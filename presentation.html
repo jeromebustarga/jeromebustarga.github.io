@@ -74,18 +74,7 @@ body {
   66% { transform: translate(-60px, 80px) scale(0.95); }
 }
 
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Slides */
+/* Slides container */
 .slide {
   position: absolute;
   inset: 0;
@@ -105,13 +94,64 @@ body {
   pointer-events: auto;
 }
 
-.content {
+/* Title slide content */
+.title-container {
   text-align: center;
-  max-width: 1100px;
-  width: 100%;
 }
 
-.section-label {
+/* Logo with rays */
+.logo-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 40px auto;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 40px rgba(244, 121, 33, 0.8)) drop-shadow(0 0 80px rgba(244, 121, 33, 0.5));
+}
+
+.light-rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  z-index: 1;
+  animation: rotate 20s linear infinite;
+}
+
+.ray {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 70px;
+  background: linear-gradient(to bottom, rgba(244, 121, 33, 0.4), transparent);
+  transform-origin: 50% 0%;
+}
+
+.ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+.ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); }
+.ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); }
+.ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); }
+.ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); }
+.ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); }
+.ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); }
+.ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); }
+
+@keyframes rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.pre-title {
   display: inline-block;
   padding: 8px 20px;
   background: rgba(255, 255, 255, 0.03);
@@ -119,440 +159,130 @@ body {
   border-radius: 30px;
   font-size: 13px;
   font-weight: 400;
-  color: #f47921;
+  color: #b0b0b0;
   margin-bottom: 40px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.sub-label {
-  display: inline-block;
-  padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 400;
-  color: #b0b0b0;
+.main-title {
+  font-size: 72px;
+  font-weight: 300;
+  line-height: 1.1;
   margin-bottom: 30px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  color: #ffffff;
+  letter-spacing: -0.03em;
 }
 
-.main-text {
+.main-title .highlight {
+  font-weight: 400;
+  background: linear-gradient(135deg, #f47921, #ff8c3a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #909090;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto 50px auto;
+}
+
+.presenter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.presenter-name {
+  font-size: 20px;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.presenter-title {
+  font-size: 14px;
+  font-weight: 300;
+  color: #808080;
+  letter-spacing: 0.02em;
+}
+
+/* Table of contents slide */
+.toc-container {
+  text-align: center;
+}
+
+.toc-title {
   font-size: 42px;
   font-weight: 300;
-  line-height: 1.5;
   color: #ffffff;
   letter-spacing: -0.02em;
+  margin-bottom: 60px;
 }
 
-.main-text .dim {
-  color: #606060;
+.toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.main-text .highlight {
-  color: #f47921;
-}
-
-/* Grid layouts */
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.toc-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 20px;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.grid-9 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  max-width: 700px;
-  margin: 0 auto;
-}
-
-.grid-9-small {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* Scrollable content */
-.scroll-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.scroll-container {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px 0 80px 0;
-  max-height: calc(100vh - 200px);
-}
-
-.scroll-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.scroll-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 3px;
-}
-
-.scroll-container::-webkit-scrollbar-thumb {
-  background: rgba(244, 121, 33, 0.3);
-  border-radius: 3px;
-}
-
-.scroll-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(244, 121, 33, 0.5);
-}
-
-/* Open scroll container - no visible scrollbar */
-.scroll-container-open {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-  max-width: 700px;
-  padding: 20px 40px 100px 40px;
-  max-height: calc(100vh - 180px);
-}
-
-.scroll-container-open::-webkit-scrollbar {
-  width: 0;
-  display: none;
-}
-
-.scroll-item {
-  flex-shrink: 0;
-}
-
-.placeholder {
-  aspect-ratio: 4/3;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #606060;
-  font-size: 13px;
-  cursor: pointer;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.placeholder:hover {
-  transform: scale(1.03);
-  border-color: rgba(244, 121, 33, 0.5);
-}
-
-.placeholder-square {
-  aspect-ratio: 1;
-}
-
-.placeholder-video {
-  aspect-ratio: 16/9;
-  position: relative;
-}
-
-.placeholder-video::after {
-  content: '▶';
   font-size: 24px;
-  color: rgba(255, 255, 255, 0.3);
-}
-
-/* Clickable images */
-.clickable-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.clickable-img:hover {
-  transform: scale(1.03);
-  border-color: rgba(244, 121, 33, 0.5);
-}
-
-/* Split layout */
-.split-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.split-left {
-  display: flex;
-  justify-content: center;
-}
-
-.split-right {
-  text-align: left;
-}
-
-.poster-placeholder {
-  width: 100%;
-  max-width: 350px;
-  aspect-ratio: 2/3;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #606060;
-  font-size: 14px;
-}
-
-.synopsis-title {
-  font-size: 28px;
-  font-weight: 400;
-  color: #ffffff;
-  margin-bottom: 20px;
-}
-
-.synopsis-text {
-  font-size: 16px;
   font-weight: 300;
   color: #909090;
-  line-height: 1.7;
+  transition: color 0.3s ease;
 }
 
-/* Photo items */
-.photo-item {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.photo-item:hover {
-  transform: scale(1.03);
-  border-color: rgba(244, 121, 33, 0.5);
-}
-
-/* Video items */
-.video-item {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-/* Lightbox */
-.lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.95);
-  z-index: 9999;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.lightbox.active {
-  display: flex;
-}
-
-.lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 12px;
-  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 30px;
-  right: 40px;
-  font-size: 32px;
+.toc-item:hover {
   color: #ffffff;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
 }
 
-.lightbox-close:hover {
-  opacity: 1;
-}
-
-/* Iframe Modal */
-.iframe-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.95);
-  z-index: 9999;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-}
-
-.iframe-modal.active {
-  display: flex;
-}
-
-.iframe-container {
-  width: 90%;
-  height: 90%;
-  max-width: 1400px;
-  background: #0d0d0d;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
-  position: relative;
-}
-
-.iframe-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.iframe-close {
-  position: fixed;
-  top: 30px;
-  right: 40px;
-  font-size: 32px;
-  color: #ffffff;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-  z-index: 10000;
-}
-
-.iframe-close:hover {
-  opacity: 1;
-}
-
-/* Preview tile with image */
-.preview-tile {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.preview-tile:hover {
-  transform: scale(1.02);
-  border-color: rgba(244, 121, 33, 0.5);
-}
-
-.preview-tile img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.preview-iframe-wrapper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.preview-iframe-wrapper iframe {
-  width: 200%;
-  height: 200%;
-  transform: scale(0.5);
-  transform-origin: top left;
-  border: none;
-  pointer-events: none;
-}
-
-.preview-overlay {
-  position: absolute;
-  inset: 0;
-  background: transparent;
-  z-index: 1;
-}
-
-.preview-tile .preview-label {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 15px 20px;
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  color: #ffffff;
+.toc-number {
   font-size: 14px;
   font-weight: 400;
-  z-index: 2;
+  color: #f47921;
+  letter-spacing: 0.05em;
 }
 
-.preview-tile .click-hint {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 10px 20px;
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
-  color: #ffffff;
-  font-size: 13px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
+.toc-label {
+  letter-spacing: -0.01em;
 }
 
-.preview-tile:hover .click-hint {
-  opacity: 1;
+.toc-desc {
+  font-size: 14px;
+  color: #606060;
+  font-weight: 300;
 }
 
-/* Bottom nav */
-.bottom-nav {
+/* Bottom info bar */
+.bottom-info {
   position: fixed;
   bottom: 40px;
   left: 60px;
   right: 60px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   font-size: 13px;
   color: #606060;
   font-weight: 300;
   z-index: 10;
 }
 
-.slide-number {
-  font-size: 14px;
-  color: #606060;
+.course-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .slide-indicator {
@@ -583,26 +313,31 @@ body {
     padding: 40px 30px;
   }
   
-  .main-text {
-    font-size: 28px;
+  .main-title {
+    font-size: 42px;
   }
   
-  .grid-3, .grid-4, .grid-9 {
-    grid-template-columns: repeat(2, 1fr);
+  .subtitle {
+    font-size: 16px;
   }
   
-  .split-layout {
-    grid-template-columns: 1fr;
-    gap: 30px;
+  .toc-title {
+    font-size: 32px;
   }
   
-  .split-right {
-    text-align: center;
+  .toc-item {
+    font-size: 18px;
+    flex-direction: column;
+    gap: 8px;
   }
   
-  .bottom-nav {
+  .bottom-info {
     left: 30px;
     right: 30px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
   }
 }
 </style>
@@ -616,181 +351,77 @@ body {
   <div class="orb orb3"></div>
 </div>
 
-<!-- Part 1: Transition -->
-<section class="slide active" id="slide-1">
-  <div class="content">
-    <div class="section-label" style="opacity: 0; animation: fadeUp 1s ease-out 0.2s forwards;">03 — The Projects</div>
-    <p class="main-text" style="opacity: 0; animation: fadeUp 1s ease-out 0.4s forwards;">
-      <span class="dim">Over the past few years,</span><br>
-      <span class="dim">I've had the chance to work on projects —</span><br>
-      <span class="highlight">personal</span> <span class="dim">and</span> <span class="highlight">professional</span> —<br>
-      <span class="dim">that let me put everything I've learned into practice.</span>
+<!-- Part 1: Title -->
+<section class="slide active" id="slide-title">
+  <div class="title-container">
+    <div class="logo-container">
+      <div class="light-rays">
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+      </div>
+      <img src="images/logo.png" alt="Jerome Bustarga Logo" class="logo-image">
+    </div>
+    
+    <div class="pre-title">Senior Capstone Presentation</div>
+    
+    <h1 class="main-title">It's <span class="highlight">Jerome's world</span></h1>
+    
+    <p class="subtitle">
+      A journey through design, development, and the intersection of creativity and code.
     </p>
-  </div>
-</section>
-
-<!-- Part 2: Space Projects -->
-<section class="slide" id="slide-2">
-  <div class="content">
-    <div class="sub-label">Space Projects</div>
-    <div class="grid-3">
-      <div class="preview-tile iframe-trigger" data-src="GreenXAerospace.html">
-        <div class="preview-iframe-wrapper">
-          <iframe src="GreenXAerospace.html" scrolling="no"></iframe>
-        </div>
-        <div class="preview-overlay"></div>
-        <div class="preview-label">GreenX Aerospace</div>
-        <div class="click-hint">Click to view</div>
-      </div>
-      <div class="preview-tile">
-        <img src="images/cutespace.jpg" alt="Cute Space Collage" class="clickable-img" style="width: 100%; height: 100%; object-fit: cover;">
-        <div class="preview-label">Space Collage</div>
-      </div>
-      <div class="preview-tile figma-trigger" data-figma="https://embed.figma.com/proto/1HYAWvpa1cxm4CNiQYc2Hd/Jerome-s-Web-Design-Class?page-id=596%3A13&node-id=596-14&viewport=-1822%2C115%2C0.36&scaling=scale-down&content-scaling=fixed&starting-point-node-id=596%3A14&embed-host=share">
-        <div class="preview-iframe-wrapper">
-          <iframe src="https://embed.figma.com/proto/1HYAWvpa1cxm4CNiQYc2Hd/Jerome-s-Web-Design-Class?page-id=596%3A13&node-id=596-14&viewport=-1822%2C115%2C0.36&scaling=scale-down&content-scaling=fixed&starting-point-node-id=596%3A14&embed-host=share" scrolling="no"></iframe>
-        </div>
-        <div class="preview-overlay"></div>
-        <div class="preview-label">Figma Prototype</div>
-        <div class="click-hint">Click to interact</div>
-      </div>
+    
+    <div class="presenter">
+      <span class="presenter-name">Jerome Bustarga</span>
+      <span class="presenter-title">Designer & Web Developer</span>
     </div>
   </div>
 </section>
 
-<!-- Part 3: Passion Project -->
-<section class="slide" id="slide-3">
-  <div class="content">
-    <div class="sub-label">Passion Project</div>
-    <p class="main-text" style="margin-bottom: 30px; font-size: 28px;">
-      <span class="highlight">CSDJ Department</span> <span class="dim">Logo & Brand Guide</span>
-    </p>
-    <div class="grid-3">
-      <div class="placeholder">Brand Guide 1</div>
-      <div class="placeholder">Brand Guide 2</div>
-      <div class="placeholder">Brand Guide 3</div>
-    </div>
+<!-- Part 2: Table of Contents -->
+<section class="slide" id="slide-toc">
+  <div class="toc-container">
+    <h2 class="toc-title">What we'll cover</h2>
+    
+    <ul class="toc-list">
+      <li class="toc-item">
+        <span class="toc-number">01</span>
+        <span class="toc-label">The Origin</span>
+        <span class="toc-desc">— life story & early design</span>
+      </li>
+      <li class="toc-item">
+        <span class="toc-number">02</span>
+        <span class="toc-label">The Logo</span>
+        <span class="toc-desc">— branding & meaning</span>
+      </li>
+      <li class="toc-item">
+        <span class="toc-number">03</span>
+        <span class="toc-label">The Projects</span>
+        <span class="toc-desc">— overview of my work</span>
+      </li>
+      <li class="toc-item">
+        <span class="toc-number">04</span>
+        <span class="toc-label">Deep Dive</span>
+        <span class="toc-desc">— Twine project process</span>
+      </li>
+    </ul>
   </div>
 </section>
 
-<!-- Part 4: Motion Graphics -->
-<section class="slide" id="slide-4">
-  <div class="content">
-    <div class="sub-label">Motion Graphics</div>
-    <div class="grid-9">
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-      <div class="placeholder placeholder-video"></div>
-    </div>
+<!-- Bottom info -->
+<div class="bottom-info">
+  <div class="course-info">
+    <span>Creighton University</span>
+    <span>Computer Science, Design & Journalism</span>
   </div>
-</section>
-
-<!-- Part 5: Other Projects - Page 1 -->
-<section class="slide" id="slide-5">
-  <div class="content">
-    <div class="sub-label">Other Projects</div>
-    <div class="grid-4">
-      <div class="placeholder">Project 1</div>
-      <div class="placeholder">Project 2</div>
-      <div class="placeholder">Project 3</div>
-      <div class="placeholder">Project 4</div>
-    </div>
-  </div>
-</section>
-
-<!-- Part 6: Other Projects - Page 2 -->
-<section class="slide" id="slide-6">
-  <div class="content">
-    <div class="sub-label">Other Projects</div>
-    <div class="grid-4">
-      <div class="placeholder">Project 5</div>
-      <div class="placeholder">Project 6</div>
-      <div class="placeholder">Project 7</div>
-      <div class="placeholder">Project 8</div>
-    </div>
-  </div>
-</section>
-
-<!-- Part 7: Short Film -->
-<section class="slide" id="slide-7">
-  <div class="content">
-    <div class="sub-label">Short Film</div>
-    <div class="split-layout">
-      <div class="split-left">
-        <div class="poster-placeholder">Film Poster</div>
-      </div>
-      <div class="split-right">
-        <h3 class="synopsis-title">Film Title</h3>
-        <p class="synopsis-text">
-          Synopsis placeholder. A brief description of your short film, what it's about, the themes it explores, and your role in the production.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Part 8: Internship 1 - Onboarding -->
-<section class="slide" id="slide-8">
-  <div class="content">
-    <div class="sub-label">Internship • Onboarding Materials</div>
-    <div class="grid-9">
-      <div class="placeholder placeholder-square">1</div>
-      <div class="placeholder placeholder-square">2</div>
-      <div class="placeholder placeholder-square">3</div>
-      <div class="placeholder placeholder-square">4</div>
-      <div class="placeholder placeholder-square">5</div>
-      <div class="placeholder placeholder-square">6</div>
-      <div class="placeholder placeholder-square">7</div>
-      <div class="placeholder placeholder-square">8</div>
-      <div class="placeholder placeholder-square">9</div>
-    </div>
-  </div>
-</section>
-
-<!-- Part 9: Internship 2 - Tax Analysis -->
-<section class="slide" id="slide-9">
-  <div class="content">
-    <div class="sub-label">Internship • Tax File Analysis</div>
-    <div class="grid-9">
-      <div class="placeholder placeholder-square">1</div>
-      <div class="placeholder placeholder-square">2</div>
-      <div class="placeholder placeholder-square">3</div>
-      <div class="placeholder placeholder-square">4</div>
-      <div class="placeholder placeholder-square">5</div>
-      <div class="placeholder placeholder-square">6</div>
-      <div class="placeholder placeholder-square">7</div>
-      <div class="placeholder placeholder-square">8</div>
-      <div class="placeholder placeholder-square">9</div>
-    </div>
-  </div>
-</section>
-
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox">
-  <span class="lightbox-close">&times;</span>
-  <img src="" alt="Enlarged photo" id="lightbox-img">
-</div>
-
-<!-- Iframe Modal -->
-<div class="iframe-modal" id="iframeModal">
-  <span class="iframe-close">&times;</span>
-  <div class="iframe-container">
-    <iframe id="iframeContent" src=""></iframe>
-  </div>
-</div>
-
-<!-- Bottom nav -->
-<div class="bottom-nav">
-  <span class="slide-number">The Projects</span>
-  <span class="slide-indicator" id="slideIndicator">1 / 9</span>
+  <span class="slide-indicator" id="slideIndicator">1 / 2</span>
   <div class="nav-hint">
-    <kbd>←</kbd> <kbd>→</kbd>
+    Press <kbd>→</kbd> to continue
   </div>
 </div>
 
@@ -808,92 +439,20 @@ function showSlide(index) {
   slideIndicator.textContent = `${index + 1} / ${totalSlides}`;
 }
 
-// Lightbox functionality
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
-const lightboxClose = document.querySelector('.lightbox-close');
-
-// Make all images with these classes clickable for lightbox
-document.querySelectorAll('.photo-item, .clickable-img, img.scroll-img').forEach(photo => {
-  photo.addEventListener('click', (e) => {
-    e.stopPropagation();
-    lightboxImg.src = photo.src;
-    lightbox.classList.add('active');
-  });
-});
-
-lightbox.addEventListener('click', () => {
-  lightbox.classList.remove('active');
-});
-
-lightboxClose.addEventListener('click', () => {
-  lightbox.classList.remove('active');
-});
-
-// Iframe Modal functionality
-const iframeModal = document.getElementById('iframeModal');
-const iframeContent = document.getElementById('iframeContent');
-const iframeClose = document.querySelector('.iframe-close');
-
-// HTML iframe triggers
-document.querySelectorAll('.iframe-trigger').forEach(trigger => {
-  trigger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const src = trigger.getAttribute('data-src');
-    iframeContent.src = src;
-    iframeModal.classList.add('active');
-  });
-});
-
-// Figma iframe triggers
-document.querySelectorAll('.figma-trigger').forEach(trigger => {
-  trigger.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const src = trigger.getAttribute('data-figma');
-    iframeContent.src = src;
-    iframeModal.classList.add('active');
-  });
-});
-
-iframeModal.addEventListener('click', (e) => {
-  if (e.target === iframeModal) {
-    iframeModal.classList.remove('active');
-    iframeContent.src = '';
-  }
-});
-
-iframeClose.addEventListener('click', () => {
-  iframeModal.classList.remove('active');
-  iframeContent.src = '';
-});
-
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
-  // Close lightbox with Escape
-  if (e.key === 'Escape') {
-    lightbox.classList.remove('active');
-    iframeModal.classList.remove('active');
-    iframeContent.src = '';
-    return;
-  }
-  
-  // Don't navigate slides if lightbox or iframe is open
-  if (lightbox.classList.contains('active') || iframeModal.classList.contains('active')) return;
-  
   if (e.key === 'ArrowRight' || e.key === ' ') {
     if (currentSlide < totalSlides - 1) {
       currentSlide++;
       showSlide(currentSlide);
     } else {
-      window.location.href = 'slide5.html';
+      window.location.href = 'slide2.html';
     }
   }
   if (e.key === 'ArrowLeft') {
     if (currentSlide > 0) {
       currentSlide--;
       showSlide(currentSlide);
-    } else {
-      window.location.href = 'slide3.html';
     }
   }
 });
