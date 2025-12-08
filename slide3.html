@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capstone Presentation - Jerome Bustarga</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0d0d0d;
+  color: #e8e8e8;
+}
+
+/* Background orbs */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.08;
+  animation: float 25s ease-in-out infinite;
+}
+
+.orb1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #404040, transparent);
+  top: -250px;
+  left: -200px;
+}
+
+.orb2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #303030, transparent);
+  bottom: -200px;
+  right: -150px;
+  animation-delay: 8s;
+}
+
+.orb3 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, #353535, transparent);
+  top: 40%;
+  right: 10%;
+  animation-delay: 16s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -80px) scale(1.05); }
+  66% { transform: translate(-60px, 80px) scale(0.95); }
+}
+
+/* Slides */
+.slide {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.content {
+  text-align: center;
+  max-width: 1000px;
+}
+
+.section-label {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #f47921;
+  margin-bottom: 50px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.main-text {
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.main-text .dim {
+  color: #606060;
+}
+
+.main-text .highlight {
+  color: #f47921;
+}
+
+/* Logo display */
+.logo-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 50px auto;
+}
+
+.logo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 0 60px rgba(244, 121, 33, 0.6)) drop-shadow(0 0 120px rgba(244, 121, 33, 0.4));
+}
+
+.light-rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 240px;
+  z-index: 1;
+  animation: rotate 20s linear infinite;
+}
+
+.ray {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(244, 121, 33, 0.3), transparent);
+  transform-origin: 50% 0%;
+}
+
+.ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+.ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); }
+.ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); }
+.ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); }
+.ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); }
+.ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); }
+.ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); }
+.ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); }
+
+@keyframes rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.logo-caption {
+  font-size: 24px;
+  font-weight: 300;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.logo-caption .dim {
+  color: #606060;
+}
+
+.logo-caption .highlight {
+  color: #f47921;
+}
+
+/* Logo split layout */
+.logo-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.logo-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sketch-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.sketch-placeholder {
+  aspect-ratio: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #606060;
+  font-size: 14px;
+}
+
+.sketch-item {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.sketch-item:hover {
+  transform: scale(1.05);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+@media (max-width: 900px) {
+  .logo-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .sketch-grid {
+    max-width: 300px;
+  }
+}
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 40px;
+  left: 60px;
+  right: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #606060;
+  font-weight: 300;
+  z-index: 10;
+}
+
+.slide-number {
+  font-size: 14px;
+  color: #606060;
+}
+
+.nav-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #606060;
+}
+
+.nav-hint kbd {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #909090;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .slide {
+    padding: 40px 30px;
+  }
+  
+  .logo-container {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .light-rays {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .ray {
+    height: 100px;
+  }
+  
+  .logo-caption {
+    font-size: 18px;
+  }
+  
+  .bottom-nav {
+    left: 30px;
+    right: 30px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- Slide container for multiple parts -->
+<section class="slide active" id="slide-1">
+  <div class="content">
+    <p class="main-text">
+      I grew up without much.<br><br>
+      <span class="dim">And when you grow up without much,</span><br>
+      <span class="dim">you learn not to</span> <span class="highlight">dream too big</span> —<br>
+      <span class="dim">because wanting things you can't have</span><br>
+      <span class="dim">just breaks your heart.</span>
+    </p>
+  </div>
+</section>
+
+<!-- The Logo -->
+<section class="slide" id="slide-2">
+  <div class="content">
+    <div class="section-label">02 — The Logo</div>
+    
+    <div class="logo-split">
+      <div class="logo-left">
+        <div class="logo-container">
+          <div class="light-rays">
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+          </div>
+          <img src="images/logo.png" alt="Jerome Bustarga Logo" class="logo-image">
+        </div>
+        
+        <p class="logo-caption">
+          A <span class="highlight">lightbulb</span> <span class="dim">and a</span> <span class="highlight">ship's wheel</span>.
+        </p>
+      </div>
+      
+      <div class="logo-right">
+        <div class="sketch-grid">
+          <div class="sketch-placeholder">Sketch 1</div>
+          <div class="sketch-placeholder">Sketch 2</div>
+          <div class="sketch-placeholder">Sketch 3</div>
+          <div class="sketch-placeholder">Sketch 4</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom nav -->
+<div class="bottom-nav">
+  <span class="slide-number">The Logo</span>
+  <div class="nav-hint">
+    <kbd>←</kbd> <kbd>→</kbd>
+  </div>
+</div>
+
+<script>
+// Slide management
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide4.html';
+    }
+  }
+  if (e.key === 'ArrowLeft') {
+    if (currentSlide > 0) {
+      currentSlide--;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide2.html';
+    }
+  }
+});
+
+// Mouse trail
+new p5((p) => {
+  let trails = [];
+  
+  p.setup = () => {
+    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    canvas.position(0, 0);
+    canvas.style('pointer-events', 'none');
+    canvas.style('z-index', '9998');
+    canvas.style('position', 'fixed');
+    canvas.style('top', '0');
+    canvas.style('left', '0');
+    p.clear();
+    p.noStroke();
+  };
+
+  p.draw = () => {
+    p.clear();
+    
+    for (let i = trails.length - 1; i >= 0; i--) {
+      const point = trails[i];
+      p.fill(255, 255, 255, point.alpha * 0.08);
+      p.ellipse(point.x, point.y, point.size * 2);
+      p.fill(255, 255, 255, point.alpha * 0.3);
+      p.ellipse(point.x, point.y, point.size);
+      point.alpha -= 3;
+      point.size *= 0.96;
+      if (point.alpha <= 0) trails.splice(i, 1);
+    }
+
+    const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+    if (d > 0) {
+      const steps = p.max(1, d * 0.5);
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const x = p.lerp(p.pmouseX, p.mouseX, t);
+        const y = p.lerp(p.pmouseY, p.mouseY, t);
+        trails.push({ x, y, size: p.random(6, 10), alpha: p.random(120, 150) });
+      }
+    }
+    if (trails.length > 600) trails.splice(0, trails.length - 600);
+  };
+
+  p.windowResized = () => p.resizeCanvas(p.windowWidth, p.windowHeight);
+});
+</script>
+
+</body>
+</html>

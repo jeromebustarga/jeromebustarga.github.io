@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capstone Presentation - Jerome Bustarga</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0d0d0d;
+  color: #e8e8e8;
+}
+
+/* Background orbs */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.08;
+  animation: float 25s ease-in-out infinite;
+}
+
+.orb1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #404040, transparent);
+  top: -250px;
+  left: -200px;
+}
+
+.orb2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #303030, transparent);
+  bottom: -200px;
+  right: -150px;
+  animation-delay: 8s;
+}
+
+.orb3 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, #353535, transparent);
+  top: 40%;
+  right: 10%;
+  animation-delay: 16s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -80px) scale(1.05); }
+  66% { transform: translate(-60px, 80px) scale(0.95); }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slides */
+.slide {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.content {
+  text-align: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.section-label {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #f47921;
+  margin-bottom: 40px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sub-label {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #b0b0b0;
+  margin-bottom: 30px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.main-text {
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.main-text .dim {
+  color: #606060;
+}
+
+.main-text .highlight {
+  color: #f47921;
+}
+
+/* Grid layouts */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.grid-9 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.grid-9-video {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.video-embed {
+  position: relative;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.video-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.grid-9-small {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Scrollable content */
+.scroll-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 0 80px 0;
+  max-height: calc(100vh - 200px);
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(244, 121, 33, 0.3);
+  border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(244, 121, 33, 0.5);
+}
+
+/* Open scroll container - no visible scrollbar */
+.scroll-container-open {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  max-width: 700px;
+  padding: 20px 40px 100px 40px;
+  max-height: calc(100vh - 180px);
+}
+
+.scroll-container-open::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+.scroll-item {
+  flex-shrink: 0;
+}
+
+.placeholder {
+  aspect-ratio: 4/3;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #606060;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.placeholder:hover {
+  transform: scale(1.03);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+.placeholder-square {
+  aspect-ratio: 1;
+}
+
+.placeholder-video {
+  aspect-ratio: 16/9;
+  position: relative;
+}
+
+.placeholder-video::after {
+  content: '▶';
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Clickable images */
+.clickable-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.clickable-img:hover {
+  transform: scale(1.03);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+/* Split layout */
+.split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.split-left {
+  display: flex;
+  justify-content: center;
+}
+
+.split-right {
+  text-align: left;
+}
+
+.poster-placeholder {
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 2/3;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #606060;
+  font-size: 14px;
+}
+
+.synopsis-title {
+  font-size: 28px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.synopsis-text {
+  font-size: 16px;
+  font-weight: 300;
+  color: #909090;
+  line-height: 1.7;
+}
+
+/* Photo items */
+.photo-item {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.photo-item:hover {
+  transform: scale(1.03);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+/* Video items */
+.video-item {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+/* Iframe Modal */
+.iframe-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.iframe-modal.active {
+  display: flex;
+}
+
+.iframe-container {
+  width: 90%;
+  height: 90%;
+  max-width: 1400px;
+  background: #0d0d0d;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
+  position: relative;
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.iframe-close {
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  z-index: 10000;
+}
+
+.iframe-close:hover {
+  opacity: 1;
+}
+
+/* Single preview centered */
+.single-preview {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Preview tile with image */
+.preview-tile {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.preview-tile:hover {
+  transform: scale(1.02);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+.preview-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-iframe-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-iframe-wrapper iframe {
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: top left;
+  border: none;
+  pointer-events: none;
+}
+
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 1;
+}
+
+.preview-tile .preview-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 400;
+  z-index: 2;
+}
+
+.preview-tile .click-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.preview-tile:hover .click-hint {
+  opacity: 1;
+}
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 40px;
+  left: 60px;
+  right: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #606060;
+  font-weight: 300;
+  z-index: 10;
+}
+
+.slide-number {
+  font-size: 14px;
+  color: #606060;
+}
+
+.slide-indicator {
+  font-size: 14px;
+  color: #606060;
+}
+
+.nav-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #606060;
+}
+
+.nav-hint kbd {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #909090;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .slide {
+    padding: 40px 30px;
+  }
+  
+  .main-text {
+    font-size: 28px;
+  }
+  
+  .grid-3, .grid-4, .grid-9 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .split-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .split-right {
+    text-align: center;
+  }
+  
+  .bottom-nav {
+    left: 30px;
+    right: 30px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- Part 1: Transition -->
+<section class="slide active" id="slide-1">
+  <div class="content">
+    <div class="section-label" style="opacity: 0; animation: fadeUp 1s ease-out 0.2s forwards;">03 — The Projects</div>
+    <p class="main-text" style="opacity: 0; animation: fadeUp 1s ease-out 0.4s forwards;">
+      <span class="dim">Over the past few years,</span><br>
+      <span class="dim">I've had the chance to work on projects —</span><br>
+      <span class="highlight">personal</span> <span class="dim">and</span> <span class="highlight">professional</span> —<br>
+      <span class="dim">that let me put everything I've learned into practice.</span>
+    </p>
+  </div>
+</section>
+
+<!-- Part 2: Space Projects -->
+<section class="slide" id="slide-2">
+  <div class="content">
+    <div class="sub-label">Space Projects</div>
+    <div class="grid-3">
+      <div class="preview-tile iframe-trigger" data-src="GreenXAerospace.html">
+        <div class="preview-iframe-wrapper">
+          <iframe src="GreenXAerospace.html" scrolling="no"></iframe>
+        </div>
+        <div class="preview-overlay"></div>
+        <div class="preview-label">GreenX Aerospace</div>
+        <div class="click-hint">Click to view</div>
+      </div>
+      <div class="preview-tile">
+        <img src="images/cutespace.jpg" alt="Cute Space Collage" class="clickable-img" style="width: 100%; height: 100%; object-fit: cover;">
+        <div class="preview-label">Space Collage</div>
+      </div>
+      <div class="preview-tile figma-trigger" data-figma="https://embed.figma.com/proto/1HYAWvpa1cxm4CNiQYc2Hd/Jerome-s-Web-Design-Class?page-id=596%3A13&node-id=596-14&viewport=-1822%2C115%2C0.36&scaling=scale-down&content-scaling=fixed&starting-point-node-id=596%3A14&embed-host=share">
+        <div class="preview-iframe-wrapper">
+          <iframe src="https://embed.figma.com/proto/1HYAWvpa1cxm4CNiQYc2Hd/Jerome-s-Web-Design-Class?page-id=596%3A13&node-id=596-14&viewport=-1822%2C115%2C0.36&scaling=scale-down&content-scaling=fixed&starting-point-node-id=596%3A14&embed-host=share" scrolling="no"></iframe>
+        </div>
+        <div class="preview-overlay"></div>
+        <div class="preview-label">Figma Prototype</div>
+        <div class="click-hint">Click to interact</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 3: Passion Project -->
+<section class="slide" id="slide-3">
+  <div class="content">
+    <div class="sub-label">Passion Project</div>
+    <p class="main-text" style="margin-bottom: 30px; font-size: 28px;">
+      <span class="highlight">CSDJ Department</span> <span class="dim">Logo & Brand Guide</span>
+    </p>
+    <div class="single-preview">
+      <div class="preview-tile iframe-trigger" data-src="CSDJ.html">
+        <div class="preview-iframe-wrapper">
+          <iframe src="CSDJ.html" scrolling="no"></iframe>
+        </div>
+        <div class="preview-overlay"></div>
+        <div class="click-hint">Click to view</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 4: Motion Graphics -->
+<section class="slide" id="slide-4">
+  <div class="content">
+    <div class="sub-label">Motion Graphics</div>
+    <div class="grid-9-video">
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=1d634aec-4fdb-4bef-aafb-e6d3727f3bac&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX7 - Keyframes Basics - Race.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=f12fde0d-b8e4-4ea0-88c6-b6d481004276&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX4 - Strokes & Reveals.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=749fb7df-ae65-4400-816a-284d524c8cfd&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX2 - Mograph Questionnaire.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=ed52b8b2-3fd0-4f2d-908b-7818d2704d48&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX9 - 3D Monogram.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=fc38d900-a00f-4341-8ab7-8db4b69c94c4&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX7 - Keyframes Basics - Obstacles.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=7ae1ef13-cfd6-41d5-aa48-a071d1c82f22&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX3 - Personal Mantras.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=7f43954a-fcb5-479a-a878-6cd6e6296511&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX1 - The Super Basics.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=f87a45dc-90b1-407b-a190-c00a90af83e5&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX8 - 3d Tracking.mp4"></iframe>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=6fc9c509-e6e0-4b6d-99d2-852dc669bd35&embed=%7B%22af%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="EX8 - 2d Tracking.mp4"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 5: Other Projects - Page 1 -->
+<section class="slide" id="slide-5">
+  <div class="content">
+    <div class="sub-label">Other Projects</div>
+    <div class="grid-4">
+      <div class="placeholder">Project 1</div>
+      <div class="placeholder">Project 2</div>
+      <div class="placeholder">Project 3</div>
+      <div class="placeholder">Project 4</div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 6: Other Projects - Page 2 -->
+<section class="slide" id="slide-6">
+  <div class="content">
+    <div class="sub-label">Other Projects</div>
+    <div class="grid-4">
+      <div class="placeholder">Project 5</div>
+      <div class="placeholder">Project 6</div>
+      <div class="placeholder">Project 7</div>
+      <div class="placeholder">Project 8</div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 7: Short Film -->
+<section class="slide" id="slide-7">
+  <div class="content">
+    <div class="sub-label">Short Film</div>
+    <div class="split-layout">
+      <div class="split-left">
+        <div class="poster-placeholder">Film Poster</div>
+      </div>
+      <div class="split-right">
+        <h3 class="synopsis-title">Film Title</h3>
+        <p class="synopsis-text">
+          Synopsis placeholder. A brief description of your short film, what it's about, the themes it explores, and your role in the production.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 8: Internship 1 - Onboarding -->
+<section class="slide" id="slide-8">
+  <div class="content">
+    <div class="sub-label">Internship • Onboarding Materials</div>
+    <div class="grid-9">
+      <div class="placeholder placeholder-square">1</div>
+      <div class="placeholder placeholder-square">2</div>
+      <div class="placeholder placeholder-square">3</div>
+      <div class="placeholder placeholder-square">4</div>
+      <div class="placeholder placeholder-square">5</div>
+      <div class="placeholder placeholder-square">6</div>
+      <div class="placeholder placeholder-square">7</div>
+      <div class="placeholder placeholder-square">8</div>
+      <div class="placeholder placeholder-square">9</div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 9: Internship 2 - Tax Analysis -->
+<section class="slide" id="slide-9">
+  <div class="content">
+    <div class="sub-label">Internship • Tax File Analysis</div>
+    <div class="grid-9">
+      <div class="placeholder placeholder-square">1</div>
+      <div class="placeholder placeholder-square">2</div>
+      <div class="placeholder placeholder-square">3</div>
+      <div class="placeholder placeholder-square">4</div>
+      <div class="placeholder placeholder-square">5</div>
+      <div class="placeholder placeholder-square">6</div>
+      <div class="placeholder placeholder-square">7</div>
+      <div class="placeholder placeholder-square">8</div>
+      <div class="placeholder placeholder-square">9</div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img src="" alt="Enlarged photo" id="lightbox-img">
+</div>
+
+<!-- Iframe Modal -->
+<div class="iframe-modal" id="iframeModal">
+  <span class="iframe-close">&times;</span>
+  <div class="iframe-container">
+    <iframe id="iframeContent" src=""></iframe>
+  </div>
+</div>
+
+<!-- Bottom nav -->
+<div class="bottom-nav">
+  <span class="slide-number">The Projects</span>
+  <span class="slide-indicator" id="slideIndicator">1 / 9</span>
+  <div class="nav-hint">
+    <kbd>←</kbd> <kbd>→</kbd>
+  </div>
+</div>
+
+<script>
+// Slide management
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+const slideIndicator = document.getElementById('slideIndicator');
+
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+  slideIndicator.textContent = `${index + 1} / ${totalSlides}`;
+}
+
+// Lightbox functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxClose = document.querySelector('.lightbox-close');
+
+// Make all images with these classes clickable for lightbox
+document.querySelectorAll('.photo-item, .clickable-img, img.scroll-img').forEach(photo => {
+  photo.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lightboxImg.src = photo.src;
+    lightbox.classList.add('active');
+  });
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+
+lightboxClose.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+
+// Iframe Modal functionality
+const iframeModal = document.getElementById('iframeModal');
+const iframeContent = document.getElementById('iframeContent');
+const iframeClose = document.querySelector('.iframe-close');
+
+// HTML iframe triggers
+document.querySelectorAll('.iframe-trigger').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const src = trigger.getAttribute('data-src');
+    iframeContent.src = src;
+    iframeModal.classList.add('active');
+  });
+});
+
+// Figma iframe triggers
+document.querySelectorAll('.figma-trigger').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const src = trigger.getAttribute('data-figma');
+    iframeContent.src = src;
+    iframeModal.classList.add('active');
+  });
+});
+
+iframeModal.addEventListener('click', (e) => {
+  if (e.target === iframeModal) {
+    iframeModal.classList.remove('active');
+    iframeContent.src = '';
+  }
+});
+
+iframeClose.addEventListener('click', () => {
+  iframeModal.classList.remove('active');
+  iframeContent.src = '';
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  // Close lightbox with Escape
+  if (e.key === 'Escape') {
+    lightbox.classList.remove('active');
+    iframeModal.classList.remove('active');
+    iframeContent.src = '';
+    return;
+  }
+  
+  // Don't navigate slides if lightbox or iframe is open
+  if (lightbox.classList.contains('active') || iframeModal.classList.contains('active')) return;
+  
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide5.html';
+    }
+  }
+  if (e.key === 'ArrowLeft') {
+    if (currentSlide > 0) {
+      currentSlide--;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide3.html';
+    }
+  }
+});
+
+// Mouse trail
+new p5((p) => {
+  let trails = [];
+  
+  p.setup = () => {
+    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    canvas.position(0, 0);
+    canvas.style('pointer-events', 'none');
+    canvas.style('z-index', '9998');
+    canvas.style('position', 'fixed');
+    canvas.style('top', '0');
+    canvas.style('left', '0');
+    p.clear();
+    p.noStroke();
+  };
+
+  p.draw = () => {
+    p.clear();
+    
+    for (let i = trails.length - 1; i >= 0; i--) {
+      const point = trails[i];
+      p.fill(255, 255, 255, point.alpha * 0.08);
+      p.ellipse(point.x, point.y, point.size * 2);
+      p.fill(255, 255, 255, point.alpha * 0.3);
+      p.ellipse(point.x, point.y, point.size);
+      point.alpha -= 3;
+      point.size *= 0.96;
+      if (point.alpha <= 0) trails.splice(i, 1);
+    }
+
+    const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+    if (d > 0) {
+      const steps = p.max(1, d * 0.5);
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const x = p.lerp(p.pmouseX, p.mouseX, t);
+        const y = p.lerp(p.pmouseY, p.mouseY, t);
+        trails.push({ x, y, size: p.random(6, 10), alpha: p.random(120, 150) });
+      }
+    }
+    if (trails.length > 600) trails.splice(0, trails.length - 600);
+  };
+
+  p.windowResized = () => p.resizeCanvas(p.windowWidth, p.windowHeight);
+});
+</script>
+
+</body>
+</html>
