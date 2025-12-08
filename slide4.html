@@ -188,6 +188,57 @@ body {
   margin: 0 auto;
 }
 
+.grid-5x2 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Film stills */
+.film-stills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.film-stills img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.still-placeholder {
+  aspect-ratio: 16/9;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #606060;
+  font-size: 11px;
+}
+
+.poster-img {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grid-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .video-embed {
   position: relative;
   aspect-ratio: 16/9;
@@ -439,6 +490,81 @@ body {
 
 .lightbox-close:hover {
   opacity: 1;
+}
+
+/* Gallery Lightbox */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.gallery-lightbox.active {
+  display: flex;
+}
+
+.gallery-lightbox img {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
+}
+
+.gallery-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-close:hover {
+  opacity: 1;
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 40px;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 20px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.gallery-arrow:hover {
+  opacity: 1;
+}
+
+.gallery-prev {
+  left: 30px;
+}
+
+.gallery-next {
+  right: 30px;
+}
+
+.gallery-counter {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #909090;
+  font-size: 14px;
+}
+
+.gallery-img {
+  cursor: pointer;
 }
 
 /* Iframe Modal */
@@ -803,13 +929,18 @@ body {
     <div class="sub-label">Short Film</div>
     <div class="split-layout">
       <div class="split-left">
-        <div class="poster-placeholder">Film Poster</div>
+        <img src="images/johnshea1.png" alt="Film Poster" class="poster-img clickable-img">
       </div>
       <div class="split-right">
-        <h3 class="synopsis-title">Film Title</h3>
+        <h3 class="synopsis-title">Fr. John Shea</h3>
         <p class="synopsis-text">
-          Synopsis placeholder. A brief description of your short film, what it's about, the themes it explores, and your role in the production.
+          A short documentary exploring Fr. John Shea's dual life as a Jesuit priest and Biology professor at Creighton. Through personal reflections, he shares how faith and science intersect — the conflicts, the harmonies, and the journey of navigating both.
         </p>
+        <div class="film-stills">
+          <img src="images/johnshea2.png" alt="Still 1" class="clickable-img">
+          <img src="images/johnshea3.png" alt="Still 2" class="clickable-img">
+          <img src="images/johnshea4.png" alt="Still 3" class="clickable-img">
+        </div>
       </div>
     </div>
   </div>
@@ -819,16 +950,17 @@ body {
 <section class="slide" id="slide-8">
   <div class="content">
     <div class="sub-label">Internship • Onboarding Materials</div>
-    <div class="grid-9">
-      <div class="placeholder placeholder-square">1</div>
-      <div class="placeholder placeholder-square">2</div>
-      <div class="placeholder placeholder-square">3</div>
-      <div class="placeholder placeholder-square">4</div>
-      <div class="placeholder placeholder-square">5</div>
-      <div class="placeholder placeholder-square">6</div>
-      <div class="placeholder placeholder-square">7</div>
-      <div class="placeholder placeholder-square">8</div>
-      <div class="placeholder placeholder-square">9</div>
+    <div class="grid-5x2">
+      <img src="images/HDR1.png" alt="Onboarding 1" class="gallery-img grid-img" data-gallery="onboarding" data-index="0">
+      <img src="images/HDR2.png" alt="Onboarding 2" class="gallery-img grid-img" data-gallery="onboarding" data-index="1">
+      <img src="images/HDR3.png" alt="Onboarding 3" class="gallery-img grid-img" data-gallery="onboarding" data-index="2">
+      <img src="images/HDR4.png" alt="Onboarding 4" class="gallery-img grid-img" data-gallery="onboarding" data-index="3">
+      <img src="images/HDR5.png" alt="Onboarding 5" class="gallery-img grid-img" data-gallery="onboarding" data-index="4">
+      <img src="images/HDR6.png" alt="Onboarding 6" class="gallery-img grid-img" data-gallery="onboarding" data-index="5">
+      <img src="images/HDR7.png" alt="Onboarding 7" class="gallery-img grid-img" data-gallery="onboarding" data-index="6">
+      <img src="images/HDR8.png" alt="Onboarding 8" class="gallery-img grid-img" data-gallery="onboarding" data-index="7">
+      <img src="images/HDR9.png" alt="Onboarding 9" class="gallery-img grid-img" data-gallery="onboarding" data-index="8">
+      <img src="images/HDR10.png" alt="Onboarding 10" class="gallery-img grid-img" data-gallery="onboarding" data-index="9">
     </div>
   </div>
 </section>
@@ -837,16 +969,17 @@ body {
 <section class="slide" id="slide-9">
   <div class="content">
     <div class="sub-label">Internship • Tax File Analysis</div>
-    <div class="grid-9">
-      <div class="placeholder placeholder-square">1</div>
-      <div class="placeholder placeholder-square">2</div>
-      <div class="placeholder placeholder-square">3</div>
-      <div class="placeholder placeholder-square">4</div>
-      <div class="placeholder placeholder-square">5</div>
-      <div class="placeholder placeholder-square">6</div>
-      <div class="placeholder placeholder-square">7</div>
-      <div class="placeholder placeholder-square">8</div>
-      <div class="placeholder placeholder-square">9</div>
+    <div class="grid-5x2">
+      <img src="images/BH1.png" alt="Tax Analysis 1" class="gallery-img grid-img" data-gallery="tax" data-index="0">
+      <img src="images/BH2.png" alt="Tax Analysis 2" class="gallery-img grid-img" data-gallery="tax" data-index="1">
+      <img src="images/BH3.png" alt="Tax Analysis 3" class="gallery-img grid-img" data-gallery="tax" data-index="2">
+      <img src="images/BH4.png" alt="Tax Analysis 4" class="gallery-img grid-img" data-gallery="tax" data-index="3">
+      <img src="images/BH5.png" alt="Tax Analysis 5" class="gallery-img grid-img" data-gallery="tax" data-index="4">
+      <img src="images/BH6.png" alt="Tax Analysis 6" class="gallery-img grid-img" data-gallery="tax" data-index="5">
+      <img src="images/BH7.png" alt="Tax Analysis 7" class="gallery-img grid-img" data-gallery="tax" data-index="6">
+      <img src="images/BH8.png" alt="Tax Analysis 8" class="gallery-img grid-img" data-gallery="tax" data-index="7">
+      <img src="images/BH9.png" alt="Tax Analysis 9" class="gallery-img grid-img" data-gallery="tax" data-index="8">
+      <img src="images/BH10.png" alt="Tax Analysis 10" class="gallery-img grid-img" data-gallery="tax" data-index="9">
     </div>
   </div>
 </section>
@@ -855,6 +988,15 @@ body {
 <div class="lightbox" id="lightbox">
   <span class="lightbox-close">&times;</span>
   <img src="" alt="Enlarged photo" id="lightbox-img">
+</div>
+
+<!-- Gallery Lightbox -->
+<div class="gallery-lightbox" id="galleryLightbox">
+  <span class="gallery-close">&times;</span>
+  <span class="gallery-arrow gallery-prev">&#10094;</span>
+  <img src="" alt="Gallery photo" id="gallery-img">
+  <span class="gallery-arrow gallery-next">&#10095;</span>
+  <div class="gallery-counter" id="galleryCounter">1 / 10</div>
 </div>
 
 <!-- Iframe Modal -->
@@ -910,6 +1052,55 @@ lightboxClose.addEventListener('click', () => {
   lightbox.classList.remove('active');
 });
 
+// Gallery Lightbox functionality
+const galleryLightbox = document.getElementById('galleryLightbox');
+const galleryImg = document.getElementById('gallery-img');
+const galleryClose = document.querySelector('.gallery-close');
+const galleryPrev = document.querySelector('.gallery-prev');
+const galleryNext = document.querySelector('.gallery-next');
+const galleryCounter = document.getElementById('galleryCounter');
+
+let currentGallery = [];
+let currentGalleryIndex = 0;
+
+document.querySelectorAll('.gallery-img').forEach(img => {
+  img.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const galleryName = img.getAttribute('data-gallery');
+    currentGallery = Array.from(document.querySelectorAll(`.gallery-img[data-gallery="${galleryName}"]`));
+    currentGalleryIndex = parseInt(img.getAttribute('data-index'));
+    showGalleryImage();
+    galleryLightbox.classList.add('active');
+  });
+});
+
+function showGalleryImage() {
+  galleryImg.src = currentGallery[currentGalleryIndex].src;
+  galleryCounter.textContent = `${currentGalleryIndex + 1} / ${currentGallery.length}`;
+}
+
+galleryPrev.addEventListener('click', (e) => {
+  e.stopPropagation();
+  currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
+  showGalleryImage();
+});
+
+galleryNext.addEventListener('click', (e) => {
+  e.stopPropagation();
+  currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
+  showGalleryImage();
+});
+
+galleryClose.addEventListener('click', () => {
+  galleryLightbox.classList.remove('active');
+});
+
+galleryLightbox.addEventListener('click', (e) => {
+  if (e.target === galleryLightbox) {
+    galleryLightbox.classList.remove('active');
+  }
+});
+
 // Iframe Modal functionality
 const iframeModal = document.getElementById('iframeModal');
 const iframeContent = document.getElementById('iframeContent');
@@ -949,11 +1140,25 @@ iframeClose.addEventListener('click', () => {
 
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
-  // Close lightbox with Escape
+  // Close lightbox/gallery with Escape
   if (e.key === 'Escape') {
     lightbox.classList.remove('active');
     iframeModal.classList.remove('active');
     iframeContent.src = '';
+    galleryLightbox.classList.remove('active');
+    return;
+  }
+  
+  // Gallery arrow navigation
+  if (galleryLightbox.classList.contains('active')) {
+    if (e.key === 'ArrowLeft') {
+      currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
+      showGalleryImage();
+    }
+    if (e.key === 'ArrowRight') {
+      currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
+      showGalleryImage();
+    }
     return;
   }
   
