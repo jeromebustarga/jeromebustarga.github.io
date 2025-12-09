@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Capstone Presentation - Jerome Bustarga</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0d0d0d;
+  color: #e8e8e8;
+}
+
+/* Background orbs */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.08;
+  animation: float 25s ease-in-out infinite;
+}
+
+.orb1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #404040, transparent);
+  top: -250px;
+  left: -200px;
+}
+
+.orb2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #303030, transparent);
+  bottom: -200px;
+  right: -150px;
+  animation-delay: 8s;
+}
+
+.orb3 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, #353535, transparent);
+  top: 40%;
+  right: 10%;
+  animation-delay: 16s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -80px) scale(1.05); }
+  66% { transform: translate(-60px, 80px) scale(0.95); }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slides */
+.slide {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.content {
+  text-align: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.section-label {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #f47921;
+  margin-bottom: 40px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sub-label {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 400;
+  color: #b0b0b0;
+  margin-bottom: 30px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.main-text {
+  font-size: 42px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.main-text .dim {
+  color: #606060;
+}
+
+.main-text .highlight {
+  color: #f47921;
+}
+
+.medium-text {
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.medium-text .dim {
+  color: #606060;
+}
+
+.medium-text .highlight {
+  color: #f47921;
+}
+
+.small-text {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #909090;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Grid layouts */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  margin: 30px auto 0 auto;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1000px;
+  margin: 30px auto 0 auto;
+}
+
+.placeholder {
+  aspect-ratio: 4/3;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #606060;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.placeholder:hover {
+  transform: scale(1.03);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+.clickable-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.clickable-img:hover {
+  transform: scale(1.03);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+/* Preview tile */
+.single-preview {
+  max-width: 700px;
+  margin: 30px auto 0 auto;
+}
+
+.preview-tile {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.preview-tile:hover {
+  transform: scale(1.02);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+.preview-iframe-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-iframe-wrapper iframe {
+  width: 200%;
+  height: 200%;
+  transform: scale(0.5);
+  transform-origin: top left;
+  border: none;
+  pointer-events: none;
+}
+
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 1;
+}
+
+.preview-tile .click-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.preview-tile:hover .click-hint {
+  opacity: 1;
+}
+
+/* Tools list */
+.tools-list {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.tool-item {
+  padding: 15px 30px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.tool-item .highlight {
+  color: #f47921;
+}
+
+/* What's next */
+.next-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+  text-align: left;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.next-item {
+  padding: 20px 25px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+}
+
+.next-item-title {
+  font-size: 18px;
+  font-weight: 400;
+  color: #f47921;
+  margin-bottom: 8px;
+}
+
+.next-item-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: #909090;
+  line-height: 1.5;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
+/* Iframe Modal */
+.iframe-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.iframe-modal.active {
+  display: flex;
+}
+
+.iframe-container {
+  width: 90%;
+  height: 90%;
+  max-width: 1400px;
+  background: #0d0d0d;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
+  position: relative;
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.iframe-close {
+  position: fixed;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  z-index: 10000;
+}
+
+.iframe-close:hover {
+  opacity: 1;
+}
+
+/* Bottom nav */
+.bottom-nav {
+  position: fixed;
+  bottom: 40px;
+  left: 60px;
+  right: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #606060;
+  font-weight: 300;
+  z-index: 10;
+}
+
+.slide-number {
+  font-size: 14px;
+  color: #606060;
+}
+
+.slide-indicator {
+  font-size: 14px;
+  color: #606060;
+}
+
+.nav-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #606060;
+}
+
+.nav-hint kbd {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #909090;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .slide {
+    padding: 40px 30px;
+  }
+  
+  .main-text {
+    font-size: 28px;
+  }
+  
+  .medium-text {
+    font-size: 22px;
+  }
+  
+  .grid-3, .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .tools-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .bottom-nav {
+    left: 30px;
+    right: 30px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Background orbs -->
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- Part 1: Transition -->
+<section class="slide active" id="slide-1">
+  <div class="content">
+    <div class="section-label" style="opacity: 0; animation: fadeUp 1s ease-out 0.2s forwards;">04 — Deep Dive</div>
+    <p class="main-text" style="opacity: 0; animation: fadeUp 1s ease-out 0.4s forwards;">
+      <span class="dim">But before I show you the project,</span><br>
+      <span class="dim">let me tell you</span> <span class="highlight">why it exists</span>.
+    </p>
+  </div>
+</section>
+
+<!-- Part 2: Digital Humanities -->
+<section class="slide" id="slide-2">
+  <div class="content">
+    <div class="sub-label">My Minor</div>
+    <p class="main-text">
+      <span class="highlight">Digital Humanities</span>
+    </p>
+    <p class="small-text" style="margin-top: 30px;">
+      An interdisciplinary field that integrates digital technology into research and teaching within the humanities — using computational methods to analyze and interpret humanities-based research.
+    </p>
+  </div>
+</section>
+
+<!-- Part 3: The Problem - Digital Divide -->
+<section class="slide" id="slide-3">
+  <div class="content">
+    <div class="sub-label">The Problem</div>
+    <p class="main-text">
+      The <span class="highlight">Digital Divide</span>
+    </p>
+    <p class="small-text" style="margin-top: 30px;">
+      The gap between those who have access to technology and those who don't.<br><br>
+      But it's not just about access — it's about <span style="color: #ffffff;">literacy</span>, <span style="color: #ffffff;">skills</span>, and <span style="color: #ffffff;">meaningful use</span>.
+    </p>
+  </div>
+</section>
+
+<!-- Part 4: The Gap -->
+<section class="slide" id="slide-4">
+  <div class="content">
+    <p class="main-text">
+      <span class="dim">Everyone's racing to</span> <span class="highlight">advance AI</span>.<br><br>
+      <span class="dim">Even here at Creighton.</span><br><br>
+      <span class="dim">But we're</span> <span class="highlight">leaving people behind</span>.<br><br>
+      <span class="dim">The more we advance,</span><br>
+      <span class="dim">the wider the divide grows.</span>
+    </p>
+  </div>
+</section>
+
+<!-- Part 5: The Initiative -->
+<section class="slide" id="slide-5">
+  <div class="content">
+    <div class="sub-label">The Initiative</div>
+    <p class="main-text">
+      <span class="highlight">Digital Literacy</span>
+    </p>
+    <p class="small-text" style="margin-top: 30px;">
+      An initiative to bridge the gap — to make sure no one gets left behind as technology moves forward.
+    </p>
+  </div>
+</section>
+
+<!-- Part 6: The Project -->
+<section class="slide" id="slide-6">
+  <div class="content">
+    <div class="sub-label">The Project</div>
+    <p class="medium-text">
+      A <span class="highlight">choose-your-own-adventure</span> game<br>
+      <span class="dim">made for kids.</span>
+    </p>
+    <p class="small-text" style="margin-top: 30px;">
+      Teaching them proper use of the world wide web — and the implications of wrong decisions.
+    </p>
+  </div>
+</section>
+
+<!-- Part 7: The Process -->
+<section class="slide" id="slide-7">
+  <div class="content">
+    <div class="sub-label">The Process</div>
+    <div class="grid-4">
+      <div class="placeholder">Wireframe 1</div>
+      <div class="placeholder">Wireframe 2</div>
+      <div class="placeholder">Sketch 1</div>
+      <div class="placeholder">Sketch 2</div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 8: The Tools -->
+<section class="slide" id="slide-8">
+  <div class="content">
+    <div class="sub-label">The Tools</div>
+    <p class="medium-text">
+      <span class="dim">Built with</span> <span class="highlight">Twine</span><br>
+      <span class="dim">and powered by</span> <span class="highlight">HTML</span>, <span class="highlight">CSS</span>, <span class="highlight">JavaScript</span>
+    </p>
+    <p class="small-text" style="margin-top: 30px;">
+      Combining both my web development and design skills.
+    </p>
+  </div>
+</section>
+
+<!-- Part 9: Demo -->
+<section class="slide" id="slide-9">
+  <div class="content">
+    <div class="sub-label">The Final Output</div>
+    <div class="single-preview">
+      <div class="preview-tile iframe-trigger" data-src="twine-project.html">
+        <div class="preview-iframe-wrapper">
+          <iframe src="twine-project.html" scrolling="no"></iframe>
+        </div>
+        <div class="preview-overlay"></div>
+        <div class="click-hint">Click to interact</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Part 10: What's Next -->
+<section class="slide" id="slide-10">
+  <div class="content">
+    <div class="sub-label">What's Next</div>
+    <p class="medium-text" style="margin-bottom: 10px;">
+      <span class="dim">This is just the beginning.</span>
+    </p>
+    <div class="next-items">
+      <div class="next-item">
+        <div class="next-item-title">Another Twine Project</div>
+        <div class="next-item-desc">A more complex narrative with multiple storylines — still in progress.</div>
+      </div>
+      <div class="next-item">
+        <div class="next-item-title">YouTube Research</div>
+        <div class="next-item-desc">Studying recommendation systems and filter bubbles — visualizing watch history to uncover patterns.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img src="" alt="Enlarged photo" id="lightbox-img">
+</div>
+
+<!-- Iframe Modal -->
+<div class="iframe-modal" id="iframeModal">
+  <span class="iframe-close">&times;</span>
+  <div class="iframe-container">
+    <iframe id="iframeContent" src=""></iframe>
+  </div>
+</div>
+
+<!-- Bottom nav -->
+<div class="bottom-nav">
+  <span class="slide-number">Deep Dive</span>
+  <span class="slide-indicator" id="slideIndicator">1 / 10</span>
+  <div class="nav-hint">
+    <kbd>←</kbd> <kbd>→</kbd>
+  </div>
+</div>
+
+<script>
+// Slide management
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+const slideIndicator = document.getElementById('slideIndicator');
+
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.toggle('active', i === index);
+  });
+  slideIndicator.textContent = `${index + 1} / ${totalSlides}`;
+}
+
+// Lightbox functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxClose = document.querySelector('.lightbox-close');
+
+document.querySelectorAll('.clickable-img').forEach(photo => {
+  photo.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lightboxImg.src = photo.src;
+    lightbox.classList.add('active');
+  });
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+
+lightboxClose.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+
+// Iframe Modal functionality
+const iframeModal = document.getElementById('iframeModal');
+const iframeContent = document.getElementById('iframeContent');
+const iframeClose = document.querySelector('.iframe-close');
+
+document.querySelectorAll('.iframe-trigger').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const src = trigger.getAttribute('data-src');
+    iframeContent.src = src;
+    iframeModal.classList.add('active');
+  });
+});
+
+iframeModal.addEventListener('click', (e) => {
+  if (e.target === iframeModal) {
+    iframeModal.classList.remove('active');
+    iframeContent.src = '';
+  }
+});
+
+iframeClose.addEventListener('click', () => {
+  iframeModal.classList.remove('active');
+  iframeContent.src = '';
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  // Close modals with Escape
+  if (e.key === 'Escape') {
+    lightbox.classList.remove('active');
+    iframeModal.classList.remove('active');
+    iframeContent.src = '';
+    return;
+  }
+  
+  // Don't navigate slides if modal is open
+  if (lightbox.classList.contains('active') || iframeModal.classList.contains('active')) return;
+  
+  if (e.key === 'ArrowRight' || e.key === ' ') {
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide6.html';
+    }
+  }
+  if (e.key === 'ArrowLeft') {
+    if (currentSlide > 0) {
+      currentSlide--;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide4.html';
+    }
+  }
+});
+
+// Mouse trail
+new p5((p) => {
+  let trails = [];
+  
+  p.setup = () => {
+    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    canvas.position(0, 0);
+    canvas.style('pointer-events', 'none');
+    canvas.style('z-index', '9998');
+    canvas.style('position', 'fixed');
+    canvas.style('top', '0');
+    canvas.style('left', '0');
+    p.clear();
+    p.noStroke();
+  };
+
+  p.draw = () => {
+    p.clear();
+    
+    for (let i = trails.length - 1; i >= 0; i--) {
+      const point = trails[i];
+      p.fill(255, 255, 255, point.alpha * 0.08);
+      p.ellipse(point.x, point.y, point.size * 2);
+      p.fill(255, 255, 255, point.alpha * 0.3);
+      p.ellipse(point.x, point.y, point.size);
+      point.alpha -= 3;
+      point.size *= 0.96;
+      if (point.alpha <= 0) trails.splice(i, 1);
+    }
+
+    const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+    if (d > 0) {
+      const steps = p.max(1, d * 0.5);
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        const x = p.lerp(p.pmouseX, p.mouseX, t);
+        const y = p.lerp(p.pmouseY, p.mouseY, t);
+        trails.push({ x, y, size: p.random(6, 10), alpha: p.random(120, 150) });
+      }
+    }
+    if (trails.length > 600) trails.splice(0, trails.length - 600);
+  };
+
+  p.windowResized = () => p.resizeCanvas(p.windowWidth, p.windowHeight);
+});
+</script>
+
+</body>
+</html>
