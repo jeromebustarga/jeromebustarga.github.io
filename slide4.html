@@ -239,6 +239,24 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.video-embed-square {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.video-embed-square iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180%;
+  height: 180%;
+  border: none;
+}
+
 .video-embed {
   position: relative;
   aspect-ratio: 16/9;
@@ -902,10 +920,10 @@ body {
   <div class="content">
     <div class="sub-label">Other Projects</div>
     <div class="grid-4">
-      <div class="placeholder">Project 1</div>
-      <div class="placeholder">Project 2</div>
-      <div class="placeholder">Project 3</div>
-      <div class="placeholder">Project 4</div>
+      <img src="images/dataviz.jpg" alt="Data Visualization" class="clickable-img">
+      <img src="images/portrait.png" alt="Portrait" class="clickable-img">
+      <img src="images/scene.png" alt="Scene" class="clickable-img">
+      <img src="images/Boots.png" alt="Boots" class="clickable-img">
     </div>
   </div>
 </section>
@@ -915,10 +933,14 @@ body {
   <div class="content">
     <div class="sub-label">Other Projects</div>
     <div class="grid-4">
-      <div class="placeholder">Project 5</div>
-      <div class="placeholder">Project 6</div>
-      <div class="placeholder">Project 7</div>
-      <div class="placeholder">Project 8</div>
+      <img src="images/Jansen.png" alt="Jansen" class="clickable-img">
+      <img src="images/expresstext.png" alt="Express Text" class="clickable-img">
+      <div class="video-embed-square">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=fd259b0c-e817-474c-93ae-b37de5781640&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="FinalRender.mp4"></iframe>
+      </div>
+      <div class="video-embed-square">
+        <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=8f8e7dfb-986e-4796-998e-587db82a1c30&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Creative Video - Dance Jamz.mov"></iframe>
+      </div>
     </div>
   </div>
 </section>
@@ -1139,7 +1161,14 @@ iframeClose.addEventListener('click', () => {
 });
 
 // Keyboard navigation
+let isNavigating = false;
+
 document.addEventListener('keydown', (e) => {
+  // Prevent default for navigation keys
+  if (['ArrowRight', 'ArrowLeft', ' ', 'Escape'].includes(e.key)) {
+    e.preventDefault();
+  }
+  
   // Close lightbox/gallery with Escape
   if (e.key === 'Escape') {
     lightbox.classList.remove('active');
@@ -1165,15 +1194,56 @@ document.addEventListener('keydown', (e) => {
   // Don't navigate slides if lightbox or iframe is open
   if (lightbox.classList.contains('active') || iframeModal.classList.contains('active')) return;
   
+  // Prevent rapid key presses
+  if (isNavigating) return;
+  
   if (e.key === 'ArrowRight' || e.key === ' ') {
+    isNavigating = true;
     if (currentSlide < totalSlides - 1) {
       currentSlide++;
       showSlide(currentSlide);
     } else {
       window.location.href = 'slide5.html';
     }
+    setTimeout(() => { isNavigating = false; }, 300);
   }
   if (e.key === 'ArrowLeft') {
+    isNavigating = true;
+    if (currentSlide > 0) {
+      currentSlide--;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide3.html';
+    }
+    setTimeout(() => { isNavigating = false; }, 300);
+  }
+});
+
+// Click to advance (right side) or go back (left side)
+document.addEventListener('click', (e) => {
+  // Don't navigate if clicking on interactive elements
+  if (e.target.closest('.clickable-img, .gallery-img, .iframe-trigger, .figma-trigger, .preview-tile, .video-embed, .video-embed-square, .lightbox, .iframe-modal, .gallery-lightbox, a, button, iframe')) return;
+  
+  // Don't navigate if modals are open
+  if (lightbox.classList.contains('active') || iframeModal.classList.contains('active') || galleryLightbox.classList.contains('active')) return;
+  
+  if (isNavigating) return;
+  
+  const clickX = e.clientX;
+  const windowWidth = window.innerWidth;
+  
+  isNavigating = true;
+  
+  if (clickX > windowWidth * 0.5) {
+    // Right side - advance
+    if (currentSlide < totalSlides - 1) {
+      currentSlide++;
+      showSlide(currentSlide);
+    } else {
+      window.location.href = 'slide5.html';
+    }
+  } else {
+    // Left side - go back
     if (currentSlide > 0) {
       currentSlide--;
       showSlide(currentSlide);
@@ -1181,6 +1251,8 @@ document.addEventListener('keydown', (e) => {
       window.location.href = 'slide3.html';
     }
   }
+  
+  setTimeout(() => { isNavigating = false; }, 300);
 });
 
 // Mouse trail
