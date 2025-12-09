@@ -264,6 +264,44 @@ body {
   }
 }
 
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.lightbox.active {
+  display: flex;
+}
+
+.lightbox img {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(244, 121, 33, 0.3);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-close:hover {
+  opacity: 1;
+}
+
 /* Bottom nav */
 .bottom-nav {
   position: fixed;
@@ -382,10 +420,10 @@ body {
       
       <div class="logo-right">
         <div class="sketch-grid">
-          <div class="sketch-placeholder">Sketch 1</div>
-          <div class="sketch-placeholder">Sketch 2</div>
-          <div class="sketch-placeholder">Sketch 3</div>
-          <div class="sketch-placeholder">Sketch 4</div>
+          <img src="images/bulb1.png" alt="Logo Sketch 1" class="sketch-item clickable-img">
+          <img src="images/bulb2.png" alt="Logo Sketch 2" class="sketch-item clickable-img">
+          <img src="images/bulb3.png" alt="Logo Sketch 3" class="sketch-item clickable-img">
+          <img src="images/bulb4.png" alt="Logo Sketch 4" class="sketch-item clickable-img">
         </div>
       </div>
     </div>
@@ -400,6 +438,12 @@ body {
   </div>
 </div>
 
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close">&times;</span>
+  <img src="" alt="Enlarged photo" id="lightbox-img">
+</div>
+
 <script>
 // Slide management
 let currentSlide = 0;
@@ -412,8 +456,36 @@ function showSlide(index) {
   });
 }
 
+// Lightbox functionality
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxClose = document.querySelector('.lightbox-close');
+
+document.querySelectorAll('.clickable-img').forEach(photo => {
+  photo.addEventListener('click', (e) => {
+    e.stopPropagation();
+    lightboxImg.src = photo.src;
+    lightbox.classList.add('active');
+  });
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+
+lightboxClose.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    lightbox.classList.remove('active');
+    return;
+  }
+  
+  if (lightbox.classList.contains('active')) return;
+  
   if (e.key === 'ArrowRight' || e.key === ' ') {
     if (currentSlide < totalSlides - 1) {
       currentSlide++;
