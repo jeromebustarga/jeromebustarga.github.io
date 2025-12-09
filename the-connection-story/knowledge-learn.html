@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Maker</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Active code editor effect */
+    .code-editor {
+      position: fixed;
+      top: 10%;
+      right: 3%;
+      width: 280px;
+      background: rgba(13, 27, 42, 0.9);
+      border: 1px solid rgba(100, 255, 218, 0.3);
+      border-radius: 8px;
+      padding: 15px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      opacity: 0.25;
+      z-index: 1;
+    }
+    
+    .code-editor-line {
+      color: var(--mint);
+      margin-bottom: 4px;
+      opacity: 0;
+      animation: type-line 0.5s ease forwards;
+    }
+    
+    .code-editor-line:nth-child(1) { animation-delay: 0s; }
+    .code-editor-line:nth-child(2) { animation-delay: 0.8s; color: var(--cyan); }
+    .code-editor-line:nth-child(3) { animation-delay: 1.6s; }
+    .code-editor-line:nth-child(4) { animation-delay: 2.4s; color: var(--purple); }
+    .code-editor-line:nth-child(5) { animation-delay: 3.2s; }
+    .code-editor-line:nth-child(6) { animation-delay: 4s; color: var(--cyan); }
+    
+    @keyframes type-line {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    
+    /* Building blocks floating up */
+    .build-block {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      border: 2px solid var(--mint);
+      border-radius: 6px;
+      opacity: 0;
+      animation: block-rise 12s infinite ease-out;
+    }
+    
+    .build-block:nth-child(1) { left: 8%; animation-delay: 0s; }
+    .build-block:nth-child(2) { left: 15%; animation-delay: 2s; border-color: var(--cyan); }
+    .build-block:nth-child(3) { left: 85%; animation-delay: 4s; }
+    .build-block:nth-child(4) { left: 92%; animation-delay: 1s; border-color: var(--purple); }
+    
+    @keyframes block-rise {
+      0% { bottom: -50px; opacity: 0; transform: rotate(0deg); }
+      20% { opacity: 0.3; }
+      80% { opacity: 0.3; }
+      100% { bottom: 110%; opacity: 0; transform: rotate(180deg); }
+    }
+    
+    /* Progress bar */
+    .progress-build {
+      position: fixed;
+      bottom: 8%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 4px;
+      background: rgba(100, 255, 218, 0.2);
+      border-radius: 2px;
+      overflow: hidden;
+      opacity: 0.4;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--mint), var(--cyan));
+      animation: progress-grow 8s infinite ease-in-out;
+    }
+    
+    @keyframes progress-grow {
+      0% { width: 0%; }
+      50% { width: 100%; }
+      100% { width: 0%; }
+    }
+    
+    /* Lightbulb moments */
+    .lightbulb {
+      position: fixed;
+      font-size: 24px;
+      opacity: 0;
+      animation: bulb-flash 6s infinite ease-in-out;
+    }
+    
+    .lightbulb:nth-child(1) { top: 20%; left: 5%; animation-delay: 0s; }
+    .lightbulb:nth-child(2) { top: 60%; right: 5%; animation-delay: 2s; }
+    .lightbulb:nth-child(3) { top: 80%; left: 8%; animation-delay: 4s; }
+    
+    @keyframes bulb-flash {
+      0%, 100% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 0.4; transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-base"></div>
+  
+  <!-- Code editor -->
+  <div class="code-editor">
+    <div class="code-editor-line">const app = createApp();</div>
+    <div class="code-editor-line">app.init();</div>
+    <div class="code-editor-line">// Your first project!</div>
+    <div class="code-editor-line">function build() {</div>
+    <div class="code-editor-line">  return success;</div>
+    <div class="code-editor-line">}</div>
+  </div>
+  
+  <!-- Building blocks -->
+  <div class="build-block"></div>
+  <div class="build-block"></div>
+  <div class="build-block"></div>
+  <div class="build-block"></div>
+  
+  <!-- Progress bar -->
+  <div class="progress-build">
+    <div class="progress-fill"></div>
+  </div>
+  
+  <!-- Lightbulbs -->
+  <div class="lightbulb">💡</div>
+  <div class="lightbulb">💡</div>
+  <div class="lightbulb">💡</div>
+  
+  <div class="binary-rain">
+    <div class="binary-column">01001000 01100101 01101100</div>
+    <div class="binary-column">10110010 01001001 01101110</div>
+    <div class="binary-column">01000011 01101111 01101110</div>
+  </div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/knowledge-learn.jpg" alt="Hands typing on a keyboard with code floating upward, transforming into buildings, apps, and creative projects">
+      </div>
+      
+      <span class="path-indicator path-knowledge">Knowledge Path → Builder</span>
+      <h2 class="passage-title">The Maker</h2>
+      
+      <div class="story-text">
+        <p>You decide to learn to code. It's <span class="warning">frustrating</span> at first — error messages, broken programs, hours of debugging. But there's a tutorial for everything. A forum where strangers help you for free.</p>
+        
+        <div class="screen-text good-text">
+          "Don't give up! Everyone's first program is garbage. Here's what fixed it for me..." — reply from a developer in India
+        </div>
+        
+        <p>Six months later, you build your first website. It's ugly, but it's <span class="good">yours</span>. A year after that, you create an app that helps students at your school organize study groups. People actually use it.</p>
+        
+        <p>The internet didn't just give you information — it gave you <span class="highlight">tools</span>. Tools to build, to create, to solve problems.</p>
+        
+        <p>Now you're at a crossroads. You've gained valuable skills. But <strong>what do you do with them?</strong></p>
+      </div>
+      
+      <div class="choices">
+        <a href="ending-teacher.html" class="choice-btn good-path">
+          <span class="choice-label">Pay It Forward</span>
+          Start teaching others. Make tutorials, answer questions on forums, help kids who are where you were two years ago.
+        </a>
+        <a href="ending-creator.html" class="choice-btn good-path">
+          <span class="choice-label">Build Your Dream</span>
+          Focus on your own projects. You have an idea for something that could help a lot of people. Time to make it real.
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

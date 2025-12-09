@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Algorithm</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Endless spiral */
+    .endless-spiral {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 500px;
+      height: 500px;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      border-radius: 50%;
+      animation: spiral-spin 15s linear infinite;
+    }
+    
+    .endless-spiral::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      border-radius: 50%;
+    }
+    
+    .endless-spiral::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 20%;
+      width: 60%;
+      height: 60%;
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      border-radius: 50%;
+    }
+    
+    @keyframes spiral-spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    /* Echo chamber walls */
+    .echo-wall {
+      position: fixed;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.3), transparent);
+      animation: wall-pulse 3s infinite ease-in-out;
+    }
+    
+    .echo-wall:nth-child(1) { top: 10%; animation-delay: 0s; }
+    .echo-wall:nth-child(2) { top: 90%; animation-delay: 1.5s; }
+    
+    @keyframes wall-pulse {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.5; }
+    }
+    
+    /* Watching eyes */
+    .paranoid-eye {
+      position: fixed;
+      font-size: 30px;
+      opacity: 0;
+      animation: eye-watch 6s infinite ease-in-out;
+    }
+    
+    .paranoid-eye:nth-child(1) { top: 20%; left: 5%; animation-delay: 0s; }
+    .paranoid-eye:nth-child(2) { top: 30%; right: 8%; animation-delay: 1s; }
+    .paranoid-eye:nth-child(3) { top: 60%; left: 8%; animation-delay: 2s; }
+    .paranoid-eye:nth-child(4) { top: 75%; right: 5%; animation-delay: 3s; }
+    
+    @keyframes eye-watch {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.3; }
+    }
+    
+    /* Distortion overlay */
+    .distort {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(255, 107, 107, 0.02) 2px,
+          rgba(255, 107, 107, 0.02) 4px
+        );
+      pointer-events: none;
+      animation: distort-shift 0.5s infinite;
+    }
+    
+    @keyframes distort-shift {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(2px); }
+    }
+    
+    /* Question mark floating */
+    .question-float {
+      position: fixed;
+      font-size: 40px;
+      color: var(--coral);
+      opacity: 0.1;
+      animation: question-drift 8s infinite ease-in-out;
+    }
+    
+    .question-float { top: 50%; left: 50%; transform: translate(-50%, -50%); }
+    
+    @keyframes question-drift {
+      0%, 100% { opacity: 0.05; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.15; transform: translate(-50%, -50%) scale(1.2); }
+    }
+  </style>
+</head>
+<body class="ending-bad">
+  <div class="bg-base"></div>
+  <div class="distort"></div>
+  
+  <!-- Spiral -->
+  <div class="endless-spiral"></div>
+  
+  <!-- Echo walls -->
+  <div class="echo-wall"></div>
+  <div class="echo-wall"></div>
+  
+  <!-- Paranoid eyes -->
+  <div class="paranoid-eye">👁️</div>
+  <div class="paranoid-eye">👁️</div>
+  <div class="paranoid-eye">👁️</div>
+  <div class="paranoid-eye">👁️</div>
+  
+  <!-- Question mark -->
+  <div class="question-float">?</div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-lost.jpg" alt="A person isolated in a dark room, surrounded by screens showing conspiracy content, trapped in an endless spiral">
+      </div>
+      
+      <h2 class="passage-title">✦ The Algorithm</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>You're still searching for the "truth." Each year, the theories get more elaborate, more isolating. Your family has given up trying to reach you. Old friends are blocked or deleted.</p>
+        
+        <p>You've found communities online that agree with everything you believe. They're the only people who "understand." <span class="warning">Echo chambers</span> that grow louder and tighter.</p>
+        
+        <div class="screen-text warning-text">
+          "The algorithm doesn't care what you believe. It only cares that you keep watching."
+        </div>
+        
+        <p>Sometimes, late at night, a small voice asks: <span class="warm">what if you're wrong?</span> But you push it down. You've invested too much. Admitting error would mean years wasted.</p>
+        
+        <p>The internet could have been a window to the world. Instead, it became a <span class="warning">mirror</span> reflecting only what you wanted to see.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Outside Friends</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Hours Consumed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">?</div>
+          <div class="stat-label">Way Out</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>

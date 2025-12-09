@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - Found Family</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Globe with connection points */
+    .globe-bg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 400px;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(100, 255, 218, 0.2);
+      border-radius: 50%;
+      animation: globe-rotate 30s linear infinite;
+      opacity: 0.3;
+    }
+    
+    .globe-bg::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: rgba(100, 255, 218, 0.3);
+    }
+    
+    .globe-bg::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 1px;
+      height: 100%;
+      background: rgba(100, 255, 218, 0.3);
+    }
+    
+    @keyframes globe-rotate {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    /* Connection dots around globe */
+    .globe-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--mint);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--mint);
+      animation: dot-pulse 3s infinite ease-in-out;
+    }
+    
+    .globe-dot:nth-child(1) { top: 25%; left: 30%; animation-delay: 0s; }
+    .globe-dot:nth-child(2) { top: 40%; left: 70%; animation-delay: 0.5s; }
+    .globe-dot:nth-child(3) { top: 60%; left: 25%; animation-delay: 1s; }
+    .globe-dot:nth-child(4) { top: 70%; left: 65%; animation-delay: 1.5s; }
+    .globe-dot:nth-child(5) { top: 35%; left: 50%; animation-delay: 2s; }
+    
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+    
+    /* Connection lines between dots */
+    .connect-line {
+      position: fixed;
+      height: 1px;
+      background: linear-gradient(90deg, var(--mint), var(--cyan), var(--mint));
+      opacity: 0;
+      animation: line-connect 5s infinite ease-in-out;
+    }
+    
+    .connect-line:nth-child(1) { top: 32%; left: 30%; width: 20%; transform: rotate(20deg); animation-delay: 0s; }
+    .connect-line:nth-child(2) { top: 50%; left: 25%; width: 25%; transform: rotate(-15deg); animation-delay: 1s; }
+    .connect-line:nth-child(3) { top: 55%; left: 50%; width: 15%; transform: rotate(30deg); animation-delay: 2s; }
+    
+    @keyframes line-connect {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.6; }
+    }
+    
+    /* Floating flags */
+    .flag {
+      position: fixed;
+      font-size: 24px;
+      opacity: 0;
+      animation: flag-wave 8s infinite ease-in-out;
+    }
+    
+    .flag:nth-child(1) { top: 20%; left: 8%; animation-delay: 0s; }
+    .flag:nth-child(2) { top: 35%; right: 5%; animation-delay: 2s; }
+    .flag:nth-child(3) { top: 75%; left: 5%; animation-delay: 4s; }
+    .flag:nth-child(4) { top: 85%; right: 8%; animation-delay: 6s; }
+    
+    @keyframes flag-wave {
+      0%, 100% { opacity: 0; transform: translateY(0); }
+      50% { opacity: 0.4; transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body class="ending-good">
+  <div class="bg-base"></div>
+  
+  <!-- Globe -->
+  <div class="globe-bg"></div>
+  
+  <!-- Globe dots -->
+  <div class="globe-dot"></div>
+  <div class="globe-dot"></div>
+  <div class="globe-dot"></div>
+  <div class="globe-dot"></div>
+  <div class="globe-dot"></div>
+  
+  <!-- Connection lines -->
+  <div class="connect-line"></div>
+  <div class="connect-line"></div>
+  <div class="connect-line"></div>
+  
+  <!-- Flags -->
+  <div class="flag">🇩🇪</div>
+  <div class="flag">🇯🇵</div>
+  <div class="flag">🇧🇷</div>
+  <div class="flag">🌍</div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-tribe.jpg" alt="A group video call with friends from different countries, their faces glowing warmly, connection lines spanning a globe behind them">
+      </div>
+      
+      <h2 class="passage-title">✦ Found Family</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>That synthesizer forum? Those strangers became your <span class="good">closest friends</span>. Marcus in Berlin. Yuki in Tokyo. Sofia in São Paulo. You've never lived in the same city, but you've shared more with them than most people share with neighbors.</p>
+        
+        <p>Marcus helped you through the worst breakup of your life. Yuki connected you with a job opportunity that changed your career. You flew to São Paulo for Sofia's wedding last year.</p>
+        
+        <div class="screen-text good-text">
+          "We found each other in the noise. Millions of voices online, and somehow we heard each other."
+        </div>
+        
+        <p>The internet showed you that your "weird" interests weren't weird at all — there were thousands of people just like you, scattered across the globe, waiting to be found.</p>
+        
+        <p>You weren't alone. You were just looking in the wrong places. The internet helped you find <span class="warm">your people</span>.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">12</div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">47</div>
+          <div class="stat-label">Close Friends</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Found Family</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>

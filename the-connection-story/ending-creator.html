@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Builder</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Building blocks rising */
+    .build-rise {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--mint);
+      border-radius: 8px;
+      opacity: 0;
+      animation: block-build 10s infinite ease-out;
+    }
+    
+    .build-rise:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .build-rise:nth-child(2) { left: 25%; animation-delay: 2s; border-color: var(--cyan); }
+    .build-rise:nth-child(3) { left: 75%; animation-delay: 4s; }
+    .build-rise:nth-child(4) { left: 90%; animation-delay: 6s; border-color: var(--cyan); }
+    
+    @keyframes block-build {
+      0% { bottom: -50px; opacity: 0; transform: rotate(0deg); }
+      50% { opacity: 0.4; }
+      100% { bottom: 110%; opacity: 0; transform: rotate(90deg); }
+    }
+    
+    /* World map dots */
+    .world-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--mint);
+      border-radius: 50%;
+      box-shadow: 0 0 15px var(--mint);
+      animation: world-pulse 4s infinite ease-in-out;
+    }
+    
+    .world-dot:nth-child(1) { top: 30%; left: 15%; animation-delay: 0s; }
+    .world-dot:nth-child(2) { top: 35%; left: 45%; animation-delay: 0.5s; }
+    .world-dot:nth-child(3) { top: 40%; left: 70%; animation-delay: 1s; }
+    .world-dot:nth-child(4) { top: 55%; left: 25%; animation-delay: 1.5s; }
+    .world-dot:nth-child(5) { top: 60%; left: 55%; animation-delay: 2s; }
+    .world-dot:nth-child(6) { top: 70%; left: 80%; animation-delay: 2.5s; }
+    
+    @keyframes world-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.3); }
+    }
+    
+    /* Code floating */
+    .float-code {
+      position: fixed;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--cyan);
+      opacity: 0.15;
+      white-space: nowrap;
+    }
+    
+    .float-code:nth-child(1) { top: 15%; right: 5%; }
+    .float-code:nth-child(2) { top: 75%; left: 3%; }
+    
+    /* Success sparkle */
+    .sparkle {
+      position: fixed;
+      font-size: 20px;
+      opacity: 0;
+      animation: sparkle-pop 5s infinite ease-out;
+    }
+    
+    .sparkle:nth-child(1) { top: 20%; left: 8%; animation-delay: 0s; }
+    .sparkle:nth-child(2) { top: 60%; right: 10%; animation-delay: 2s; }
+    .sparkle:nth-child(3) { top: 85%; left: 15%; animation-delay: 4s; }
+    
+    @keyframes sparkle-pop {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 0.6; transform: scale(1.2) rotate(180deg); }
+    }
+  </style>
+</head>
+<body class="ending-good">
+  <div class="bg-base"></div>
+  
+  <!-- Building blocks -->
+  <div class="build-rise"></div>
+  <div class="build-rise"></div>
+  <div class="build-rise"></div>
+  <div class="build-rise"></div>
+  
+  <!-- World dots -->
+  <div class="world-dot"></div>
+  <div class="world-dot"></div>
+  <div class="world-dot"></div>
+  <div class="world-dot"></div>
+  <div class="world-dot"></div>
+  <div class="world-dot"></div>
+  
+  <!-- Float code -->
+  <div class="float-code">function educate() { return future; }</div>
+  <div class="float-code">const impact = worldwide;</div>
+  
+  <!-- Sparkles -->
+  <div class="sparkle">✨</div>
+  <div class="sparkle">✨</div>
+  <div class="sparkle">✨</div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-creator.jpg" alt="A developer looking at screens showing students learning worldwide, code transforming into schools and opportunities">
+      </div>
+      
+      <h2 class="passage-title">✦ The Builder</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>That first ugly website led somewhere. You now work at a company building tools for education — helping kids in rural areas access the same learning you discovered at 14. <span class="warm">Full circle</span>.</p>
+        
+        <p>Last month, your team launched in three new countries. Students who never had access to quality education are now learning from the best teachers in the world, for free.</p>
+        
+        <div class="screen-text good-text">
+          "A kid in a small town with Wi-Fi now has access to more knowledge than a president did 30 years ago."
+        </div>
+        
+        <p>The internet gave you a <span class="highlight">superpower</span>: the ability to learn anything, build anything, connect with anyone who could help. You didn't need expensive schools or the right connections.</p>
+        
+        <p>You needed <span class="good">curiosity, patience, and an internet connection</span>. Now you're making sure others have the same chance.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">12K+</div>
+          <div class="stat-label">Students Helped</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">23</div>
+          <div class="stat-label">Countries</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Possibilities</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>

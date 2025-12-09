@@ -245,6 +245,7 @@ body {
   border-radius: 8px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
 }
 
 .video-embed-square iframe {
@@ -255,6 +256,38 @@ body {
   width: 180%;
   height: 180%;
   border: none;
+  pointer-events: none;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 1;
+}
+
+.video-embed-square .click-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.video-embed-square:hover .click-hint {
+  opacity: 1;
+}
+
+.video-embed-square:hover {
+  border: 1px solid rgba(244, 121, 33, 0.5);
 }
 
 .video-embed {
@@ -935,11 +968,15 @@ body {
     <div class="grid-4">
       <img src="images/Jansen.png" alt="Jansen" class="clickable-img">
       <img src="images/expresstext.png" alt="Express Text" class="clickable-img">
-      <div class="video-embed-square">
+      <div class="video-embed-square video-trigger" data-video="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=fd259b0c-e817-474c-93ae-b37de5781640&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create">
         <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=fd259b0c-e817-474c-93ae-b37de5781640&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="FinalRender.mp4"></iframe>
+        <div class="video-overlay"></div>
+        <div class="click-hint">Click to expand</div>
       </div>
-      <div class="video-embed-square">
+      <div class="video-embed-square video-trigger" data-video="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=8f8e7dfb-986e-4796-998e-587db82a1c30&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create">
         <iframe src="https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=8f8e7dfb-986e-4796-998e-587db82a1c30&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Creative Video - Dance Jamz.mov"></iframe>
+        <div class="video-overlay"></div>
+        <div class="click-hint">Click to expand</div>
       </div>
     </div>
   </div>
@@ -1143,6 +1180,16 @@ document.querySelectorAll('.figma-trigger').forEach(trigger => {
   trigger.addEventListener('click', (e) => {
     e.stopPropagation();
     const src = trigger.getAttribute('data-figma');
+    iframeContent.src = src;
+    iframeModal.classList.add('active');
+  });
+});
+
+// Video triggers
+document.querySelectorAll('.video-trigger').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const src = trigger.getAttribute('data-video');
     iframeContent.src = src;
     iframeModal.classList.add('active');
   });

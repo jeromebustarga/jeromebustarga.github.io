@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Return</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Breaking free particles */
+    .break-particle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: break-free 8s infinite ease-out;
+    }
+    
+    .break-particle:nth-child(1) { top: 50%; left: 50%; animation-delay: 0s; }
+    .break-particle:nth-child(2) { top: 50%; left: 50%; animation-delay: 0.5s; }
+    .break-particle:nth-child(3) { top: 50%; left: 50%; animation-delay: 1s; }
+    .break-particle:nth-child(4) { top: 50%; left: 50%; animation-delay: 1.5s; }
+    .break-particle:nth-child(5) { top: 50%; left: 50%; animation-delay: 2s; }
+    .break-particle:nth-child(6) { top: 50%; left: 50%; animation-delay: 2.5s; }
+    
+    @keyframes break-free {
+      0% { 
+        opacity: 0.8; 
+        transform: translate(-50%, -50%) scale(1); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: translate(calc(-50% + var(--x, 100px)), calc(-50% + var(--y, -100px))) scale(0); 
+      }
+    }
+    
+    .break-particle:nth-child(1) { --x: -150px; --y: -100px; }
+    .break-particle:nth-child(2) { --x: 150px; --y: -80px; }
+    .break-particle:nth-child(3) { --x: -100px; --y: 120px; }
+    .break-particle:nth-child(4) { --x: 120px; --y: 100px; }
+    .break-particle:nth-child(5) { --x: -50px; --y: -150px; }
+    .break-particle:nth-child(6) { --x: 80px; --y: 150px; }
+    
+    /* Dawn light */
+    .dawn-light {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at 50% 100%, rgba(255, 215, 0, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+      animation: dawn-rise 10s infinite ease-in-out;
+    }
+    
+    @keyframes dawn-rise {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+    
+    /* Chains breaking */
+    .chain-break {
+      position: fixed;
+      width: 60px;
+      height: 4px;
+      background: var(--coral);
+      opacity: 0.3;
+      animation: chain-snap 6s infinite ease-out;
+    }
+    
+    .chain-break:nth-child(1) { top: 30%; left: 10%; transform: rotate(45deg); animation-delay: 0s; }
+    .chain-break:nth-child(2) { top: 70%; right: 10%; transform: rotate(-45deg); animation-delay: 3s; }
+    
+    @keyframes chain-snap {
+      0%, 40% { opacity: 0.3; transform: rotate(45deg) scaleX(1); }
+      50% { opacity: 0.6; }
+      60%, 100% { opacity: 0; transform: rotate(45deg) scaleX(0); }
+    }
+    
+    /* Hope stars */
+    .hope-star {
+      position: fixed;
+      font-size: 16px;
+      opacity: 0;
+      animation: star-twinkle 4s infinite ease-in-out;
+    }
+    
+    .hope-star:nth-child(1) { top: 15%; left: 20%; animation-delay: 0s; }
+    .hope-star:nth-child(2) { top: 25%; right: 15%; animation-delay: 1s; }
+    .hope-star:nth-child(3) { top: 80%; left: 25%; animation-delay: 2s; }
+    .hope-star:nth-child(4) { top: 85%; right: 20%; animation-delay: 3s; }
+    
+    @keyframes star-twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 0.5; transform: scale(1); }
+    }
+  </style>
+</head>
+<body class="ending-mixed">
+  <div class="bg-base"></div>
+  <div class="dawn-light"></div>
+  
+  <!-- Breaking particles -->
+  <div class="break-particle"></div>
+  <div class="break-particle"></div>
+  <div class="break-particle"></div>
+  <div class="break-particle"></div>
+  <div class="break-particle"></div>
+  <div class="break-particle"></div>
+  
+  <!-- Chain breaks -->
+  <div class="chain-break"></div>
+  <div class="chain-break"></div>
+  
+  <!-- Hope stars -->
+  <div class="hope-star">✦</div>
+  <div class="hope-star">✦</div>
+  <div class="hope-star">✦</div>
+  <div class="hope-star">✦</div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-return.jpg" alt="A person stepping out of a dark spiral into golden light, chains breaking, helping someone else escape">
+      </div>
+      
+      <h2 class="passage-title">✦ The Return</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>You wasted years in rabbit holes. But that moment of doubt saved you. You started questioning not just the mainstream, but <span class="warning">your own sources</span>. You learned about algorithms, engagement, manipulation.</p>
+        
+        <p>The relationships you damaged are slowly healing. It took humility. Apologies. Time.</p>
+        
+        <div class="screen-text warm-text">
+          "I wasn't a free thinker. I was a product, optimized for engagement. Realizing that was painful — but it set me free."
+        </div>
+        
+        <p>You're rebuilding. Learning to verify sources, check facts, escape echo chambers. The internet that misled you has everything you need to find your way back — <span class="good">if you look with wiser eyes</span>.</p>
+        
+        <p>Now you help others who are where you were. Not by telling them they're wrong, but by asking the questions no one asked you.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Years Lost</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Hard Truth</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Time to Rebuild</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Influencer</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Overwhelming notification rain */
+    .notif-rain {
+      position: fixed;
+      font-size: 16px;
+      opacity: 0;
+      animation: notif-fall 6s linear infinite;
+    }
+    
+    .notif-rain:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .notif-rain:nth-child(2) { left: 15%; animation-delay: 0.5s; }
+    .notif-rain:nth-child(3) { left: 25%; animation-delay: 1s; }
+    .notif-rain:nth-child(4) { left: 35%; animation-delay: 0.3s; }
+    .notif-rain:nth-child(5) { left: 45%; animation-delay: 0.8s; }
+    .notif-rain:nth-child(6) { left: 55%; animation-delay: 1.2s; }
+    .notif-rain:nth-child(7) { left: 65%; animation-delay: 0.2s; }
+    .notif-rain:nth-child(8) { left: 75%; animation-delay: 0.7s; }
+    .notif-rain:nth-child(9) { left: 85%; animation-delay: 1.5s; }
+    .notif-rain:nth-child(10) { left: 95%; animation-delay: 0.4s; }
+    
+    @keyframes notif-fall {
+      0% { top: -30px; opacity: 0.7; }
+      100% { top: 110%; opacity: 0; }
+    }
+    
+    /* Giant follower count */
+    .follower-count {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Outfit', sans-serif;
+      font-size: 150px;
+      font-weight: 700;
+      color: var(--coral);
+      opacity: 0.08;
+      text-shadow: 0 0 50px var(--coral);
+      animation: count-pulse 4s infinite ease-in-out;
+      z-index: 0;
+    }
+    
+    @keyframes count-pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.05); }
+    }
+    
+    /* Camera flash effect */
+    .flash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      animation: camera-flash 8s infinite ease-out;
+      z-index: 2;
+    }
+    
+    @keyframes camera-flash {
+      0%, 95%, 100% { opacity: 0; }
+      96% { opacity: 0.3; }
+    }
+    
+    /* Exhaustion static */
+    .exhaust-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, transparent 30%, rgba(255, 107, 107, 0.1) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body class="ending-bad">
+  <div class="bg-base"></div>
+  <div class="exhaust-overlay"></div>
+  <div class="flash"></div>
+  
+  <!-- Follower count -->
+  <div class="follower-count">500K</div>
+  
+  <!-- Notification rain -->
+  <div class="notif-rain">❤️</div>
+  <div class="notif-rain">💬</div>
+  <div class="notif-rain">👍</div>
+  <div class="notif-rain">🔔</div>
+  <div class="notif-rain">❤️</div>
+  <div class="notif-rain">📱</div>
+  <div class="notif-rain">💬</div>
+  <div class="notif-rain">👍</div>
+  <div class="notif-rain">❤️</div>
+  <div class="notif-rain">🔔</div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-viral.jpg" alt="An exhausted influencer surrounded by phones and cameras, their reflection showing emptiness, drowning in notifications">
+      </div>
+      
+      <h2 class="passage-title">✦ The Influencer</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>You got what you wanted. <span class="highlight">500,000 followers</span>. Brand deals. Sponsored posts. Your face on screens across the world. You "made it."</p>
+        
+        <p>But you're <span class="warning">exhausted</span>. Every moment is content. Every meal, every trip, every relationship — optimized for engagement. The algorithm demands constant feeding, and you've become its servant.</p>
+        
+        <div class="screen-text warning-text">
+          "The irony? Half a million people watch my life, but I don't have time to actually live it."
+        </div>
+        
+        <p>Your real friends drifted away years ago. They got tired of being background characters in your content. Your anxiety is constant. Without the validation of likes, you feel like <span class="warning">nothing</span>.</p>
+        
+        <p>You've become the mask. And you're not sure who's underneath anymore.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">500K</div>
+          <div class="stat-label">Followers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">2</div>
+          <div class="stat-label">Real Friends</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Peace of Mind</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>

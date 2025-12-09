@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - Being Real Online</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Warm connection particles */
+    .connection-particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: var(--mint);
+      border-radius: 50%;
+      opacity: 0;
+      animation: connect-float 10s infinite ease-in-out;
+      box-shadow: 0 0 10px var(--mint);
+    }
+    
+    .connection-particle:nth-child(even) {
+      background: var(--coral);
+      box-shadow: 0 0 10px var(--coral);
+    }
+    
+    .connection-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .connection-particle:nth-child(2) { left: 20%; animation-delay: 1.5s; }
+    .connection-particle:nth-child(3) { left: 30%; animation-delay: 3s; }
+    .connection-particle:nth-child(4) { left: 70%; animation-delay: 0.5s; }
+    .connection-particle:nth-child(5) { left: 80%; animation-delay: 2s; }
+    .connection-particle:nth-child(6) { left: 90%; animation-delay: 4s; }
+    
+    @keyframes connect-float {
+      0% { top: 100%; opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { opacity: 0.8; }
+      100% { top: -5%; opacity: 0; }
+    }
+    
+    /* Heart pulse effect */
+    .heart-pulse {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 107, 107, 0.05) 0%, transparent 70%);
+      animation: heart-beat 3s infinite ease-in-out;
+      z-index: 0;
+    }
+    
+    @keyframes heart-beat {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.6; }
+    }
+    
+    /* Globe connection lines */
+    .globe-line {
+      position: fixed;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--mint), transparent);
+      opacity: 0;
+      animation: globe-connect 6s infinite ease-in-out;
+      transform-origin: left center;
+    }
+    
+    .globe-line:nth-child(1) { top: 25%; left: 10%; width: 80%; animation-delay: 0s; }
+    .globe-line:nth-child(2) { top: 45%; left: 5%; width: 90%; animation-delay: 2s; }
+    .globe-line:nth-child(3) { top: 75%; left: 15%; width: 70%; animation-delay: 4s; }
+    
+    @keyframes globe-connect {
+      0% { opacity: 0; transform: scaleX(0); }
+      50% { opacity: 0.4; transform: scaleX(1); }
+      100% { opacity: 0; transform: scaleX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-base"></div>
+  <div class="heart-pulse"></div>
+  
+  <!-- Connection particles -->
+  <div class="connection-particle"></div>
+  <div class="connection-particle"></div>
+  <div class="connection-particle"></div>
+  <div class="connection-particle"></div>
+  <div class="connection-particle"></div>
+  <div class="connection-particle"></div>
+  
+  <!-- Globe lines -->
+  <div class="globe-line"></div>
+  <div class="globe-line"></div>
+  <div class="globe-line"></div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/social-authentic.jpg" alt="A warm video call screen showing a grandmother's smiling face, surrounded by soft glowing hearts and connection lines spanning a globe">
+      </div>
+      
+      <span class="path-indicator path-social">Social Media Path → Authentic</span>
+      <h2 class="passage-title">Being Real Online</h2>
+      
+      <div class="story-text">
+        <p>You post a photo from your messy room, captioned with a joke about your "aesthetic chaos." People laugh — <span class="good">real laughs</span>, not polite ones. You share your genuine opinions about music, even the unpopular ones.</p>
+        
+        <p>Some people unfollow you. That stings. But the ones who stay? They actually <span class="warm">get you</span>.</p>
+        
+        <p>One day, you remember your grandmother in the Philippines. She's getting older, and you haven't seen her since you were little. You wonder if she has internet now...</p>
+        
+        <p>At the same time, you discover an online forum dedicated to vintage synthesizers — your secret obsession that no one at school understands. People from around the world are discussing the exact weird hobby you thought made you a freak.</p>
+        
+        <div class="screen-text good-text">
+          "The internet doesn't just connect computers. It connects souls who would never have found each other otherwise."
+        </div>
+        
+        <p><strong>Where do you focus your energy?</strong></p>
+      </div>
+      
+      <div class="choices">
+        <a href="ending-family.html" class="choice-btn good-path">
+          <span class="choice-label">Family First</span>
+          Reach out to your grandmother. Set up video calls. Use the internet to bridge the ocean between you before it's too late.
+        </a>
+        <a href="ending-tribe.html" class="choice-btn good-path">
+          <span class="choice-label">Find Your Tribe</span>
+          Dive deep into that synthesizer community. These strangers understand you better than most people you see every day.
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

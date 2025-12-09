@@ -237,6 +237,70 @@ body {
   margin: 30px auto 0 auto;
 }
 
+/* Drawing process */
+.drawing-process {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 35px;
+}
+
+.process-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.process-step .placeholder {
+  width: 130px;
+  aspect-ratio: 1;
+  font-size: 11px;
+}
+
+.process-img {
+  width: 130px;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.process-label {
+  font-size: 10px;
+  color: #909090;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.process-arrow {
+  font-size: 20px;
+  color: #f47921;
+  margin-top: -25px;
+}
+
+/* Illustrations grid */
+.illustrations-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.illustrations-grid .placeholder {
+  aspect-ratio: 1;
+}
+
+.illustrations-grid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 .preview-tile {
   width: 100%;
   aspect-ratio: 16/9;
@@ -598,21 +662,69 @@ body {
   </div>
 </section>
 
-<!-- Part 7: The Process -->
+<!-- Part 7: The Process - Ideation -->
 <section class="slide" id="slide-7">
   <div class="content">
-    <div class="sub-label">The Process</div>
-    <div class="grid-4">
-      <div class="placeholder">Wireframe 1</div>
-      <div class="placeholder">Wireframe 2</div>
-      <div class="placeholder">Sketch 1</div>
-      <div class="placeholder">Sketch 2</div>
+    <div class="sub-label">The Process • Ideation & UI/UX Design</div>
+    <div class="single-preview">
+      <div class="preview-tile figma-trigger" data-figma="https://embed.figma.com/design/6fwu1fQnXhnHEsigTZ9Q3i/JeromeBustarga-WireframeDemo?node-id=0-1&embed-host=share">
+        <div class="preview-iframe-wrapper">
+          <iframe src="https://embed.figma.com/design/6fwu1fQnXhnHEsigTZ9Q3i/JeromeBustarga-WireframeDemo?node-id=0-1&embed-host=share" scrolling="no"></iframe>
+        </div>
+        <div class="preview-overlay"></div>
+        <div class="click-hint">Click to interact</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- Part 8: The Tools -->
+<!-- Part 8: The Process - Illustrations -->
 <section class="slide" id="slide-8">
+  <div class="content">
+    <div class="sub-label">The Process • Illustrations</div>
+    
+    <!-- Drawing Process -->
+    <div class="drawing-process">
+      <div class="process-step">
+        <img src="images/tc1.png" alt="First Sketch" class="process-img clickable-img">
+        <span class="process-label">01 First Sketch</span>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <img src="images/tc2.png" alt="Refined Sketch" class="process-img clickable-img">
+        <span class="process-label">02 Refined Sketch</span>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <img src="images/tc3.png" alt="Final Sketch" class="process-img clickable-img">
+        <span class="process-label">03 Final Sketch</span>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <img src="images/tc4.png" alt="Image Trace" class="process-img clickable-img">
+        <span class="process-label">04 Image Trace</span>
+      </div>
+      <div class="process-arrow">→</div>
+      <div class="process-step">
+        <img src="images/tc5.png" alt="Final Color" class="process-img clickable-img">
+        <span class="process-label">05 Final Color</span>
+      </div>
+    </div>
+    
+    <!-- Illustrations Grid -->
+    <div class="illustrations-grid">
+      <img src="images/tc6.png" alt="Illustration 1" class="clickable-img">
+      <img src="images/tc7.png" alt="Illustration 2" class="clickable-img">
+      <img src="images/tc8.png" alt="Illustration 3" class="clickable-img">
+      <img src="images/tc9.png" alt="Illustration 4" class="clickable-img">
+      <img src="images/tc10.png" alt="Illustration 5" class="clickable-img">
+      <img src="images/tc11.png" alt="Illustration 6" class="clickable-img">
+    </div>
+  </div>
+</section>
+
+<!-- Part 9: The Tools -->
+<section class="slide" id="slide-9">
   <div class="content">
     <div class="sub-label">The Tools</div>
     <p class="medium-text">
@@ -625,14 +737,14 @@ body {
   </div>
 </section>
 
-<!-- Part 9: Demo -->
-<section class="slide" id="slide-9">
+<!-- Part 10: Demo -->
+<section class="slide" id="slide-10">
   <div class="content">
     <div class="sub-label">The Final Output</div>
     <div class="single-preview">
-      <div class="preview-tile iframe-trigger" data-src="twine-project.html">
+      <div class="preview-tile iframe-trigger" data-src="the-connection-story/start.html">
         <div class="preview-iframe-wrapper">
-          <iframe src="twine-project.html" scrolling="no"></iframe>
+          <iframe src="the-connection-story/start.html" scrolling="no"></iframe>
         </div>
         <div class="preview-overlay"></div>
         <div class="click-hint">Click to interact</div>
@@ -641,8 +753,8 @@ body {
   </div>
 </section>
 
-<!-- Part 10: What's Next -->
-<section class="slide" id="slide-10">
+<!-- Part 11: What's Next -->
+<section class="slide" id="slide-11">
   <div class="content">
     <div class="sub-label">What's Next</div>
     <p class="medium-text" style="margin-bottom: 10px;">
@@ -678,7 +790,7 @@ body {
 <!-- Bottom nav -->
 <div class="bottom-nav">
   <span class="slide-number">Deep Dive</span>
-  <span class="slide-indicator" id="slideIndicator">1 / 10</span>
+  <span class="slide-indicator" id="slideIndicator">1 / 11</span>
   <div class="nav-hint">
     <kbd>←</kbd> <kbd>→</kbd>
   </div>
@@ -728,6 +840,16 @@ document.querySelectorAll('.iframe-trigger').forEach(trigger => {
   trigger.addEventListener('click', (e) => {
     e.stopPropagation();
     const src = trigger.getAttribute('data-src');
+    iframeContent.src = src;
+    iframeModal.classList.add('active');
+  });
+});
+
+// Figma iframe triggers
+document.querySelectorAll('.figma-trigger').forEach(trigger => {
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const src = trigger.getAttribute('data-figma');
     iframeContent.src = src;
     iframeModal.classList.add('active');
   });

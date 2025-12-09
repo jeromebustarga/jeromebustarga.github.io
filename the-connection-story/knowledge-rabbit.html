@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - Down the Rabbit Hole</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Spiraling vortex effect */
+    .vortex {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 107, 107, 0.1), transparent, rgba(157, 78, 237, 0.1), transparent);
+      animation: vortex-spin 20s linear infinite;
+      opacity: 0.3;
+      z-index: 0;
+    }
+    
+    @keyframes vortex-spin {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    /* Warning text floating */
+    .warning-float {
+      position: fixed;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--coral);
+      opacity: 0;
+      animation: warning-drift 12s infinite ease-in-out;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .warning-float:nth-child(1) { top: 15%; left: 5%; animation-delay: 0s; }
+    .warning-float:nth-child(2) { top: 30%; right: 3%; animation-delay: 3s; }
+    .warning-float:nth-child(3) { top: 70%; left: 8%; animation-delay: 6s; }
+    .warning-float:nth-child(4) { top: 85%; right: 5%; animation-delay: 9s; }
+    
+    @keyframes warning-drift {
+      0%, 100% { opacity: 0; transform: translateX(0); }
+      50% { opacity: 0.5; transform: translateX(10px); }
+    }
+    
+    /* Glitchy eyes */
+    .eye-watch {
+      position: fixed;
+      font-size: 28px;
+      opacity: 0;
+      animation: eye-appear 8s infinite ease-in-out;
+    }
+    
+    .eye-watch:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .eye-watch:nth-child(2) { top: 40%; right: 8%; animation-delay: 2s; }
+    .eye-watch:nth-child(3) { top: 75%; left: 5%; animation-delay: 4s; }
+    
+    @keyframes eye-appear {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 0.2; transform: scale(1); }
+    }
+    
+    /* Distorted static */
+    .glitch-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 107, 107, 0.03) 2px,
+        rgba(255, 107, 107, 0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+      animation: glitch-shift 0.3s infinite;
+    }
+    
+    @keyframes glitch-shift {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-1px); }
+      75% { transform: translateX(1px); }
+    }
+    
+    /* Rabbit hole tunnel lines */
+    .tunnel-line {
+      position: fixed;
+      left: 50%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      transform-origin: left center;
+      opacity: 0;
+      animation: tunnel-zoom 4s infinite ease-out;
+    }
+    
+    .tunnel-line:nth-child(1) { top: 30%; width: 200px; animation-delay: 0s; }
+    .tunnel-line:nth-child(2) { top: 50%; width: 300px; animation-delay: 1s; }
+    .tunnel-line:nth-child(3) { top: 70%; width: 250px; animation-delay: 2s; }
+    
+    @keyframes tunnel-zoom {
+      0% { opacity: 0; transform: translateX(-50%) scaleX(0); }
+      50% { opacity: 0.4; transform: translateX(-50%) scaleX(1); }
+      100% { opacity: 0; transform: translateX(-50%) scaleX(1.5); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-base"></div>
+  <div class="vortex"></div>
+  <div class="glitch-overlay"></div>
+  
+  <!-- Warning texts -->
+  <div class="warning-float">WAKE UP</div>
+  <div class="warning-float">THEY DON'T WANT YOU TO KNOW</div>
+  <div class="warning-float">SHARE BEFORE DELETED</div>
+  <div class="warning-float">THE TRUTH IS OUT THERE</div>
+  
+  <!-- Watching eyes -->
+  <div class="eye-watch">👁️</div>
+  <div class="eye-watch">👁️</div>
+  <div class="eye-watch">👁️</div>
+  
+  <!-- Tunnel lines -->
+  <div class="tunnel-line"></div>
+  <div class="tunnel-line"></div>
+  <div class="tunnel-line"></div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/knowledge-rabbit.jpg" alt="A person falling through a spiral tunnel of screens and videos, each showing more extreme content, eyes everywhere">
+      </div>
+      
+      <span class="path-indicator path-knowledge">Knowledge Path → Rabbit Hole</span>
+      <h2 class="passage-title">Down the Rabbit Hole</h2>
+      
+      <div class="story-text">
+        <p>The videos are compelling. They connect dots you never considered. Each one leads to another, deeper, more <span class="warning">"shocking."</span> The algorithm feeds you exactly what you want to see.</p>
+        
+        <div class="screen-text warning-text">
+          "WATCH BEFORE THEY DELETE THIS"<br>
+          "What THEY don't want you to know..."<br>
+          "Share this before it's too late!"
+        </div>
+        
+        <p>You start to distrust everything. The news is lying. Scientists have an agenda. Everyone who disagrees is either stupid or part of the cover-up.</p>
+        
+        <p>Your parents are worried. Your friends think you've become <span class="warning">"weird."</span> But they just don't understand. They haven't seen what you've seen.</p>
+        
+        <p>One day, a claim you believed completely is <span class="highlight">proven false</span>. You saw the original source, debunked by the very people you were told were lying. For a moment, the ground shifts beneath you.</p>
+        
+        <p><strong>How do you respond?</strong></p>
+      </div>
+      
+      <div class="choices">
+        <a href="ending-lost.html" class="choice-btn risky-path">
+          <span class="choice-label">They're Lying</span>
+          This is just another cover-up. The debunking is part of the conspiracy. You need to go even deeper to find the real truth.
+        </a>
+        <a href="ending-return.html" class="choice-btn mixed-path">
+          <span class="choice-label">Wait... What If?</span>
+          What if you've been wrong? What if the algorithm was just showing you what kept you clicking? Maybe it's time to question everything — including your own beliefs.
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

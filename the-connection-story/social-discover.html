@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Social World</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Social-specific floating icons */
+    .social-float {
+      position: fixed;
+      font-size: 28px;
+      opacity: 0.08;
+      animation: float-up 15s infinite ease-in-out;
+      z-index: 1;
+    }
+    .social-float:nth-child(1) { left: 5%; animation-delay: 0s; }
+    .social-float:nth-child(2) { left: 15%; animation-delay: 3s; }
+    .social-float:nth-child(3) { left: 25%; animation-delay: 1s; }
+    .social-float:nth-child(4) { left: 75%; animation-delay: 4s; }
+    .social-float:nth-child(5) { left: 85%; animation-delay: 2s; }
+    .social-float:nth-child(6) { left: 95%; animation-delay: 5s; }
+    
+    @keyframes float-up {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.1; }
+      90% { opacity: 0.1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+    
+    /* Notification popup animations */
+    .notif-float {
+      position: fixed;
+      background: rgba(157, 78, 237, 0.15);
+      border: 1px solid rgba(157, 78, 237, 0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--purple);
+      animation: notif-appear 8s infinite ease-in-out;
+      z-index: 2;
+    }
+    .notif-float:nth-child(1) { top: 15%; right: 5%; animation-delay: 0s; }
+    .notif-float:nth-child(2) { top: 35%; left: 3%; animation-delay: 2s; }
+    .notif-float:nth-child(3) { top: 65%; right: 8%; animation-delay: 4s; }
+    .notif-float:nth-child(4) { top: 80%; left: 5%; animation-delay: 6s; }
+    
+    @keyframes notif-appear {
+      0%, 100% { opacity: 0; transform: scale(0.8) translateX(20px); }
+      15%, 85% { opacity: 0.6; transform: scale(1) translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-base"></div>
+  
+  <!-- Floating Social Icons -->
+  <div class="social-float">❤️</div>
+  <div class="social-float">👍</div>
+  <div class="social-float">💬</div>
+  <div class="social-float">🔔</div>
+  <div class="social-float">📱</div>
+  <div class="social-float">✨</div>
+  
+  <!-- Floating Notifications -->
+  <div class="notif-float">+1 New Follower</div>
+  <div class="notif-float">Sarah liked your post</div>
+  <div class="notif-float">3 new comments</div>
+  <div class="notif-float">Jake is now following you</div>
+  
+  <div class="network-lines">
+    <div class="network-line"></div>
+    <div class="network-line"></div>
+    <div class="network-line"></div>
+    <div class="network-line"></div>
+  </div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/social-discover.jpg" alt="A social media feed glowing on a screen, showing profile pictures, likes, and comments floating in space">
+      </div>
+      
+      <span class="path-indicator path-social">Social Media Path</span>
+      <h2 class="passage-title">The Social World</h2>
+      
+      <div class="story-text">
+        <p>You create your first profile. It asks for a photo, a bio, your interests. Within hours, you have <span class="highlight">23 friend requests</span> — classmates, people from other schools, even a few strangers who share your love of music.</p>
+        
+        <p>The notifications are addictive. Every like, every comment sends a little rush through you. You scroll through posts: vacation photos, funny memes, heated debates about movies.</p>
+        
+        <div class="screen-text">
+          "Sarah posted a photo from her trip to Paris ✨"<br>
+          "Jake commented on your post: 'lol same'"<br>
+          "You have 3 new followers!"
+        </div>
+        
+        <p>But you notice something. People seem... <span class="warm">perfect</span> here. Their lives look amazing. Their jokes are witty. Their photos are flawless. You look at your own profile and feel a strange pressure building.</p>
+        
+        <p><strong>How do you present yourself online?</strong></p>
+      </div>
+      
+      <div class="choices">
+        <a href="social-authentic.html" class="choice-btn good-path">
+          <span class="choice-label">Be Yourself</span>
+          Post your real thoughts, your actual photos. Connect with people who like the real you — awkward moments and all.
+        </a>
+        <a href="social-mask.html" class="choice-btn risky-path">
+          <span class="choice-label">Play the Game</span>
+          Curate a perfect image. Only post your best moments. Maybe stretch the truth a little. Everyone else is doing it.
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Library of Everything</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Code stream specific to knowledge path */
+    .code-stream-active {
+      position: fixed;
+      top: 0;
+      right: 20px;
+      width: 350px;
+      height: 100%;
+      overflow: hidden;
+      opacity: 0.12;
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .code-line {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--mint);
+      white-space: nowrap;
+      animation: code-scroll 20s linear infinite;
+      margin-bottom: 6px;
+    }
+    
+    .code-line:nth-child(even) { color: var(--cyan); animation-duration: 25s; }
+    .code-line:nth-child(3n) { color: var(--purple); animation-duration: 22s; }
+    
+    @keyframes code-scroll {
+      0% { transform: translateY(100vh); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-50px); opacity: 0; }
+    }
+    
+    /* Floating book/document icons */
+    .knowledge-icons {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .k-icon {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0;
+      animation: float-knowledge 12s infinite ease-in-out;
+    }
+    
+    .k-icon:nth-child(1) { left: 8%; top: 20%; animation-delay: 0s; }
+    .k-icon:nth-child(2) { left: 92%; top: 30%; animation-delay: 2s; }
+    .k-icon:nth-child(3) { left: 5%; top: 60%; animation-delay: 4s; }
+    .k-icon:nth-child(4) { left: 88%; top: 70%; animation-delay: 1s; }
+    .k-icon:nth-child(5) { left: 10%; top: 85%; animation-delay: 3s; }
+    .k-icon:nth-child(6) { left: 95%; top: 15%; animation-delay: 5s; }
+    
+    @keyframes float-knowledge {
+      0%, 100% { opacity: 0; transform: translateY(0) scale(0.8); }
+      50% { opacity: 0.15; transform: translateY(-20px) scale(1); }
+    }
+    
+    /* Search bar animation */
+    .search-float {
+      position: fixed;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 212, 255, 0.08);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 10px 30px;
+      border-radius: 25px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--cyan);
+      opacity: 0.4;
+      z-index: 1;
+      animation: search-pulse 4s infinite ease-in-out;
+    }
+    
+    @keyframes search-pulse {
+      0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.5; transform: translateX(-50%) scale(1.02); }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-base"></div>
+  
+  <!-- Code Stream -->
+  <div class="code-stream-active">
+    <div class="code-line">function learn() { return knowledge; }</div>
+    <div class="code-line">const curiosity = infinite;</div>
+    <div class="code-line">while(true) { explore(); }</div>
+    <div class="code-line">import { wisdom } from 'internet';</div>
+    <div class="code-line">let questions = await search();</div>
+    <div class="code-line">console.log("Hello, World!");</div>
+    <div class="code-line">for(let i=0; i<∞; i++) { grow(); }</div>
+    <div class="code-line">return buildSomethingNew();</div>
+    <div class="code-line">const future = you.create();</div>
+    <div class="code-line">// The journey begins here...</div>
+    <div class="code-line">npm install knowledge</div>
+    <div class="code-line">git commit -m "first steps"</div>
+  </div>
+  
+  <!-- Floating Icons -->
+  <div class="knowledge-icons">
+    <div class="k-icon">📚</div>
+    <div class="k-icon">💡</div>
+    <div class="k-icon">🔬</div>
+    <div class="k-icon">🎓</div>
+    <div class="k-icon">🌐</div>
+    <div class="k-icon">⚡</div>
+  </div>
+  
+  <!-- Search bar -->
+  <div class="search-float">🔍 How do computers work?</div>
+  
+  <div class="binary-rain">
+    <div class="binary-column">01001000 01100101 01101100 01101100 01101111</div>
+    <div class="binary-column">10110010 01001001 01101110 01110100 01100101</div>
+    <div class="binary-column">01000011 01101111 01101110 01101110 01100101</div>
+    <div class="binary-column">11010101 01000100 01100001 01110100 01100001</div>
+    <div class="binary-column">01010111 01100101 01101100 01100011 01101111</div>
+  </div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/knowledge-discover.jpg" alt="An infinite library made of glowing screens and floating books, streams of data flowing like rivers">
+      </div>
+      
+      <span class="path-indicator path-knowledge">Knowledge Path</span>
+      <h2 class="passage-title">The Library of Everything</h2>
+      
+      <div class="story-text">
+        <p>You type a question into the search bar: <span class="highlight">"How do computers work?"</span></p>
+        
+        <p>The results are overwhelming. Thousands of articles, videos, forums. You click on one, then another. Hours vanish. You learn about binary code, processors, the history of computing. It's like drinking from a fire hose of knowledge.</p>
+        
+        <div class="screen-text">
+          "Did you know? The first computer bug was an actual moth stuck in a machine in 1947."
+        </div>
+        
+        <p>You discover free courses, tutorial videos, entire textbooks available at the click of a button. Kids your age are building apps, making music, creating art — all self-taught through the internet.</p>
+        
+        <p>But then you stumble onto something else. A video with a shocking title. The comments are full of people saying <span class="warning">"They don't want you to know this!"</span> and <span class="warning">"Wake up!"</span></p>
+        
+        <p><strong>What path do you follow?</strong></p>
+      </div>
+      
+      <div class="choices">
+        <a href="knowledge-learn.html" class="choice-btn good-path">
+          <span class="choice-label">Build Something</span>
+          Focus on learning real skills. Find a passion — coding, music production, digital art — and actually create something.
+        </a>
+        <a href="knowledge-rabbit.html" class="choice-btn risky-path">
+          <span class="choice-label">Dig Deeper</span>
+          That video was intriguing. What else are "they" hiding? You want to know the truth that the mainstream won't tell you.
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

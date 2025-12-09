@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - Across the Ocean</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Warm golden particles */
+    .gold-particle {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: gold-float 10s infinite ease-in-out;
+      box-shadow: 0 0 15px var(--gold);
+    }
+    
+    .gold-particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .gold-particle:nth-child(2) { left: 25%; animation-delay: 2s; }
+    .gold-particle:nth-child(3) { left: 40%; animation-delay: 4s; }
+    .gold-particle:nth-child(4) { left: 60%; animation-delay: 1s; }
+    .gold-particle:nth-child(5) { left: 75%; animation-delay: 3s; }
+    .gold-particle:nth-child(6) { left: 90%; animation-delay: 5s; }
+    
+    @keyframes gold-float {
+      0%, 100% { top: 100%; opacity: 0; }
+      50% { top: 0%; opacity: 0.6; }
+    }
+    
+    /* Heart connection line across screen */
+    .connection-arc {
+      position: fixed;
+      top: 50%;
+      left: 10%;
+      width: 80%;
+      height: 100px;
+      border: 2px solid transparent;
+      border-top-color: var(--mint);
+      border-radius: 50% 50% 0 0;
+      opacity: 0;
+      animation: arc-pulse 6s infinite ease-in-out;
+    }
+    
+    @keyframes arc-pulse {
+      0%, 100% { opacity: 0; transform: scaleY(0.5); }
+      50% { opacity: 0.3; transform: scaleY(1); }
+    }
+    
+    /* Video call frame decoration */
+    .call-frame {
+      position: fixed;
+      top: 15%;
+      right: 5%;
+      width: 120px;
+      height: 90px;
+      border: 2px solid var(--mint);
+      border-radius: 8px;
+      opacity: 0.2;
+      animation: frame-glow 4s infinite ease-in-out;
+    }
+    
+    .call-frame::before {
+      content: '❤️';
+      position: absolute;
+      bottom: -15px;
+      right: -15px;
+      font-size: 20px;
+    }
+    
+    @keyframes frame-glow {
+      0%, 100% { box-shadow: 0 0 10px var(--mint); }
+      50% { box-shadow: 0 0 30px var(--mint); }
+    }
+  </style>
+</head>
+<body class="ending-good">
+  <div class="bg-base"></div>
+  
+  <!-- Gold particles -->
+  <div class="gold-particle"></div>
+  <div class="gold-particle"></div>
+  <div class="gold-particle"></div>
+  <div class="gold-particle"></div>
+  <div class="gold-particle"></div>
+  <div class="gold-particle"></div>
+  
+  <!-- Connection arc -->
+  <div class="connection-arc"></div>
+  
+  <!-- Video call frame -->
+  <div class="call-frame"></div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-family.jpg" alt="A warm video call showing an elderly grandmother smiling, surrounded by golden light and floating hearts connecting across an ocean">
+      </div>
+      
+      <h2 class="passage-title">✦ Across the Ocean</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>Your grandmother passed away last year. But you have <span class="good">hundreds of hours</span> of video calls saved. Her stories about your grandfather. Her recipes, demonstrated step by step. Her face lighting up every time she saw yours on the screen.</p>
+        
+        <p>The internet gave you <span class="warm">fifteen extra years</span> with her that distance would have stolen. She met your partner through a screen. She watched you graduate, crying happily from 8,000 miles away.</p>
+        
+        <div class="screen-text good-text">
+          "Technology didn't replace human connection. It extended it across oceans and time zones."
+        </div>
+        
+        <p>You still watch those old recordings sometimes. Her laugh. Her advice. Her love, preserved in pixels and data, as real as the day it was recorded.</p>
+        
+        <p>The internet, at its best, is a <span class="good">bridge</span>. You used it to connect to what mattered most.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">847</div>
+          <div class="stat-label">Hours of Calls</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">15</div>
+          <div class="stat-label">Years Connected</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Memories Saved</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>

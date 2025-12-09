@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Performance</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Obsessive notification counter */
+    .counter-obsess {
+      position: fixed;
+      top: 15%;
+      right: 8%;
+      font-family: 'Outfit', sans-serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--coral);
+      opacity: 0.15;
+      animation: counter-pulse 2s infinite ease-in-out;
+      text-shadow: 0 0 30px var(--coral);
+    }
+    
+    @keyframes counter-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(1.1); opacity: 0.2; }
+    }
+    
+    /* Falling likes that fade */
+    .like-fall {
+      position: fixed;
+      font-size: 20px;
+      opacity: 0;
+      animation: like-drop 8s infinite linear;
+    }
+    
+    .like-fall:nth-child(1) { left: 10%; animation-delay: 0s; }
+    .like-fall:nth-child(2) { left: 25%; animation-delay: 1s; }
+    .like-fall:nth-child(3) { left: 40%; animation-delay: 2s; }
+    .like-fall:nth-child(4) { left: 60%; animation-delay: 0.5s; }
+    .like-fall:nth-child(5) { left: 75%; animation-delay: 1.5s; }
+    .like-fall:nth-child(6) { left: 90%; animation-delay: 2.5s; }
+    
+    @keyframes like-drop {
+      0% { top: -20px; opacity: 0.6; transform: scale(1); }
+      100% { top: 110%; opacity: 0; transform: scale(0.3); }
+    }
+    
+    /* Anxious static overlay */
+    .static-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 1;
+      animation: static-flicker 0.5s infinite;
+    }
+    
+    @keyframes static-flicker {
+      0%, 100% { opacity: 0.02; }
+      50% { opacity: 0.04; }
+    }
+    
+    /* Comparison bars */
+    .compare-bar {
+      position: fixed;
+      left: 3%;
+      width: 4px;
+      background: linear-gradient(to top, var(--coral), transparent);
+      border-radius: 2px;
+      opacity: 0.2;
+      animation: bar-grow 5s infinite ease-in-out;
+    }
+    
+    .compare-bar:nth-child(1) { bottom: 10%; height: 15%; animation-delay: 0s; }
+    .compare-bar:nth-child(2) { bottom: 10%; left: 5%; height: 35%; animation-delay: 0.5s; }
+    .compare-bar:nth-child(3) { bottom: 10%; left: 7%; height: 55%; animation-delay: 1s; background: linear-gradient(to top, var(--purple), transparent); }
+    
+    @keyframes bar-grow {
+      0%, 100% { transform: scaleY(0.8); opacity: 0.1; }
+      50% { transform: scaleY(1); opacity: 0.25; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-base"></div>
+  <div class="static-overlay"></div>
+  
+  <!-- Like counter -->
+  <div class="counter-obsess">34</div>
+  
+  <!-- Falling likes -->
+  <div class="like-fall">❤️</div>
+  <div class="like-fall">👍</div>
+  <div class="like-fall">❤️</div>
+  <div class="like-fall">💔</div>
+  <div class="like-fall">👍</div>
+  <div class="like-fall">❤️</div>
+  
+  <!-- Comparison bars -->
+  <div class="compare-bar"></div>
+  <div class="compare-bar"></div>
+  <div class="compare-bar"></div>
+  
+  <div class="network-lines">
+    <div class="network-line"></div>
+    <div class="network-line"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/social-mask.jpg" alt="A teenager taking a selfie, but their reflection shows exhaustion and anxiety, surrounded by floating likes and comparison metrics">
+      </div>
+      
+      <span class="path-indicator path-social">Social Media Path → Curated</span>
+      <h2 class="passage-title">The Performance</h2>
+      
+      <div class="story-text">
+        <p>It works. Your carefully curated posts get <span class="highlight">hundreds of likes</span>. You angle your photos just right. You only share the highlights. People think you're living an amazing life.</p>
+        
+        <p>But there's a cost. You spend hours crafting the perfect caption. A post that doesn't perform well <span class="warning">ruins your evening</span>. You refresh obsessively, watching the numbers.</p>
+        
+        <div class="screen-text warning-text">
+          "Only 34 likes? Sarah got 200 on hers. What did I do wrong?"
+        </div>
+        
+        <p>You start comparing yourself constantly. Their vacations. Their relationships. Their success. The gap between your curated life and your real life grows wider every day.</p>
+        
+        <p>One night, at 2 AM, you can't sleep. You've spent six hours scrolling, and you feel <span class="warning">worse</span> than when you started. The phone glows in the dark. You wonder if this is what life is now.</p>
+        
+        <p><strong>What happens next?</strong></p>
+      </div>
+      
+      <div class="choices">
+        <a href="ending-viral.html" class="choice-btn risky-path">
+          <span class="choice-label">Double Down</span>
+          You're so close to going viral. If you just try harder, post more, be more strategic... maybe then you'll feel complete.
+        </a>
+        <a href="ending-wake.html" class="choice-btn mixed-path">
+          <span class="choice-label">Something's Wrong</span>
+          This doesn't feel right. You're exhausted, anxious, and lonely despite having thousands of "friends." Maybe it's time to step back.
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

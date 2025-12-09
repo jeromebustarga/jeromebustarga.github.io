@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Multiplier</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Knowledge spreading rays */
+    .knowledge-ray {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 2px;
+      height: 200px;
+      background: linear-gradient(to top, var(--mint), transparent);
+      transform-origin: bottom center;
+      opacity: 0;
+      animation: ray-spread 8s infinite ease-out;
+    }
+    
+    .knowledge-ray:nth-child(1) { transform: rotate(0deg); animation-delay: 0s; }
+    .knowledge-ray:nth-child(2) { transform: rotate(45deg); animation-delay: 1s; }
+    .knowledge-ray:nth-child(3) { transform: rotate(90deg); animation-delay: 2s; }
+    .knowledge-ray:nth-child(4) { transform: rotate(135deg); animation-delay: 3s; }
+    .knowledge-ray:nth-child(5) { transform: rotate(180deg); animation-delay: 4s; }
+    .knowledge-ray:nth-child(6) { transform: rotate(225deg); animation-delay: 5s; }
+    .knowledge-ray:nth-child(7) { transform: rotate(270deg); animation-delay: 6s; }
+    .knowledge-ray:nth-child(8) { transform: rotate(315deg); animation-delay: 7s; }
+    
+    @keyframes ray-spread {
+      0% { opacity: 0; height: 0; }
+      50% { opacity: 0.5; height: 300px; }
+      100% { opacity: 0; height: 400px; }
+    }
+    
+    /* Student dots multiplying */
+    .student-dot {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      opacity: 0;
+      animation: student-appear 6s infinite ease-out;
+    }
+    
+    .student-dot:nth-child(1) { top: 30%; left: 20%; animation-delay: 0s; }
+    .student-dot:nth-child(2) { top: 25%; left: 35%; animation-delay: 0.5s; }
+    .student-dot:nth-child(3) { top: 40%; left: 15%; animation-delay: 1s; }
+    .student-dot:nth-child(4) { top: 35%; right: 25%; animation-delay: 1.5s; }
+    .student-dot:nth-child(5) { top: 50%; right: 15%; animation-delay: 2s; }
+    .student-dot:nth-child(6) { top: 65%; left: 25%; animation-delay: 2.5s; }
+    .student-dot:nth-child(7) { top: 70%; right: 30%; animation-delay: 3s; }
+    .student-dot:nth-child(8) { top: 80%; left: 40%; animation-delay: 3.5s; }
+    
+    @keyframes student-appear {
+      0% { opacity: 0; transform: scale(0); }
+      50% { opacity: 0.7; transform: scale(1.5); }
+      100% { opacity: 0.3; transform: scale(1); }
+    }
+    
+    /* View counter */
+    .view-counter {
+      position: fixed;
+      top: 12%;
+      right: 8%;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: var(--mint);
+      opacity: 0.4;
+      animation: counter-tick 2s infinite;
+    }
+    
+    @keyframes counter-tick {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body class="ending-good">
+  <div class="bg-base"></div>
+  
+  <!-- Knowledge rays -->
+  <div class="knowledge-ray"></div>
+  <div class="knowledge-ray"></div>
+  <div class="knowledge-ray"></div>
+  <div class="knowledge-ray"></div>
+  <div class="knowledge-ray"></div>
+  <div class="knowledge-ray"></div>
+  <div class="knowledge-ray"></div>
+  <div class="knowledge-ray"></div>
+  
+  <!-- Student dots -->
+  <div class="student-dot"></div>
+  <div class="student-dot"></div>
+  <div class="student-dot"></div>
+  <div class="student-dot"></div>
+  <div class="student-dot"></div>
+  <div class="student-dot"></div>
+  <div class="student-dot"></div>
+  <div class="student-dot"></div>
+  
+  <!-- View counter -->
+  <div class="view-counter">Views: 3,247,891</div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-teacher.jpg" alt="A person teaching through a screen, knowledge rays spreading outward to students around the world, forming a network of light">
+      </div>
+      
+      <h2 class="passage-title">✦ The Multiplier</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>Your tutorials have been watched <span class="good">3 million times</span>. You've answered thousands of questions on forums. You run a free coding bootcamp for kids who can't afford expensive courses.</p>
+        
+        <p>Last week, a teenager from Nigeria messaged you. She built her first app using your tutorials. She's applying to universities now — the same opportunities that felt impossible before she found the internet.</p>
+        
+        <div class="screen-text good-text">
+          "Someone helped me when I was starting. Now I help others. The chain keeps going."
+        </div>
+        
+        <p>The knowledge was free. You received it from strangers. Now you pass it on to more strangers. That's the beautiful economy of the internet at its best — <span class="warm">infinite reproduction of value</span>.</p>
+        
+        <p>You're not just a creator. You're a <span class="good">multiplier</span>. Every person you teach might teach ten more.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">3M+</div>
+          <div class="stat-label">Views</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">847</div>
+          <div class="stat-label">Students</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Impact</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>

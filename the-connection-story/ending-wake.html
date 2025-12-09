@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Connection - The Unfollow</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Fading away icons */
+    .fade-icon {
+      position: fixed;
+      font-size: 28px;
+      animation: icon-dissolve 10s infinite ease-out;
+    }
+    
+    .fade-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .fade-icon:nth-child(2) { top: 40%; right: 8%; animation-delay: 2s; }
+    .fade-icon:nth-child(3) { top: 60%; left: 5%; animation-delay: 4s; }
+    .fade-icon:nth-child(4) { top: 80%; right: 12%; animation-delay: 6s; }
+    
+    @keyframes icon-dissolve {
+      0% { opacity: 0.5; transform: scale(1); filter: blur(0); }
+      100% { opacity: 0; transform: scale(0.5); filter: blur(10px); }
+    }
+    
+    /* Sunrise gradient */
+    .sunrise-glow {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      background: linear-gradient(to top, rgba(255, 215, 0, 0.1), transparent);
+      pointer-events: none;
+      animation: sunrise 8s infinite ease-in-out;
+    }
+    
+    @keyframes sunrise {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+    }
+    
+    /* Peaceful particles */
+    .peace-particle {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: var(--gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: peace-float 12s infinite ease-in-out;
+    }
+    
+    .peace-particle:nth-child(1) { left: 20%; animation-delay: 0s; }
+    .peace-particle:nth-child(2) { left: 40%; animation-delay: 3s; }
+    .peace-particle:nth-child(3) { left: 60%; animation-delay: 6s; }
+    .peace-particle:nth-child(4) { left: 80%; animation-delay: 9s; }
+    
+    @keyframes peace-float {
+      0% { bottom: 0; opacity: 0; }
+      50% { opacity: 0.6; }
+      100% { bottom: 100%; opacity: 0; }
+    }
+    
+    /* Delete button ghost */
+    .delete-ghost {
+      position: fixed;
+      top: 15%;
+      right: 10%;
+      padding: 8px 16px;
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--gold);
+      opacity: 0.3;
+      animation: delete-fade 6s infinite ease-in-out;
+    }
+    
+    @keyframes delete-fade {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body class="ending-mixed">
+  <div class="bg-base"></div>
+  <div class="sunrise-glow"></div>
+  
+  <!-- Fading icons -->
+  <div class="fade-icon">📱</div>
+  <div class="fade-icon">❤️</div>
+  <div class="fade-icon">🔔</div>
+  <div class="fade-icon">💬</div>
+  
+  <!-- Peace particles -->
+  <div class="peace-particle"></div>
+  <div class="peace-particle"></div>
+  <div class="peace-particle"></div>
+  <div class="peace-particle"></div>
+  
+  <!-- Delete ghost -->
+  <div class="delete-ghost">Delete Account</div>
+  
+  <div class="data-nodes">
+    <div class="data-node"></div>
+    <div class="data-node"></div>
+  </div>
+
+  <div class="story-container">
+    <div class="content-box">
+      <div class="hero-image">
+        <img src="images/ending-wake.jpg" alt="A person peacefully looking at a sunrise, phone left behind, social media icons dissolving into light">
+      </div>
+      
+      <h2 class="passage-title">✦ The Unfollow</h2>
+      
+      <div class="story-text">
+        <p>It's <span class="highlight">2025</span> now. You're 29 years old.</p>
+        
+        <p>You deleted your social media three years ago. It took multiple attempts. The withdrawal was <span class="warning">real</span> — the phantom urge to check, to scroll, to compare.</p>
+        
+        <p>But slowly, something healed. You learned to exist without an audience. To do things <span class="warm">without documenting them</span>. To accept that your life doesn't need to be content.</p>
+        
+        <div class="screen-text warm-text">
+          "I lost years to the performance. But I'm still here. I'm still me. And now I know better."
+        </div>
+        
+        <p>You're not anti-internet. You still use it for connection, learning, communication. But you use it as a <span class="good">tool</span>, not a stage.</p>
+        
+        <p>The scar tissue taught you something. You share that wisdom now — not as content, but as honest conversation with people who need to hear it.</p>
+      </div>
+      
+      <div class="ending-stats">
+        <div class="stat">
+          <div class="stat-value">3</div>
+          <div class="stat-label">Years Free</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Hard Lesson</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Life to Live</div>
+        </div>
+      </div>
+      
+      <a href="start.html" class="restart-btn">↺ Start Again</a>
+    </div>
+  </div>
+</body>
+</html>
