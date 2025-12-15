@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Algorithm Mirror - AI Literacy Through Personal Data</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Upload Screen -->
+    <div id="upload-screen">
+        <div class="upload-container">
+            <h1>The Algorithm Mirror</h1>
+            <p>Discover how YouTube's algorithm sees you through your watch history</p>
+            
+            <div class="upload-box" id="upload-box">
+                <div class="upload-text">Upload Your YouTube History</div>
+                <div class="upload-subtext">
+                    Drag & drop your watch-history.json or click to browse<br>
+                    <small>(Google Takeout → YouTube → history → watch-history.json)</small>
+                </div>
+            </div>
+            
+            <input type="file" id="file-input" accept=".json" style="display: none;">
+            
+            <button class="sample-data-btn" id="sample-data-btn">
+                Try with Sample Data
+            </button>
+        </div>
+    </div>
+    
+    <!-- Main Application -->
+    <div id="app" style="display: none;">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-title">The Algorithm Mirror</div>
+            
+            <div class="view-tabs">
+                <button class="tab-btn active" data-view="particles">
+                    Particle View
+                </button>
+                <button class="tab-btn" data-view="portrait">
+                    Pixel Portrait
+                </button>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="action-btn" id="download-btn">
+                    Download PNG
+                </button>
+                <button class="action-btn" id="reset-btn">
+                    New Data
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Visualization Container -->
+            <div class="visualization-container">
+                <div id="particle-canvas"></div>
+                <div id="pixel-portrait-container" style="display: none;">
+                    <canvas id="pixel-canvas"></canvas>
+                </div>
+            </div>
+            
+            <!-- Metrics Panel -->
+            <div class="metrics-panel">
+                <!-- Time Period Selector -->
+                <div class="time-selector">
+                    <div class="metrics-title">Time Period</div>
+                    <div class="time-buttons">
+                        <button class="time-btn" data-period="month">Last Month</button>
+                        <button class="time-btn" data-period="year">Last Year</button>
+                        <button class="time-btn" data-period="5years">5 Years</button>
+                        <button class="time-btn active" data-period="all">All Time</button>
+                    </div>
+                    <div class="period-info" id="period-info" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
+                </div>
+                
+                <!-- Year Comparison (Optional) -->
+                <div class="year-comparison" id="year-comparison" style="display: none;">
+                    <div class="metrics-title">Yearly Evolution</div>
+                    <div id="yearly-stats" style="font-size: 12px; color: #888;"></div>
+                </div>
+                
+                <!-- Basic Metrics -->
+                <div class="metrics-section">
+                    <div class="metrics-title">Overview</div>
+                    <div class="metric-item">
+                        <span class="metric-label">Total Videos:</span>
+                        <span class="metric-value" id="total-videos">0</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Unique Channels:</span>
+                        <span class="metric-value" id="unique-channels">0</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Time Span:</span>
+                        <span class="metric-value" id="time-span">0 days</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-label">Daily Average:</span>
+                        <span class="metric-value" id="daily-average">0</span>
+                    </div>
+                </div>
+                
+                <!-- AI Literacy Metrics -->
+                <div class="metrics-section">
+                    <div class="metrics-title">Algorithmic Influence</div>
+                    
+                    <div class="metric-item">
+                        <span class="metric-label">Channel Concentration:</span>
+                        <span class="metric-value" id="echo-strength">0%</span>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-bar-fill" id="echo-bar"></div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <span class="metric-label">Content Diversity:</span>
+                        <span class="metric-value" id="diversity-score">0.00</span>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-bar-fill" id="diversity-bar"></div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <span class="metric-label">Binge Score:</span>
+                        <span class="metric-value" id="binge-score">0.00</span>
+                    </div>
+                    <div class="metric-bar">
+                        <div class="metric-bar-fill" id="binge-bar"></div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <span class="metric-label">Peak Hour:</span>
+                        <span class="metric-value" id="peak-hour">--</span>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <span class="metric-label">Night Owl Score:</span>
+                        <span class="metric-value" id="night-owl">0%</span>
+                    </div>
+                </div>
+                
+                <!-- AI Insights -->
+                <div class="ai-insights">
+                    <div class="ai-insights-title">
+                        <div class="ai-icon"></div>
+                        AI Analysis
+                        <button id="ai-settings-btn" style="margin-left: auto; background: none; border: none; color: #667eea; cursor: pointer; font-size: 12px;">
+                            ⚙
+                        </button>
+                    </div>
+                    
+                    <!-- API Key Input (initially hidden) -->
+                    <div id="api-key-section" style="display: none; margin-bottom: 15px; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                        <div style="font-size: 12px; color: #888; margin-bottom: 8px;">
+                            Google Gemini API key for AI-powered analysis
+                            <a href="https://makersuite.google.com/app/apikey" target="_blank" style="color: #667eea; text-decoration: none;"> (Get one here)</a>
+                        </div>
+                        <input type="password" id="api-key-input" placeholder="AIza..." value="AIzaSyBFX8bHJKW5oCMzFRT5OV5Eq8W8pLej_AQ" style="width: 100%; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-size: 12px; margin-bottom: 8px;">
+                        <div style="display: flex; gap: 8px;">
+                            <button id="save-api-key" style="flex: 1; padding: 6px; background: #667eea; border: none; border-radius: 4px; color: white; font-size: 12px; cursor: pointer;">Save</button>
+                            <button id="test-api-key" style="flex: 1; padding: 6px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px; color: white; font-size: 12px; cursor: pointer;">Test</button>
+                        </div>
+                        <div id="api-key-status" style="margin-top: 8px; font-size: 11px; color: #10b981;">✓ Gemini API key pre-configured</div>
+                    </div>
+                    
+                    <div id="ai-narrative" class="ai-insight-text">
+                        Analyzing your viewing patterns...
+                    </div>
+                    <div id="ai-warning" class="ai-warning" style="display: none;"></div>
+                    <div id="ai-suggestion" class="ai-suggestion" style="display: none;"></div>
+                </div>
+                
+                <!-- Explanation Toggle -->
+                <div class="explanation-section">
+                    <button class="explanation-toggle" id="explanation-toggle">
+                        What do these metrics mean?
+                    </button>
+                    <div id="metric-explanations" class="metric-explanations" style="display: none;">
+                        <!-- Will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Hover Info -->
+    <div id="hover-info" style="display: none;">
+        <div class="hover-title">Video Title</div>
+        <div class="hover-details">Channel • Category • Date</div>
+    </div>
+    
+    <!-- JavaScript Modules -->
+    <script src="js/dataProcessor.js"></script>
+    <script src="js/metrics.js"></script>
+    <script src="js/visualizations.js"></script>
+    <script src="js/aiInsights.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
