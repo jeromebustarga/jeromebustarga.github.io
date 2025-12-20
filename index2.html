@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
 <title>Jerome Bustarga - Developer Portfolio</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -25,6 +25,13 @@ body {
   color: #e8e8e8;
   overflow-x: hidden;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Touch-friendly tap targets */
+a, button {
+  -webkit-tap-highlight-color: rgba(244, 121, 33, 0.1);
 }
 
 /* Page automatically powers on */
@@ -273,32 +280,67 @@ body.scrolled .icon-menu.show {
   pointer-events: none;
 }
 
-.bg-text {
+/* Infinite scrolling background text */
+.bg-text-wrapper {
   position: fixed;
-  font-size: 18vw;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.05);
-  white-space: nowrap;
-  user-select: none;
+  left: 0;
+  width: 100%;
+  height: 25vh;
+  overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  letter-spacing: -0.05em;
-  line-height: 1;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  display: flex;
+  align-items: center;
 }
 
 .bg-text-1 {
-  top: 10%;
-  left: -3%;
+  top: 8%;
 }
 
 .bg-text-2 {
-  top: 38%;
-  right: -3%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .bg-text-3 {
-  bottom: 3%;
-  left: -3%;
+  bottom: 8%;
+}
+
+.bg-text-scroller {
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+  overflow: visible;
+}
+
+.bg-text-item {
+  font-size: 18vw;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.03);
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+  padding: 0 2rem;
+  flex-shrink: 0;
+}
+
+/* Radial light effect from top */
+.radial-light-top {
+  position: fixed;
+  top: min(180px, 25vh);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200vw;
+  height: 200vw;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle at center, 
+    hsla(25, 91%, 54%, 0.15) 0%, 
+    hsla(25, 91%, 54%, 0.08) 10%, 
+    transparent 40%);
 }
 
 .orb {
@@ -416,6 +458,79 @@ body.scrolled nav {
   display: flex;
   gap: 40px;
   list-style: none;
+}
+
+/* Mobile hamburger menu */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: #e8e8e8;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(7px, 7px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+@media (max-width: 640px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 250px;
+    background: rgba(13, 13, 13, 0.98);
+    backdrop-filter: blur(20px);
+    flex-direction: column;
+    gap: 0;
+    padding: 80px 30px 30px;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 16px 0;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-links a::before {
+    display: none;
+  }
 }
 
 .nav-links a {
@@ -855,7 +970,111 @@ footer {
 }
 
 /* Responsive */
+@media (max-width: 1024px) {
+  nav {
+    padding: 20px 40px;
+    padding-right: 90px;
+  }
+
+  body.scrolled nav {
+    padding-right: 40px;
+  }
+
+  section {
+    padding: 100px 40px;
+  }
+
+  .hero-section {
+    padding: 100px 40px 70px;
+  }
+
+  .work-section,
+  .skills-section {
+    padding: 0 40px 100px 40px;
+  }
+
+  .contact-section {
+    padding: 100px 40px;
+  }
+
+  footer {
+    padding: 40px 40px;
+  }
+}
+
 @media (max-width: 768px) {
+  /* Background text mobile adjustments */
+  .bg-text-item {
+    font-size: 15vw;
+  }
+
+  .bg-text-wrapper {
+    height: 22vh;
+  }
+
+  .bg-text-1 {
+    top: 6%;
+  }
+
+  .bg-text-2 {
+    top: 50%;
+  }
+
+  .bg-text-3 {
+    bottom: 6%;
+  }
+
+  /* Navigation */
+  nav {
+    padding: 18px 30px;
+    padding-right: 85px;
+  }
+
+  body.scrolled nav {
+    padding-right: 30px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+  }
+
+  /* Icon dropdown */
+  .icon-dropdown {
+    top: 20px;
+    right: 25px;
+  }
+
+  body.scrolled .icon-dropdown {
+    bottom: 25px;
+    left: 25px;
+  }
+
+  .icon-dropdown-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .icon-menu a {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  /* Lightbulb */
   .lightbulb-container {
     margin-bottom: 30px;
   }
@@ -865,69 +1084,329 @@ footer {
     height: 80px;
   }
 
-  .section-title {
-    min-height: 80vh;
-    padding: 40px 30px;
+  .radial-light {
+    width: 250px;
+    height: 250px;
   }
 
-  .section-title h2 {
-    font-size: 32px;
-  }
-
-  section {
-    padding: 80px 30px;
-  }
-
+  /* Hero Section */
   .hero-section {
-    padding: 100px 30px 60px;
-  }
-
-  .work-section,
-  .skills-section {
-    padding: 0 30px 80px 30px;
-  }
-
-  nav {
-    padding: 20px 30px;
-  }
-
-  .nav-links {
-    gap: 24px;
+    min-height: 90vh;
+    padding: 90px 30px 60px;
   }
 
   .hero-content h1 {
-    font-size: 42px;
+    font-size: 48px;
+    margin-bottom: 25px;
   }
 
   .hero-content p {
     font-size: 16px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  .hero-cta {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 13px;
+  }
+
+  /* Section Titles */
+  .section-title {
+    min-height: 70vh;
+    padding: 50px 30px;
+  }
+
+  .section-title h2 {
+    font-size: 36px;
+  }
+
+  .section-title p {
+    font-size: 15px;
+  }
+
+  /* Work Section */
+  .work-section {
+    padding: 0 30px 100px 30px;
+  }
+
+  section {
+    padding: 100px 30px;
+  }
+
+  .projects-container {
+    gap: 50px;
   }
 
   .project-item {
     grid-template-columns: 1fr !important;
-    gap: 40px;
+    gap: 35px;
+    padding: 50px 0;
   }
 
   .project-item:nth-child(even) .project-visual {
     order: 0;
   }
 
+  .project-details h3 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .project-details p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .project-tech {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .tech-tag {
+    padding: 5px 14px;
+    font-size: 11px;
+  }
+
+  .project-link {
+    font-size: 13px;
+  }
+
+  .project-number {
+    font-size: 11px;
+    margin-bottom: 14px;
+  }
+
+  /* Skills Section */
+  .skills-section {
+    padding: 0 30px 100px 30px;
+  }
+
   .skills-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .skill-card {
+    padding: 36px 28px;
+  }
+
+  .skill-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .skill-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .skill-card p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* Contact Section */
+  .contact-section {
+    padding: 100px 30px;
+  }
+
+  .contact-content h2 {
+    font-size: 40px;
+    margin-bottom: 18px;
+  }
+
+  .contact-content p {
+    font-size: 15px;
+    margin-bottom: 35px;
+  }
+
+  .social-links {
+    gap: 14px;
+  }
+
+  .social-link {
+    width: 44px;
+    height: 44px;
+    font-size: 17px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 35px 30px;
+    font-size: 12px;
+  }
+
+  /* Orbs */
+  .orb1 {
+    width: 450px;
+    height: 450px;
+  }
+
+  .orb2 {
+    width: 400px;
+    height: 400px;
+  }
+
+  .orb3 {
+    width: 425px;
+    height: 425px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Background text */
+  .bg-text-item {
+    font-size: 16vw;
+    padding: 0 1.5rem;
+  }
+
+  .bg-text-wrapper {
+    height: 20vh;
+  }
+
+  /* Navigation - adjust for hamburger */
+  nav {
+    padding-right: 60px;
+  }
+
+  body.scrolled nav {
+    padding-right: 30px;
+  }
+
+  /* Hero adjustments */
+  .hero-section {
+    min-height: 85vh;
+  }
+
+  .hero-content h1 {
+    font-size: 38px;
   }
 
   .hero-cta {
     flex-direction: column;
     width: 100%;
+    gap: 12px;
   }
 
   .btn {
     width: 100%;
     justify-content: center;
+    padding: 13px 28px;
+  }
+
+  /* Projects */
+  .project-item {
+    gap: 30px;
+    padding: 40px 0;
+  }
+
+  .project-details h3 {
+    font-size: 24px;
+  }
+
+  /* Section titles */
+  .section-title {
+    min-height: 60vh;
+  }
+
+  .section-title h2 {
+    font-size: 32px;
+  }
+
+  /* Contact */
+  .contact-content h2 {
+    font-size: 36px;
   }
 }
 
 @media (max-width: 480px) {
+  /* Background text small mobile */
+  .bg-text-item {
+    font-size: 18vw;
+    padding: 0 1rem;
+  }
+
+  .bg-text-wrapper {
+    height: 22vh;
+  }
+
+  .bg-text-1 {
+    top: 5%;
+  }
+
+  .bg-text-2 {
+    top: 50%;
+  }
+
+  .bg-text-3 {
+    bottom: 5%;
+  }
+
+  /* Navigation */
+  nav {
+    padding: 16px 20px;
+    padding-right: 60px;
+  }
+
+  body.scrolled nav {
+    padding-right: 20px;
+  }
+
+  .logo {
+    font-size: 15px;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nav-links {
+    gap: 16px;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+  }
+
+  /* Icon dropdown */
+  .icon-dropdown {
+    top: 18px;
+    right: 20px;
+  }
+
+  body.scrolled .icon-dropdown {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .icon-dropdown-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .icon-menu {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .icon-menu a {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+  }
+
+  /* Lightbulb */
   .lightbulb {
     width: 70px;
     height: 70px;
@@ -936,17 +1415,225 @@ footer {
   .lightbulb-container {
     margin-bottom: 25px;
   }
+
+  .radial-light {
+    width: 200px;
+    height: 200px;
+  }
+
+  .light-rays {
+    width: 100px;
+    height: 100px;
+  }
+
+  .ray {
+    height: 60px;
+  }
   
+  /* Hero Section */
   .hero-section {
-    padding: 80px 20px 40px;
+    min-height: 80vh;
+    padding: 70px 20px 40px;
   }
   
   .hero-content h1 {
     font-size: 32px;
+    margin-bottom: 20px;
   }
   
   .hero-content p {
     font-size: 14px;
+    line-height: 1.65;
+    margin-bottom: 35px;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    padding: 7px 16px;
+    margin-bottom: 25px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 12px;
+  }
+
+  /* Section Titles */
+  .section-title {
+    min-height: 50vh;
+    padding: 40px 20px;
+  }
+
+  .section-title h2 {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .section-title p {
+    font-size: 14px;
+  }
+
+  /* Work Section */
+  .work-section {
+    padding: 0 20px 80px 20px;
+  }
+
+  section {
+    padding: 80px 20px;
+  }
+
+  .projects-container {
+    gap: 40px;
+  }
+
+  .project-item {
+    gap: 25px;
+    padding: 35px 0;
+  }
+
+  .project-visual {
+    border-radius: 10px;
+  }
+
+  .project-details h3 {
+    font-size: 22px;
+  }
+
+  .project-details p {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  .project-tech {
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .tech-tag {
+    padding: 4px 12px;
+    font-size: 10px;
+  }
+
+  .project-number {
+    font-size: 10px;
+    margin-bottom: 12px;
+  }
+
+  /* Skills Section */
+  .skills-section {
+    padding: 0 20px 80px 20px;
+  }
+
+  .skills-grid {
+    gap: 20px;
+  }
+
+  .skill-card {
+    padding: 32px 24px;
+    border-radius: 10px;
+  }
+
+  .skill-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
+
+  .skill-card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+  }
+
+  .skill-card p {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  /* Contact Section */
+  .contact-section {
+    padding: 80px 20px;
+  }
+
+  .contact-content h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .contact-content p {
+    font-size: 14px;
+    margin-bottom: 30px;
+    line-height: 1.65;
+  }
+
+  .social-links {
+    gap: 12px;
+    margin-top: 35px !important;
+  }
+
+  .social-link {
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+    border-radius: 8px;
+  }
+
+  /* Footer */
+  footer {
+    padding: 30px 20px;
+    font-size: 11px;
+  }
+
+  /* Orbs - smaller on mobile */
+  .orb1 {
+    width: 350px;
+    height: 350px;
+    top: -180px;
+    left: -150px;
+  }
+
+  .orb2 {
+    width: 300px;
+    height: 300px;
+    bottom: -150px;
+    right: -100px;
+  }
+
+  .orb3 {
+    width: 325px;
+    height: 325px;
+  }
+
+  /* Radial light from top */
+  .radial-light-top {
+    top: min(140px, 20vh);
+  }
+}
+
+@media (max-width: 360px) {
+  /* Extra small screens */
+  .hero-content h1 {
+    font-size: 28px;
+  }
+
+  .hero-content p {
+    font-size: 13px;
+  }
+
+  .section-title h2 {
+    font-size: 24px;
+  }
+
+  .project-details h3 {
+    font-size: 20px;
+  }
+
+  .contact-content h2 {
+    font-size: 28px;
+  }
+
+  .bg-text-item {
+    font-size: 20vw;
   }
 }
 </style>
@@ -957,9 +1644,56 @@ footer {
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
-  <div class="bg-text bg-text-1">DESIGN EMPOWER</div>
-  <div class="bg-text bg-text-2">CODE UPLIFT</div>
-  <div class="bg-text bg-text-3">CREATE INSPIRE</div>
+  <div class="bg-text-wrapper bg-text-1">
+    <div class="bg-text-scroller" data-direction="1">
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+    </div>
+  </div>
+  <div class="bg-text-wrapper bg-text-2">
+    <div class="bg-text-scroller" data-direction="-1">
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+    </div>
+  </div>
+  <div class="bg-text-wrapper bg-text-3">
+    <div class="bg-text-scroller" data-direction="1">
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+    </div>
+  </div>
+  <!-- Radial light effect from top -->
+  <div class="radial-light-top"></div>
 </div>
 
 <div class="icon-dropdown">
@@ -989,7 +1723,12 @@ footer {
       <span class="logo-text-alt">It's Jerome's World</span>
     </span>
   </a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#work">Work</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1240,6 +1979,32 @@ footer {
 </main>
 
 <script>
+// Hamburger menu toggle
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const navLinks = document.getElementById('navLinks');
+
+hamburgerBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  hamburgerBtn.classList.toggle('active');
+  navLinks.classList.toggle('active');
+});
+
+// Close mobile menu when clicking a link
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburgerBtn.classList.remove('active');
+    navLinks.classList.remove('active');
+  });
+});
+
+// Close mobile menu when clicking outside
+window.addEventListener('click', (e) => {
+  if (!e.target.closest('nav')) {
+    hamburgerBtn.classList.remove('active');
+    navLinks.classList.remove('active');
+  }
+});
+
 // Icon dropdown menu toggle
 const iconDropdownBtn = document.getElementById('iconDropdownBtn');
 const iconMenu = document.getElementById('iconMenu');
@@ -1286,10 +2051,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Subtle parallax effect on scroll
+// Infinite scrolling background text effect
+const bgTextScrollers = document.querySelectorAll('.bg-text-scroller');
+
+function updateBackgroundText() {
+  const scrollY = window.scrollY;
+  
+  bgTextScrollers.forEach(scroller => {
+    const direction = parseInt(scroller.getAttribute('data-direction'));
+    
+    // Calculate the offset with wrap-around for infinite loop effect
+    const baseOffset = scrollY * 0.01; // Very slow, subtle movement
+    // Use modulo to create seamless looping (25% = width of one text segment approximately)
+    const wrappedOffset = ((baseOffset % 25) + 25) % 25;
+    // Alternate directions: positive direction moves left, negative moves right
+    const finalOffset = direction === 1 ? -wrappedOffset : wrappedOffset - 25;
+    
+    scroller.style.transform = `translateX(${finalOffset}%)`;
+  });
+}
+
+// Scroll event with parallax for orbs and background text
 let lastScrollY = window.scrollY;
 const logoNav = document.getElementById('logoNav');
-const bgTexts = document.querySelectorAll('.bg-text');
 
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
@@ -1301,21 +2085,8 @@ window.addEventListener('scroll', () => {
     orb.style.transform = `translateY(${scrollY * speed}px)`;
   });
   
-  // Background text parallax
-  bgTexts.forEach((text, index) => {
-    let speed = 0.3;
-    let direction;
-    
-    if (index === 0) {
-      direction = 1;
-    } else if (index === 1) {
-      direction = -1;
-    } else {
-      direction = 1;
-    }
-    
-    text.style.transform = `translateX(${scrollY * speed * direction}px)`;
-  });
+  // Update infinite scrolling background text
+  updateBackgroundText();
   
   // Change logo text on scroll and move icon menu
   if (scrollY > 100) {
@@ -1328,6 +2099,9 @@ window.addEventListener('scroll', () => {
   
   lastScrollY = scrollY;
 });
+
+// Initialize background text position on load
+updateBackgroundText();
 
 // Refined mouse trail with p5.js
 new p5((p) => {

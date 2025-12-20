@@ -422,33 +422,67 @@ body.reveal-page main {
   pointer-events: none;
 }
 
-/* Background text effect */
-.bg-text {
+/* Infinite scrolling background text */
+.bg-text-wrapper {
   position: fixed;
-  font-size: 18vw;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.05);
-  white-space: nowrap;
-  user-select: none;
+  left: 0;
+  width: 100%;
+  height: 25vh;
+  overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  letter-spacing: -0.05em;
-  line-height: 1;
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  display: flex;
+  align-items: center;
 }
 
 .bg-text-1 {
-  top: 10%;
-  left: -3%;
+  top: 8%;
 }
 
 .bg-text-2 {
-  top: 38%;
-  right: -3%;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .bg-text-3 {
-  bottom: 3%;
-  left: -3%;
+  bottom: 8%;
+}
+
+.bg-text-scroller {
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+  overflow: visible;
+}
+
+.bg-text-item {
+  font-size: 18vw;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.03);
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+  padding: 0 2rem;
+  flex-shrink: 0;
+}
+
+/* Radial light effect from top */
+.radial-light-top {
+  position: fixed;
+  top: min(180px, 25vh);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200vw;
+  height: 200vw;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle at center, 
+    hsla(25, 91%, 54%, 0.15) 0%, 
+    hsla(25, 91%, 54%, 0.08) 10%, 
+    transparent 40%);
 }
 
 .orb {
@@ -837,6 +871,13 @@ body.reveal-page .hero-text-content {
   transform: translateY(-4px);
 }
 
+.project-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .project-placeholder {
   position: absolute;
   inset: 0;
@@ -1047,8 +1088,24 @@ footer {
   font-weight: 300;
 }
 
-/* Responsive */
+/* Responsive adjustments */
 @media (max-width: 768px) {
+  .bg-text-item {
+    font-size: 15vw;
+  }
+
+  .bg-text-wrapper {
+    height: 22vh;
+  }
+
+  .bg-text-1 {
+    top: 6%;
+  }
+
+  .bg-text-3 {
+    bottom: 6%;
+  }
+
   .section-title {
     min-height: 80vh;
     padding: 40px 30px;
@@ -1142,6 +1199,46 @@ footer {
     justify-content: center;
   }
 }
+
+@media (max-width: 640px) {
+  .bg-text-item {
+    font-size: 16vw;
+    padding: 0 1.5rem;
+  }
+
+  .bg-text-wrapper {
+    height: 20vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .bg-text-item {
+    font-size: 18vw;
+    padding: 0 1rem;
+  }
+
+  .bg-text-wrapper {
+    height: 22vh;
+  }
+
+  .bg-text-1 {
+    top: 5%;
+  }
+
+  .bg-text-2 {
+    top: 50%;
+  }
+
+  .bg-text-3 {
+    bottom: 5%;
+  }
+}
+
+@media (max-width: 360px) {
+  .bg-text-item {
+    font-size: 20vw;
+  }
+}
 </style>
 </head>
 <body>
@@ -1152,9 +1249,61 @@ footer {
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
-  <div class="bg-text bg-text-1">DESIGN EMPOWER</div>
-  <div class="bg-text bg-text-2">CODE UPLIFT</div>
-  <div class="bg-text bg-text-3">CREATE INSPIRE</div>
+  
+  <!-- Infinite Scrolling Background Text -->
+  <div class="bg-text-wrapper bg-text-1">
+    <div class="bg-text-scroller" data-direction="1">
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+      <span class="bg-text-item">DESIGN EMPOWER</span>
+    </div>
+  </div>
+  
+  <div class="bg-text-wrapper bg-text-2">
+    <div class="bg-text-scroller" data-direction="-1">
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+      <span class="bg-text-item">CODE UPLIFT</span>
+    </div>
+  </div>
+  
+  <div class="bg-text-wrapper bg-text-3">
+    <div class="bg-text-scroller" data-direction="1">
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+      <span class="bg-text-item">CREATE INSPIRE</span>
+    </div>
+  </div>
+  
+  <!-- Radial light effect from top -->
+  <div class="radial-light-top"></div>
 </div>
 
 <div class="icon-dropdown">
@@ -1195,8 +1344,7 @@ footer {
 <nav>
   <a href="#mainContent" class="logo" id="logoNav">
     <div class="logo-icon">
-    <img src="images/logo.png" alt="Jerome Bustarga
-    Logo">
+    <img src="images/logo.png" alt="Jerome Bustarga Logo">
     </div>
     <span class="logo-text-wrapper" style="position: relative;">
       <span class="logo-text">Jerome Bustarga</span>
@@ -1247,9 +1395,7 @@ footer {
       <!-- Story Card 1 -->
       <div class="project-item">
         <div class="project-visual">
-          <div class="project-placeholder">
-            <i class="fa-solid fa-graduation-cap"></i>
-          </div>
+          <img src="images/creighton.png" alt="Education & Foundation">
         </div>
         <div class="project-details">
           <div class="project-number">01</div>
@@ -1267,9 +1413,7 @@ footer {
       <!-- Story Card 2 -->
       <div class="project-item">
         <div class="project-visual">
-          <div class="project-placeholder">
-            <i class="fa-solid fa-palette"></i>
-          </div>
+          <img src="images/create.png" alt="Creative Vision">
         </div>
         <div class="project-details">
           <div class="project-number">02</div>
@@ -1287,9 +1431,7 @@ footer {
       <!-- Story Card 3 -->
       <div class="project-item">
         <div class="project-visual">
-          <div class="project-placeholder">
-            <i class="fa-solid fa-code"></i>
-          </div>
+          <img src="images/story-technical.jpg" alt="Technical Expertise">
         </div>
         <div class="project-details">
           <div class="project-number">03</div>
@@ -1307,9 +1449,7 @@ footer {
       <!-- Story Card 4 -->
       <div class="project-item">
         <div class="project-visual">
-          <div class="project-placeholder">
-            <i class="fa-solid fa-rocket"></i>
-          </div>
+          <img src="images/story-future.jpg" alt="Looking Forward">
         </div>
         <div class="project-details">
           <div class="project-number">04</div>
@@ -1472,10 +1612,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// Infinite scrolling background text effect
+const bgTextScrollers = document.querySelectorAll('.bg-text-scroller');
+
+function updateBackgroundText() {
+  const scrollY = window.scrollY;
+  
+  bgTextScrollers.forEach(scroller => {
+    const direction = parseInt(scroller.getAttribute('data-direction'));
+    
+    // Calculate the offset with wrap-around for infinite loop effect
+    const baseOffset = scrollY * 0.01; // Very slow, subtle movement
+    // Use modulo to create seamless looping (25% = width of one text segment approximately)
+    const wrappedOffset = ((baseOffset % 25) + 25) % 25;
+    // Alternate directions: positive direction moves left, negative moves right
+    const finalOffset = direction === 1 ? -wrappedOffset : wrappedOffset - 25;
+    
+    scroller.style.transform = `translateX(${finalOffset}%)`;
+  });
+}
+
 // Subtle parallax effect on scroll
 let lastScrollY = window.scrollY;
 const logoNav = document.getElementById('logoNav');
-const bgTexts = document.querySelectorAll('.bg-text');
 
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
@@ -1487,22 +1646,8 @@ window.addEventListener('scroll', () => {
     orb.style.transform = `translateY(${scrollY * speed}px)`;
   });
   
-  // Background text parallax
-  bgTexts.forEach((text, index) => {
-    let speed = 0.3;
-    let direction;
-    
-    // Alternate directions: 0 moves right, 1 moves left, 2 moves right
-    if (index === 0) {
-      direction = 1; // moves right
-    } else if (index === 1) {
-      direction = -1; // moves left
-    } else {
-      direction = 1; // moves right
-    }
-    
-    text.style.transform = `translateX(${scrollY * speed * direction}px)`;
-  });
+  // Update infinite scrolling background text
+  updateBackgroundText();
   
   // Change logo text on scroll and move icon menu
   if (scrollY > 100) {
@@ -1515,6 +1660,9 @@ window.addEventListener('scroll', () => {
   
   lastScrollY = scrollY;
 });
+
+// Initialize background text position on load
+updateBackgroundText();
 
 // Refined mouse trail with p5.js
 new p5((p) => {
