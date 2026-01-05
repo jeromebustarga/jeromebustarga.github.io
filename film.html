@@ -1557,9 +1557,9 @@ const filmProjects = [
     category: "Web Commercial",
     year: "2024",
     thumbnailType: "video",
-    thumbnailVideo: "https://creightonuniv-my.sharepoint.com/:v:/g/personal/jhb09808_creighton_edu/IQAMmyX9F-hMR5Ous33leBZAASdyfkJ3VWqNeyD_w1QAeeM?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=gUBdmN",
-    videoUrl: "https://creightonuniv-my.sharepoint.com/:v:/g/personal/jhb09808_creighton_edu/IQAMmyX9F-hMR5Ous33leBZAASdyfkJ3VWqNeyD_w1QAeeM?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D&e=gUBdmN",
-    videoType: "sharepoint",
+    thumbnailVideo: "https://player.vimeo.com/video/1151721786?background=1&autoplay=1&loop=1&muted=1",
+    videoUrl: "https://player.vimeo.com/video/1151721786",
+    videoType: "vimeo",
     description: "A personal brand advertisement introducing my portfolio website and creative identity.",
     story: "This commercial serves as both an introduction and a statement—establishing the 'It's Jerome's World' brand through dynamic visuals and bold messaging. The piece captures the essence of my multidisciplinary approach, blending technology, design, and storytelling into a cohesive visual identity.",
     process: "The ad was designed to be punchy and memorable, utilizing quick cuts, kinetic typography, and signature orange brand colors. Every frame was intentionally crafted to reflect the energy and creativity behind the portfolio it represents.",
@@ -1572,9 +1572,9 @@ const filmProjects = [
     category: "Creative Video",
     year: "2024",
     thumbnailType: "video",
-    thumbnailVideo: "https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=8f8e7dfb-986e-4796-998e-587db82a1c30&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
-    videoUrl: "https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=8f8e7dfb-986e-4796-998e-587db82a1c30&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
-    videoType: "sharepoint",
+    thumbnailVideo: "https://player.vimeo.com/video/1151721841?background=1&autoplay=1&loop=1&muted=1",
+    videoUrl: "https://player.vimeo.com/video/1151721841",
+    videoType: "vimeo",
     description: "A high-energy creative video featuring Creighton Dance Jamz, capturing the spirit and movement of the dance community.",
     story: "This project was an exploration of rhythm, movement, and visual storytelling. The goal was to translate the raw energy of dance into a cinematic experience that feels as dynamic as the performances themselves.",
     process: "Shot with an emphasis on capturing authentic moments and fluid motion, the video employs creative camera angles, slow-motion sequences, and rhythmic editing that syncs with the music. The color grading was designed to enhance the vibrant atmosphere while maintaining a polished, professional look.",
@@ -1754,22 +1754,14 @@ function openModal(item) {
     `;
   }
 
-  // Handle different video embed types
+  // Handle video embed
   let videoHTML = '';
   if (item.videoUrl) {
-    if (item.videoType === 'sharepoint') {
-      videoHTML = `
-        <div class="video-container">
-          <iframe src="${item.videoUrl}" frameborder="0" scrolling="no" allowfullscreen></iframe>
-        </div>
-      `;
-    } else {
-      videoHTML = `
-        <div class="video-container">
-          <iframe src="${item.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-      `;
-    }
+    videoHTML = `
+      <div class="video-container">
+        <iframe src="${item.videoUrl}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    `;
   }
 
   // Build media section - poster + video side by side if poster exists
