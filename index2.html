@@ -1003,6 +1003,49 @@ footer {
 }
 
 @media (max-width: 768px) {
+  /* MOBILE PERFORMANCE: Disable heavy GPU effects */
+  .orb {
+    filter: none;
+    opacity: 0.04;
+  }
+  
+  .bulb-on {
+    filter: drop-shadow(0 0 20px rgba(244, 121, 33, 0.6));
+    animation: none;
+  }
+  
+  .radial-light {
+    animation: none;
+    opacity: 0.6;
+  }
+  
+  .light-rays {
+    animation: rotate 30s linear infinite; /* Slower rotation */
+  }
+  
+  .radial-light-top {
+    opacity: 0.8;
+  }
+  
+  nav,
+  .icon-dropdown-btn,
+  .icon-menu {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  
+  nav {
+    background: rgba(13, 13, 13, 0.95);
+  }
+  
+  .icon-dropdown-btn {
+    background: rgba(20, 20, 20, 0.95);
+  }
+  
+  .icon-menu {
+    background: rgba(20, 20, 20, 0.98);
+  }
+
   /* Background text mobile adjustments */
   .bg-text-item {
     font-size: 15vw;
