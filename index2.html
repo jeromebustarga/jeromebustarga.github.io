@@ -2103,64 +2103,70 @@ window.addEventListener('scroll', () => {
 // Initialize background text position on load
 updateBackgroundText();
 
-// Refined mouse trail with p5.js
-new p5((p) => {
-  let trails = [];
-  
-  p.setup = () => {
-    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-    canvas.position(0, 0);
-    canvas.style('pointer-events', 'none');
-    canvas.style('z-index', '9998');
-    canvas.style('position', 'fixed');
-    canvas.style('top', '0');
-    canvas.style('left', '0');
-    p.clear();
-    p.noStroke();
-  };
+// Refined mouse trail with p5.js - DISABLED ON MOBILE
+const isTouchDevice = ('ontouchstart' in window) || 
+                      (navigator.maxTouchPoints > 0) || 
+                      (window.matchMedia('(pointer: coarse)').matches);
 
-  p.draw = () => {
-    p.clear();
+if (!isTouchDevice) {
+  new p5((p) => {
+    let trails = [];
     
-    for (let i = trails.length - 1; i >= 0; i--) {
-      const point = trails[i];
-      
-      // Subtle white glow
-      p.fill(255, 255, 255, point.alpha * 0.08);
-      p.ellipse(point.x, point.y, point.size * 2);
-      
-      // Core
-      p.fill(255, 255, 255, point.alpha * 0.3);
-      p.ellipse(point.x, point.y, point.size);
-      
-      point.alpha -= 3;
-      point.size *= 0.96;
-      if (point.alpha <= 0) trails.splice(i, 1);
-    }
+    p.setup = () => {
+      const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+      canvas.position(0, 0);
+      canvas.style('pointer-events', 'none');
+      canvas.style('z-index', '9998');
+      canvas.style('position', 'fixed');
+      canvas.style('top', '0');
+      canvas.style('left', '0');
+      p.clear();
+      p.noStroke();
+    };
 
-    const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-    if (d > 0) {
-      const steps = p.max(1, d * 0.5);
-      for (let i = 0; i <= steps; i++) {
-        const t = i / steps;
-        const x = p.lerp(p.pmouseX, p.mouseX, t);
-        const y = p.lerp(p.pmouseY, p.mouseY, t);
-        trails.push({
-          x,
-          y,
-          size: p.random(6, 10),
-          alpha: p.random(120, 150)
-        });
+    p.draw = () => {
+      p.clear();
+      
+      for (let i = trails.length - 1; i >= 0; i--) {
+        const point = trails[i];
+        
+        // Subtle white glow
+        p.fill(255, 255, 255, point.alpha * 0.08);
+        p.ellipse(point.x, point.y, point.size * 2);
+        
+        // Core
+        p.fill(255, 255, 255, point.alpha * 0.3);
+        p.ellipse(point.x, point.y, point.size);
+        
+        point.alpha -= 3;
+        point.size *= 0.96;
+        if (point.alpha <= 0) trails.splice(i, 1);
       }
-    }
 
-    if (trails.length > 600) trails.splice(0, trails.length - 600);
-  };
+      const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+      if (d > 0) {
+        const steps = p.max(1, d * 0.5);
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          const x = p.lerp(p.pmouseX, p.mouseX, t);
+          const y = p.lerp(p.pmouseY, p.mouseY, t);
+          trails.push({
+            x,
+            y,
+            size: p.random(6, 10),
+            alpha: p.random(120, 150)
+          });
+        }
+      }
 
-  p.windowResized = () => {
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
-  };
-});
+      if (trails.length > 600) trails.splice(0, trails.length - 600);
+    };
+
+    p.windowResized = () => {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    };
+  });
+}
 </script>
 </body>
 </html>
