@@ -426,8 +426,54 @@ main {
   transition: all 0.5s ease;
 }
 
-.gallery-item:hover .gallery-item-image {
-  transform: scale(1.05);
+.gallery-item-video {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.gallery-item-video::after {
+  content: '\f04b';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(244, 121, 33, 0.85);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  line-height: 60px;
+  text-align: center;
+  padding-left: 5px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 5;
+  box-shadow: 0 4px 20px rgba(244, 121, 33, 0.4);
+}
+
+.gallery-item:hover .gallery-item-video::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.gallery-item-video iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+  transform: scale(1.1);
+  transition: transform 0.5s ease;
+}
+
+.gallery-item:hover .gallery-item-image,
+.gallery-item:hover .gallery-item-video iframe {
+  transform: scale(1.15);
 }
 
 .gallery-item-overlay {
@@ -481,6 +527,222 @@ main {
     transform: translate(-1px, 1px);
   }
 }
+
+/* Motion Graphics Lab Section */
+.motion-lab-section {
+  padding: clamp(60px, 10vw, 100px) clamp(20px, 5vw, 60px);
+  max-width: 1600px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: clamp(40px, 6vw, 60px);
+}
+
+.section-label {
+  display: inline-block;
+  padding: clamp(6px, 1.5vw, 8px) clamp(16px, 3vw, 20px);
+  background: rgba(244, 121, 33, 0.08);
+  border: 1px solid rgba(244, 121, 33, 0.2);
+  border-radius: 30px;
+  font-size: clamp(11px, 2vw, 13px);
+  font-weight: 500;
+  color: #f47921;
+  margin-bottom: clamp(16px, 3vw, 20px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.section-title .highlight {
+  background: linear-gradient(135deg, #f47921 0%, #ff9a56 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 400;
+}
+
+.section-description {
+  font-size: clamp(14px, 2vw, 16px);
+  color: #808080;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Video Grid */
+.video-grid-9 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(12px, 2vw, 20px);
+}
+
+.video-cell {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: clamp(8px, 1.5vw, 12px);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.video-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(244, 121, 33, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.video-cell:hover::before {
+  opacity: 1;
+}
+
+.video-cell:hover {
+  transform: scale(1.02);
+  border-color: rgba(244, 121, 33, 0.3);
+  box-shadow: 0 10px 40px rgba(244, 121, 33, 0.15);
+  z-index: 10;
+}
+
+.video-cell video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.video-cell:hover video {
+  transform: scale(1.05);
+}
+
+.video-cell-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(12px, 2vw, 16px);
+  background: linear-gradient(to top, rgba(13, 13, 13, 0.95) 0%, transparent 100%);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  z-index: 3;
+}
+
+.video-cell:hover .video-cell-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.video-cell-title {
+  font-size: clamp(12px, 1.8vw, 14px);
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.video-cell-tag {
+  font-size: clamp(10px, 1.5vw, 11px);
+  color: #f47921;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Expanded video overlay */
+.video-expanded-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  backdrop-filter: blur(20px);
+  justify-content: center;
+  align-items: center;
+  padding: clamp(20px, 4vw, 60px);
+  cursor: pointer;
+}
+
+.video-expanded-overlay.active {
+  display: flex;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.video-expanded-container {
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+  cursor: default;
+}
+
+.video-expanded-container video {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+.video-expanded-info {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.video-expanded-title {
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.video-expanded-tag {
+  font-size: 13px;
+  color: #f47921;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.video-expanded-close {
+  position: fixed;
+  top: clamp(20px, 4vw, 40px);
+  right: clamp(20px, 4vw, 40px);
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: #a0a0a0;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.video-expanded-close:hover {
+  background: rgba(244, 121, 33, 0.1);
+  border-color: rgba(244, 121, 33, 0.3);
+  color: #f47921;
+  transform: rotate(90deg);
+}
+
+/* Responsive video grid - handled in main responsive section */
 
 /* Modal */
 .modal {
@@ -582,17 +844,13 @@ main {
   margin-bottom: clamp(30px, 5vw, 40px);
 }
 
-.modal-tools {
-  margin-bottom: clamp(20px, 4vw, 30px);
-}
-
 .modal-tools h4 {
-  font-size: clamp(12px, 2vw, 14px);
+  font-size: 12px;
   font-weight: 500;
-  color: #fff;
-  margin-bottom: 12px;
+  color: #808080;
+  margin-bottom: 14px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
 }
 
 .tool-tags {
@@ -649,24 +907,29 @@ main {
 
 .modal-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
   padding-bottom: 30px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .modal-header .modal-category {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 1px solid rgba(244, 121, 33, 0.2);
+  border-radius: 20px;
   color: #f47921;
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
 }
 
 .modal-header .modal-title {
-  font-size: clamp(28px, 4vw, 42px);
+  font-size: clamp(28px, 4vw, 38px);
   font-weight: 300;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   letter-spacing: -0.02em;
 }
 
@@ -680,11 +943,10 @@ main {
 }
 
 .modal-story h3 {
-  font-size: 24px;
-  font-weight: 400;
-  margin: 40px 0 20px;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 30px 0 14px;
   color: #f47921;
-  letter-spacing: -0.01em;
 }
 
 .modal-story h3:first-child {
@@ -692,19 +954,16 @@ main {
 }
 
 .modal-story p {
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.8;
-  color: #c0c0c0;
-  margin-bottom: 24px;
+  color: #b0b0b0;
+  margin-bottom: 20px;
 }
 
-.story-image {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin: 30px 0;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.modal-tools {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Video embed styling */
@@ -713,10 +972,10 @@ main {
   width: 100%;
   padding-bottom: 56.25%;
   margin: 30px 0;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .video-container iframe {
@@ -727,19 +986,123 @@ main {
   height: 100%;
 }
 
-/* Responsive modal for case studies */
-@media (max-width: 768px) {
-  .modal-case-study {
-    padding: 20px;
-  }
-  
-  .modal-story p {
-    font-size: 14px;
-  }
-  
-  .story-image {
-    margin: 20px 0;
-  }
+/* Film Stills Gallery */
+.modal-stills {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modal-stills h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #f47921;
+}
+
+.stills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.still-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.still-image:hover {
+  transform: scale(1.02);
+  border-color: rgba(244, 121, 33, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Poster */
+.modal-media-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  margin-bottom: 50px;
+  align-items: start;
+}
+
+.modal-poster-col {
+  text-align: center;
+}
+
+.poster-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.awards-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px 16px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 1px solid rgba(244, 121, 33, 0.25);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #f47921;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.awards-badge i {
+  font-size: 14px;
+}
+
+.modal-video-col h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #808080;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.modal-video-col .video-container {
+  margin: 0;
+}
+
+/* Modal text content */
+.modal-text-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 40px;
+}
+
+.modal-section {
+  margin-bottom: 30px;
+}
+
+.modal-section h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f47921;
+  margin-bottom: 12px;
+}
+
+.modal-section p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #b0b0b0;
+}
+
+.modal-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 30px;
 }
 
 /* Footer */
@@ -761,40 +1124,306 @@ footer {
   .gallery-item:active {
     transform: scale(0.98);
   }
+  
+  .video-cell-label {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Responsive adjustments */
+/* ========================================
+   MOBILE RESPONSIVE STYLES
+   ======================================== */
+
+/* Large tablets and below */
+@media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Tablets */
 @media (max-width: 768px) {
+  /* Navigation */
+  nav {
+    padding: 16px 20px;
+    padding-right: 70px;
+  }
+  
+  body.scrolled nav {
+    padding-right: 20px;
+  }
+  
   .nav-links {
     display: none;
   }
   
+  .logo {
+    font-size: 16px;
+  }
+  
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Icon dropdown */
+  .icon-dropdown {
+    top: 16px;
+    right: 16px;
+  }
+  
+  body.scrolled .icon-dropdown {
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .icon-dropdown-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+  
+  /* Hero */
+  .hero-section {
+    min-height: 50vh;
+    padding: 40px 20px;
+  }
+  
+  .hero-content h1 {
+    font-size: 36px;
+  }
+  
+  .hero-content p {
+    font-size: 15px;
+  }
+  
+  /* Gallery */
+  .gallery-section {
+    padding: 30px 16px;
+  }
+  
   .gallery-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 30px;
   }
   
+  /* Motion Lab */
+  .motion-lab-section {
+    padding: 50px 16px;
+  }
+  
+  .section-title {
+    font-size: 28px;
+  }
+  
+  .video-grid-9 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  
+  /* Modal */
   .modal-content {
-    grid-template-columns: 1fr;
+    padding: 20px;
   }
   
-  .modal-details {
+  .modal-case-study {
+    padding: 20px;
+  }
+  
+  .modal-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+  }
+  
+  .modal-header .modal-title {
+    font-size: 28px;
+  }
+  
+  .modal-media-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .modal-poster-col {
+    order: 1;
+  }
+  
+  .poster-image {
+    max-width: 200px;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .modal-video-col {
     order: 2;
   }
   
-  .modal-image-container {
-    order: 1;
+  .modal-two-col {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  .video-expanded-close {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  /* Stills grid */
+  .stills-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  /* Footer */
+  footer {
+    padding: 30px 16px;
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+/* Small phones */
+@media (max-width: 480px) {
+  /* Hero */
+  .hero-section {
+    min-height: 45vh;
+    padding: 30px 16px;
+  }
+  
+  .hero-label {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+  
+  .hero-content h1 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  
+  .hero-content p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  /* Section headers */
+  .section-label {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+  }
+  
+  .section-description {
+    font-size: 13px;
+  }
+  
+  /* Video grid - single column on small phones */
+  .video-grid-9 {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .video-cell-title {
+    font-size: 13px;
+  }
+  
+  .video-cell-tag {
+    font-size: 10px;
+  }
+  
+  /* Modal */
+  .modal-case-study {
+    padding: 16px;
+    max-height: 95vh;
+  }
+  
+  .modal-header .modal-category {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+  
+  .modal-header .modal-title {
+    font-size: 24px;
+  }
+  
+  .modal-section h3 {
+    font-size: 16px;
+  }
+  
+  .modal-section p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  
+  .modal-tools h4 {
+    font-size: 11px;
+  }
+  
+  .tool-tag {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+  
+  .poster-image {
+    max-width: 160px;
+  }
+  
+  .awards-badge {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+  
+  .awards-badge i {
+    font-size: 12px;
+  }
+  
+  /* Stills */
+  .modal-stills h3 {
+    font-size: 16px;
+  }
+  
+  /* Expanded video */
+  .video-expanded-overlay {
+    padding: 16px;
+  }
+  
+  .video-expanded-title {
+    font-size: 16px;
+  }
+  
+  .video-expanded-tag {
+    font-size: 11px;
+  }
+  
+  /* Background text - smaller on mobile */
+  .bg-text {
+    font-size: 25vw;
+    opacity: 0.03;
   }
 }
 
-@media (min-width: 1025px) {
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+/* Landscape phones */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    min-height: auto;
+    padding: 60px 20px 40px;
+  }
+  
+  .modal-case-study {
+    max-height: 100vh;
   }
 }
 </style>
@@ -861,6 +1490,22 @@ footer {
     </div>
   </section>
 
+  <!-- Motion Graphics Lab Section -->
+  <section class="motion-lab-section">
+    <div class="section-header">
+      <div class="section-label">Motion Studies</div>
+      <h2 class="section-title">The <span class="highlight">Lab</span></h2>
+      <p class="section-description">
+        A curated collection of motion design explorations—from kinetic typography 
+        and dynamic tracking to 3D animation and visual storytelling.
+      </p>
+    </div>
+    
+    <div class="video-grid-9" id="videoGrid9">
+      <!-- Videos will be generated by JavaScript -->
+    </div>
+  </section>
+
   <footer>
     <p>© 2025 Jerome Bustarga. Thoughtfully designed & built.</p>
   </footer>
@@ -876,40 +1521,115 @@ footer {
   </div>
 </div>
 
+<!-- Expanded Video Overlay -->
+<div class="video-expanded-overlay" id="videoExpandedOverlay">
+  <button class="video-expanded-close" id="videoExpandedClose">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="video-expanded-container" id="videoExpandedContainer">
+    <!-- Expanded video will be inserted here -->
+  </div>
+</div>
+
 <script>
-// Sample film & motion data - Replace with your actual projects
+// Film & Motion Projects
 const filmProjects = [
   {
     id: 1,
-    title: "Sample Motion Graphics Project",
-    category: "Motion Graphics",
+    title: "Fr. John Shea",
+    category: "Documentary",
     year: "2024",
-    image: "images/placeholder-16-9.jpg", // Thumbnail image
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_HERE", // YouTube embed URL
-    description: "Description of your motion graphics project. Explain the concept, execution, and key features.",
-    tools: ["After Effects", "Premiere Pro", "Illustrator"]
+    image: "images/johnshea1.png",
+    thumbnailType: "image",
+    poster: "images/johnshea1.png",
+    videoUrl: "https://player.vimeo.com/video/1054691723",
+    videoType: "vimeo",
+    description: "A short documentary that explores the life and dual roles of Fr. John Shea, a member of the Society of Jesus and a respected professor in the Biology Department at Creighton University.",
+    story: "The documentary delves into his unique journey as both a scientist and a priest, revealing the profound insights and challenges he faces while navigating the intersection of faith and scientific inquiry. Through personal reflections and candid conversations, Fr. Shea shares his experiences, shedding light on the conflicts and harmonies between his spiritual vocation and scientific pursuits.",
+    process: "The film was crafted through intimate interviews and observational footage, capturing Fr. Shea in both his laboratory and spiritual environments. The cinematography emphasizes the duality of his world—the precision of scientific research juxtaposed with the contemplative nature of religious life. Careful attention was paid to lighting and composition to create a meditative visual tone that mirrors the subject's thoughtful approach to life.",
+    stills: ["images/johnshea2.png", "images/johnshea3.png", "images/johnshea4.png"],
+    tools: ["Premiere Pro", "DaVinci Resolve", "Cinematography", "Interview Production"],
+    awards: "Film Festival Entry"
   },
   {
     id: 2,
-    title: "Sample Short Film",
-    category: "Short Film",
+    title: "It's Jerome's World",
+    category: "Web Commercial",
     year: "2024",
-    image: "images/placeholder-16-9.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_HERE",
-    description: "Description of your short film. Discuss the story, production process, and creative decisions.",
-    tools: ["Premiere Pro", "DaVinci Resolve", "Sound Design"]
+    thumbnailType: "video",
+    thumbnailVideo: "https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=fd259b0c-e817-474c-93ae-b37de5781640&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
+    videoUrl: "https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=fd259b0c-e817-474c-93ae-b37de5781640&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
+    videoType: "sharepoint",
+    description: "A personal brand advertisement introducing my portfolio website and creative identity.",
+    story: "This commercial serves as both an introduction and a statement—establishing the 'It's Jerome's World' brand through dynamic visuals and bold messaging. The piece captures the essence of my multidisciplinary approach, blending technology, design, and storytelling into a cohesive visual identity.",
+    process: "The ad was designed to be punchy and memorable, utilizing quick cuts, kinetic typography, and signature orange brand colors. Every frame was intentionally crafted to reflect the energy and creativity behind the portfolio it represents.",
+    stills: [],
+    tools: ["Premiere Pro", "After Effects", "Motion Graphics", "Brand Strategy"]
   },
   {
     id: 3,
-    title: "Sample Title Sequence",
-    category: "Title Design",
+    title: "Dance Jamz",
+    category: "Creative Video",
     year: "2024",
-    image: "images/placeholder-16-9.jpg",
-    videoUrl: "https://www.youtube.com/embed/VIDEO_ID_HERE",
-    description: "Description of your title sequence design. Detail the visual concept and animation techniques.",
-    tools: ["After Effects", "Cinema 4D", "Typography"]
+    thumbnailType: "video",
+    thumbnailVideo: "https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=8f8e7dfb-986e-4796-998e-587db82a1c30&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
+    videoUrl: "https://creightonuniv-my.sharepoint.com/personal/jhb09808_creighton_edu/_layouts/15/embed.aspx?UniqueId=8f8e7dfb-986e-4796-998e-587db82a1c30&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create",
+    videoType: "sharepoint",
+    description: "A high-energy creative video featuring Creighton Dance Jamz, capturing the spirit and movement of the dance community.",
+    story: "This project was an exploration of rhythm, movement, and visual storytelling. The goal was to translate the raw energy of dance into a cinematic experience that feels as dynamic as the performances themselves.",
+    process: "Shot with an emphasis on capturing authentic moments and fluid motion, the video employs creative camera angles, slow-motion sequences, and rhythmic editing that syncs with the music. The color grading was designed to enhance the vibrant atmosphere while maintaining a polished, professional look.",
+    stills: [],
+    tools: ["Premiere Pro", "Color Grading", "Cinematography", "Sound Design"]
   }
-  // Add more projects as needed
+];
+
+// Motion Graphics Lab videos data
+const motionLabVideos = [
+  {
+    src: "images/EX7 - Keyframes Basics - Race.mp4",
+    title: "Race",
+    tag: "Keyframe Animation"
+  },
+  {
+    src: "images/EX7 - Keyframes Basics - Obstacles.mp4",
+    title: "Obstacles",
+    tag: "Keyframe Animation"
+  },
+  {
+    src: "images/EX8 - 3d Tracking.mp4",
+    title: "3D Camera Tracking",
+    tag: "Compositing"
+  },
+  {
+    src: "images/EX4 - Strokes & Reveals.mp4",
+    title: "Strokes & Reveals",
+    tag: "Path Animation"
+  },
+  {
+    src: "images/EX2 - Mograph Questionnaire.mp4",
+    title: "Mograph Questionnaire",
+    tag: "Kinetic Typography"
+  },
+  {
+    src: "images/EX9 - 3D Monogram.mp4",
+    title: "3D Monogram",
+    tag: "3D Animation"
+  },
+  {
+    src: "images/EX3 - Personal Mantras.mp4",
+    title: "Personal Mantras",
+    tag: "Typography"
+  },
+  {
+    src: "images/EX1 - The Super Basics.mp4",
+    title: "Shape Dynamics",
+    tag: "Motion Design"
+  },
+  {
+    src: "images/EX8 - 2d Tracking.mp4",
+    title: "2D Motion Tracking",
+    tag: "Compositing"
+  }
 ];
 
 // Generate gallery items
@@ -919,8 +1639,21 @@ filmProjects.forEach((item, index) => {
   const galleryItem = document.createElement('div');
   galleryItem.className = 'gallery-item';
   galleryItem.style.transitionDelay = `${index * 0.1}s`;
+  
+  // Check if thumbnail is video or image
+  let thumbnailHTML = '';
+  if (item.thumbnailType === 'video') {
+    thumbnailHTML = `
+      <div class="gallery-item-video">
+        <iframe src="${item.thumbnailVideo}" frameborder="0" scrolling="no" loading="lazy"></iframe>
+      </div>
+    `;
+  } else {
+    thumbnailHTML = `<img src="${item.image}" alt="${item.title}" class="gallery-item-image">`;
+  }
+  
   galleryItem.innerHTML = `
-    <img src="${item.image}" alt="${item.title}" class="gallery-item-image">
+    ${thumbnailHTML}
     <div class="gallery-item-overlay">
       <div class="gallery-item-title">${item.title}</div>
       <div class="gallery-item-category">${item.category}</div>
@@ -929,6 +1662,62 @@ filmProjects.forEach((item, index) => {
   
   galleryItem.addEventListener('click', () => openModal(item));
   galleryGrid.appendChild(galleryItem);
+});
+
+// Generate Motion Graphics Lab grid
+const videoGrid9 = document.getElementById('videoGrid9');
+
+motionLabVideos.forEach((video, index) => {
+  const videoCell = document.createElement('div');
+  videoCell.className = 'video-cell';
+  videoCell.style.animationDelay = `${index * 0.1}s`;
+  videoCell.innerHTML = `
+    <video autoplay muted loop playsinline>
+      <source src="${video.src}" type="video/mp4">
+    </video>
+    <div class="video-cell-label">
+      <div class="video-cell-title">${video.title}</div>
+      <div class="video-cell-tag">${video.tag}</div>
+    </div>
+  `;
+  
+  videoCell.addEventListener('click', () => expandVideo(video));
+  videoGrid9.appendChild(videoCell);
+});
+
+// Expanded video functionality
+const videoExpandedOverlay = document.getElementById('videoExpandedOverlay');
+const videoExpandedContainer = document.getElementById('videoExpandedContainer');
+const videoExpandedClose = document.getElementById('videoExpandedClose');
+
+function expandVideo(video) {
+  videoExpandedContainer.innerHTML = `
+    <video autoplay loop playsinline controls>
+      <source src="${video.src}" type="video/mp4">
+    </video>
+    <div class="video-expanded-info">
+      <h3 class="video-expanded-title">${video.title}</h3>
+      <div class="video-expanded-tag">${video.tag}</div>
+    </div>
+  `;
+  
+  videoExpandedOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeExpandedVideo() {
+  videoExpandedOverlay.classList.remove('active');
+  document.body.style.overflow = 'auto';
+  // Pause video when closing
+  const video = videoExpandedContainer.querySelector('video');
+  if (video) video.pause();
+}
+
+videoExpandedClose.addEventListener('click', closeExpandedVideo);
+videoExpandedOverlay.addEventListener('click', (e) => {
+  if (e.target === videoExpandedOverlay) {
+    closeExpandedVideo();
+  }
 });
 
 // Intersection Observer for scroll animations
@@ -952,6 +1741,56 @@ const modalContent = document.getElementById('modalContent');
 const modalClose = document.getElementById('modalClose');
 
 function openModal(item) {
+  // Build stills gallery HTML if stills exist
+  let stillsHTML = '';
+  if (item.stills && item.stills.length > 0) {
+    stillsHTML = `
+      <div class="modal-stills">
+        <h3>Film Stills</h3>
+        <div class="stills-grid">
+          ${item.stills.map(still => `<img src="${still}" alt="Film still" class="still-image">`).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  // Handle different video embed types
+  let videoHTML = '';
+  if (item.videoUrl) {
+    if (item.videoType === 'sharepoint') {
+      videoHTML = `
+        <div class="video-container">
+          <iframe src="${item.videoUrl}" frameborder="0" scrolling="no" allowfullscreen></iframe>
+        </div>
+      `;
+    } else {
+      videoHTML = `
+        <div class="video-container">
+          <iframe src="${item.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      `;
+    }
+  }
+
+  // Build media section - poster + video side by side if poster exists
+  let mediaHTML = '';
+  if (item.poster) {
+    mediaHTML = `
+      <div class="modal-media-grid">
+        <div class="modal-poster-col">
+          <img src="${item.poster}" alt="${item.title} Poster" class="poster-image">
+          ${item.awards ? `<div class="awards-badge"><i class="fa-solid fa-award"></i> ${item.awards}</div>` : ''}
+        </div>
+        <div class="modal-video-col">
+          <h3>Watch the Film</h3>
+          ${videoHTML}
+        </div>
+      </div>
+    `;
+  } else {
+    mediaHTML = videoHTML;
+  }
+
   modalContent.innerHTML = `
     <div class="modal-case-study">
       <div class="modal-header">
@@ -959,18 +1798,34 @@ function openModal(item) {
         <h2 class="modal-title">${item.title}</h2>
         <div class="modal-year">${item.year}</div>
       </div>
-      <div class="modal-story">
-        ${item.videoUrl ? `
-          <div class="video-container">
-            <iframe src="${item.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      
+      ${mediaHTML}
+      
+      <div class="modal-text-content">
+        <div class="modal-section">
+          <h3>Overview</h3>
+          <p>${item.description}</p>
+        </div>
+        
+        <div class="modal-two-col">
+          <div class="modal-section">
+            <h3>The Story</h3>
+            <p>${item.story}</p>
           </div>
-        ` : ''}
-        <p>${item.description}</p>
-      </div>
-      <div class="modal-tools">
-        <h4>Tools & Software</h4>
-        <div class="tool-tags">
-          ${item.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+          
+          <div class="modal-section">
+            <h3>The Process</h3>
+            <p>${item.process}</p>
+          </div>
+        </div>
+        
+        ${stillsHTML}
+        
+        <div class="modal-tools">
+          <h4>Tools & Techniques</h4>
+          <div class="tool-tags">
+            ${item.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+          </div>
         </div>
       </div>
     </div>
@@ -992,10 +1847,15 @@ modal.addEventListener('click', (e) => {
   }
 });
 
-// Close modal with Escape key
+// Close modal/expanded video with Escape key
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modal.classList.contains('active')) {
-    closeModal();
+  if (e.key === 'Escape') {
+    if (modal.classList.contains('active')) {
+      closeModal();
+    }
+    if (videoExpandedOverlay.classList.contains('active')) {
+      closeExpandedVideo();
+    }
   }
 });
 
