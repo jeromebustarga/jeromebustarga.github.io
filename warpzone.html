@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <title>Jerome Bustarga - Portfolio</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -13,6 +13,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -25,6 +26,10 @@ body {
   color: #e8e8e8;
   overflow: hidden;
   line-height: 1.6;
+  touch-action: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 /* Lightbulb Power Button */
@@ -41,18 +46,26 @@ body {
 }
 
 body.power-on .lightbulb-container {
-  top: 40px;
-  left: 60px;
+  top: 20px;
+  left: 20px;
   transform: translate(0, 0);
   z-index: 10001;
   flex-direction: row;
-  gap: 15px;
+  gap: 10px;
+}
+
+@media (min-width: 769px) {
+  body.power-on .lightbulb-container {
+    top: 40px;
+    left: 60px;
+    gap: 15px;
+  }
 }
 
 .logo-wrapper {
   display: none;
   align-items: center;
-  gap: 15px;
+  gap: 10px;
 }
 
 body.power-on .logo-wrapper {
@@ -60,9 +73,16 @@ body.power-on .logo-wrapper {
 }
 
 .lightbulb {
-  width: 50px;
-  height: 50px;
+  width: 35px;
+  height: 35px;
   position: relative;
+}
+
+@media (min-width: 769px) {
+  .lightbulb {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .bulb-image {
@@ -89,19 +109,25 @@ body.power-on .bulb-on {
 }
 
 .logo-name {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
   color: #e8e8e8;
   letter-spacing: 1px;
   white-space: nowrap;
 }
 
+@media (min-width: 769px) {
+  .logo-name {
+    font-size: 20px;
+  }
+}
+
 .start-button {
-  padding: 14px 40px;
+  padding: 16px 50px;
   background: rgba(244, 121, 33, 0.1);
   border: 2px solid rgba(244, 121, 33, 0.4);
   color: #f47921;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -118,48 +144,12 @@ body.power-on .bulb-on {
   box-shadow: 0 8px 24px rgba(244, 121, 33, 0.3);
 }
 
+.start-button:active {
+  transform: scale(0.98);
+}
+
 body.power-on .start-button {
   display: none;
-}
-
-.light-rays {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 140px;
-  height: 140px;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-body.power-on .light-rays {
-  opacity: 1;
-  animation: rotate 20s linear infinite;
-}
-
-.ray {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2px;
-  height: 80px;
-  background: linear-gradient(to bottom, rgba(244, 121, 33, 0.4), transparent);
-  transform-origin: 50% 0%;
-}
-
-.ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
-.ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); }
-.ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); }
-.ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); }
-.ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); }
-.ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); }
-.ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); }
-.ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); }
-
-@keyframes rotate {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 #gameContainer {
@@ -169,6 +159,14 @@ body.power-on .light-rays {
   align-items: center;
   justify-content: center;
   z-index: 2;
+  padding: 10px;
+  padding-bottom: 180px; /* Space for mobile controls */
+}
+
+@media (min-width: 769px) {
+  #gameContainer {
+    padding-bottom: 10px;
+  }
 }
 
 body.power-on #gameContainer {
@@ -182,24 +180,39 @@ body.power-on #gameContainer {
 
 .game-arena {
   position: relative;
-  width: 90vw;
+  width: 100%;
   max-width: 1200px;
-  height: 70vh;
+  height: 100%;
+  max-height: 500px;
   background: rgba(20, 20, 20, 0.6);
   border: 2px solid rgba(244, 121, 33, 0.2);
-  border-radius: 20px;
+  border-radius: 12px;
   backdrop-filter: blur(20px);
   overflow: hidden;
   box-shadow: 0 0 60px rgba(244, 121, 33, 0.1);
   pointer-events: none;
 }
 
+@media (min-width: 769px) {
+  .game-arena {
+    border-radius: 20px;
+    max-height: 70vh;
+  }
+}
+
 .character {
   position: absolute;
-  width: 40px;
-  height: 60px;
+  width: 30px;
+  height: 45px;
   transition: none;
   z-index: 100;
+}
+
+@media (min-width: 769px) {
+  .character {
+    width: 40px;
+    height: 60px;
+  }
 }
 
 /* MAIN LEVEL - GRID BASED PLATFORMER */
@@ -213,8 +226,14 @@ body.power-on #gameContainer {
   display: grid;
   grid-template-columns: repeat(30, 1fr);
   grid-template-rows: repeat(20, 1fr);
-  gap: 1px;
+  gap: 0px;
   background: rgba(244, 121, 33, 0.1);
+}
+
+@media (min-width: 769px) {
+  .main-level.active {
+    gap: 1px;
+  }
 }
 
 .main-grid-cell {
@@ -222,7 +241,13 @@ body.power-on #gameContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(244, 121, 33, 0.15);
+  border: none;
+}
+
+@media (min-width: 769px) {
+  .main-grid-cell {
+    border: 1px solid rgba(244, 121, 33, 0.15);
+  }
 }
 
 .main-grid-cell.wall {
@@ -238,23 +263,36 @@ body.power-on #gameContainer {
   border: none;
 }
 
-/* Main Level Doors in grid */
+/* Doors */
 .door {
   position: absolute;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 4px;
   pointer-events: none;
   z-index: 50;
 }
 
+@media (min-width: 769px) {
+  .door {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
 .door-icon {
-  font-size: 52px;
+  font-size: 28px;
   color: #f47921;
   transition: all 0.3s ease;
   line-height: 1;
+}
+
+@media (min-width: 769px) {
+  .door-icon {
+    font-size: 52px;
+  }
 }
 
 .door.can-enter .door-icon {
@@ -278,14 +316,21 @@ body.power-on #gameContainer {
 }
 
 .door-label {
-  font-size: 11px;
+  font-size: 8px;
   font-weight: 600;
   color: #f47921;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
   line-height: 1;
   transition: all 0.3s ease;
+}
+
+@media (min-width: 769px) {
+  .door-label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+  }
 }
 
 .door.can-enter .door-label {
@@ -303,8 +348,14 @@ body.power-on #gameContainer {
   display: grid;
   grid-template-columns: repeat(30, 1fr);
   grid-template-rows: repeat(20, 1fr);
-  gap: 1px;
+  gap: 0px;
   background: rgba(244, 121, 33, 0.1);
+}
+
+@media (min-width: 769px) {
+  .studio-level.active {
+    gap: 1px;
+  }
 }
 
 .grid-cell {
@@ -312,7 +363,13 @@ body.power-on #gameContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(244, 121, 33, 0.15);
+  border: none;
+}
+
+@media (min-width: 769px) {
+  .grid-cell {
+    border: 1px solid rgba(244, 121, 33, 0.15);
+  }
 }
 
 .grid-cell.wall {
@@ -328,23 +385,36 @@ body.power-on #gameContainer {
   border: none;
 }
 
-/* Studio Doors in grid */
+/* Studio Doors */
 .studio-door {
   position: absolute;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 4px;
   pointer-events: none;
   z-index: 50;
 }
 
+@media (min-width: 769px) {
+  .studio-door {
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
 .studio-door-icon {
-  font-size: 52px;
+  font-size: 28px;
   color: #f47921;
   transition: all 0.3s ease;
   line-height: 1;
+}
+
+@media (min-width: 769px) {
+  .studio-door-icon {
+    font-size: 52px;
+  }
 }
 
 .studio-door.can-enter .studio-door-icon {
@@ -355,13 +425,20 @@ body.power-on #gameContainer {
 }
 
 .studio-door-label {
-  font-size: 11px;
+  font-size: 8px;
   font-weight: 600;
   color: #f47921;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
   line-height: 1;
+}
+
+@media (min-width: 769px) {
+  .studio-door-label {
+    font-size: 11px;
+    letter-spacing: 1.2px;
+  }
 }
 
 .studio-door.can-enter .studio-door-label {
@@ -370,16 +447,25 @@ body.power-on #gameContainer {
 
 .game-instructions {
   position: absolute;
-  bottom: 30px;
+  bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   color: rgba(244, 121, 33, 0.7);
-  font-size: 14px;
-  letter-spacing: 1px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
   animation: fadeOutInstructions 4s ease-in-out forwards;
   z-index: 1000;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  width: 90%;
+}
+
+@media (min-width: 769px) {
+  .game-instructions {
+    font-size: 14px;
+    letter-spacing: 1px;
+    bottom: 30px;
+  }
 }
 
 @keyframes fadeOutInstructions {
@@ -392,32 +478,49 @@ body.power-on #gameContainer {
   display: inline-block;
   background: rgba(244, 121, 33, 0.15);
   border: 1px solid rgba(244, 121, 33, 0.4);
-  padding: 4px 10px;
+  padding: 2px 6px;
   border-radius: 4px;
-  margin: 0 3px;
+  margin: 0 2px;
   font-family: 'Courier New', monospace;
   font-weight: 600;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  font-size: 9px;
+}
+
+@media (min-width: 769px) {
+  .key-hint {
+    padding: 4px 10px;
+    font-size: inherit;
+  }
 }
 
 .entrance-prompt {
   position: absolute;
-  top: -40px;
+  top: -30px;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(244, 121, 33, 0.95);
   color: #0d0d0d;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
   opacity: 0;
   transition: opacity 0.3s ease;
   pointer-events: none;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   z-index: 60;
+}
+
+@media (min-width: 769px) {
+  .entrance-prompt {
+    top: -40px;
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
 }
 
 .door.can-enter .entrance-prompt,
@@ -431,16 +534,195 @@ body.power-on #gameContainer {
   50% { transform: translate(-50%, -8px); }
 }
 
+/* ========== MOBILE TOUCH CONTROLS ========== */
+.mobile-controls {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 170px;
+  background: linear-gradient(to top, rgba(13, 13, 13, 0.95), rgba(13, 13, 13, 0.8));
+  z-index: 10000;
+  padding: 15px 20px;
+  border-top: 1px solid rgba(244, 121, 33, 0.2);
+}
+
+body.power-on .mobile-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (min-width: 769px) {
+  body.power-on .mobile-controls {
+    display: none;
+  }
+}
+
+/* D-Pad */
+.dpad-container {
+  position: relative;
+  width: 130px;
+  height: 130px;
+}
+
+.dpad-btn {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background: rgba(244, 121, 33, 0.15);
+  border: 2px solid rgba(244, 121, 33, 0.4);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f47921;
+  font-size: 18px;
+  transition: all 0.1s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dpad-btn:active,
+.dpad-btn.active {
+  background: rgba(244, 121, 33, 0.4);
+  border-color: #f47921;
+  transform: scale(0.95);
+  box-shadow: 0 0 20px rgba(244, 121, 33, 0.5);
+}
+
+.dpad-up {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dpad-down {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dpad-left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dpad-right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dpad-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;
+  height: 35px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 1px solid rgba(244, 121, 33, 0.2);
+  border-radius: 50%;
+}
+
+/* Action Button */
+.action-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-btn {
+  width: 80px;
+  height: 80px;
+  background: rgba(244, 121, 33, 0.2);
+  border: 3px solid rgba(244, 121, 33, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f47921;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.1s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: 0 4px 15px rgba(244, 121, 33, 0.2);
+}
+
+.action-btn:active,
+.action-btn.active {
+  background: rgba(244, 121, 33, 0.5);
+  border-color: #f47921;
+  transform: scale(0.95);
+  box-shadow: 0 0 30px rgba(244, 121, 33, 0.6);
+}
+
+.action-btn.can-enter {
+  animation: actionPulse 1s ease-in-out infinite;
+}
+
+@keyframes actionPulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(244, 121, 33, 0.2);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(244, 121, 33, 0.6);
+  }
+}
+
+.action-label {
+  font-size: 10px;
+  color: rgba(244, 121, 33, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Level indicator */
+.level-indicator {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(244, 121, 33, 0.15);
+  border: 1px solid rgba(244, 121, 33, 0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  color: #f47921;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 100;
+}
+
+@media (min-width: 769px) {
+  .level-indicator {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+}
+
 footer {
   position: fixed;
-  bottom: 20px;
+  bottom: 180px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10002;
-  font-size: 12px;
+  font-size: 10px;
   color: rgba(244, 121, 33, 0.5);
   letter-spacing: 1px;
   display: none;
+}
+
+@media (min-width: 769px) {
+  footer {
+    bottom: 20px;
+    font-size: 12px;
+  }
 }
 
 body.power-on footer {
@@ -463,6 +745,8 @@ body.power-on footer {
 
 <div id="gameContainer">
   <div class="game-arena" id="gameArena">
+    <div class="level-indicator" id="levelIndicator">Main Hub</div>
+    
     <div class="character" id="character">
       <canvas id="characterCanvas" width="40" height="60"></canvas>
     </div>
@@ -479,6 +763,32 @@ body.power-on footer {
   </div>
 </div>
 
+<!-- Mobile Touch Controls -->
+<div class="mobile-controls" id="mobileControls">
+  <div class="dpad-container">
+    <button class="dpad-btn dpad-up" data-key="ArrowUp">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
+    <button class="dpad-btn dpad-down" data-key="ArrowDown">
+      <i class="fa-solid fa-chevron-down"></i>
+    </button>
+    <button class="dpad-btn dpad-left" data-key="ArrowLeft">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button class="dpad-btn dpad-right" data-key="ArrowRight">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+    <div class="dpad-center"></div>
+  </div>
+  
+  <div class="action-container">
+    <button class="action-btn" id="actionBtn">
+      Enter
+    </button>
+    <span class="action-label">Door / Jump</span>
+  </div>
+</div>
+
 <footer>
   © 2025 Jerome Bustarga. All rights reserved.
 </footer>
@@ -486,32 +796,35 @@ body.power-on footer {
 <script>
 const lightbulbContainer = document.getElementById('lightbulbContainer');
 const startButton = document.getElementById('startButton');
+const levelIndicator = document.getElementById('levelIndicator');
 let isPoweredOn = false;
+let isMobile = window.innerWidth < 769;
+
+// Check if device is mobile
+function checkMobile() {
+  isMobile = window.innerWidth < 769 || 'ontouchstart' in window;
+}
+checkMobile();
+window.addEventListener('resize', checkMobile);
 
 startButton.addEventListener('click', () => {
   if (!isPoweredOn) {
     isPoweredOn = true;
     document.body.classList.add('power-on');
     
-    // Spawn character immediately
     requestAnimationFrame(() => {
       const arenaRect = gameArena.getBoundingClientRect();
       const cellWidth = arenaRect.width / 30;
       const cellHeight = arenaRect.height / 20;
       
-      // Ground blocks start at row 17 (rows 17-19 are ground)
-      // Spawn at row 10 to give a clear drop distance
-      charX = (cellWidth * 15) - 20;
-      charY = (cellHeight * 10) - 30;
+      charX = (cellWidth * 15) - (isMobile ? 15 : 20);
+      charY = (cellHeight * 10) - (isMobile ? 22 : 30);
       
       character.style.left = charX + 'px';
       character.style.top = charY + 'px';
       
-      // Character is in air, so not grounded
       isGrounded = false;
       velocityY = 0;
-      
-      // Activate physics immediately for smooth drop
       physicsActive = true;
     });
   }
@@ -519,41 +832,45 @@ startButton.addEventListener('click', () => {
 
 const gameContainer = document.getElementById('gameContainer');
 
-document.addEventListener('mousemove', (e) => {
-  if (!isPoweredOn) return;
-  
-  const rect = gameContainer.getBoundingClientRect();
-  const isInside = (
-    e.clientX >= rect.left &&
-    e.clientX <= rect.right &&
-    e.clientY >= rect.top &&
-    e.clientY <= rect.bottom
-  );
-  
-  if (isInside) {
-    gameContainer.classList.add('hide-cursor');
-  } else {
-    gameContainer.classList.remove('hide-cursor');
-  }
-});
+// Only hide cursor on desktop
+if (!isMobile) {
+  document.addEventListener('mousemove', (e) => {
+    if (!isPoweredOn) return;
+    
+    const rect = gameContainer.getBoundingClientRect();
+    const isInside = (
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom
+    );
+    
+    if (isInside) {
+      gameContainer.classList.add('hide-cursor');
+    } else {
+      gameContainer.classList.remove('hide-cursor');
+    }
+  });
+}
 
 const charCanvas = document.getElementById('characterCanvas');
 const charCtx = charCanvas.getContext('2d');
 
 function drawCharacter() {
+  const scale = isMobile ? 0.75 : 1;
   charCtx.clearRect(0, 0, 40, 60);
   charCtx.fillStyle = '#f47921';
-  charCtx.fillRect(12, 8, 16, 16);
+  charCtx.fillRect(12 * scale, 8 * scale, 16 * scale, 16 * scale);
   charCtx.fillStyle = '#0d0d0d';
-  charCtx.fillRect(15, 13, 4, 4);
-  charCtx.fillRect(21, 13, 4, 4);
+  charCtx.fillRect(15 * scale, 13 * scale, 4 * scale, 4 * scale);
+  charCtx.fillRect(21 * scale, 13 * scale, 4 * scale, 4 * scale);
   charCtx.fillStyle = '#e8e8e8';
-  charCtx.fillRect(10, 24, 20, 20);
+  charCtx.fillRect(10 * scale, 24 * scale, 20 * scale, 20 * scale);
   charCtx.fillStyle = '#f47921';
-  charCtx.fillRect(10, 30, 20, 4);
+  charCtx.fillRect(10 * scale, 30 * scale, 20 * scale, 4 * scale);
   charCtx.fillStyle = '#a0a0a0';
-  charCtx.fillRect(12, 44, 6, 12);
-  charCtx.fillRect(22, 44, 6, 12);
+  charCtx.fillRect(12 * scale, 44 * scale, 6 * scale, 12 * scale);
+  charCtx.fillRect(22 * scale, 44 * scale, 6 * scale, 12 * scale);
 }
 
 drawCharacter();
@@ -569,11 +886,11 @@ let velocityX = 0;
 let velocityY = 0;
 let isGrounded = false;
 let currentLevel = 'main';
-let physicsActive = false; // New flag to control physics
+let physicsActive = false;
 
 const GRAVITY = 0.6;
 const JUMP_FORCE = -14;
-const MOVE_SPEED = 5;
+const MOVE_SPEED = isMobile ? 4 : 5;
 const MAX_FALL_SPEED = 12;
 
 const keys = {
@@ -584,85 +901,69 @@ const keys = {
   Space: false
 };
 
-// Main level grid layout (30x20 grid) - Platformer style
+// Main level grid layout
 const mainLevelGrid = [];
 
 for (let row = 0; row < 20; row++) {
   mainLevelGrid[row] = [];
   for (let col = 0; col < 30; col++) {
-    // Border walls
     if (row === 0 || row === 19 || col === 0 || col === 29) {
       mainLevelGrid[row][col] = 1;
     }
-    // Ground floor (bottom 2 rows)
     else if (row >= 17) {
       mainLevelGrid[row][col] = 1;
     }
-    // Left low platform
     else if (col >= 3 && col <= 9 && row === 14) {
       mainLevelGrid[row][col] = 1;
     }
-    // Left high platform
     else if (col >= 5 && col <= 11 && row === 10) {
       mainLevelGrid[row][col] = 1;
     }
-    // Right low platform
     else if (col >= 20 && col <= 26 && row === 14) {
       mainLevelGrid[row][col] = 1;
     }
-    // Right high platform
     else if (col >= 18 && col <= 24 && row === 10) {
       mainLevelGrid[row][col] = 1;
     }
-    // Center top platform
     else if (col >= 13 && col <= 16 && row === 6) {
       mainLevelGrid[row][col] = 1;
     }
-    // Center mid platform (for access)
     else if (col >= 12 && col <= 17 && row === 13) {
       mainLevelGrid[row][col] = 1;
     }
-    // Open paths
     else {
       mainLevelGrid[row][col] = 0;
     }
   }
 }
 
-// Door positions for main level - placed at center of bounding boxes
 const mainDoorData = [
-  { row: 12, col: 6, id: 'doorRepository', icon: 'fa-door-open', label: 'Repository', type: 'repository' }, // Center of (11,5)(13,7)
-  { row: 8, col: 21, id: 'doorStudio', icon: 'fa-door-open', label: 'Studio', type: 'studio' }, // Center of (7,20)(9,22)
-  { row: 4, col: 14, id: 'doorHome', icon: 'fa-door-closed', label: 'Home', type: 'home' }, // Center of (3,13)(5,15)
-  { row: 12, col: 23, id: 'doorAbout', icon: 'fa-user-circle', label: 'About', type: 'about' } // Center of (11,22)(13,24)
+  { row: 12, col: 6, id: 'doorRepository', icon: 'fa-door-open', label: 'Repository', type: 'repository' },
+  { row: 8, col: 21, id: 'doorStudio', icon: 'fa-door-open', label: 'Studio', type: 'studio' },
+  { row: 4, col: 14, id: 'doorHome', icon: 'fa-door-closed', label: 'Home', type: 'home' },
+  { row: 12, col: 23, id: 'doorAbout', icon: 'fa-user-circle', label: 'About', type: 'about' }
 ];
 
-// Studio level grid maze layout (30x20 grid) - maze navigation, LEFT-RIGHT ONLY
 const studioMazeGrid = [];
 
 for (let row = 0; row < 20; row++) {
   studioMazeGrid[row] = [];
   for (let col = 0; col < 30; col++) {
-    // Border walls
     if (row === 0 || row === 19 || col === 0 || col === 29) {
       studioMazeGrid[row][col] = 1;
     }
-    // Vertical dividers
     else if ((col === 7 || col === 15 || col === 22) && (row < 6 || (row > 9 && row < 13) || row > 16)) {
       studioMazeGrid[row][col] = 1;
     }
-    // Horizontal dividers
     else if ((row === 7 || row === 14) && (col < 6 || (col > 9 && col < 14) || (col > 17 && col < 21) || col > 24)) {
       studioMazeGrid[row][col] = 1;
     }
-    // Open paths
     else {
       studioMazeGrid[row][col] = 0;
     }
   }
 }
 
-// Door data for studio level - scattered around maze
 const studioDoorData = [
   { row: 4, col: 4, id: 'doorIllustrations', icon: 'fa-palette', label: 'Illustrations', type: 'illustrations' },
   { row: 11, col: 11, id: 'doorBranding', icon: 'fa-tag', label: 'Branding', type: 'branding' },
@@ -672,7 +973,6 @@ const studioDoorData = [
   { row: 11, col: 19, id: 'doorBack', icon: 'fa-arrow-left', label: 'Back', type: 'back' }
 ];
 
-// Build main level grid
 function buildMainGrid() {
   mainLevel.innerHTML = '';
   
@@ -689,7 +989,6 @@ function buildMainGrid() {
         cell.classList.add('path');
       }
       
-      // Check if this is a door position
       const doorInfo = mainDoorData.find(d => d.row === row && d.col === col);
       if (doorInfo) {
         const door = document.createElement('div');
@@ -699,7 +998,7 @@ function buildMainGrid() {
         
         const prompt = document.createElement('div');
         prompt.className = 'entrance-prompt';
-        prompt.textContent = 'Press SPACE';
+        prompt.textContent = isMobile ? 'Tap ENTER' : 'Press SPACE';
         
         const icon = document.createElement('div');
         icon.className = 'door-icon';
@@ -719,16 +1018,20 @@ function buildMainGrid() {
     }
   }
   
-  // Add instructions
   const instructions = document.createElement('div');
   instructions.className = 'game-instructions';
-  instructions.innerHTML = `
-    Use <span class="key-hint">←</span> <span class="key-hint">→</span> to move • <span class="key-hint">↑</span> to jump • <span class="key-hint">SPACE</span> to enter doors
-  `;
+  if (isMobile) {
+    instructions.innerHTML = `
+      Use <span class="key-hint">D-PAD</span> to move • <span class="key-hint">ENTER</span> to jump/enter doors
+    `;
+  } else {
+    instructions.innerHTML = `
+      Use <span class="key-hint">←</span> <span class="key-hint">→</span> to move • <span class="key-hint">↑</span> to jump • <span class="key-hint">SPACE</span> to enter doors
+    `;
+  }
   mainLevel.appendChild(instructions);
 }
 
-// Build studio level grid
 function buildStudioGrid() {
   studioLevel.innerHTML = '';
   
@@ -754,7 +1057,7 @@ function buildStudioGrid() {
         
         const prompt = document.createElement('div');
         prompt.className = 'entrance-prompt';
-        prompt.textContent = 'Press SPACE';
+        prompt.textContent = isMobile ? 'Tap ENTER' : 'Press SPACE';
         
         const icon = document.createElement('div');
         icon.className = 'studio-door-icon';
@@ -776,22 +1079,27 @@ function buildStudioGrid() {
   
   const instructions = document.createElement('div');
   instructions.className = 'game-instructions';
-  instructions.innerHTML = `
-    Use <span class="key-hint">←</span> <span class="key-hint">↑</span> <span class="key-hint">↓</span> <span class="key-hint">→</span> to move • <span class="key-hint">SPACE</span> to enter doors
-  `;
+  if (isMobile) {
+    instructions.innerHTML = `
+      Use <span class="key-hint">D-PAD</span> to navigate • <span class="key-hint">ENTER</span> to enter doors
+    `;
+  } else {
+    instructions.innerHTML = `
+      Use <span class="key-hint">←</span> <span class="key-hint">↑</span> <span class="key-hint">↓</span> <span class="key-hint">→</span> to move • <span class="key-hint">SPACE</span> to enter doors
+    `;
+  }
   studioLevel.appendChild(instructions);
 }
 
 buildMainGrid();
 buildStudioGrid();
-
-// Show main level grid immediately but keep it hidden until powered on
 mainLevel.classList.add('active');
 
 function switchToStudioLevel() {
   currentLevel = 'studio';
   mainLevel.classList.remove('active');
   studioLevel.classList.add('active');
+  levelIndicator.textContent = 'Studio';
   
   velocityX = 0;
   velocityY = 0;
@@ -803,9 +1111,8 @@ function switchToStudioLevel() {
     const cellWidth = arenaRect.width / 30;
     const cellHeight = arenaRect.height / 20;
     
-    // Spawn LEFT of back icon (back is at row 11, col 19 - spawn at row 11, col 17)
-    charX = (cellWidth * 17) + (cellWidth / 2) - 20;
-    charY = (cellHeight * 11) + (cellHeight / 2) - 30;
+    charX = (cellWidth * 17) + (cellWidth / 2) - (isMobile ? 15 : 20);
+    charY = (cellHeight * 11) + (cellHeight / 2) - (isMobile ? 22 : 30);
     
     character.style.left = charX + 'px';
     character.style.top = charY + 'px';
@@ -818,6 +1125,7 @@ function switchToMainLevel() {
   currentLevel = 'main';
   studioLevel.classList.remove('active');
   mainLevel.classList.add('active');
+  levelIndicator.textContent = 'Main Hub';
   
   velocityX = 0;
   velocityY = 0;
@@ -829,28 +1137,25 @@ function switchToMainLevel() {
     const cellWidth = arenaRect.width / 30;
     const cellHeight = arenaRect.height / 20;
     
-    // Spawn at row 10 (above ground) so character drops
-    charX = (cellWidth * 15) - 20;
-    charY = (cellHeight * 10) - 30;
+    charX = (cellWidth * 15) - (isMobile ? 15 : 20);
+    charY = (cellHeight * 10) - (isMobile ? 22 : 30);
     
     character.style.left = charX + 'px';
     character.style.top = charY + 'px';
     
-    // Activate physics immediately for smooth drop
     physicsActive = true;
   });
 }
 
+// Keyboard controls
 window.addEventListener('keydown', (e) => {
   if (e.code in keys || e.code === 'Space') {
     e.preventDefault();
     if (e.code === 'Space') {
       keys.Space = true;
-      // Space is ONLY for entering doors
       checkDoorEntry();
     } else if (e.code === 'ArrowUp') {
       keys.ArrowUp = true;
-      // ArrowUp is for jumping in main level
       if (currentLevel === 'main' && isGrounded) {
         velocityY = JUMP_FORCE;
         isGrounded = false;
@@ -871,6 +1176,73 @@ window.addEventListener('keyup', (e) => {
   }
 });
 
+// ========== MOBILE TOUCH CONTROLS ==========
+const dpadBtns = document.querySelectorAll('.dpad-btn');
+const actionBtn = document.getElementById('actionBtn');
+
+// D-Pad touch handling
+dpadBtns.forEach(btn => {
+  const keyCode = btn.dataset.key;
+  
+  btn.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    btn.classList.add('active');
+    keys[keyCode] = true;
+    
+    // Handle jump on main level
+    if (keyCode === 'ArrowUp' && currentLevel === 'main' && isGrounded) {
+      velocityY = JUMP_FORCE;
+      isGrounded = false;
+    }
+  }, { passive: false });
+  
+  btn.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    btn.classList.remove('active');
+    keys[keyCode] = false;
+  }, { passive: false });
+  
+  btn.addEventListener('touchcancel', (e) => {
+    btn.classList.remove('active');
+    keys[keyCode] = false;
+  });
+});
+
+// Action button handling (Enter/Jump)
+actionBtn.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  actionBtn.classList.add('active');
+  
+  // Check if near door first
+  const nearDoor = document.querySelector('.door.can-enter, .studio-door.can-enter');
+  
+  if (nearDoor) {
+    // Enter door
+    checkDoorEntry();
+  } else if (currentLevel === 'main' && isGrounded) {
+    // Jump in main level
+    velocityY = JUMP_FORCE;
+    isGrounded = false;
+  }
+}, { passive: false });
+
+actionBtn.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  actionBtn.classList.remove('active');
+}, { passive: false });
+
+// Update action button state based on door proximity
+function updateActionButton() {
+  const nearDoor = document.querySelector('.door.can-enter, .studio-door.can-enter');
+  if (nearDoor) {
+    actionBtn.classList.add('can-enter');
+    actionBtn.textContent = 'Enter';
+  } else {
+    actionBtn.classList.remove('can-enter');
+    actionBtn.textContent = currentLevel === 'main' ? 'Jump' : 'Enter';
+  }
+}
+
 function getWalls() {
   if (currentLevel === 'main') {
     return Array.from(document.querySelectorAll('.main-grid-cell.wall'));
@@ -879,23 +1251,23 @@ function getWalls() {
   }
 }
 
-// FIXED: Improved platform collision detection to prevent getting stuck
 function checkPlatformCollision(x, y, width, height) {
   const walls = getWalls();
   const arenaRect = gameArena.getBoundingClientRect();
   
+  const charWidth = isMobile ? 30 : 40;
+  const charHeight = isMobile ? 45 : 60;
+  
   const charBox = {
     left: arenaRect.left + x,
-    right: arenaRect.left + x + width,
+    right: arenaRect.left + x + charWidth,
     top: arenaRect.top + y,
-    bottom: arenaRect.top + y + height
+    bottom: arenaRect.top + y + charHeight
   };
   
   for (let wall of walls) {
     const wallRect = wall.getBoundingClientRect();
     
-    // Check if character is above platform and falling
-    // Increased tolerance and improved detection
     if (charBox.bottom >= wallRect.top - 2 &&
         charBox.bottom <= wallRect.top + 15 &&
         charBox.right > wallRect.left + 5 &&
@@ -911,17 +1283,17 @@ function checkPlatformCollision(x, y, width, height) {
   return { collision: false };
 }
 
-// FIXED: Adjusted wall collision margins to prevent embedding
 function isWallAt(x, y) {
   const arenaRect = gameArena.getBoundingClientRect();
+  const charWidth = isMobile ? 30 : 40;
+  const charHeight = isMobile ? 45 : 60;
   
-  // Reduced margin to prevent character from getting too embedded
-  const margin = 8;
+  const margin = 6;
   const charBox = {
     left: arenaRect.left + x + margin,
-    right: arenaRect.left + x + 40 - margin,
+    right: arenaRect.left + x + charWidth - margin,
     top: arenaRect.top + y + margin,
-    bottom: arenaRect.top + y + 60 - margin
+    bottom: arenaRect.top + y + charHeight - margin
   };
   
   const walls = getWalls();
@@ -944,7 +1316,6 @@ function isWallAt(x, y) {
   return false;
 }
 
-// FIXED: Improved movement function with better ground detection
 function moveCharacter() {
   if (!isPoweredOn || !physicsActive) {
     requestAnimationFrame(moveCharacter);
@@ -952,18 +1323,19 @@ function moveCharacter() {
   }
   
   const arenaRect = gameArena.getBoundingClientRect();
+  const charWidth = isMobile ? 30 : 40;
+  const charHeight = isMobile ? 45 : 60;
+  const moveSpeed = isMobile ? 4 : MOVE_SPEED;
   
   if (currentLevel === 'main') {
-    // MAIN LEVEL: Left-Right movement + Jumping with gravity
     if (keys.ArrowLeft) {
-      velocityX = -MOVE_SPEED;
+      velocityX = -moveSpeed;
     } else if (keys.ArrowRight) {
-      velocityX = MOVE_SPEED;
+      velocityX = moveSpeed;
     } else {
       velocityX = 0;
     }
     
-    // Apply gravity
     if (!isGrounded) {
       velocityY += GRAVITY;
       if (velocityY > MAX_FALL_SPEED) {
@@ -971,36 +1343,29 @@ function moveCharacter() {
       }
     }
     
-    // Update position
     let newX = charX + velocityX;
     let newY = charY + velocityY;
     
-    // Horizontal boundaries
     if (newX < 5) newX = 5;
-    if (newX > arenaRect.width - 45) newX = arenaRect.width - 45;
+    if (newX > arenaRect.width - charWidth - 5) newX = arenaRect.width - charWidth - 5;
     
-    // Check horizontal wall collision
     if (!isWallAt(newX, charY)) {
       charX = newX;
     } else {
       velocityX = 0;
     }
     
-    // Check platform collision for vertical movement
-    const collision = checkPlatformCollision(charX, newY, 40, 60);
+    const collision = checkPlatformCollision(charX, newY, charWidth, charHeight);
     
     if (collision.collision) {
-      // Snap to platform top with small offset to prevent embedding
-      charY = collision.platformTop - 58;
+      charY = collision.platformTop - charHeight + 2;
       velocityY = 0;
       isGrounded = true;
     } else {
-      // Check if moving into wall vertically
       if (!isWallAt(charX, newY)) {
         charY = newY;
         isGrounded = false;
       } else {
-        // If hitting a wall from side while falling, stop vertical velocity
         if (velocityY > 0) {
           velocityY = 0;
           isGrounded = true;
@@ -1008,47 +1373,41 @@ function moveCharacter() {
       }
     }
     
-    // Bottom boundary safety - ensure character doesn't go below ground
-    if (charY > arenaRect.height - 65) {
-      charY = arenaRect.height - 65;
+    if (charY > arenaRect.height - charHeight - 5) {
+      charY = arenaRect.height - charHeight - 5;
       velocityY = 0;
       isGrounded = true;
     }
     
-    // Additional ground check for stability
     if (isGrounded) {
-      // Check if still on ground
-      const stillOnGround = checkPlatformCollision(charX, charY + 2, 40, 60);
-      if (!stillOnGround.collision && charY < arenaRect.height - 65) {
+      const stillOnGround = checkPlatformCollision(charX, charY + 2, charWidth, charHeight);
+      if (!stillOnGround.collision && charY < arenaRect.height - charHeight - 5) {
         isGrounded = false;
       }
     }
     
   } else {
-    // STUDIO LEVEL: Left-Right AND Up-Down movement
     let newX = charX;
     let newY = charY;
-    const speed = 4;
+    const speed = isMobile ? 3 : 4;
     
     if (keys.ArrowLeft && charX > 5) {
       newX = charX - speed;
     }
-    if (keys.ArrowRight && charX < arenaRect.width - 45) {
+    if (keys.ArrowRight && charX < arenaRect.width - charWidth - 5) {
       newX = charX + speed;
     }
     if (keys.ArrowUp && charY > 5) {
       newY = charY - speed;
     }
-    if (keys.ArrowDown && charY < arenaRect.height - 65) {
+    if (keys.ArrowDown && charY < arenaRect.height - charHeight - 5) {
       newY = charY + speed;
     }
     
-    // Check horizontal collision
     if (!isWallAt(newX, charY)) {
       charX = newX;
     }
     
-    // Check vertical collision
     if (!isWallAt(charX, newY)) {
       charY = newY;
     }
@@ -1058,6 +1417,7 @@ function moveCharacter() {
   character.style.top = charY + 'px';
   
   checkDoorCollision();
+  updateActionButton();
   requestAnimationFrame(moveCharacter);
 }
 
@@ -1147,62 +1507,64 @@ function enterDoor(doorType) {
 
 moveCharacter();
 
-// Mouse trail effect
-new p5((p) => {
-  let trails = [];
-  
-  p.setup = () => {
-    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-    canvas.position(0, 0);
-    canvas.style('pointer-events', 'none');
-    canvas.style('z-index', '1');
-    canvas.style('position', 'fixed');
-    canvas.style('top', '0');
-    canvas.style('left', '0');
-    p.clear();
-    p.noStroke();
-  };
-
-  p.draw = () => {
-    p.clear();
+// Mouse trail effect (desktop only)
+if (!isMobile) {
+  new p5((p) => {
+    let trails = [];
     
-    for (let i = trails.length - 1; i >= 0; i--) {
-      const point = trails[i];
-      
-      p.fill(255, 255, 255, point.alpha * 0.08);
-      p.ellipse(point.x, point.y, point.size * 2);
-      
-      p.fill(255, 255, 255, point.alpha * 0.3);
-      p.ellipse(point.x, point.y, point.size);
-      
-      point.alpha -= 3;
-      point.size *= 0.96;
-      if (point.alpha <= 0) trails.splice(i, 1);
-    }
+    p.setup = () => {
+      const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+      canvas.position(0, 0);
+      canvas.style('pointer-events', 'none');
+      canvas.style('z-index', '1');
+      canvas.style('position', 'fixed');
+      canvas.style('top', '0');
+      canvas.style('left', '0');
+      p.clear();
+      p.noStroke();
+    };
 
-    const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-    if (d > 0) {
-      const steps = p.max(1, d * 0.5);
-      for (let i = 0; i <= steps; i++) {
-        const t = i / steps;
-        const x = p.lerp(p.pmouseX, p.mouseX, t);
-        const y = p.lerp(p.pmouseY, p.mouseY, t);
-        trails.push({
-          x,
-          y,
-          size: p.random(6, 10),
-          alpha: p.random(120, 150)
-        });
+    p.draw = () => {
+      p.clear();
+      
+      for (let i = trails.length - 1; i >= 0; i--) {
+        const point = trails[i];
+        
+        p.fill(255, 255, 255, point.alpha * 0.08);
+        p.ellipse(point.x, point.y, point.size * 2);
+        
+        p.fill(255, 255, 255, point.alpha * 0.3);
+        p.ellipse(point.x, point.y, point.size);
+        
+        point.alpha -= 3;
+        point.size *= 0.96;
+        if (point.alpha <= 0) trails.splice(i, 1);
       }
-    }
 
-    if (trails.length > 600) trails.splice(0, trails.length - 600);
-  };
+      const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+      if (d > 0) {
+        const steps = p.max(1, d * 0.5);
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          const x = p.lerp(p.pmouseX, p.mouseX, t);
+          const y = p.lerp(p.pmouseY, p.mouseY, t);
+          trails.push({
+            x,
+            y,
+            size: p.random(6, 10),
+            alpha: p.random(120, 150)
+          });
+        }
+      }
 
-  p.windowResized = () => {
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
-  };
-});
+      if (trails.length > 600) trails.splice(0, trails.length - 600);
+    };
+
+    p.windowResized = () => {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    };
+  });
+}
 </script>
 </body>
 </html>
