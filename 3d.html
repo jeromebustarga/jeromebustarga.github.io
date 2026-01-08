@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>3D Art - Jerome Bustarga</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0d0d0d;
+  color: #e8e8e8;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Background orbs */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.08;
+  animation: float 25s ease-in-out infinite;
+}
+
+.orb1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #404040, transparent);
+  top: -250px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.orb2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #303030, transparent);
+  bottom: -200px;
+  right: -150px;
+  animation-delay: 8s;
+}
+
+.orb3 {
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, #353535, transparent);
+  top: 40%;
+  right: 10%;
+  animation-delay: 16s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -80px) scale(1.05); }
+  66% { transform: translate(-60px, 80px) scale(0.95); }
+}
+
+/* Background text effect */
+.bg-text {
+  position: fixed;
+  font-size: 18vw;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.bg-text-1 {
+  top: 10%;
+  left: -3%;
+}
+
+.bg-text-2 {
+  top: 38%;
+  right: -3%;
+}
+
+.bg-text-3 {
+  bottom: 3%;
+  left: -3%;
+}
+
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 60px;
+  padding-right: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  z-index: 1000;
+  background: rgba(13, 13, 13, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.8s ease;
+}
+
+body.scrolled nav {
+  padding-right: 60px;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.02em;
+}
+
+.logo-text {
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.logo-text-alt {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.logo.scrolled .logo-text {
+  opacity: 0;
+}
+
+.logo.scrolled .logo-text-alt {
+  opacity: 1;
+}
+
+.logo-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #909090;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.3s ease;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a:hover {
+  color: #f47921;
+}
+
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #f47921;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::before {
+  width: 100%;
+}
+
+/* Icon Dropdown Menu */
+.icon-dropdown {
+  position: fixed;
+  top: 24px;
+  right: 30px;
+  z-index: 10001;
+  opacity: 1;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+
+body.scrolled .icon-dropdown {
+  top: auto;
+  bottom: 30px;
+  right: auto;
+  left: 30px;
+}
+
+.icon-dropdown-btn {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: #a0a0a0;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.icon-dropdown-btn:hover {
+  background: rgba(244, 121, 33, 0.08);
+  border-color: rgba(244, 121, 33, 0.3);
+  color: #f47921;
+}
+
+.icon-menu {
+  display: none;
+  position: absolute;
+  top: 58px;
+  right: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+body.scrolled .icon-menu {
+  top: auto;
+  bottom: 58px;
+  right: auto;
+  left: 0;
+}
+
+.icon-menu.show {
+  display: flex;
+  animation: slideDown 0.3s ease;
+}
+
+body.scrolled .icon-menu.show {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.icon-menu a {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  color: #a0a0a0;
+  font-size: 18px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.icon-menu a:hover {
+  background: rgba(244, 121, 33, 0.08);
+  border-color: rgba(244, 121, 33, 0.3);
+  color: #f47921;
+  transform: translateY(-2px);
+}
+
+/* Main Content */
+main {
+  position: relative;
+  z-index: 1;
+  padding-top: clamp(80px, 12vw, 100px);
+}
+
+/* Hero Section */
+.hero-section {
+  min-height: clamp(50vh, 60vh, 60vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 60px);
+}
+
+.hero-content {
+  max-width: 800px;
+  width: 100%;
+}
+
+.hero-label {
+  display: inline-block;
+  padding: clamp(6px, 1.5vw, 8px) clamp(16px, 3vw, 20px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+  font-size: clamp(11px, 2vw, 13px);
+  font-weight: 400;
+  color: #b0b0b0;
+  margin-bottom: clamp(20px, 4vw, 30px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.hero-content h1 {
+  font-size: clamp(36px, 8vw, 72px);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: clamp(20px, 4vw, 30px);
+  letter-spacing: -0.02em;
+}
+
+.highlight {
+  background: linear-gradient(135deg, #f47921 0%, #ff9a56 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 400;
+}
+
+.hero-content p {
+  font-size: clamp(15px, 2.5vw, 18px);
+  color: #b0b0b0;
+  line-height: 1.7;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Gallery Section */
+.gallery-section {
+  padding: clamp(40px, 6vw, 60px) clamp(20px, 5vw, 60px);
+  padding-bottom: clamp(80px, 10vw, 120px);
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+  gap: clamp(20px, 3vw, 30px);
+  margin-top: clamp(40px, 6vw, 60px);
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: clamp(8px, 1.5vw, 12px);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gallery-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-item-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.5s ease;
+}
+
+.gallery-item:hover .gallery-item-image {
+  transform: scale(1.15);
+}
+
+.gallery-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13, 13, 13, 0.95) 0%, transparent 50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(20px, 4vw, 30px);
+}
+
+.gallery-item:hover .gallery-item-overlay {
+  opacity: 1;
+}
+
+.gallery-item-title {
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #fff;
+}
+
+.gallery-item-category {
+  font-size: clamp(12px, 2vw, 14px);
+  color: #f47921;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Coming Soon Badge */
+.coming-soon-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #808080;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  backdrop-filter: blur(10px);
+  z-index: 5;
+}
+
+/* Placeholder Visuals */
+.placeholder-3d {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Geometric Abstract */
+.geo-abstract {
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1a1a 100%);
+}
+
+.geo-abstract .shape-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  transform-style: preserve-3d;
+  animation: rotate3D 10s linear infinite;
+}
+
+.geo-abstract .geo-cube {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #f47921;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.geo-abstract .geo-cube:nth-child(1) { transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg); }
+.geo-abstract .geo-cube:nth-child(2) { transform: translate(-50%, -50%) rotateX(30deg) rotateY(30deg); opacity: 0.7; }
+.geo-abstract .geo-cube:nth-child(3) { transform: translate(-50%, -50%) rotateX(60deg) rotateY(60deg); opacity: 0.4; }
+
+@keyframes rotate3D {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+/* Sphere Visual */
+.sphere-visual {
+  background: radial-gradient(circle at 30% 30%, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+.sphere-visual .sphere {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(244, 121, 33, 0.4) 0%, transparent 70%);
+  border: 1px solid rgba(244, 121, 33, 0.3);
+  box-shadow: 
+    inset 0 0 60px rgba(0, 0, 0, 0.6),
+    0 0 30px rgba(244, 121, 33, 0.2);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(244, 121, 33, 0.2); }
+  50% { transform: scale(1.05); box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(244, 121, 33, 0.3); }
+}
+
+/* Wireframe Visual */
+.wireframe-visual {
+  background: linear-gradient(180deg, #0d0d0d 0%, #111 100%);
+}
+
+.wireframe-visual .wireframe {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: wireframeSpin 8s linear infinite;
+}
+
+.wireframe-visual .wire-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #f47921;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.wireframe-visual .wire-ring:nth-child(1) { transform: rotateX(90deg); }
+.wireframe-visual .wire-ring:nth-child(2) { transform: rotateY(90deg); }
+.wireframe-visual .wire-ring:nth-child(3) { transform: rotateX(45deg) rotateY(45deg); }
+.wireframe-visual .wire-ring:nth-child(4) { transform: rotateX(-45deg) rotateY(45deg); }
+
+@keyframes wireframeSpin {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+/* Torus Visual */
+.torus-visual {
+  background: linear-gradient(135deg, #0a0a0a 0%, #151515 100%);
+}
+
+.torus-visual .torus-container {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: torusSpin 12s linear infinite;
+}
+
+.torus-visual .torus-ring {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 6px solid transparent;
+  border-top-color: #f47921;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  opacity: 0.6;
+}
+
+.torus-visual .torus-ring:nth-child(1) { transform: translate(-50%, -50%) rotateX(0deg); }
+.torus-visual .torus-ring:nth-child(2) { transform: translate(-50%, -50%) rotateX(30deg); }
+.torus-visual .torus-ring:nth-child(3) { transform: translate(-50%, -50%) rotateX(60deg); }
+.torus-visual .torus-ring:nth-child(4) { transform: translate(-50%, -50%) rotateX(90deg); }
+.torus-visual .torus-ring:nth-child(5) { transform: translate(-50%, -50%) rotateX(120deg); }
+.torus-visual .torus-ring:nth-child(6) { transform: translate(-50%, -50%) rotateX(150deg); }
+
+@keyframes torusSpin {
+  0% { transform: rotateY(0deg) rotateZ(0deg); }
+  100% { transform: rotateY(360deg) rotateZ(360deg); }
+}
+
+/* Crystal Visual */
+.crystal-visual {
+  background: radial-gradient(ellipse at center, #111 0%, #0a0a0a 100%);
+}
+
+.crystal-visual .crystal {
+  width: 80px;
+  height: 140px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: crystalFloat 5s ease-in-out infinite;
+}
+
+.crystal-visual .crystal-face {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 70px solid rgba(244, 121, 33, 0.15);
+}
+
+.crystal-visual .crystal-face:nth-child(1) { transform: translateY(0) rotateY(0deg); }
+.crystal-visual .crystal-face:nth-child(2) { transform: translateY(0) rotateY(90deg); }
+.crystal-visual .crystal-face:nth-child(3) { transform: translateY(0) rotateY(180deg); }
+.crystal-visual .crystal-face:nth-child(4) { transform: translateY(0) rotateY(270deg); }
+
+.crystal-visual .crystal-bottom {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-top: 70px solid rgba(244, 121, 33, 0.2);
+  bottom: 0;
+}
+
+@keyframes crystalFloat {
+  0%, 100% { transform: translateY(0) rotateY(0deg); }
+  50% { transform: translateY(-20px) rotateY(180deg); }
+}
+
+/* Particle Field */
+.particle-visual {
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+.particle-visual .particles {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.particle-visual .particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #f47921;
+  border-radius: 50%;
+  animation: particleFloat 3s ease-in-out infinite;
+}
+
+.particle-visual .particle:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+.particle-visual .particle:nth-child(2) { left: 40%; top: 60%; animation-delay: 0.5s; }
+.particle-visual .particle:nth-child(3) { left: 60%; top: 20%; animation-delay: 1s; }
+.particle-visual .particle:nth-child(4) { left: 80%; top: 70%; animation-delay: 1.5s; }
+.particle-visual .particle:nth-child(5) { left: 30%; top: 80%; animation-delay: 2s; }
+.particle-visual .particle:nth-child(6) { left: 70%; top: 40%; animation-delay: 2.5s; }
+.particle-visual .particle:nth-child(7) { left: 50%; top: 50%; animation-delay: 0.8s; width: 6px; height: 6px; }
+.particle-visual .particle:nth-child(8) { left: 15%; top: 55%; animation-delay: 1.2s; }
+.particle-visual .particle:nth-child(9) { left: 85%; top: 35%; animation-delay: 1.8s; }
+.particle-visual .particle:nth-child(10) { left: 45%; top: 85%; animation-delay: 0.3s; }
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+}
+
+/* Glitch effect on hover */
+.gallery-item:hover {
+  animation: glitchItem 0.3s ease;
+}
+
+@keyframes glitchItem {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, -2px); box-shadow: 2px 2px 0 rgba(244, 121, 33, 0.3); }
+  50% { transform: translate(2px, 2px); box-shadow: -2px -2px 0 rgba(244, 121, 33, 0.3); }
+  75% { transform: translate(-1px, 1px); }
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 10000;
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow-y: auto;
+}
+
+.modal.active {
+  display: flex;
+  opacity: 1;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+  padding: clamp(30px, 6vw, 60px);
+  animation: modalSlideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-close {
+  position: fixed;
+  top: clamp(20px, 4vw, 40px);
+  right: clamp(20px, 4vw, 40px);
+  width: clamp(44px, 6vw, 50px);
+  height: clamp(44px, 6vw, 50px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  color: #a0a0a0;
+  font-size: clamp(20px, 3vw, 24px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+  z-index: 10001;
+}
+
+.modal-close:hover {
+  background: rgba(244, 121, 33, 0.1);
+  border-color: rgba(244, 121, 33, 0.3);
+  color: #f47921;
+  transform: rotate(90deg);
+}
+
+/* Case Study Modal Styles */
+.modal-case-study {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: clamp(30px, 5vw, 60px);
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.modal-header {
+  text-align: center;
+  margin-bottom: 50px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modal-header .modal-category {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 1px solid rgba(244, 121, 33, 0.2);
+  border-radius: 20px;
+  color: #f47921;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.modal-header .modal-title {
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 300;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.modal-header .modal-year {
+  color: #606060;
+  font-size: 14px;
+}
+
+.modal-visual-preview {
+  margin-bottom: 40px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  aspect-ratio: 16/9;
+}
+
+.modal-text-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 40px;
+}
+
+.modal-section {
+  margin-bottom: 30px;
+}
+
+.modal-section h3 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #f47921;
+  margin-bottom: 12px;
+}
+
+.modal-section p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #b0b0b0;
+}
+
+.modal-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+
+.modal-tools {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modal-tools h4 {
+  font-size: 12px;
+  font-weight: 500;
+  color: #808080;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(6px, 1.5vw, 8px);
+}
+
+.tool-tag {
+  padding: clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 16px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  font-size: clamp(12px, 2vw, 13px);
+  color: #a0a0a0;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: clamp(40px, 6vw, 60px) clamp(20px, 4vw, 40px);
+  color: #606060;
+  font-size: clamp(12px, 2vw, 14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .gallery-item-overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(13, 13, 13, 0.85) 0%, transparent 60%);
+  }
+  
+  .gallery-item:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 16px 20px;
+    padding-right: 70px;
+  }
+  
+  body.scrolled nav {
+    padding-right: 20px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .logo {
+    font-size: 16px;
+  }
+  
+  .logo-icon {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .icon-dropdown {
+    top: 16px;
+    right: 16px;
+  }
+  
+  body.scrolled .icon-dropdown {
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .icon-dropdown-btn {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+  
+  .hero-section {
+    min-height: 50vh;
+    padding: 40px 20px;
+  }
+  
+  .hero-content h1 {
+    font-size: 36px;
+  }
+  
+  .hero-content p {
+    font-size: 15px;
+  }
+  
+  .gallery-section {
+    padding: 30px 16px;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 30px;
+  }
+  
+  .modal-content {
+    padding: 20px;
+  }
+  
+  .modal-case-study {
+    padding: 20px;
+  }
+  
+  .modal-header {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+  }
+  
+  .modal-header .modal-title {
+    font-size: 28px;
+  }
+  
+  .modal-two-col {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .modal-close {
+    top: 12px;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+  
+  footer {
+    padding: 30px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    min-height: 45vh;
+    padding: 30px 16px;
+  }
+  
+  .hero-label {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+  
+  .hero-content h1 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  
+  .hero-content p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .modal-case-study {
+    padding: 16px;
+    max-height: 95vh;
+  }
+  
+  .modal-header .modal-category {
+    font-size: 10px;
+    padding: 5px 12px;
+  }
+  
+  .modal-header .modal-title {
+    font-size: 24px;
+  }
+  
+  .modal-section h3 {
+    font-size: 16px;
+  }
+  
+  .modal-section p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  
+  .modal-tools h4 {
+    font-size: 11px;
+  }
+  
+  .tool-tag {
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+  
+  .bg-text {
+    font-size: 25vw;
+    opacity: 0.03;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-section {
+    min-height: auto;
+    padding: 60px 20px 40px;
+  }
+  
+  .modal-case-study {
+    max-height: 100vh;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="bg-text bg-text-1">3D RENDER</div>
+  <div class="bg-text bg-text-2">SCULPT CREATE</div>
+  <div class="bg-text bg-text-3">DIMENSION</div>
+</div>
+
+<div class="icon-dropdown">
+  <button class="icon-dropdown-btn" id="iconDropdownBtn">
+    <i class="fa-solid fa-grip"></i>
+  </button>
+  <div class="icon-menu" id="iconMenu">
+    <a href="index.html" title="Home" aria-label="Home">
+      <i class="fa-solid fa-home"></i>
+    </a>
+    <a href="about.html" title="About Me" aria-label="About Me">
+      <i class="fa-solid fa-user"></i>
+    </a>
+    <a href="warpzone.html" title="Warp Zone" aria-label="Warp Zone">
+      <i class="fa-solid fa-rocket"></i>
+    </a>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="logo" id="logoNav">
+    <div class="logo-icon">
+      <img src="images/logo.png" alt="Jerome Bustarga Logo">
+    </div>
+    <span class="logo-text-wrapper" style="position: relative;">
+      <span class="logo-text">Jerome Bustarga</span>
+      <span class="logo-text-alt">It's Jerome's World</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="warpzone.html">Back to Warp Zone</a></li>
+    <li><a href="index.html">Back to Home</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-label">Creative Dimension</div>
+      <h1>3D <span class="highlight">Art</span></h1>
+      <p>
+        Exploring the intersection of geometry, light, and digital sculpture. 
+        Where mathematics meets imagination in three-dimensional space.
+      </p>
+    </div>
+  </section>
+
+  <section class="gallery-section">
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- Gallery items will be dynamically generated -->
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Jerome Bustarga. Thoughtfully designed & built.</p>
+  </footer>
+</main>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+  <button class="modal-close" id="modalClose">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <div class="modal-content" id="modalContent">
+    <!-- Modal content will be dynamically generated -->
+  </div>
+</div>
+
+<script>
+// 3D Art Projects
+const artProjects = [
+  {
+    id: 1,
+    title: "Geometric Abstractions",
+    category: "Abstract",
+    year: "Coming Soon",
+    visualType: "geo-abstract",
+    description: "Exploring mathematical beauty through intersecting planes and impossible forms.",
+    concept: "This series investigates the visual language of pure geometry—how simple shapes combine to create complex, mesmerizing structures. Each piece starts with mathematical principles and evolves through intuitive manipulation.",
+    process: "Built using parametric modeling techniques, each composition begins with fundamental shapes that are duplicated, rotated, and scaled according to mathematical sequences. The final renders emphasize clean lines, subtle reflections, and the interplay of positive and negative space.",
+    tools: ["Blender", "Geometry Nodes", "Cycles Renderer", "Abstract Design"],
+    isComingSoon: true
+  },
+  {
+    id: 2,
+    title: "Luminous Objects",
+    category: "Material Study",
+    year: "Coming Soon",
+    visualType: "sphere-visual",
+    description: "Studies in light, reflection, and material properties on organic forms.",
+    concept: "This collection focuses on the technical artistry of material creation—glass, metal, subsurface scattering, and exotic surfaces that push the boundaries of photorealism and stylization.",
+    process: "Each object is crafted with meticulous attention to shader development, exploring how different materials absorb, reflect, and transmit light. HDRI lighting and caustics add realism while artistic liberties create otherworldly atmospheres.",
+    tools: ["Cinema 4D", "Octane Render", "Material Design", "HDRI Lighting"],
+    isComingSoon: true
+  },
+  {
+    id: 3,
+    title: "Wireframe Studies",
+    category: "Technical Art",
+    year: "Coming Soon",
+    visualType: "wireframe-visual",
+    description: "Deconstructing complex forms to reveal underlying structural beauty.",
+    concept: "Wireframes strip away surface detail to expose the skeletal framework beneath. This series celebrates the elegance of topology and the mathematical precision required to build convincing 3D forms.",
+    process: "Starting with high-polygon models, each piece is systematically deconstructed to find the optimal balance between form recognition and abstract geometry. Custom shaders enhance the wireframe aesthetic with subtle glow and depth effects.",
+    tools: ["Three.js", "WebGL", "Interactive Design", "Procedural Modeling"],
+    isComingSoon: true
+  },
+  {
+    id: 4,
+    title: "Topological Forms",
+    category: "Math Art",
+    year: "Coming Soon",
+    visualType: "torus-visual",
+    description: "Infinite surfaces and non-orientable geometries visualized in digital space.",
+    concept: "Inspired by mathematical topology, these pieces explore surfaces that challenge our intuition—Möbius strips, Klein bottles, and other forms that exist beyond ordinary three-dimensional logic.",
+    process: "Using parametric equations as starting points, each form is generated procedurally and refined through iterative sculpting. The challenge lies in making abstract mathematical concepts visually compelling and emotionally resonant.",
+    tools: ["Houdini", "Procedural Generation", "Math Visualization", "Parametric Design"],
+    isComingSoon: true
+  },
+  {
+    id: 5,
+    title: "Crystal Formations",
+    category: "Procedural",
+    year: "Coming Soon",
+    visualType: "crystal-visual",
+    description: "Procedurally generated crystalline structures with subsurface scattering.",
+    concept: "Nature's geometry inspires this series of crystal formations. Each piece explores how light interacts with transparent and translucent materials, creating complex caustic patterns and internal reflections.",
+    process: "Procedural generation creates unique crystal structures that follow natural growth patterns. Advanced rendering techniques simulate realistic light behavior through multiple refractive surfaces, while artistic color choices add otherworldly appeal.",
+    tools: ["Blender", "Procedural Texturing", "Caustics Rendering", "Nature-Inspired Design"],
+    isComingSoon: true
+  },
+  {
+    id: 6,
+    title: "Particle Systems",
+    category: "Simulation",
+    year: "Coming Soon",
+    visualType: "particle-visual",
+    description: "Dynamic simulations of flow, gravity, and emergent behavior.",
+    concept: "Particle systems transform simple rules into complex, organic motion. This series captures moments of simulated physics—swarms, flows, explosions, and formations that emerge from underlying mathematical laws.",
+    process: "Each piece begins with physics simulation, allowing thousands of particles to interact according to custom force fields and behavioral rules. The challenge is capturing the perfect moment where chaos resolves into beauty.",
+    tools: ["After Effects", "Particle Simulation", "Motion Design", "Physics-Based Animation"],
+    isComingSoon: true
+  }
+];
+
+// Visual HTML generators
+function getVisualHTML(visualType) {
+  switch(visualType) {
+    case 'geo-abstract':
+      return `
+        <div class="placeholder-3d geo-abstract">
+          <div class="shape-container">
+            <div class="geo-cube"></div>
+            <div class="geo-cube"></div>
+            <div class="geo-cube"></div>
+          </div>
+        </div>
+      `;
+    case 'sphere-visual':
+      return `
+        <div class="placeholder-3d sphere-visual">
+          <div class="sphere"></div>
+        </div>
+      `;
+    case 'wireframe-visual':
+      return `
+        <div class="placeholder-3d wireframe-visual">
+          <div class="wireframe">
+            <div class="wire-ring"></div>
+            <div class="wire-ring"></div>
+            <div class="wire-ring"></div>
+            <div class="wire-ring"></div>
+          </div>
+        </div>
+      `;
+    case 'torus-visual':
+      return `
+        <div class="placeholder-3d torus-visual">
+          <div class="torus-container">
+            <div class="torus-ring"></div>
+            <div class="torus-ring"></div>
+            <div class="torus-ring"></div>
+            <div class="torus-ring"></div>
+            <div class="torus-ring"></div>
+            <div class="torus-ring"></div>
+          </div>
+        </div>
+      `;
+    case 'crystal-visual':
+      return `
+        <div class="placeholder-3d crystal-visual">
+          <div class="crystal">
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+            <div class="crystal-face"></div>
+            <div class="crystal-bottom"></div>
+          </div>
+        </div>
+      `;
+    case 'particle-visual':
+      return `
+        <div class="placeholder-3d particle-visual">
+          <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+          </div>
+        </div>
+      `;
+    default:
+      return '';
+  }
+}
+
+// Generate gallery items
+const galleryGrid = document.getElementById('galleryGrid');
+
+artProjects.forEach((item, index) => {
+  const galleryItem = document.createElement('div');
+  galleryItem.className = 'gallery-item';
+  galleryItem.style.transitionDelay = `${index * 0.1}s`;
+  
+  galleryItem.innerHTML = `
+    ${getVisualHTML(item.visualType)}
+    ${item.isComingSoon ? '<span class="coming-soon-badge">Coming Soon</span>' : ''}
+    <div class="gallery-item-overlay">
+      <div class="gallery-item-title">${item.title}</div>
+      <div class="gallery-item-category">${item.category}</div>
+    </div>
+  `;
+  
+  galleryItem.addEventListener('click', () => openModal(item));
+  galleryGrid.appendChild(galleryItem);
+});
+
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.gallery-item').forEach(item => {
+  observer.observe(item);
+});
+
+// Modal functionality
+const modal = document.getElementById('modal');
+const modalContent = document.getElementById('modalContent');
+const modalClose = document.getElementById('modalClose');
+
+function openModal(item) {
+  modalContent.innerHTML = `
+    <div class="modal-case-study">
+      <div class="modal-header">
+        <div class="modal-category">${item.category}</div>
+        <h2 class="modal-title">${item.title}</h2>
+        <div class="modal-year">${item.year}</div>
+      </div>
+      
+      <div class="modal-visual-preview">
+        ${getVisualHTML(item.visualType)}
+      </div>
+      
+      <div class="modal-text-content">
+        <div class="modal-section">
+          <h3>Overview</h3>
+          <p>${item.description}</p>
+        </div>
+        
+        <div class="modal-two-col">
+          <div class="modal-section">
+            <h3>The Concept</h3>
+            <p>${item.concept}</p>
+          </div>
+          
+          <div class="modal-section">
+            <h3>The Process</h3>
+            <p>${item.process}</p>
+          </div>
+        </div>
+        
+        <div class="modal-tools">
+          <h4>Tools & Techniques</h4>
+          <div class="tool-tags">
+            ${item.tools.map(tool => `<span class="tool-tag">${tool}</span>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+});
+
+// Icon dropdown menu toggle
+const iconDropdownBtn = document.getElementById('iconDropdownBtn');
+const iconMenu = document.getElementById('iconMenu');
+
+iconDropdownBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  iconMenu.classList.toggle('show');
+});
+
+window.addEventListener('click', (e) => {
+  if (!e.target.closest('.icon-dropdown')) {
+    iconMenu.classList.remove('show');
+  }
+});
+
+// Scroll behavior
+window.addEventListener('scroll', () => {
+  const logoNav = document.getElementById('logoNav');
+  const scrollY = window.scrollY;
+  
+  if (scrollY > 100) {
+    document.body.classList.add('scrolled');
+    logoNav.classList.add('scrolled');
+  } else {
+    document.body.classList.remove('scrolled');
+    logoNav.classList.remove('scrolled');
+  }
+  
+  // Background text parallax
+  const bgTexts = document.querySelectorAll('.bg-text');
+  bgTexts.forEach((text, index) => {
+    const speed = 0.3;
+    const direction = index === 1 ? -1 : 1;
+    text.style.transform = `translateX(${scrollY * speed * direction}px)`;
+  });
+});
+
+// Mouse trail with p5.js
+new p5((p) => {
+  let trails = [];
+  
+  p.setup = () => {
+    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+    canvas.position(0, 0);
+    canvas.style('pointer-events', 'none');
+    canvas.style('z-index', '9998');
+    canvas.style('position', 'fixed');
+    canvas.style('top', '0');
+    canvas.style('left', '0');
+    p.clear();
+    p.noStroke();
+  };
+
+  p.draw = () => {
+    p.clear();
+    
+    for (let i = trails.length - 1; i >= 0; i--) {
+      const point = trails[i];
+      p.fill(255, 255, 255, point.alpha * 0.08);
+      p.ellipse(point.x, point.y, point.size * 2);
+      p.fill(255, 255, 255, point.alpha * 0.3);
+      p.ellipse(point.x, point.y, point.size);
+      point.alpha -= 3;
+      point.size *= 0.96;
+      if (point.alpha <= 0) trails.splice(i, 1);
+    }
+
+    const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+    if (d > 0) {
+      const steps = p.max(1, d * 0.5);
+      for (let i = 0; i <= steps; i++) {
+        const t = i / steps;
+        trails.push({
+          x: p.lerp(p.pmouseX, p.mouseX, t),
+          y: p.lerp(p.pmouseY, p.mouseY, t),
+          size: p.random(6, 10),
+          alpha: p.random(120, 150)
+        });
+      }
+    }
+
+    if (trails.length > 600) trails.splice(0, trails.length - 600);
+  };
+
+  p.windowResized = () => {
+    p.resizeCanvas(p.windowWidth, p.windowHeight);
+  };
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Research - Jerome Bustarga</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0d0d0d;
+  color: #e8e8e8;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* Background Effects */
+.bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.06;
+  animation: float 25s ease-in-out infinite;
+}
+
+.orb1 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, #f47921, transparent);
+  top: -300px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.orb2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #3b82f6, transparent);
+  bottom: -200px;
+  right: -150px;
+  animation-delay: 8s;
+}
+
+.orb3 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #9333ea, transparent);
+  top: 50%;
+  right: 20%;
+  animation-delay: 16s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -80px) scale(1.05); }
+  66% { transform: translate(-60px, 80px) scale(0.95); }
+}
+
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 60px;
+  padding-right: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  z-index: 1000;
+  background: rgba(13, 13, 13, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.8s ease;
+}
+
+body.scrolled nav {
+  padding-right: 60px;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.02em;
+}
+
+.logo-text {
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.logo-text-alt {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.logo.scrolled .logo-text {
+  opacity: 0;
+}
+
+.logo.scrolled .logo-text-alt {
+  opacity: 1;
+}
+
+.logo-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #909090;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.3s ease;
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a:hover {
+  color: #f47921;
+}
+
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #f47921;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::before {
+  width: 100%;
+}
+
+/* Icon Dropdown Menu */
+.icon-dropdown {
+  position: fixed;
+  top: 24px;
+  right: 30px;
+  z-index: 10001;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.scrolled .icon-dropdown {
+  top: auto;
+  bottom: 30px;
+  right: auto;
+  left: 30px;
+}
+
+.icon-dropdown-btn {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: #a0a0a0;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+.icon-dropdown-btn:hover {
+  background: rgba(244, 121, 33, 0.08);
+  border-color: rgba(244, 121, 33, 0.3);
+  color: #f47921;
+}
+
+.icon-menu {
+  display: none;
+  position: absolute;
+  top: 58px;
+  right: 0;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+body.scrolled .icon-menu {
+  top: auto;
+  bottom: 58px;
+  right: auto;
+  left: 0;
+}
+
+.icon-menu.show {
+  display: flex;
+  animation: slideDown 0.3s ease;
+}
+
+body.scrolled .icon-menu.show {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.icon-menu a {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  color: #a0a0a0;
+  font-size: 18px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.icon-menu a:hover {
+  background: rgba(244, 121, 33, 0.08);
+  border-color: rgba(244, 121, 33, 0.3);
+  color: #f47921;
+  transform: translateY(-2px);
+}
+
+/* Main Content */
+main {
+  position: relative;
+  z-index: 1;
+  padding-top: 100px;
+}
+
+/* Hero Section */
+.hero-section {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-canvas-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  text-align: center;
+  padding: 40px;
+}
+
+.hero-label {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 1px solid rgba(244, 121, 33, 0.2);
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #f47921;
+  margin-bottom: 30px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-content h1 {
+  font-size: clamp(42px, 7vw, 80px);
+  font-weight: 300;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  letter-spacing: -0.03em;
+}
+
+.highlight {
+  background: linear-gradient(135deg, #f47921 0%, #ff9a56 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 400;
+}
+
+.hero-content p {
+  font-size: clamp(16px, 2vw, 20px);
+  color: #a0a0a0;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto 40px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #f47921 0%, #e06c1a 100%);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(244, 121, 33, 0.3);
+}
+
+.btn-secondary {
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #e8e8e8;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Section Styles */
+.section {
+  padding: clamp(60px, 10vw, 120px) clamp(20px, 5vw, 80px);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-label {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 1px solid rgba(244, 121, 33, 0.15);
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #f47921;
+  margin-bottom: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 300;
+  margin-bottom: 30px;
+  letter-spacing: -0.02em;
+}
+
+.section p {
+  font-size: 17px;
+  color: #a0a0a0;
+  max-width: 800px;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(244, 121, 33, 0.2);
+  transform: translateY(-4px);
+}
+
+.stat-value {
+  font-size: clamp(36px, 5vw, 52px);
+  font-weight: 300;
+  background: linear-gradient(135deg, #f47921, #ff9a56);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #808080;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Research Content */
+.research-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 80px;
+}
+
+.research-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.research-block.reverse {
+  direction: rtl;
+}
+
+.research-block.reverse > * {
+  direction: ltr;
+}
+
+.research-text h3 {
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.research-text p {
+  font-size: 16px;
+  color: #909090;
+  margin-bottom: 16px;
+}
+
+/* Demo Container */
+.demo-container {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  position: relative;
+}
+
+.demo-label {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 11px;
+  color: #808080;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 10;
+}
+
+/* Methodology Section */
+.methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 50px;
+}
+
+.method-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 32px;
+  transition: all 0.3s ease;
+}
+
+.method-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-4px);
+}
+
+.method-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(244, 121, 33, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #f47921;
+}
+
+.method-card h4 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.method-card p {
+  font-size: 14px;
+  color: #808080;
+  line-height: 1.7;
+}
+
+.method-stat {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  color: #f47921;
+}
+
+/* Quote Section */
+.quote-section {
+  background: rgba(244, 121, 33, 0.03);
+  border-top: 1px solid rgba(244, 121, 33, 0.1);
+  border-bottom: 1px solid rgba(244, 121, 33, 0.1);
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.quote-text {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 300;
+  font-style: italic;
+  color: #e8e8e8;
+  max-width: 900px;
+  margin: 0 auto 24px;
+  line-height: 1.5;
+}
+
+.quote-attribution {
+  font-size: 14px;
+  color: #808080;
+}
+
+/* Tools Section */
+.tools-section {
+  margin-top: 60px;
+}
+
+.tools-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.tool-tag {
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  font-size: 13px;
+  color: #a0a0a0;
+  transition: all 0.3s ease;
+}
+
+.tool-tag:hover {
+  background: rgba(244, 121, 33, 0.08);
+  border-color: rgba(244, 121, 33, 0.3);
+  color: #f47921;
+}
+
+/* Category Legend */
+.category-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #808080;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* CTA Section */
+.cta-section {
+  text-align: center;
+  padding: 100px 40px;
+  background: linear-gradient(180deg, transparent 0%, rgba(244, 121, 33, 0.03) 100%);
+}
+
+.cta-section h2 {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.cta-section p {
+  font-size: 18px;
+  color: #808080;
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px;
+  color: #606060;
+  font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .research-block {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .research-block.reverse {
+    direction: ltr;
+  }
+}
+
+@media (max-width: 768px) {
+  nav {
+    padding: 16px 20px;
+    padding-right: 70px;
+  }
+  
+  body.scrolled nav {
+    padding-right: 20px;
+  }
+  
+  .nav-links {
+    display: none;
+  }
+  
+  .icon-dropdown {
+    top: 16px;
+    right: 16px;
+  }
+  
+  body.scrolled .icon-dropdown {
+    bottom: 20px;
+    left: 20px;
+  }
+  
+  .hero-section {
+    min-height: 80vh;
+  }
+  
+  .hero-content {
+    padding: 20px;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+  
+  .section {
+    padding: 60px 20px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .methodology-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quote-section {
+    padding: 60px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    padding: 24px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<div class="icon-dropdown">
+  <button class="icon-dropdown-btn" id="iconDropdownBtn">
+    <i class="fa-solid fa-grip"></i>
+  </button>
+  <div class="icon-menu" id="iconMenu">
+    <a href="index.html" title="Home"><i class="fa-solid fa-home"></i></a>
+    <a href="about.html" title="About Me"><i class="fa-solid fa-user"></i></a>
+    <a href="warpzone.html" title="Warp Zone"><i class="fa-solid fa-rocket"></i></a>
+  </div>
+</div>
+
+<nav>
+  <a href="index.html" class="logo" id="logoNav">
+    <div class="logo-icon">
+      <img src="images/logo.png" alt="Jerome Bustarga Logo">
+    </div>
+    <span class="logo-text-wrapper" style="position: relative;">
+      <span class="logo-text">Jerome Bustarga</span>
+      <span class="logo-text-alt">It's Jerome's World</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="warpzone.html">Warp Zone</a></li>
+    <li><a href="index.html">Home</a></li>
+  </ul>
+</nav>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-canvas-container" id="heroCanvas"></div>
+    <div class="hero-content">
+      <div class="hero-label">Independent Research • Digital Humanities</div>
+      <h1>The <span class="highlight">Algorithm Mirror</span></h1>
+      <p>
+        A web-based tool that transforms YouTube watch histories into interactive visualizations, 
+        revealing how recommendation algorithms shape our viewing habits through aesthetic data art.
+      </p>
+      <div class="hero-actions">
+        <a href="https://jeromebustarga.com/algorithm-mirror/" target="_blank" class="btn-primary">
+          <i class="fa-solid fa-play"></i>
+          Try the Tool
+        </a>
+        <a href="images/algorithm-mirror-paper.pdf" target="_blank" class="btn-secondary">
+          <i class="fa-solid fa-file-pdf"></i>
+          Read the Paper
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Findings -->
+  <section class="section">
+    <div class="section-label">Key Findings</div>
+    <h2>Measuring the Invisible</h2>
+    <p>
+      Analysis of 12 real datasets totaling 82,164 videos reveals measurable patterns of 
+      algorithmic influence that most users remain unaware of.
+    </p>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value">64.7%</div>
+        <div class="stat-label">Mean Channel Concentration</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">91.2%</div>
+        <div class="stat-label">Categorization Accuracy</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">3.9×</div>
+        <div class="stat-label">Longer Engagement with Art</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">89.7%</div>
+        <div class="stat-label">AI Cost Reduction</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Particle Visualization Demo -->
+  <section class="section">
+    <div class="research-content">
+      <div class="research-block">
+        <div class="research-text">
+          <h3>Particle System Visualization</h3>
+          <p>
+            Each video becomes a particle, colored by content category. Invisible "attractor points" 
+            represent your top channels, pulling related videos into clusters—a visual metaphor for 
+            filter bubbles forming in real-time.
+          </p>
+          <p>
+            Mouse interaction allows users to "push" particles, revealing the system's tendency 
+            to re-cluster. The physics simulation makes abstract algorithmic concepts tangible 
+            and interactive.
+          </p>
+          <div class="category-legend">
+            <div class="legend-item"><span class="legend-dot" style="background: #9333ea;"></span> Gaming</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #3b82f6;"></span> Music</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #10b981;"></span> Education</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #06b6d4;"></span> Tech</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #f59e0b;"></span> Comedy</div>
+            <div class="legend-item"><span class="legend-dot" style="background: #ef4444;"></span> News</div>
+          </div>
+        </div>
+        <div class="demo-container" id="particleDemo">
+          <div class="demo-label">Interactive Demo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pixel Portrait Demo -->
+  <section class="section">
+    <div class="research-content">
+      <div class="research-block reverse">
+        <div class="research-text">
+          <h3>Pixel Portrait: Your Viewing DNA</h3>
+          <p>
+            Videos arranged chronologically left-to-right, top-to-bottom, each pixel colored by 
+            content category. This creates a visual archive where color shifts reveal category 
+            transitions over time.
+          </p>
+          <p>
+            A gradual shift from blue (Music) to purple (Gaming) documents algorithmic drift—the 
+            progressive narrowing of content diversity that occurs as recommendation systems 
+            "learn" user preferences.
+          </p>
+          <p>
+            The grid format transforms years of passive consumption into a single glanceable image, 
+            making long-term patterns immediately visible.
+          </p>
+        </div>
+        <div class="demo-container" id="pixelDemo">
+          <div class="demo-label">Simulated Data</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract Art Demo -->
+  <section class="section">
+    <div class="research-content">
+      <div class="research-block">
+        <div class="research-text">
+          <h3>Abstract Art: Data as Beauty</h3>
+          <p>
+            Eight generative algorithms transform viewing data into shareable art. The "Spiral Vortex" 
+            rotates videos around a center with distance indicating watch time. "Temporal Flow" 
+            creates circular timelines where older videos appear in inner rings.
+          </p>
+          <p>
+            User engagement data shows abstract art receives <strong>3.9× longer viewing duration</strong> 
+            than statistical charts, validating the hypothesis that beauty drives data literacy. 
+            75% of test users shared their visualizations on social media.
+          </p>
+          <p>
+            These modes prioritize aesthetic impact over analytical precision, maximizing the 
+            "moment of recognition" that transforms abstract concepts into personal understanding.
+          </p>
+        </div>
+        <div class="demo-container" id="abstractDemo">
+          <div class="demo-label">Spiral Vortex Mode</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="quote-section">
+    <blockquote class="quote-text">
+      "I feel manipulated. I thought I was choosing what to watch."
+    </blockquote>
+    <p class="quote-attribution">— User E, upon seeing 87% channel concentration</p>
+  </section>
+
+  <!-- Methodology -->
+  <section class="section">
+    <div class="section-label">Methodology</div>
+    <h2>Hybrid AI Categorization</h2>
+    <p>
+      A five-phase system achieves 91% accuracy while reducing API costs by 90% compared to 
+      pure AI approaches—a replicable template for Digital Humanities projects requiring 
+      large-scale content analysis under resource constraints.
+    </p>
+    
+    <div class="methodology-grid">
+      <div class="method-card">
+        <div class="method-icon"><i class="fa-solid fa-filter"></i></div>
+        <h4>Phase 1: Keyword Pre-filtering</h4>
+        <p>
+          Weighted scoring across seven languages (English, Filipino, Spanish, French, German, 
+          Indonesian, Arabic) categorizes obvious cases first.
+        </p>
+        <div class="method-stat">Catches 68.4% of videos at 89% accuracy</div>
+      </div>
+      
+      <div class="method-card">
+        <div class="method-icon"><i class="fa-solid fa-diagram-project"></i></div>
+        <h4>Phase 2: Channel Pattern Analysis</h4>
+        <p>
+          If 60%+ of a channel's categorized videos match one category, apply that category 
+          to remaining videos from that channel.
+        </p>
+        <div class="method-stat">Categorizes additional 18.1% at 94% accuracy</div>
+      </div>
+      
+      <div class="method-card">
+        <div class="method-icon"><i class="fa-solid fa-brain"></i></div>
+        <h4>Phase 3: Selective AI</h4>
+        <p>
+          Only genuinely ambiguous videos (10.3% of total) get sent to Google's Gemini API 
+          in batches of 20 with specificity-focused prompts.
+        </p>
+        <div class="method-stat">95% accuracy where it matters most</div>
+      </div>
+      
+      <div class="method-card">
+        <div class="method-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <h4>Phase 4: Contextual Refinement</h4>
+        <p>
+          Videos watched within 10 minutes of same-channel content inherit that content's 
+          category, capturing binge-watching patterns.
+        </p>
+        <div class="method-stat">Final cost: $0.12 per user vs $1.19 pure AI</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy -->
+  <section class="section">
+    <div class="section-label">Privacy First</div>
+    <h2>Client-Side Processing</h2>
+    <p>
+      All analysis happens locally in JavaScript. No viewing data leaves the user's device, 
+      no account creation required, no cloud processing. This "privacy by design" approach 
+      maintains contextual integrity by keeping personal data under user control.
+    </p>
+    
+    <div class="tools-section">
+      <h4 style="font-size: 14px; color: #808080; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;">Technologies Used</h4>
+      <div class="tools-grid">
+        <span class="tool-tag">JavaScript (ES6+)</span>
+        <span class="tool-tag">p5.js</span>
+        <span class="tool-tag">Canvas API</span>
+        <span class="tool-tag">Google Gemini API</span>
+        <span class="tool-tag">YouTube Takeout</span>
+        <span class="tool-tag">Shannon Entropy</span>
+        <span class="tool-tag">Physics Simulation</span>
+        <span class="tool-tag">Generative Art</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2>See Your Own <span class="highlight">Algorithm Mirror</span></h2>
+    <p>
+      Export your YouTube data via Google Takeout and discover what the algorithm 
+      has been doing to your viewing habits.
+    </p>
+    <div class="hero-actions">
+      <a href="https://jeromebustarga.com/algorithm-mirror/" target="_blank" class="btn-primary">
+        <i class="fa-solid fa-external-link-alt"></i>
+        Launch the Tool
+      </a>
+      <a href="images/algorithm-mirror-paper.pdf" target="_blank" class="btn-secondary">
+        <i class="fa-solid fa-download"></i>
+        Download Paper (PDF)
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Jerome Bustarga. Independent Research for Digital Humanities Minor at Creighton University.</p>
+  </footer>
+</main>
+
+<script>
+// Category colors from the actual tool
+const categoryColors = {
+  'Gaming': '#9333ea',
+  'Music': '#3b82f6',
+  'Education': '#10b981',
+  'Tech': '#06b6d4',
+  'Comedy': '#f59e0b',
+  'News': '#ef4444',
+  'Cooking': '#ec4899',
+  'Sports': '#84cc16',
+  'Science': '#6366f1',
+  'Entertainment': '#f97316'
+};
+
+const categories = Object.keys(categoryColors);
+
+// Generate simulated video data
+function generateSimulatedData(count, driftPattern = true) {
+  const data = [];
+  for (let i = 0; i < count; i++) {
+    const progress = i / count;
+    // Simulate algorithmic drift - diversity decreases over time
+    let categoryIndex;
+    if (driftPattern) {
+      const diversityFactor = progress < 0.3 ? 1 : progress < 0.6 ? 0.6 : 0.3;
+      const availableCategories = Math.max(2, Math.floor(categories.length * diversityFactor));
+      categoryIndex = Math.floor(Math.random() * availableCategories);
+    } else {
+      categoryIndex = Math.floor(Math.random() * categories.length);
+    }
+    
+    const category = categories[categoryIndex];
+    data.push({
+      category: category,
+      color: categoryColors[category],
+      channel: `Channel_${Math.floor(Math.random() * 20)}`,
+      index: i
+    });
+  }
+  return data;
+}
+
+// Hero Canvas - Ambient particle field
+new p5((p) => {
+  let particles = [];
+  const particleCount = 60;
+  
+  p.setup = () => {
+    const container = document.getElementById('heroCanvas');
+    const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+    canvas.parent('heroCanvas');
+    
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: p.random(p.width),
+        y: p.random(p.height),
+        size: p.random(3, 8),
+        speedX: p.random(-0.3, 0.3),
+        speedY: p.random(-0.3, 0.3),
+        color: p.color(categoryColors[categories[Math.floor(Math.random() * categories.length)]])
+      });
+    }
+  };
+  
+  p.draw = () => {
+    p.clear();
+    
+    // Draw connections
+    p.strokeWeight(0.5);
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const d = p.dist(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+        if (d < 120) {
+          p.stroke(255, 255, 255, p.map(d, 0, 120, 30, 0));
+          p.line(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+        }
+      }
+    }
+    
+    // Draw and update particles
+    p.noStroke();
+    particles.forEach(particle => {
+      particle.x += particle.speedX;
+      particle.y += particle.speedY;
+      
+      // Wrap around edges
+      if (particle.x < 0) particle.x = p.width;
+      if (particle.x > p.width) particle.x = 0;
+      if (particle.y < 0) particle.y = p.height;
+      if (particle.y > p.height) particle.y = 0;
+      
+      // Glow
+      p.fill(p.red(particle.color), p.green(particle.color), p.blue(particle.color), 30);
+      p.ellipse(particle.x, particle.y, particle.size * 3);
+      
+      // Core
+      p.fill(p.red(particle.color), p.green(particle.color), p.blue(particle.color), 150);
+      p.ellipse(particle.x, particle.y, particle.size);
+    });
+  };
+  
+  p.windowResized = () => {
+    const container = document.getElementById('heroCanvas');
+    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+  };
+});
+
+// Particle System Demo
+new p5((p) => {
+  let particles = [];
+  let attractors = [];
+  const data = generateSimulatedData(150);
+  let mousePressed = false;
+  
+  p.setup = () => {
+    const container = document.getElementById('particleDemo');
+    const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+    canvas.parent('particleDemo');
+    
+    // Create particles
+    data.forEach((video, i) => {
+      particles.push({
+        x: p.random(p.width),
+        y: p.random(p.height),
+        vx: p.random(-1, 1),
+        vy: p.random(-1, 1),
+        size: p.map(i, 0, data.length, 6, 3),
+        color: p.color(video.color),
+        channel: video.channel
+      });
+    });
+    
+    // Create attractors for "top channels"
+    const topChannels = ['Channel_0', 'Channel_1', 'Channel_2', 'Channel_3', 'Channel_4'];
+    topChannels.forEach((channel, i) => {
+      const angle = (i / 5) * p.TWO_PI - p.HALF_PI;
+      attractors.push({
+        x: p.width / 2 + p.cos(angle) * Math.min(p.width, p.height) * 0.3,
+        y: p.height / 2 + p.sin(angle) * Math.min(p.width, p.height) * 0.3,
+        channel: channel
+      });
+    });
+  };
+  
+  p.draw = () => {
+    p.background(10, 10, 10, 30);
+    
+    // Draw connections
+    p.strokeWeight(0.3);
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        if (particles[i].channel === particles[j].channel) {
+          const d = p.dist(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+          if (d < 40) {
+            p.stroke(p.red(particles[i].color), p.green(particles[i].color), p.blue(particles[i].color), 40);
+            p.line(particles[i].x, particles[i].y, particles[j].x, particles[j].y);
+          }
+        }
+      }
+    }
+    
+    // Update and draw particles
+    p.noStroke();
+    particles.forEach(particle => {
+      // Attract to channel attractor
+      attractors.forEach(attractor => {
+        if (particle.channel === attractor.channel) {
+          const dx = attractor.x - particle.x;
+          const dy = attractor.y - particle.y;
+          const d = p.sqrt(dx * dx + dy * dy);
+          if (d > 0 && d < 150) {
+            particle.vx += (dx / d) * 0.02;
+            particle.vy += (dy / d) * 0.02;
+          }
+        }
+      });
+      
+      // Mouse repulsion
+      if (mousePressed) {
+        const dx = particle.x - p.mouseX;
+        const dy = particle.y - p.mouseY;
+        const d = p.sqrt(dx * dx + dy * dy);
+        if (d > 0 && d < 80) {
+          particle.vx += (dx / d) * 0.5;
+          particle.vy += (dy / d) * 0.5;
+        }
+      }
+      
+      // Update position
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+      particle.vx *= 0.98;
+      particle.vy *= 0.98;
+      
+      // Bounce
+      if (particle.x < 0 || particle.x > p.width) particle.vx *= -0.9;
+      if (particle.y < 0 || particle.y > p.height) particle.vy *= -0.9;
+      particle.x = p.constrain(particle.x, 0, p.width);
+      particle.y = p.constrain(particle.y, 0, p.height);
+      
+      // Draw glow
+      p.fill(p.red(particle.color), p.green(particle.color), p.blue(particle.color), 30);
+      p.ellipse(particle.x, particle.y, particle.size * 2.5);
+      
+      // Draw particle
+      p.fill(p.red(particle.color), p.green(particle.color), p.blue(particle.color), 180);
+      p.ellipse(particle.x, particle.y, particle.size);
+    });
+  };
+  
+  p.mousePressed = () => mousePressed = true;
+  p.mouseReleased = () => mousePressed = false;
+  
+  p.windowResized = () => {
+    const container = document.getElementById('particleDemo');
+    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+  };
+});
+
+// Pixel Portrait Demo
+new p5((p) => {
+  const data = generateSimulatedData(800, true);
+  
+  p.setup = () => {
+    const container = document.getElementById('pixelDemo');
+    const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+    canvas.parent('pixelDemo');
+    p.noLoop();
+  };
+  
+  p.draw = () => {
+    p.background(10);
+    
+    const cols = Math.ceil(Math.sqrt(data.length * (p.width / p.height)));
+    const rows = Math.ceil(data.length / cols);
+    const pixelW = p.width / cols;
+    const pixelH = p.height / rows;
+    const pixelSize = Math.min(pixelW, pixelH) - 1;
+    
+    data.forEach((video, i) => {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const x = col * pixelW + (pixelW - pixelSize) / 2;
+      const y = row * pixelH + (pixelH - pixelSize) / 2;
+      
+      p.fill(video.color);
+      p.noStroke();
+      p.rect(x, y, pixelSize, pixelSize, 2);
+    });
+  };
+  
+  p.windowResized = () => {
+    const container = document.getElementById('pixelDemo');
+    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+    p.redraw();
+  };
+});
+
+// Abstract Art Demo (Spiral Vortex)
+new p5((p) => {
+  const data = generateSimulatedData(400);
+  let time = 0;
+  
+  p.setup = () => {
+    const container = document.getElementById('abstractDemo');
+    const canvas = p.createCanvas(container.offsetWidth, container.offsetHeight);
+    canvas.parent('abstractDemo');
+  };
+  
+  p.draw = () => {
+    p.background(10, 10, 10, 25);
+    time += 0.015;
+    
+    const centerX = p.width / 2;
+    const centerY = p.height / 2;
+    
+    p.noStroke();
+    data.forEach((video, i) => {
+      const baseAngle = (i / data.length) * p.TWO_PI * 3;
+      const baseDist = (i / data.length) * Math.min(p.width, p.height) * 0.45;
+      
+      const spiralAngle = baseAngle + time + baseDist * 0.003;
+      const spiralR = baseDist * (1 + p.sin(time + baseDist * 0.01) * 0.15);
+      
+      const x = centerX + p.cos(spiralAngle) * spiralR;
+      const y = centerY + p.sin(spiralAngle) * spiralR;
+      
+      const size = p.map(i, 0, data.length, 6, 2);
+      const alpha = p.map(i, 0, data.length, 200, 100);
+      
+      // Glow
+      const col = p.color(video.color);
+      p.fill(p.red(col), p.green(col), p.blue(col), alpha * 0.2);
+      p.ellipse(x, y, size * 2.5);
+      
+      // Core
+      p.fill(p.red(col), p.green(col), p.blue(col), alpha);
+      p.ellipse(x, y, size);
+    });
+  };
+  
+  p.windowResized = () => {
+    const container = document.getElementById('abstractDemo');
+    p.resizeCanvas(container.offsetWidth, container.offsetHeight);
+  };
+});
+
+// Icon dropdown toggle
+const iconDropdownBtn = document.getElementById('iconDropdownBtn');
+const iconMenu = document.getElementById('iconMenu');
+
+iconDropdownBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  iconMenu.classList.toggle('show');
+});
+
+window.addEventListener('click', () => {
+  iconMenu.classList.remove('show');
+});
+
+// Scroll behavior
+window.addEventListener('scroll', () => {
+  const logoNav = document.getElementById('logoNav');
+  if (window.scrollY > 100) {
+    document.body.classList.add('scrolled');
+    logoNav.classList.add('scrolled');
+  } else {
+    document.body.classList.remove('scrolled');
+    logoNav.classList.remove('scrolled');
+  }
+});
+</script>
+</body>
+</html>
