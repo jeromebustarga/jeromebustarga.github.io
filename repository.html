@@ -490,17 +490,10 @@
         <!-- Projects List -->
         <div class="projects-container">
             <div class="project-group">
-                <div class="project-group-title"># Full Stack Projects</div>
-                <div class="project-item" data-project="ecommerce-platform">ecommerce-platform</div>
-                <div class="project-item" data-project="task-manager">task-manager</div>
-                <div class="project-item" data-project="social-dashboard">social-dashboard</div>
-            </div>
-            
-            <div class="project-group">
                 <div class="project-group-title"># Web Applications</div>
-                <div class="project-item" data-project="weather-app">weather-app</div>
-                <div class="project-item" data-project="recipe-finder">recipe-finder</div>
-                <div class="project-item" data-project="crypto-tracker">crypto-tracker</div>
+                <div class="project-item" data-project="uplift-ksmo">uplift-ksmo</div>
+                <div class="project-item" data-project="creighton-cubby">creighton-cubby</div>
+                <div class="project-item" data-project="race2space">race2space</div>
             </div>
             
             <div class="project-group">
@@ -550,48 +543,32 @@
 
         // Project data with preview URLs and actual site URLs
         const projects = {
-            'ecommerce-platform': {
-                name: 'E-Commerce Platform',
-                preview: 'https://example.com/preview/ecommerce',
-                url: 'https://example.com/ecommerce',
-                description: 'Full-stack e-commerce solution with React and Node.js',
-                tech: ['React', 'Node.js', 'MongoDB', 'Stripe API']
+            // Web Applications (Real Projects)
+            'uplift-ksmo': {
+                name: 'Uplift KSMO',
+                preview: 'https://upliftksmo.pythonanywhere.com',
+                url: 'https://upliftksmo.pythonanywhere.com',
+                description: 'Resource management platform for Uplift, an organization distributing essentials and food to the homeless via mobile vans. Features inventory tracking, delivery scheduling, and volunteer coordination.',
+                tech: ['Django', 'Python', 'SQLite', 'HTML/CSS/JS'],
+                github: 'https://github.com/jhb09808/Capstone-UpliftReimagined'
             },
-            'task-manager': {
-                name: 'Task Management System',
-                preview: 'https://example.com/preview/tasks',
-                url: 'https://example.com/tasks',
-                description: 'Collaborative task management with real-time updates',
-                tech: ['Vue.js', 'Express', 'PostgreSQL', 'Socket.io']
+            'creighton-cubby': {
+                name: 'Creighton Cubby',
+                preview: 'https://creightoncubby2024.pythonanywhere.com',
+                url: 'https://creightoncubby2024.pythonanywhere.com',
+                description: 'A dedicated online marketplace for Creighton University students to buy, sell, and trade items within the campus community. Features secure user authentication and messaging.',
+                tech: ['Django', 'Python', 'SQLite', 'HTML/CSS/JS'],
+                github: 'https://github.com/jhb09808/Project-CreightonCubby'
             },
-            'social-dashboard': {
-                name: 'Social Media Dashboard',
-                preview: 'https://example.com/preview/social',
-                url: 'https://example.com/social',
-                description: 'Analytics dashboard for social media management',
-                tech: ['Next.js', 'D3.js', 'Firebase', 'REST APIs']
+            'race2space': {
+                name: 'Race2Space',
+                preview: 'https://race2space.pythonanywhere.com',
+                url: 'https://race2space.pythonanywhere.com',
+                description: 'A platform highlighting the remarkable achievements and ambitions of developing countries in space exploration. Features country profiles, interactive maps, and in-depth articles.',
+                tech: ['Django', 'Python', 'SQLite', 'HTML/CSS/JS'],
+                github: 'https://github.com/jhb09808/Project-Race2Space'
             },
-            'weather-app': {
-                name: 'Weather Application',
-                preview: 'https://example.com/preview/weather',
-                url: 'https://example.com/weather',
-                description: 'Real-time weather data with interactive maps',
-                tech: ['JavaScript', 'OpenWeather API', 'Mapbox']
-            },
-            'recipe-finder': {
-                name: 'Recipe Finder',
-                preview: 'https://example.com/preview/recipes',
-                url: 'https://example.com/recipes',
-                description: 'AI-powered recipe recommendations',
-                tech: ['React', 'Spoonacular API', 'TensorFlow.js']
-            },
-            'crypto-tracker': {
-                name: 'Cryptocurrency Tracker',
-                preview: 'https://example.com/preview/crypto',
-                url: 'https://example.com/crypto',
-                description: 'Real-time cryptocurrency portfolio tracking',
-                tech: ['Vue.js', 'CoinGecko API', 'Chart.js']
-            },
+            // Creative Experiments (placeholders)
             'generative-art': {
                 name: 'Generative Art Gallery',
                 preview: 'https://example.com/preview/art',
@@ -613,6 +590,7 @@
                 description: 'Real-time audio visualization system',
                 tech: ['Web Audio API', 'p5.js', 'GLSL Shaders']
             },
+            // Digital Humanities (placeholders)
             'data-stories': {
                 name: 'Interactive Data Stories',
                 preview: 'https://example.com/preview/stories',
@@ -707,6 +685,9 @@
                     addOutput(`Project: ${proj.name}`, 'success');
                     addOutput(`Description: ${proj.description}`, 'output');
                     addOutput(`Technologies: ${proj.tech.join(', ')}`, 'output');
+                    if (proj.github) {
+                        addOutput(`GitHub: ${proj.github}`, 'output');
+                    }
                 } else {
                     addOutput('No project currently selected', 'error');
                 }
@@ -772,6 +753,9 @@
 
             // Simulate loading and show preview
             setTimeout(() => {
+                // Check if it's a real project with live URL
+                const isLiveProject = project.url && !project.url.includes('example.com');
+                
                 previewFrame.innerHTML = `
                     <div class="preview-placeholder" style="background: linear-gradient(135deg, rgba(244, 121, 33, 0.02), rgba(13, 13, 13, 0.5));">
                         <div style="max-width: 600px;">
@@ -793,22 +777,34 @@
                                     ">${tech}</span>
                                 `).join('')}
                             </div>
+                            ${project.github ? `
+                            <div style="margin-top: 20px;">
+                                <a href="${project.github}" target="_blank" style="
+                                    color: var(--terminal-orange);
+                                    font-size: 13px;
+                                    text-decoration: none;
+                                    display: inline-flex;
+                                    align-items: center;
+                                    gap: 8px;
+                                    opacity: 0.8;
+                                    transition: opacity 0.3s;
+                                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                                    <i class="fa-brands fa-github"></i> View on GitHub
+                                </a>
+                            </div>
+                            ` : ''}
+                            ${!isLiveProject ? `
                             <div style="margin-top: 30px; padding: 20px; border: 1px solid var(--border-color); border-radius: 8px; background: rgba(244, 121, 33, 0.02);">
                                 <div style="color: var(--terminal-orange); font-size: 12px; font-family: 'Courier New', monospace;">
-                                    // Project preview will be embedded here
-                                </div>
-                                <div style="color: var(--text-dim); font-size: 11px; margin-top: 10px; font-family: 'Courier New', monospace;">
-                                    // Replace preview URL with actual project URL
+                                    // Project preview coming soon
                                 </div>
                             </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
-
-                // When you have real URLs, use this instead:
-                // previewFrame.innerHTML = `<iframe src="${project.preview}" class="preview-iframe"></iframe>`;
                 
-                viewSiteBtn.disabled = false;
+                viewSiteBtn.disabled = !isLiveProject;
             }, 1500);
         }
 
