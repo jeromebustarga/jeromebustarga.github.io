@@ -711,6 +711,116 @@ main {
   aspect-ratio: 9/16;
 }
 
+/* Illustrations gallery - square */
+.mockup-gallery-illustrations {
+  grid-template-columns: repeat(auto-fit, minmax(140px, 180px));
+  justify-content: center;
+}
+
+.mockup-item-square {
+  aspect-ratio: 1;
+}
+
+/* Illustration Process */
+.illustration-process {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.process-step-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.process-step-visual .process-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.process-step-visual .process-img:hover {
+  transform: scale(1.05);
+  border-color: rgba(244, 121, 33, 0.5);
+}
+
+.process-step-label {
+  font-size: 11px;
+  color: #909090;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  text-align: center;
+}
+
+.process-step-label .step-num {
+  color: #f47921;
+  font-weight: 500;
+}
+
+.illustration-process .process-arrow {
+  color: #f47921;
+  font-size: 16px;
+  margin-top: -30px;
+}
+
+@media (max-width: 768px) {
+  .illustration-process {
+    gap: 8px;
+  }
+  
+  .process-step-visual .process-img {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .illustration-process .process-arrow {
+    font-size: 12px;
+  }
+  
+  .process-step-label {
+    font-size: 9px;
+  }
+}
+
+/* Demo Link Button */
+.demo-link-container {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.demo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #f47921 0%, #ff9a56 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(244, 121, 33, 0.3);
+}
+
+.demo-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(244, 121, 33, 0.4);
+}
+
+.demo-link i {
+  font-size: 18px;
+}
+
 /* Process Steps */
 .process-steps {
   display: grid;
@@ -988,6 +1098,70 @@ footer {
 const projects = [
   {
     id: 1,
+    title: "The Connection",
+    category: "Digital Humanities",
+    year: "2024",
+    image: "the-connection-story/images/start-hero.jpg",
+    description: `
+      <h3>Project Context</h3>
+      <p>The Connection is an interactive narrative experience developed as part of my Digital Humanities minor — an interdisciplinary field that integrates computational methods with humanities-based research. This project addresses a critical contemporary issue: the <strong>Digital Divide</strong>, which extends beyond mere access to technology to encompass literacy, skills, and meaningful use of digital tools.</p>
+      
+      <p>As institutions like Creighton University and the broader tech industry race to advance AI and emerging technologies, a paradox emerges: the more we advance, the wider the gap grows between those who can meaningfully participate in digital society and those left behind. This project represents a direct intervention in that widening divide.</p>
+      
+      <h3>Research Foundation</h3>
+      <p>The project is grounded in <strong>Digital Literacy</strong> research — an initiative to ensure no one gets left behind as technology evolves. Rather than targeting adults who may have already developed fixed digital habits, the intervention focuses on children during their formative years of technology interaction. Research in developmental psychology suggests that early exposure to ethical decision-making frameworks creates lasting cognitive patterns that influence future behavior.</p>
+      
+      <p>The choose-your-own-adventure format was selected based on pedagogical research supporting <strong>experiential learning</strong> — the principle that learners retain information more effectively when they actively participate in decision-making rather than passively receiving instruction. By allowing children to experience the consequences of both positive and negative digital choices within a safe, simulated environment, the project creates meaningful learning moments without real-world risk.</p>
+      
+      <h3>Design Approach</h3>
+      <p>The visual design employs a hand-illustrated aesthetic specifically chosen to appeal to the target demographic while differentiating the experience from typical educational software. Each illustration progresses through a deliberate five-stage process: initial sketch, refined sketch, final sketch, vector trace, and final coloring. This methodology ensures visual consistency across all narrative branches while maintaining the warmth and approachability of hand-drawn artwork.</p>
+      
+      <p>The user interface prioritizes clarity and accessibility, with large touch targets suitable for younger users and clear visual hierarchy guiding attention to key decision points. Color psychology informed the palette selection — warm, inviting tones for positive paths and gradually shifting hues to signal consequences of risky choices.</p>
+      
+      <h3>Technical Implementation</h3>
+      <p>The narrative engine leverages <strong>Twine</strong>, an open-source tool specifically designed for interactive fiction, extended with custom HTML, CSS, and JavaScript to create a polished, production-ready experience. This technical stack was chosen for its accessibility — ensuring the final product can run in any modern web browser without requiring installation or specialized hardware, directly addressing access barriers inherent in the digital divide.</p>
+      
+      <p>The branching narrative structure contains multiple decision points, each designed to illustrate specific digital literacy concepts: online privacy, information verification, cyberbullying recognition, and safe communication practices. Consequences are designed to be educational rather than punitive, with each "wrong" choice leading to explanation and reflection rather than simple failure states.</p>
+      
+      <h3>Broader Implications</h3>
+      <p>This project demonstrates how Human-Computer Interaction principles can be applied to social impact initiatives. By combining narrative design, visual communication, and accessible technology, The Connection serves as a model for educational interventions that meet users where they are — both developmentally and technologically. Future iterations could incorporate adaptive difficulty, multilingual support, and accessibility features for users with disabilities, further expanding the reach of digital literacy education.</p>
+      
+      <h3>Try It Yourself</h3>
+      <p>Experience the interactive narrative and see how your choices shape the story.</p>
+      <div class="demo-link-container">
+        <a href="the-connection-story/start.html" target="_blank" class="demo-link">
+          <i class="fa-solid fa-play"></i> Launch The Connection
+        </a>
+      </div>
+    `,
+    wireframeEmbed: "https://embed.figma.com/design/6fwu1fQnXhnHEsigTZ9Q3i/JeromeBustarga-WireframeDemo?node-id=0-1&embed-host=share",
+    protoDesktopEmbed: "",
+    protoMobileEmbed: "",
+    mockups: [
+      "images/tc6.png",
+      "images/tc7.png",
+      "images/tc8.png",
+      "images/tc9.png",
+      "images/tc10.png",
+      "images/tc11.png"
+    ],
+    illustrationProcess: [
+      { step: "01", label: "First Sketch", image: "images/tc1.png" },
+      { step: "02", label: "Refined Sketch", image: "images/tc2.png" },
+      { step: "03", label: "Final Sketch", image: "images/tc3.png" },
+      { step: "04", label: "Image Trace", image: "images/tc4.png" },
+      { step: "05", label: "Final Color", image: "images/tc5.png" }
+    ],
+    processSteps: [
+      { title: "Research", desc: "Investigated digital divide literature, digital literacy frameworks, and pedagogical approaches to experiential learning for children." },
+      { title: "Narrative Design", desc: "Developed branching storylines with meaningful decision points addressing privacy, verification, and online safety concepts." },
+      { title: "Illustration", desc: "Created hand-drawn artwork through a 5-stage process ensuring visual consistency and child-appropriate aesthetics." },
+      { title: "Development", desc: "Built interactive experience using Twine with custom HTML/CSS/JS, optimized for browser-based accessibility." }
+    ],
+    tools: ["Twine", "HTML/CSS/JS", "Figma", "Digital Illustration", "Narrative Design", "UX Research"]
+  },
+  {
+    id: 2,
     title: "Aerotech",
     category: "Passion Project",
     year: "2024",
@@ -1102,44 +1276,84 @@ const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.querySelector('.lightbox-close');
 
 function openModal(item) {
+  // Wireframe section
   const wireframeHtml = item.wireframeEmbed ? 
-    `<div class="figma-embed"><iframe src="${item.wireframeEmbed}" allowfullscreen></iframe></div>` :
-    `<div class="figma-embed"><div class="figma-placeholder"><i class="fa-brands fa-figma"></i><span>Figma wireframe embed</span></div></div>`;
+    `<h3>Wireframes & UI Design</h3>
+    <p>Early explorations mapping out user flow, interface structure, and interaction patterns.</p>
+    <div class="figma-embed-container">
+      <div class="figma-embed-label"><i class="fa-brands fa-figma"></i> Interactive Wireframe</div>
+      <div class="figma-embed"><iframe src="${item.wireframeEmbed}" allowfullscreen></iframe></div>
+    </div>` : '';
   
+  // Desktop prototype section
   const protoDesktopHtml = item.protoDesktopEmbed ? 
-    `<div class="figma-embed"><iframe src="${item.protoDesktopEmbed}" allowfullscreen></iframe></div>` :
-    `<div class="figma-embed"><div class="figma-placeholder"><i class="fa-brands fa-figma"></i><span>Figma prototype embed</span></div></div>`;
+    `<h3>High Fidelity Prototype — Desktop</h3>
+    <p>Refined designs with final visual direction, typography, colors, and interactions.</p>
+    <div class="figma-embed-container">
+      <div class="figma-embed-label"><i class="fa-brands fa-figma"></i> Desktop Prototype</div>
+      <div class="figma-embed"><iframe src="${item.protoDesktopEmbed}" allowfullscreen></iframe></div>
+    </div>` : '';
   
+  // Mobile prototype section
   const protoMobileHtml = item.protoMobileEmbed ? 
-    `<div class="figma-embed"><iframe src="${item.protoMobileEmbed}" allowfullscreen></iframe></div>` :
-    `<div class="figma-embed"><div class="figma-placeholder"><i class="fa-brands fa-figma"></i><span>Figma prototype embed</span></div></div>`;
+    `<h3>High Fidelity Prototype — Mobile</h3>
+    <p>Responsive mobile experience optimized for touch interactions and smaller screens.</p>
+    <div class="figma-embed-container">
+      <div class="figma-embed-label"><i class="fa-brands fa-figma"></i> Mobile Prototype</div>
+      <div class="figma-embed"><iframe src="${item.protoMobileEmbed}" allowfullscreen></iframe></div>
+    </div>` : '';
   
+  // Illustration process section (for The Connection)
+  let illustrationProcessHtml = '';
+  if (item.illustrationProcess && item.illustrationProcess.length > 0) {
+    illustrationProcessHtml = `
+      <h3>Illustration Process</h3>
+      <p>Each illustration progresses through a deliberate five-stage workflow ensuring visual consistency.</p>
+      <div class="illustration-process">
+        ${item.illustrationProcess.map((step, i) => `
+          <div class="process-step-visual">
+            <img src="${step.image}" alt="${step.label}" class="process-img" data-src="${step.image}">
+            <div class="process-step-label"><span class="step-num">${step.step}</span> ${step.label}</div>
+          </div>
+          ${i < item.illustrationProcess.length - 1 ? '<div class="process-arrow"><i class="fa-solid fa-arrow-right"></i></div>' : ''}
+        `).join('')}
+      </div>
+    `;
+  }
+  
+  // Mockups section
   let mockupsDesktopHtml = '';
   let mockupsMobileHtml = '';
+  let mockupsIllustrationsHtml = '';
   
   if (item.mockups && item.mockups.length > 0) {
-    const desktopMockups = item.mockups.filter(src => !src.includes('mobile'));
+    const desktopMockups = item.mockups.filter(src => !src.includes('mobile') && !src.includes('tc'));
     const mobileMockups = item.mockups.filter(src => src.includes('mobile'));
+    const illustrationMockups = item.mockups.filter(src => src.includes('tc'));
     
     if (desktopMockups.length > 0) {
-      mockupsDesktopHtml = `<div class="mockup-gallery">${desktopMockups.map(src => `<div class="mockup-item" data-src="${src}"><img src="${src}" alt="Desktop Mockup"></div>`).join('')}</div>`;
-    } else {
-      mockupsDesktopHtml = `<div class="mockup-gallery"><div class="mockup-item"><div class="mockup-placeholder">Desktop Mockup</div></div></div>`;
+      mockupsDesktopHtml = `
+        <h3>Mockups — Desktop</h3>
+        <p>Full-page mockups showcasing the desktop experience.</p>
+        <div class="mockup-gallery">${desktopMockups.map(src => `<div class="mockup-item" data-src="${src}"><img src="${src}" alt="Desktop Mockup"></div>`).join('')}</div>
+      `;
     }
     
     if (mobileMockups.length > 0) {
-      mockupsMobileHtml = `<div class="mockup-gallery mockup-gallery-mobile">${mobileMockups.map(src => `<div class="mockup-item mockup-item-mobile" data-src="${src}"><img src="${src}" alt="Mobile Mockup"></div>`).join('')}</div>`;
-    } else {
-      mockupsMobileHtml = `<div class="mockup-gallery"><div class="mockup-item"><div class="mockup-placeholder">Mobile Mockup</div></div></div>`;
+      mockupsMobileHtml = `
+        <h3>Mockups — Mobile</h3>
+        <p>Responsive mobile adaptations demonstrating cross-platform consistency.</p>
+        <div class="mockup-gallery mockup-gallery-mobile">${mobileMockups.map(src => `<div class="mockup-item mockup-item-mobile" data-src="${src}"><img src="${src}" alt="Mobile Mockup"></div>`).join('')}</div>
+      `;
     }
-  } else {
-    mockupsDesktopHtml = `<div class="mockup-gallery">
-      <div class="mockup-item"><div class="mockup-placeholder">Mockup 1</div></div>
-      <div class="mockup-item"><div class="mockup-placeholder">Mockup 2</div></div>
-    </div>`;
-    mockupsMobileHtml = `<div class="mockup-gallery">
-      <div class="mockup-item"><div class="mockup-placeholder">Mobile Mockup</div></div>
-    </div>`;
+    
+    if (illustrationMockups.length > 0) {
+      mockupsIllustrationsHtml = `
+        <h3>Illustrations Gallery</h3>
+        <p>Hand-drawn artwork created for the interactive narrative experience.</p>
+        <div class="mockup-gallery mockup-gallery-illustrations">${illustrationMockups.map(src => `<div class="mockup-item mockup-item-square" data-src="${src}"><img src="${src}" alt="Illustration"></div>`).join('')}</div>
+      `;
+    }
   }
   
   const processHtml = item.processSteps.map((step, i) => `
@@ -1161,33 +1375,12 @@ function openModal(item) {
       <div class="modal-story">
         ${item.description}
         
-        <h3>Wireframes</h3>
-        <p>Early explorations and low-fidelity designs to map out user flow and structure.</p>
-        <div class="figma-embed-container">
-          <div class="figma-embed-label"><i class="fa-brands fa-figma"></i> Interactive Wireframe</div>
-          ${wireframeHtml}
-        </div>
-        
-        <h3>High Fidelity Prototype — Desktop</h3>
-        <p>Refined designs with final visual direction, typography, colors, and interactions.</p>
-        <div class="figma-embed-container">
-          <div class="figma-embed-label"><i class="fa-brands fa-figma"></i> Desktop Prototype</div>
-          ${protoDesktopHtml}
-        </div>
-        
-        <h3>High Fidelity Prototype — Mobile</h3>
-        <p>Responsive mobile experience optimized for touch interactions and smaller screens.</p>
-        <div class="figma-embed-container">
-          <div class="figma-embed-label"><i class="fa-brands fa-figma"></i> Mobile Prototype</div>
-          ${protoMobileHtml}
-        </div>
-        
-        <h3>Mockups — Desktop</h3>
-        <p>Full-page mockups showcasing the desktop experience across all four pages.</p>
+        ${wireframeHtml}
+        ${protoDesktopHtml}
+        ${protoMobileHtml}
+        ${illustrationProcessHtml}
+        ${mockupsIllustrationsHtml}
         ${mockupsDesktopHtml}
-        
-        <h3>Mockups — Mobile</h3>
-        <p>Responsive mobile adaptations demonstrating cross-platform consistency.</p>
         ${mockupsMobileHtml}
         
         <h3>Process & Creative Thinking</h3>
@@ -1204,6 +1397,13 @@ function openModal(item) {
   document.querySelectorAll('.mockup-item[data-src]').forEach(mockup => {
     mockup.addEventListener('click', () => {
       lightboxImg.src = mockup.dataset.src;
+      lightbox.classList.add('active');
+    });
+  });
+  
+  document.querySelectorAll('.process-img[data-src]').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.dataset.src;
       lightbox.classList.add('active');
     });
   });
