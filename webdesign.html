@@ -701,6 +701,16 @@ main {
   font-size: 14px;
 }
 
+/* Mobile mockups - portrait orientation */
+.mockup-gallery-mobile {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 180px));
+  justify-content: center;
+}
+
+.mockup-item-mobile {
+  aspect-ratio: 9/16;
+}
+
 /* Process Steps */
 .process-steps {
   display: grid;
@@ -781,26 +791,28 @@ main {
   background: rgba(0, 0, 0, 0.95);
   z-index: 20000;
   display: none;
-  align-items: center;
-  justify-content: center;
+  overflow-y: auto;
+  padding: 40px 20px;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .lightbox.active {
-  display: flex;
+  display: block;
   opacity: 1;
 }
 
 .lightbox img {
+  display: block;
   max-width: 90%;
-  max-height: 90vh;
+  width: auto;
+  margin: 0 auto;
   border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 .lightbox-close {
-  position: absolute;
+  position: fixed;
   top: 24px;
   right: 32px;
   width: 48px;
@@ -815,6 +827,7 @@ main {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  z-index: 20001;
 }
 
 .lightbox-close:hover {
@@ -978,7 +991,7 @@ const projects = [
     title: "Aerotech",
     category: "Passion Project",
     year: "2024",
-    image: "images/aerotech-thumb.jpg",
+    image: "images/aerotech.png",
     description: `
       <h3>Project Overview</h3>
       <p>Aerotech is a self-initiated design exploration examining how aerospace and defense companies communicate technical complexity to diverse stakeholder groups through digital interfaces. This project investigates the intersection of information architecture, visual hierarchy, and trust-building in high-stakes B2B contexts where users must quickly assess credibility, technical capability, and alignment with mission-critical needs.</p>
@@ -1029,7 +1042,10 @@ const projects = [
       "images/aerotech-home.png",
       "images/aerotech-about.png",
       "images/aerotech-technology.png",
-      "images/aerotech-contact.png"
+      "images/aerotech-contact.png",
+      "images/aerotech-mobile-home.png",
+      "images/aerotech-mobile-about.png",
+      "images/aerotech-mobile-technology.png"
     ],
     processSteps: [
       { title: "Research", desc: "Competitive analysis of Collins Aerospace, Blue Origin, and Insitu. Identified UX patterns, visual conventions, and content strategies in aerospace B2B contexts." },
@@ -1049,20 +1065,9 @@ projects.forEach((item, index) => {
   galleryItem.className = 'gallery-item';
   galleryItem.style.transitionDelay = `${index * 0.1}s`;
   
-  // Check if image exists, otherwise show placeholder
-  const hasImage = item.image && item.image.length > 0;
-  
-  galleryItem.innerHTML = hasImage ? `
+  galleryItem.innerHTML = `
     <img src="${item.image}" alt="${item.title}" class="gallery-item-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
     <div class="gallery-item-placeholder" style="display:none;">
-      <i class="fa-brands fa-figma"></i>
-    </div>
-    <div class="gallery-item-overlay">
-      <div class="gallery-item-title">${item.title}</div>
-      <div class="gallery-item-category">${item.category}</div>
-    </div>
-  ` : `
-    <div class="gallery-item-placeholder">
       <i class="fa-brands fa-figma"></i>
     </div>
     <div class="gallery-item-overlay">
@@ -1109,14 +1114,31 @@ function openModal(item) {
     `<div class="figma-embed"><iframe src="${item.protoMobileEmbed}" allowfullscreen></iframe></div>` :
     `<div class="figma-embed"><div class="figma-placeholder"><i class="fa-brands fa-figma"></i><span>Figma prototype embed</span></div></div>`;
   
-  let mockupsHtml = '';
+  let mockupsDesktopHtml = '';
+  let mockupsMobileHtml = '';
+  
   if (item.mockups && item.mockups.length > 0) {
-    mockupsHtml = `<div class="mockup-gallery">${item.mockups.map(src => `<div class="mockup-item" data-src="${src}"><img src="${src}" alt="Mockup"></div>`).join('')}</div>`;
+    const desktopMockups = item.mockups.filter(src => !src.includes('mobile'));
+    const mobileMockups = item.mockups.filter(src => src.includes('mobile'));
+    
+    if (desktopMockups.length > 0) {
+      mockupsDesktopHtml = `<div class="mockup-gallery">${desktopMockups.map(src => `<div class="mockup-item" data-src="${src}"><img src="${src}" alt="Desktop Mockup"></div>`).join('')}</div>`;
+    } else {
+      mockupsDesktopHtml = `<div class="mockup-gallery"><div class="mockup-item"><div class="mockup-placeholder">Desktop Mockup</div></div></div>`;
+    }
+    
+    if (mobileMockups.length > 0) {
+      mockupsMobileHtml = `<div class="mockup-gallery mockup-gallery-mobile">${mobileMockups.map(src => `<div class="mockup-item mockup-item-mobile" data-src="${src}"><img src="${src}" alt="Mobile Mockup"></div>`).join('')}</div>`;
+    } else {
+      mockupsMobileHtml = `<div class="mockup-gallery"><div class="mockup-item"><div class="mockup-placeholder">Mobile Mockup</div></div></div>`;
+    }
   } else {
-    mockupsHtml = `<div class="mockup-gallery">
+    mockupsDesktopHtml = `<div class="mockup-gallery">
       <div class="mockup-item"><div class="mockup-placeholder">Mockup 1</div></div>
       <div class="mockup-item"><div class="mockup-placeholder">Mockup 2</div></div>
-      <div class="mockup-item"><div class="mockup-placeholder">Mockup 3</div></div>
+    </div>`;
+    mockupsMobileHtml = `<div class="mockup-gallery">
+      <div class="mockup-item"><div class="mockup-placeholder">Mobile Mockup</div></div>
     </div>`;
   }
   
@@ -1160,9 +1182,13 @@ function openModal(item) {
           ${protoMobileHtml}
         </div>
         
-        <h3>Mockups</h3>
-        <p>Device mockups and presentation visuals showcasing the final design in context.</p>
-        ${mockupsHtml}
+        <h3>Mockups — Desktop</h3>
+        <p>Full-page mockups showcasing the desktop experience across all four pages.</p>
+        ${mockupsDesktopHtml}
+        
+        <h3>Mockups — Mobile</h3>
+        <p>Responsive mobile adaptations demonstrating cross-platform consistency.</p>
+        ${mockupsMobileHtml}
         
         <h3>Process & Creative Thinking</h3>
         <div class="process-steps">${processHtml}</div>
@@ -1195,7 +1221,10 @@ modalClose.addEventListener('click', closeModal);
 modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
 lightboxClose.addEventListener('click', () => lightbox.classList.remove('active'));
-lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
+lightbox.addEventListener('click', (e) => { 
+  if (e.target === lightbox) lightbox.classList.remove('active'); 
+});
+lightboxImg.addEventListener('click', (e) => e.stopPropagation());
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
