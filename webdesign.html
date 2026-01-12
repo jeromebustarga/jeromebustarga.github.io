@@ -1098,6 +1098,1402 @@ footer {
 const projects = [
   {
     id: 1,
+    title: "Konektado?",
+    category: "Digital Humanities",
+    year: "2024",
+    image: "images/konektado-thumb.png",
+    description: `
+      <style>
+        .ks-case-study {
+          --ks-bg-primary: #fafafa;
+          --ks-bg-secondary: #f0f0f0;
+          --ks-bg-dark: #0a0a0a;
+          --ks-bg-card: #ffffff;
+          --ks-text-primary: #1a1a1a;
+          --ks-text-secondary: #666666;
+          --ks-text-muted: #999999;
+          --ks-accent: #00d4aa;
+          --ks-accent-dark: #00a88a;
+          --ks-warning: #ff6b6b;
+          --ks-border: #e0e0e0;
+          --ks-serif: 'Instrument Serif', Georgia, serif;
+          --ks-sans: 'DM Sans', system-ui, sans-serif;
+          --ks-handwriting: 'Caveat', cursive;
+          font-family: var(--ks-sans);
+          color: var(--ks-text-primary);
+          line-height: 1.7;
+        }
+        .ks-case-study * { box-sizing: border-box; }
+        
+        /* Hero */
+        .ks-hero {
+          background: var(--ks-bg-dark);
+          color: #fff;
+          padding: 4rem 2rem 3rem;
+          margin: -40px -40px 0 -40px;
+          border-radius: 12px 12px 0 0;
+        }
+        .ks-hero-label {
+          font-size: 0.75rem;
+          color: var(--ks-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          margin-bottom: 1.5rem;
+        }
+        .ks-hero-title {
+          font-family: var(--ks-serif);
+          font-size: clamp(2rem, 5vw, 3.5rem);
+          font-weight: 400;
+          line-height: 1.1;
+          margin-bottom: 1.5rem;
+        }
+        .ks-hero-title em {
+          font-style: italic;
+          color: var(--ks-accent);
+        }
+        .ks-hero-subtitle {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.7);
+          max-width: 600px;
+          margin-bottom: 2rem;
+        }
+        .ks-hero-meta {
+          display: flex;
+          gap: 2rem;
+          flex-wrap: wrap;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .ks-meta-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+        .ks-meta-label {
+          font-size: 0.6875rem;
+          color: rgba(255,255,255,0.4);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+        .ks-meta-value {
+          font-size: 0.875rem;
+        }
+
+        /* Sections */
+        .ks-section {
+          padding: 3rem 0;
+        }
+        .ks-section-label {
+          font-size: 0.6875rem;
+          color: var(--ks-accent-dark);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          margin-bottom: 1rem;
+        }
+        .ks-section-title {
+          font-family: var(--ks-serif);
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          font-weight: 400;
+          margin-bottom: 1rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-section-text {
+          font-size: 0.9375rem;
+          color: var(--ks-text-secondary);
+          max-width: 600px;
+          margin-bottom: 1rem;
+        }
+        .ks-section-text em {
+          font-style: italic;
+        }
+
+        /* Full Width Section */
+        .ks-full-width {
+          background: var(--ks-bg-secondary);
+          margin-left: -40px;
+          margin-right: -40px;
+          padding: 3rem 40px;
+        }
+
+        /* Problem Grid */
+        .ks-problem-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
+          margin-top: 2rem;
+        }
+        .ks-problem-stat {
+          background: var(--ks-bg-dark);
+          color: #fff;
+          padding: 2rem;
+          border-radius: 12px;
+          text-align: center;
+        }
+        .ks-stat-number {
+          font-family: var(--ks-serif);
+          font-size: 4rem;
+          color: var(--ks-warning);
+          line-height: 1;
+          margin-bottom: 0.5rem;
+        }
+        .ks-stat-label {
+          font-size: 0.875rem;
+          color: rgba(255,255,255,0.7);
+        }
+        .ks-problem-points {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .ks-problem-point {
+          padding-left: 1rem;
+          border-left: 2px solid var(--ks-border);
+        }
+        .ks-problem-point h4 {
+          font-size: 0.875rem;
+          font-weight: 600;
+          margin-bottom: 0.25rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-problem-point p {
+          font-size: 0.8125rem;
+          color: var(--ks-text-secondary);
+          margin: 0;
+        }
+
+        /* Research */
+        .ks-research-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .ks-research-card {
+          background: var(--ks-bg-card);
+          border: 1px solid var(--ks-border);
+          border-radius: 8px;
+          padding: 1.25rem;
+        }
+        .ks-research-card-icon {
+          font-size: 1.25rem;
+          margin-bottom: 0.75rem;
+        }
+        .ks-research-card h4 {
+          font-size: 0.9375rem;
+          margin-bottom: 0.5rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-research-card p {
+          font-size: 0.75rem;
+          color: var(--ks-text-secondary);
+          margin: 0;
+        }
+
+        /* HMW Box */
+        .ks-hmw-box {
+          background: linear-gradient(135deg, rgba(0,212,170,0.1) 0%, rgba(0,212,170,0.02) 100%);
+          border-left: 3px solid var(--ks-accent);
+          padding: 1.5rem 2rem;
+          margin: 2rem 0;
+          border-radius: 0 12px 12px 0;
+        }
+        .ks-hmw-label {
+          font-size: 0.6875rem;
+          color: var(--ks-accent-dark);
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          margin-bottom: 0.5rem;
+        }
+        .ks-hmw-text {
+          font-family: var(--ks-serif);
+          font-size: 1.25rem;
+          font-style: italic;
+          color: var(--ks-text-primary);
+          margin: 0;
+        }
+
+        /* Ideation */
+        .ks-ideation-sketch-area {
+          background: #fff;
+          border: 1px solid var(--ks-border);
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-top: 1.5rem;
+        }
+        .ks-sketch-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px dashed var(--ks-border);
+        }
+        .ks-sketch-title {
+          font-family: var(--ks-handwriting);
+          font-size: 1.25rem;
+          color: var(--ks-text-secondary);
+        }
+        .ks-sketch-date {
+          font-size: 0.75rem;
+          color: var(--ks-text-muted);
+        }
+        .ks-concept-sketches {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+        .ks-sketch-card {
+          border: 2px dashed var(--ks-border);
+          border-radius: 8px;
+          padding: 1rem;
+          background: #fafafa;
+          position: relative;
+        }
+        .ks-sketch-card.selected {
+          border-color: var(--ks-accent);
+          border-style: solid;
+        }
+        .ks-sketch-card.selected::after {
+          content: '✓ Selected';
+          position: absolute;
+          top: -10px;
+          right: 10px;
+          background: var(--ks-accent);
+          color: #fff;
+          font-size: 0.625rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-weight: 600;
+        }
+        .ks-sketch-visual {
+          height: 80px;
+          background: #fff;
+          border: 1px solid var(--ks-border);
+          border-radius: 4px;
+          margin-bottom: 0.75rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: var(--ks-handwriting);
+          font-size: 0.875rem;
+          color: var(--ks-text-muted);
+          text-align: center;
+          padding: 0.5rem;
+        }
+        .ks-sketch-name {
+          font-family: var(--ks-handwriting);
+          font-size: 1.125rem;
+          margin-bottom: 0.25rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-sketch-desc {
+          font-size: 0.6875rem;
+          color: var(--ks-text-secondary);
+          margin-bottom: 0.5rem;
+        }
+        .ks-sketch-annotation {
+          font-family: var(--ks-handwriting);
+          font-size: 0.8125rem;
+          margin-top: 0.5rem;
+          padding-top: 0.5rem;
+          border-top: 1px dashed var(--ks-border);
+        }
+        .ks-sketch-annotation.rejected { color: var(--ks-warning); }
+        .ks-sketch-annotation.accepted { color: var(--ks-accent-dark); }
+
+        /* Wireframes */
+        .ks-wireframe-section {
+          background: #fff;
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-top: 1.5rem;
+          border: 1px solid var(--ks-border);
+        }
+        .ks-wireframe-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1.5rem;
+        }
+        .ks-wireframe-title {
+          font-family: var(--ks-handwriting);
+          font-size: 1.25rem;
+          color: var(--ks-text-secondary);
+        }
+        .ks-wireframe-iteration {
+          font-size: 0.6875rem;
+          color: var(--ks-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+        .ks-wireframe-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+        }
+        .ks-wireframe-screen {
+          background: #f5f5f5;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          padding: 0.5rem;
+          aspect-ratio: 9/16;
+          position: relative;
+        }
+        .ks-wireframe-label {
+          font-size: 0.5625rem;
+          color: var(--ks-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 0.375rem;
+        }
+        .ks-wf-nav {
+          height: 6px;
+          background: #ccc;
+          border-radius: 2px;
+          margin-bottom: 0.375rem;
+        }
+        .ks-wf-hero {
+          height: 35%;
+          background: repeating-linear-gradient(45deg, #e0e0e0, #e0e0e0 4px, #d0d0d0 4px, #d0d0d0 8px);
+          border-radius: 4px;
+          margin-bottom: 0.375rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .ks-wf-hero.disconnected { opacity: 0.4; }
+        .ks-wf-hero-text {
+          font-family: var(--ks-handwriting);
+          font-size: 0.625rem;
+          color: #888;
+          text-align: center;
+        }
+        .ks-wf-toggle {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          width: 18px;
+          height: 9px;
+          background: #bbb;
+          border-radius: 4px;
+        }
+        .ks-wf-content-block {
+          height: 8px;
+          background: #ddd;
+          border-radius: 2px;
+          margin-bottom: 0.25rem;
+        }
+        .ks-wf-content-block.short { width: 60%; }
+        .ks-wf-card-row {
+          display: flex;
+          gap: 0.25rem;
+          margin-top: 0.375rem;
+        }
+        .ks-wf-card {
+          flex: 1;
+          height: 20px;
+          background: #e5e5e5;
+          border-radius: 3px;
+        }
+        .ks-wf-card.broken {
+          border: 1px dashed #bbb;
+          background: transparent;
+        }
+        .ks-wf-card.faded { opacity: 0.3; }
+        .ks-wf-warning-bar {
+          background: var(--ks-warning);
+          height: 8px;
+          margin: 0.375rem -0.5rem -0.5rem;
+          border-radius: 0 0 6px 6px;
+        }
+        .ks-wireframe-notes {
+          margin-top: 1rem;
+          padding-top: 1rem;
+          border-top: 1px dashed var(--ks-border);
+        }
+        .ks-wireframe-note {
+          display: flex;
+          gap: 0.75rem;
+          margin-bottom: 0.75rem;
+        }
+        .ks-note-marker {
+          width: 20px;
+          height: 20px;
+          background: var(--ks-accent);
+          color: #fff;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.6875rem;
+          font-weight: 600;
+          flex-shrink: 0;
+        }
+        .ks-note-text {
+          font-size: 0.8125rem;
+          color: var(--ks-text-secondary);
+          margin: 0;
+        }
+        .ks-note-text strong { color: var(--ks-text-primary); }
+
+        /* Direction Grid */
+        .ks-direction-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .ks-direction-card {
+          border: 1px solid var(--ks-border);
+          border-radius: 12px;
+          overflow: hidden;
+          background: #fff;
+          position: relative;
+        }
+        .ks-direction-card.selected {
+          border-color: var(--ks-accent);
+          border-width: 2px;
+        }
+        .ks-direction-card.selected::before {
+          content: 'Final Direction';
+          position: absolute;
+          top: 0.75rem;
+          right: 0.75rem;
+          background: var(--ks-accent);
+          color: #fff;
+          font-size: 0.5625rem;
+          padding: 0.2rem 0.4rem;
+          border-radius: 4px;
+          font-weight: 600;
+          z-index: 10;
+        }
+        .ks-direction-preview {
+          height: 140px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1rem;
+        }
+        .ks-direction-preview.light { background: #fafafa; }
+        .ks-direction-preview.dark { background: #0a0a0a; }
+        .ks-direction-preview.editorial { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%); }
+        .ks-preview-mockup {
+          width: 100%;
+          height: 100%;
+          border-radius: 6px;
+          padding: 0.75rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+        }
+        .ks-preview-mockup.light {
+          background: #fff;
+          border: 1px solid #e0e0e0;
+          color: #333;
+        }
+        .ks-preview-mockup.dark {
+          background: #111;
+          border: 1px solid #333;
+          color: #fff;
+        }
+        .ks-preview-mockup.editorial {
+          background: #0d0d0d;
+          border: 1px solid #222;
+          color: #fff;
+        }
+        .ks-preview-title {
+          font-family: var(--ks-serif);
+          font-size: 0.75rem;
+          margin-bottom: 0.25rem;
+        }
+        .ks-preview-title em { color: var(--ks-accent); font-style: italic; }
+        .ks-preview-stat {
+          font-size: 1.25rem;
+          font-weight: 700;
+          margin: 0.25rem 0;
+        }
+        .ks-preview-stat.light { color: #e74c3c; }
+        .ks-preview-stat.dark { color: #ff6b6b; }
+        .ks-preview-stat.editorial { color: var(--ks-warning); }
+        .ks-preview-sub {
+          font-size: 0.5rem;
+          color: #666;
+        }
+        .ks-preview-sub.dark { color: #888; }
+        .ks-direction-info {
+          padding: 1rem;
+          border-top: 1px solid var(--ks-border);
+        }
+        .ks-direction-name {
+          font-weight: 600;
+          font-size: 0.875rem;
+          margin-bottom: 0.25rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-direction-desc {
+          font-size: 0.75rem;
+          color: var(--ks-text-secondary);
+          margin-bottom: 0.75rem;
+        }
+        .ks-direction-colors {
+          display: flex;
+          gap: 0.375rem;
+          margin-bottom: 0.75rem;
+        }
+        .ks-color-dot {
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          border: 1px solid rgba(0,0,0,0.1);
+        }
+        .ks-direction-pros-cons {
+          font-size: 0.6875rem;
+        }
+        .ks-direction-pros-cons p { margin: 0 0 0.125rem 0; }
+        .ks-direction-pros-cons .pro { color: var(--ks-accent-dark); }
+        .ks-direction-pros-cons .con { color: var(--ks-warning); }
+
+        /* Mockup Showcase */
+        .ks-mockup-showcase {
+          background: var(--ks-bg-dark);
+          border-radius: 16px;
+          padding: 2rem;
+          margin-top: 1.5rem;
+        }
+        .ks-mockup-showcase-header {
+          text-align: center;
+          margin-bottom: 1.5rem;
+          color: #fff;
+        }
+        .ks-mockup-showcase-header h3 {
+          font-family: var(--ks-serif);
+          font-size: 1.25rem;
+          margin-bottom: 0.25rem;
+        }
+        .ks-mockup-showcase-header p {
+          color: rgba(255,255,255,0.6);
+          font-size: 0.8125rem;
+          margin: 0;
+        }
+        .ks-mockup-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+        .ks-mockup-item {
+          background: #111;
+          border-radius: 12px;
+          overflow: hidden;
+          border: 1px solid #222;
+        }
+        .ks-mockup-browser {
+          background: #1a1a1a;
+          padding: 0.5rem 0.75rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          border-bottom: 1px solid #222;
+        }
+        .ks-browser-dots {
+          display: flex;
+          gap: 4px;
+        }
+        .ks-browser-dots span {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+        }
+        .ks-browser-dots span:nth-child(1) { background: #ff5f57; }
+        .ks-browser-dots span:nth-child(2) { background: #ffbd2e; }
+        .ks-browser-dots span:nth-child(3) { background: #28ca42; }
+        .ks-browser-url {
+          flex: 1;
+          background: #0d0d0d;
+          border-radius: 4px;
+          padding: 0.25rem 0.5rem;
+          font-size: 0.625rem;
+          color: #666;
+          margin-left: 0.5rem;
+        }
+        .ks-mockup-screen {
+          padding: 1rem;
+          min-height: 200px;
+          color: #fff;
+        }
+        .ks-mock-title {
+          font-family: var(--ks-serif);
+          font-size: 1rem;
+          margin-bottom: 0.25rem;
+        }
+        .ks-mock-title em { color: var(--ks-accent); font-style: italic; }
+        .ks-mockup-screen.disconnected .ks-mock-title em { color: var(--ks-warning); }
+        .ks-mock-title.glitch { animation: ks-glitch 0.3s ease infinite; }
+        @keyframes ks-glitch {
+          0%, 100% { transform: translate(0); }
+          20% { transform: translate(-1px, 1px); }
+          40% { transform: translate(1px, -1px); }
+          60% { transform: translate(-1px, -1px); }
+          80% { transform: translate(1px, 1px); }
+        }
+        .ks-mock-subtitle {
+          font-size: 0.6875rem;
+          color: #888;
+          margin-bottom: 0.75rem;
+        }
+        .ks-mock-stat {
+          display: inline-block;
+          background: #1a1a1a;
+          padding: 0.375rem 0.5rem;
+          border-radius: 6px;
+          margin-bottom: 0.75rem;
+        }
+        .ks-mock-stat-number {
+          font-family: var(--ks-serif);
+          font-size: 1.25rem;
+          color: var(--ks-warning);
+        }
+        .ks-mock-stat-number.faded { opacity: 0.5; }
+        .ks-mock-stat-label {
+          font-size: 0.5625rem;
+          color: #666;
+          margin-left: 0.25rem;
+        }
+        .ks-mock-cards {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.375rem;
+        }
+        .ks-mock-card {
+          background: #1a1a1a;
+          padding: 0.5rem;
+          border-radius: 4px;
+          font-size: 0.5rem;
+          color: #888;
+        }
+        .ks-mock-card.faded { opacity: 0.5; }
+        .ks-mock-card.broken {
+          border: 1px dashed #333;
+          background: transparent;
+          color: #444;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .ks-warning-bar {
+          background: var(--ks-warning);
+          color: #000;
+          padding: 0.25rem;
+          font-size: 0.5rem;
+          font-weight: 600;
+          text-align: center;
+          margin: 0.75rem -1rem -1rem;
+        }
+        .ks-mockup-label {
+          text-align: center;
+          margin-top: 0.75rem;
+          font-size: 0.625rem;
+          color: rgba(255,255,255,0.5);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+
+        /* Principle Cards */
+        .ks-principle-cards {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .ks-principle-card {
+          background: #fff;
+          border: 1px solid var(--ks-border);
+          border-radius: 12px;
+          padding: 1.25rem;
+        }
+        .ks-principle-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.75rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px solid var(--ks-border);
+        }
+        .ks-principle-icon {
+          width: 36px;
+          height: 36px;
+          background: var(--ks-bg-secondary);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1rem;
+        }
+        .ks-principle-name {
+          font-weight: 600;
+          font-size: 0.875rem;
+          color: var(--ks-text-primary);
+          margin: 0;
+        }
+        .ks-principle-source {
+          font-size: 0.625rem;
+          color: var(--ks-accent-dark);
+          margin: 0;
+        }
+        .ks-principle-body h4 {
+          font-size: 0.8125rem;
+          margin-bottom: 0.25rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-principle-body p {
+          font-size: 0.75rem;
+          color: var(--ks-text-secondary);
+          margin-bottom: 0.75rem;
+        }
+        .ks-principle-application {
+          background: var(--ks-bg-secondary);
+          border-radius: 6px;
+          padding: 0.75rem;
+          font-size: 0.75rem;
+          color: var(--ks-text-secondary);
+        }
+        .ks-principle-application strong { color: var(--ks-accent-dark); }
+
+        /* Design System */
+        .ks-design-system {
+          background: #fff;
+          border: 1px solid var(--ks-border);
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-top: 1.5rem;
+        }
+        .ks-ds-section {
+          margin-bottom: 1.5rem;
+        }
+        .ks-ds-section:last-child { margin-bottom: 0; }
+        .ks-ds-section-title {
+          font-size: 0.6875rem;
+          color: var(--ks-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          margin-bottom: 0.75rem;
+        }
+        .ks-ds-colors {
+          display: flex;
+          gap: 0.75rem;
+          flex-wrap: wrap;
+        }
+        .ks-ds-color {
+          text-align: center;
+        }
+        .ks-ds-color-swatch {
+          width: 48px;
+          height: 48px;
+          border-radius: 8px;
+          margin-bottom: 0.375rem;
+          border: 1px solid var(--ks-border);
+        }
+        .ks-ds-color-name {
+          font-size: 0.6875rem;
+          font-weight: 500;
+          color: var(--ks-text-primary);
+        }
+        .ks-ds-color-hex {
+          font-size: 0.5625rem;
+          color: var(--ks-text-muted);
+          font-family: monospace;
+        }
+        .ks-ds-typography {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+        .ks-ds-type-sample {
+          padding: 0.75rem;
+          background: var(--ks-bg-secondary);
+          border-radius: 6px;
+        }
+        .ks-ds-type-preview {
+          margin-bottom: 0.375rem;
+        }
+        .ks-ds-type-preview.serif {
+          font-family: var(--ks-serif);
+          font-size: 1.25rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-ds-type-preview.serif em { font-style: italic; }
+        .ks-ds-type-preview.sans {
+          font-family: var(--ks-sans);
+          font-size: 0.875rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-ds-type-meta {
+          font-size: 0.625rem;
+          color: var(--ks-text-muted);
+          margin: 0;
+        }
+
+        /* Outcome */
+        .ks-outcome-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .ks-outcome-card {
+          background: #fff;
+          border: 1px solid var(--ks-border);
+          border-radius: 12px;
+          padding: 1.5rem;
+          text-align: center;
+        }
+        .ks-outcome-icon {
+          font-size: 1.5rem;
+          margin-bottom: 0.75rem;
+        }
+        .ks-outcome-title {
+          font-weight: 600;
+          font-size: 0.875rem;
+          margin-bottom: 0.375rem;
+          color: var(--ks-text-primary);
+        }
+        .ks-outcome-desc {
+          font-size: 0.75rem;
+          color: var(--ks-text-secondary);
+          margin: 0;
+        }
+
+        /* Reflection */
+        .ks-reflection-box {
+          background: var(--ks-bg-dark);
+          color: #fff;
+          border-radius: 12px;
+          padding: 2rem;
+          margin-top: 1.5rem;
+        }
+        .ks-reflection-title {
+          font-family: var(--ks-serif);
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+        .ks-reflection-content {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+        .ks-reflection-col h4 {
+          font-size: 0.6875rem;
+          color: var(--ks-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-bottom: 0.75rem;
+        }
+        .ks-reflection-col p {
+          font-size: 0.8125rem;
+          color: rgba(255,255,255,0.8);
+          margin-bottom: 0.75rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+          .ks-problem-grid,
+          .ks-mockup-row,
+          .ks-reflection-content,
+          .ks-principle-cards { grid-template-columns: 1fr; }
+          .ks-research-grid,
+          .ks-direction-grid,
+          .ks-outcome-grid,
+          .ks-concept-sketches { grid-template-columns: 1fr; }
+          .ks-wireframe-grid { grid-template-columns: repeat(2, 1fr); }
+          .ks-hero { margin: -40px -20px 0 -20px; padding: 2rem 1.5rem; }
+          .ks-full-width { margin-left: -20px; margin-right: -20px; padding: 2rem 20px; }
+        }
+        @media (max-width: 600px) {
+          .ks-wireframe-grid { grid-template-columns: 1fr 1fr; }
+          .ks-mock-cards { grid-template-columns: 1fr; }
+        }
+      </style>
+      
+      <div class="ks-case-study">
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- Hero -->
+        <header class="ks-hero">
+          <p class="ks-hero-label">UX Case Study</p>
+          <h1 class="ks-hero-title">Konektado?<br/>Making Privilege <em>Visible</em></h1>
+          <p class="ks-hero-subtitle">An advocacy website that transforms abstract statistics into visceral experience through interaction design. The form becomes the message.</p>
+          <div class="ks-hero-meta">
+            <div class="ks-meta-item">
+              <span class="ks-meta-label">Role</span>
+              <span class="ks-meta-value">UX Design, Visual Design, Development</span>
+            </div>
+            <div class="ks-meta-item">
+              <span class="ks-meta-label">Duration</span>
+              <span class="ks-meta-value">2 Weeks</span>
+            </div>
+            <div class="ks-meta-item">
+              <span class="ks-meta-label">Tools</span>
+              <span class="ks-meta-value">Figma, HTML/CSS/JS</span>
+            </div>
+            <div class="ks-meta-item">
+              <span class="ks-meta-label">Focus</span>
+              <span class="ks-meta-value">Advocacy, HCI, Interaction Design</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Problem -->
+        <section class="ks-section">
+          <p class="ks-section-label">01 — The Problem</p>
+          <h2 class="ks-section-title">Digital divide content is consumed by people who will never experience it.</h2>
+          <p class="ks-section-text">Statistics about internet access are easy to scroll past. The privileged read about the unprivileged — and move on. How do you make someone <em>feel</em> a problem they've never faced?</p>
+          <div class="ks-problem-grid">
+            <div class="ks-problem-stat">
+              <div class="ks-stat-number">43%</div>
+              <div class="ks-stat-label">of Filipino households have no internet access at home</div>
+            </div>
+            <div class="ks-problem-points">
+              <div class="ks-problem-point">
+                <h4>Students in Palawan</h4>
+                <p>Climb mountains just to find signal strong enough to submit assignments.</p>
+              </div>
+              <div class="ks-problem-point">
+                <h4>Farmers in Mindanao</h4>
+                <p>Get exploited by middlemen because they can't access real-time market prices.</p>
+              </div>
+              <div class="ks-problem-point">
+                <h4>Families in Visayas</h4>
+                <p>Can't access telemedicine when the nearest hospital is hours away by boat.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Research -->
+        <section class="ks-section ks-full-width">
+          <p class="ks-section-label">02 — Research</p>
+          <h2 class="ks-section-title">Understanding the landscape</h2>
+          <p class="ks-section-text">I gathered data on Philippine internet access, studied existing digital divide campaigns, and identified what was missing: emotional resonance.</p>
+          <div class="ks-research-grid">
+            <div class="ks-research-card">
+              <div class="ks-research-card-icon">📊</div>
+              <h4>Data Collection</h4>
+              <p>PSA statistics on household internet access by region. World Bank digital inclusion reports. News coverage of connectivity struggles.</p>
+            </div>
+            <div class="ks-research-card">
+              <div class="ks-research-card-icon">🔍</div>
+              <h4>Competitive Analysis</h4>
+              <p>Existing advocacy sites use statistics and stories. None make the reader experience the problem — they just describe it.</p>
+            </div>
+            <div class="ks-research-card">
+              <div class="ks-research-card-icon">💡</div>
+              <h4>Key Insight</h4>
+              <p>People with reliable internet can't imagine life without it. The gap isn't knowledge — it's empathy. Design can bridge that.</p>
+            </div>
+          </div>
+          <div class="ks-hmw-box">
+            <p class="ks-hmw-label">How Might We</p>
+            <p class="ks-hmw-text">Make connected users feel — even momentarily — the frustration of unreliable internet access?</p>
+          </div>
+        </section>
+
+        <!-- Ideation -->
+        <section class="ks-section">
+          <p class="ks-section-label">03 — Ideation</p>
+          <h2 class="ks-section-title">Exploring concepts</h2>
+          <p class="ks-section-text">I sketched multiple approaches to making the digital divide experiential, not just informational.</p>
+          <div class="ks-ideation-sketch-area">
+            <div class="ks-sketch-header">
+              <span class="ks-sketch-title">Initial concept sketches</span>
+              <span class="ks-sketch-date">Week 1</span>
+            </div>
+            <div class="ks-concept-sketches">
+              <div class="ks-sketch-card">
+                <div class="ks-sketch-visual">Slow loading simulation<br/>(progressively reveals content)</div>
+                <h4 class="ks-sketch-name">A. Patience Test</h4>
+                <p class="ks-sketch-desc">Force users to wait 30+ seconds for content to load, simulating slow connections.</p>
+                <p class="ks-sketch-annotation rejected">❌ Too frustrating — users will just leave</p>
+              </div>
+              <div class="ks-sketch-card">
+                <div class="ks-sketch-visual">Side-by-side comparison<br/>(split screen)</div>
+                <h4 class="ks-sketch-name">B. Split View</h4>
+                <p class="ks-sketch-desc">Show two versions simultaneously — fast vs. slow — so users can see the difference.</p>
+                <p class="ks-sketch-annotation rejected">❌ Passive viewing, not experiencing</p>
+              </div>
+              <div class="ks-sketch-card selected">
+                <div class="ks-sketch-visual">Toggle switch<br/>(user controls the state)</div>
+                <h4 class="ks-sketch-name">C. Privilege Toggle</h4>
+                <p class="ks-sketch-desc">Let users switch between "connected" and "disconnected" states. They control it.</p>
+                <p class="ks-sketch-annotation accepted">✓ User agency + contrast = felt experience</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Wireframes -->
+        <section class="ks-section ks-full-width">
+          <p class="ks-section-label">04 — Wireframes</p>
+          <h2 class="ks-section-title">Structuring the experience</h2>
+          <p class="ks-section-text">Low-fidelity wireframes to establish layout, hierarchy, and interaction flow before visual design.</p>
+          <div class="ks-wireframe-section">
+            <div class="ks-wireframe-header">
+              <span class="ks-wireframe-title">Desktop wireframes</span>
+              <span class="ks-wireframe-iteration">Iteration 2</span>
+            </div>
+            <div class="ks-wireframe-grid">
+              <div class="ks-wireframe-screen">
+                <span class="ks-wireframe-label">Hero</span>
+                <div class="ks-wf-nav"></div>
+                <div class="ks-wf-toggle"></div>
+                <div class="ks-wf-hero"><span class="ks-wf-hero-text">43% stat<br/>+ headline</span></div>
+                <div class="ks-wf-content-block"></div>
+                <div class="ks-wf-content-block short"></div>
+              </div>
+              <div class="ks-wireframe-screen">
+                <span class="ks-wireframe-label">Reality Section</span>
+                <div class="ks-wf-nav"></div>
+                <div class="ks-wf-toggle"></div>
+                <div class="ks-wf-content-block short"></div>
+                <div class="ks-wf-card-row"><div class="ks-wf-card"></div><div class="ks-wf-card"></div><div class="ks-wf-card"></div></div>
+                <div style="margin-top:0.375rem"><div class="ks-wf-content-block"></div><div class="ks-wf-content-block short"></div></div>
+              </div>
+              <div class="ks-wireframe-screen">
+                <span class="ks-wireframe-label">Data Grid</span>
+                <div class="ks-wf-nav"></div>
+                <div class="ks-wf-toggle"></div>
+                <div class="ks-wf-content-block short"></div>
+                <div class="ks-wf-card-row"><div class="ks-wf-card"></div><div class="ks-wf-card"></div></div>
+                <div class="ks-wf-card-row"><div class="ks-wf-card"></div><div class="ks-wf-card"></div></div>
+              </div>
+              <div class="ks-wireframe-screen">
+                <span class="ks-wireframe-label">Disconnected</span>
+                <div class="ks-wf-nav"></div>
+                <div class="ks-wf-toggle"></div>
+                <div class="ks-wf-hero disconnected"><span class="ks-wf-hero-text">glitching...</span></div>
+                <div class="ks-wf-card-row"><div class="ks-wf-card broken"></div><div class="ks-wf-card broken"></div><div class="ks-wf-card faded"></div></div>
+                <div class="ks-wf-warning-bar"></div>
+              </div>
+            </div>
+            <div class="ks-wireframe-notes">
+              <div class="ks-wireframe-note">
+                <span class="ks-note-marker">1</span>
+                <p class="ks-note-text"><strong>Toggle position:</strong> Fixed top-right, always visible. Catches eye on F-pattern scan. Persistent reminder of the interaction available.</p>
+              </div>
+              <div class="ks-wireframe-note">
+                <span class="ks-note-marker">2</span>
+                <p class="ks-note-text"><strong>Hero stat prominence:</strong> 43% should dominate visual hierarchy. Large serif number, warm warning color. First thing users see and remember.</p>
+              </div>
+              <div class="ks-wireframe-note">
+                <span class="ks-note-marker">3</span>
+                <p class="ks-note-text"><strong>Disconnected state:</strong> Cards break, content fails, warning banner appears. The degradation should feel frustrating but not completely unusable.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Visual Directions -->
+        <section class="ks-section">
+          <p class="ks-section-label">05 — Visual Direction</p>
+          <h2 class="ks-section-title">Exploring the look and feel</h2>
+          <p class="ks-section-text">Three distinct visual directions, each with different emotional implications for the content.</p>
+          <div class="ks-direction-grid">
+            <div class="ks-direction-card">
+              <div class="ks-direction-preview light">
+                <div class="ks-preview-mockup light">
+                  <div class="ks-preview-title">The Digital Divide</div>
+                  <div class="ks-preview-stat light">43%</div>
+                  <div class="ks-preview-sub">Stories from the Philippines</div>
+                </div>
+              </div>
+              <div class="ks-direction-info">
+                <h4 class="ks-direction-name">A. Clean & Minimal</h4>
+                <p class="ks-direction-desc">Light background, simple typography. Professional, accessible, neutral.</p>
+                <div class="ks-direction-colors">
+                  <div class="ks-color-dot" style="background:#fff"></div>
+                  <div class="ks-color-dot" style="background:#333"></div>
+                  <div class="ks-color-dot" style="background:#e74c3c"></div>
+                  <div class="ks-color-dot" style="background:#3498db"></div>
+                </div>
+                <div class="ks-direction-pros-cons">
+                  <p class="pro">+ Readable, accessible</p>
+                  <p class="con">− Feels generic, no emotional weight</p>
+                </div>
+              </div>
+            </div>
+            <div class="ks-direction-card">
+              <div class="ks-direction-preview dark">
+                <div class="ks-preview-mockup dark">
+                  <div class="ks-preview-title">The Digital Divide</div>
+                  <div class="ks-preview-stat dark">43%</div>
+                  <div class="ks-preview-sub dark">Disconnected Philippines</div>
+                </div>
+              </div>
+              <div class="ks-direction-info">
+                <h4 class="ks-direction-name">B. Dark & Technical</h4>
+                <p class="ks-direction-desc">Dark background, monospace accents. Feels like a terminal or data dashboard.</p>
+                <div class="ks-direction-colors">
+                  <div class="ks-color-dot" style="background:#0a0a0a"></div>
+                  <div class="ks-color-dot" style="background:#fff"></div>
+                  <div class="ks-color-dot" style="background:#ff6b6b"></div>
+                  <div class="ks-color-dot" style="background:#00ff88"></div>
+                </div>
+                <div class="ks-direction-pros-cons">
+                  <p class="pro">+ Tech-forward, modern</p>
+                  <p class="con">− Cold, lacks human warmth</p>
+                </div>
+              </div>
+            </div>
+            <div class="ks-direction-card selected">
+              <div class="ks-direction-preview editorial">
+                <div class="ks-preview-mockup editorial">
+                  <div class="ks-preview-title">Connection is a <em>privilege</em></div>
+                  <div class="ks-preview-stat editorial">43%</div>
+                  <div class="ks-preview-sub dark">The Digital Divide</div>
+                </div>
+              </div>
+              <div class="ks-direction-info">
+                <h4 class="ks-direction-name">C. Dark Editorial</h4>
+                <p class="ks-direction-desc">Journalistic serif, teal accent, atmospheric gradients. Serious but warm.</p>
+                <div class="ks-direction-colors">
+                  <div class="ks-color-dot" style="background:#0a0a0a"></div>
+                  <div class="ks-color-dot" style="background:#fafafa"></div>
+                  <div class="ks-color-dot" style="background:#00d4aa"></div>
+                  <div class="ks-color-dot" style="background:#ff6b6b"></div>
+                </div>
+                <div class="ks-direction-pros-cons">
+                  <p class="pro">+ Editorial weight, emotional depth</p>
+                  <p class="pro">+ Teal = hope, coral = warning</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Final Mockups -->
+        <section class="ks-section ks-full-width">
+          <p class="ks-section-label">06 — Final Design</p>
+          <h2 class="ks-section-title">Two states, one truth</h2>
+          <p class="ks-section-text">The same content, radically different experiences. The toggle reveals what you take for granted.</p>
+          <div class="ks-mockup-showcase">
+            <div class="ks-mockup-showcase-header">
+              <h3>State Comparison</h3>
+              <p>Interactive toggle lets users experience both realities</p>
+            </div>
+            <div class="ks-mockup-row">
+              <div>
+                <div class="ks-mockup-item">
+                  <div class="ks-mockup-browser">
+                    <div class="ks-browser-dots"><span></span><span></span><span></span></div>
+                    <div class="ks-browser-url">konektado.ph</div>
+                  </div>
+                  <div class="ks-mockup-screen connected">
+                    <h4 class="ks-mock-title">Connection is a <em>privilege</em></h4>
+                    <p class="ks-mock-subtitle">The Digital Divide in the Philippines</p>
+                    <div class="ks-mock-stat">
+                      <span class="ks-mock-stat-number">43%</span>
+                      <span class="ks-mock-stat-label">without access</span>
+                    </div>
+                    <div class="ks-mock-cards">
+                      <div class="ks-mock-card">Palawan: Students climb mountains for signal</div>
+                      <div class="ks-mock-card">Mindanao: Farmers cut off from markets</div>
+                      <div class="ks-mock-card">Visayas: No telemedicine access</div>
+                    </div>
+                  </div>
+                </div>
+                <p class="ks-mockup-label">Connected State</p>
+              </div>
+              <div>
+                <div class="ks-mockup-item">
+                  <div class="ks-mockup-browser">
+                    <div class="ks-browser-dots"><span></span><span></span><span></span></div>
+                    <div class="ks-browser-url">konektado.ph — loading...</div>
+                  </div>
+                  <div class="ks-mockup-screen disconnected">
+                    <h4 class="ks-mock-title glitch">Connection is a <em>privilege</em></h4>
+                    <p class="ks-mock-subtitle">The Digital Divide in the Philippines</p>
+                    <div class="ks-mock-stat">
+                      <span class="ks-mock-stat-number faded">43%</span>
+                      <span class="ks-mock-stat-label">without access</span>
+                    </div>
+                    <div class="ks-mock-cards">
+                      <div class="ks-mock-card faded">Palawan: Students climb...</div>
+                      <div class="ks-mock-card broken">Failed to load</div>
+                      <div class="ks-mock-card broken">Failed to load</div>
+                    </div>
+                    <div class="ks-warning-bar">⚠ Slow connection — Some content may not load</div>
+                  </div>
+                </div>
+                <p class="ks-mockup-label">Disconnected State</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- HCI Principles -->
+        <section class="ks-section">
+          <p class="ks-section-label">07 — HCI Foundations</p>
+          <h2 class="ks-section-title">Design decisions grounded in research</h2>
+          <p class="ks-section-text">Every interaction choice connects to established HCI principles. The goal: make abstract statistics visceral.</p>
+          <div class="ks-principle-cards">
+            <div class="ks-principle-card">
+              <div class="ks-principle-header">
+                <div class="ks-principle-icon">👁️</div>
+                <div>
+                  <h4 class="ks-principle-name">Figure-Ground Relationship</h4>
+                  <p class="ks-principle-source">Gestalt Psychology</p>
+                </div>
+              </div>
+              <div class="ks-principle-body">
+                <h4>The Principle</h4>
+                <p>Elements are perceived as either figures (focus) or grounds (background). Sharp contrast creates visual hierarchy.</p>
+                <div class="ks-principle-application"><strong>Applied:</strong> Hero stat "43%" pops against dark gradient. In disconnected mode, broken elements become the "figure" — forcing attention to what's missing.</div>
+              </div>
+            </div>
+            <div class="ks-principle-card">
+              <div class="ks-principle-header">
+                <div class="ks-principle-icon">◐</div>
+                <div>
+                  <h4 class="ks-principle-name">Contrast & Similarity</h4>
+                  <p class="ks-principle-source">Visual Design Theory</p>
+                </div>
+              </div>
+              <div class="ks-principle-body">
+                <h4>The Principle</h4>
+                <p>Humans are hardwired to notice differences — it's survival instinct. Contrast communicates boundaries and importance.</p>
+                <div class="ks-principle-application"><strong>Applied:</strong> Connected state is polished and comfortable. Disconnected state is jarring and broken. The contrast between states IS the message.</div>
+              </div>
+            </div>
+            <div class="ks-principle-card">
+              <div class="ks-principle-header">
+                <div class="ks-principle-icon">F</div>
+                <div>
+                  <h4 class="ks-principle-name">F-Pattern Scanning</h4>
+                  <p class="ks-principle-source">Nielsen Norman Group</p>
+                </div>
+              </div>
+              <div class="ks-principle-body">
+                <h4>The Principle</h4>
+                <p>Users scan text-heavy pages in an F-shape: horizontal across top, then vertical down left side, looking for keywords.</p>
+                <div class="ks-principle-application"><strong>Applied:</strong> Toggle placed top-right catches eye on first horizontal scan. Key stats positioned where F-pattern predicts attention.</div>
+              </div>
+            </div>
+            <div class="ks-principle-card">
+              <div class="ks-principle-header">
+                <div class="ks-principle-icon">⏳</div>
+                <div>
+                  <h4 class="ks-principle-name">Intentional Friction</h4>
+                  <p class="ks-principle-source">Interaction Design</p>
+                </div>
+              </div>
+              <div class="ks-principle-body">
+                <h4>The Principle</h4>
+                <p>Friction is usually removed from UX. But strategic friction can create reflection, slow decisions, or communicate meaning.</p>
+                <div class="ks-principle-application"><strong>Applied:</strong> 3-second loading delay is intentional discomfort. The user must wait — experiencing a fraction of real frustration. The friction IS the experience.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Design System -->
+        <section class="ks-section ks-full-width">
+          <p class="ks-section-label">08 — Design System</p>
+          <h2 class="ks-section-title">Visual language documentation</h2>
+          <div class="ks-design-system">
+            <div class="ks-ds-section">
+              <h4 class="ks-ds-section-title">Color Palette</h4>
+              <div class="ks-ds-colors">
+                <div class="ks-ds-color">
+                  <div class="ks-ds-color-swatch" style="background:#0a0a0a"></div>
+                  <p class="ks-ds-color-name">Background</p>
+                  <p class="ks-ds-color-hex">#0a0a0a</p>
+                </div>
+                <div class="ks-ds-color">
+                  <div class="ks-ds-color-swatch" style="background:#fafafa"></div>
+                  <p class="ks-ds-color-name">Text Primary</p>
+                  <p class="ks-ds-color-hex">#fafafa</p>
+                </div>
+                <div class="ks-ds-color">
+                  <div class="ks-ds-color-swatch" style="background:#00d4aa"></div>
+                  <p class="ks-ds-color-name">Accent (Hope)</p>
+                  <p class="ks-ds-color-hex">#00d4aa</p>
+                </div>
+                <div class="ks-ds-color">
+                  <div class="ks-ds-color-swatch" style="background:#ff6b6b"></div>
+                  <p class="ks-ds-color-name">Warning (Danger)</p>
+                  <p class="ks-ds-color-hex">#ff6b6b</p>
+                </div>
+                <div class="ks-ds-color">
+                  <div class="ks-ds-color-swatch" style="background:#888"></div>
+                  <p class="ks-ds-color-name">Text Secondary</p>
+                  <p class="ks-ds-color-hex">#888888</p>
+                </div>
+              </div>
+            </div>
+            <div class="ks-ds-section">
+              <h4 class="ks-ds-section-title">Typography</h4>
+              <div class="ks-ds-typography">
+                <div class="ks-ds-type-sample">
+                  <p class="ks-ds-type-preview serif">Connection is a <em>privilege</em></p>
+                  <p class="ks-ds-type-meta">Instrument Serif — Headlines, editorial emphasis. Italic for emotional words.</p>
+                </div>
+                <div class="ks-ds-type-sample">
+                  <p class="ks-ds-type-preview sans">43% of Filipino households have no internet access at home.</p>
+                  <p class="ks-ds-type-meta">DM Sans — Body text, UI elements. Clean and readable.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Outcome -->
+        <section class="ks-section">
+          <p class="ks-section-label">09 — Outcome</p>
+          <h2 class="ks-section-title">What this project demonstrates</h2>
+          <div class="ks-outcome-grid">
+            <div class="ks-outcome-card">
+              <div class="ks-outcome-icon">🎯</div>
+              <h4 class="ks-outcome-title">Design as Advocacy</h4>
+              <p class="ks-outcome-desc">Form and content reinforce each other. The interaction design IS the message — not decoration.</p>
+            </div>
+            <div class="ks-outcome-card">
+              <div class="ks-outcome-icon">🧠</div>
+              <h4 class="ks-outcome-title">HCI Foundations</h4>
+              <p class="ks-outcome-desc">Every choice connects to human perception research — Gestalt, scanning patterns, intentional friction.</p>
+            </div>
+            <div class="ks-outcome-card">
+              <div class="ks-outcome-icon">⚡</div>
+              <h4 class="ks-outcome-title">Technical Execution</h4>
+              <p class="ks-outcome-desc">Clean HTML/CSS/JS with CSS-driven state management. Accessible toggle with ARIA attributes.</p>
+            </div>
+          </div>
+          <div class="ks-reflection-box">
+            <h3 class="ks-reflection-title">Reflection</h3>
+            <div class="ks-reflection-content">
+              <div class="ks-reflection-col">
+                <h4>What Worked</h4>
+                <p>The toggle mechanic successfully creates a felt contrast — users report the relief of switching back to "connected" mode. That relief is the privilege being revealed.</p>
+                <p>Grounding every design decision in HCI principles made the rationale clear and defensible.</p>
+              </div>
+              <div class="ks-reflection-col">
+                <h4>What I'd Explore Next</h4>
+                <p>User testing with people who have experienced connectivity issues — does this resonate or feel performative?</p>
+                <p>Mobile-first version, since many Filipinos access internet primarily through phones.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    `,
+    wireframeEmbed: "",
+    protoDesktopEmbed: "",
+    protoMobileEmbed: "",
+    mockups: [],
+    demoLink: "konektado-digital-divide.html",
+    processSteps: [],
+    tools: ["Figma", "HTML/CSS/JS", "HCI Research", "Interaction Design", "Advocacy Design", "Design Systems"]
+  },
+  {
+    id: 2,
     title: "The Connection",
     category: "Digital Humanities",
     year: "2024",
@@ -1161,7 +2557,7 @@ const projects = [
     tools: ["Twine", "HTML/CSS/JS", "Figma", "Digital Illustration", "Narrative Design", "UX Research"]
   },
   {
-    id: 2,
+    id: 3,
     title: "Aerotech",
     category: "Passion Project",
     year: "2024",
@@ -1276,6 +2672,18 @@ const lightboxImg = document.getElementById('lightboxImg');
 const lightboxClose = document.querySelector('.lightbox-close');
 
 function openModal(item) {
+  // Demo link
+  let linksHtml = '';
+  if (item.demoLink) {
+    linksHtml = `
+      <h3>Experience It</h3>
+      <p>Explore the live project.</p>
+      <div class="demo-link-container">
+        <a href="${item.demoLink}" target="_blank" class="demo-link"><i class="fa-solid fa-play"></i> Launch Project</a>
+      </div>
+    `;
+  }
+  
   // Wireframe section
   const wireframeHtml = item.wireframeEmbed ? 
     `<h3>Wireframes & UI Design</h3>
@@ -1356,13 +2764,18 @@ function openModal(item) {
     }
   }
   
-  const processHtml = item.processSteps.map((step, i) => `
+  const processHtml = item.processSteps && item.processSteps.length > 0 ? item.processSteps.map((step, i) => `
     <div class="process-step">
       <div class="process-step-number">0${i + 1}</div>
       <div class="process-step-title">${step.title}</div>
       <div class="process-step-desc">${step.desc}</div>
     </div>
-  `).join('');
+  `).join('') : '';
+  
+  const processSection = processHtml ? `
+    <h3>Process & Creative Thinking</h3>
+    <div class="process-steps">${processHtml}</div>
+  ` : '';
   
   modalContent.innerHTML = `
     <div class="modal-case-study">
@@ -1375,6 +2788,7 @@ function openModal(item) {
       <div class="modal-story">
         ${item.description}
         
+        ${linksHtml}
         ${wireframeHtml}
         ${protoDesktopHtml}
         ${protoMobileHtml}
@@ -1383,8 +2797,7 @@ function openModal(item) {
         ${mockupsDesktopHtml}
         ${mockupsMobileHtml}
         
-        <h3>Process & Creative Thinking</h3>
-        <div class="process-steps">${processHtml}</div>
+        ${processSection}
       </div>
       
       <div class="modal-tools">
