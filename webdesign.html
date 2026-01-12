@@ -1105,17 +1105,17 @@ const projects = [
     description: `
       <style>
         .ks-case-study {
-          --ks-bg-primary: #fafafa;
-          --ks-bg-secondary: #f0f0f0;
+          --ks-bg-primary: #1a1a1a;
+          --ks-bg-secondary: #252525;
           --ks-bg-dark: #0a0a0a;
-          --ks-bg-card: #ffffff;
-          --ks-text-primary: #1a1a1a;
-          --ks-text-secondary: #666666;
-          --ks-text-muted: #999999;
+          --ks-bg-card: #2a2a2a;
+          --ks-text-primary: #ffffff;
+          --ks-text-secondary: #b0b0b0;
+          --ks-text-muted: #808080;
           --ks-accent: #00d4aa;
-          --ks-accent-dark: #00a88a;
+          --ks-accent-dark: #00d4aa;
           --ks-warning: #ff6b6b;
-          --ks-border: #e0e0e0;
+          --ks-border: #404040;
           --ks-serif: 'Instrument Serif', Georgia, serif;
           --ks-sans: 'DM Sans', system-ui, sans-serif;
           --ks-handwriting: 'Caveat', cursive;
@@ -1185,7 +1185,7 @@ const projects = [
         }
         .ks-section-label {
           font-size: 0.6875rem;
-          color: var(--ks-accent-dark);
+          color: var(--ks-accent);
           text-transform: uppercase;
           letter-spacing: 0.2em;
           margin-bottom: 1rem;
@@ -1314,7 +1314,7 @@ const projects = [
 
         /* Ideation */
         .ks-ideation-sketch-area {
-          background: #fff;
+          background: var(--ks-bg-card);
           border: 1px solid var(--ks-border);
           border-radius: 12px;
           padding: 1.5rem;
@@ -1331,7 +1331,7 @@ const projects = [
         .ks-sketch-title {
           font-family: var(--ks-handwriting);
           font-size: 1.25rem;
-          color: var(--ks-text-secondary);
+          color: var(--ks-text-primary);
         }
         .ks-sketch-date {
           font-size: 0.75rem;
@@ -1346,7 +1346,7 @@ const projects = [
           border: 2px dashed var(--ks-border);
           border-radius: 8px;
           padding: 1rem;
-          background: #fafafa;
+          background: var(--ks-bg-secondary);
           position: relative;
         }
         .ks-sketch-card.selected {
@@ -1367,7 +1367,7 @@ const projects = [
         }
         .ks-sketch-visual {
           height: 80px;
-          background: #fff;
+          background: var(--ks-bg-primary);
           border: 1px solid var(--ks-border);
           border-radius: 4px;
           margin-bottom: 0.75rem;
@@ -1376,7 +1376,7 @@ const projects = [
           justify-content: center;
           font-family: var(--ks-handwriting);
           font-size: 0.875rem;
-          color: var(--ks-text-muted);
+          color: var(--ks-text-secondary);
           text-align: center;
           padding: 0.5rem;
         }
@@ -1403,7 +1403,7 @@ const projects = [
 
         /* Wireframes */
         .ks-wireframe-section {
-          background: #fff;
+          background: var(--ks-bg-card);
           border-radius: 12px;
           padding: 1.5rem;
           margin-top: 1.5rem;
@@ -1418,7 +1418,7 @@ const projects = [
         .ks-wireframe-title {
           font-family: var(--ks-handwriting);
           font-size: 1.25rem;
-          color: var(--ks-text-secondary);
+          color: var(--ks-text-primary);
         }
         .ks-wireframe-iteration {
           font-size: 0.6875rem;
@@ -1547,7 +1547,7 @@ const projects = [
           border: 1px solid var(--ks-border);
           border-radius: 12px;
           overflow: hidden;
-          background: #fff;
+          background: var(--ks-bg-card);
           position: relative;
         }
         .ks-direction-card.selected {
@@ -1618,7 +1618,7 @@ const projects = [
         .ks-preview-stat.editorial { color: var(--ks-warning); }
         .ks-preview-sub {
           font-size: 0.5rem;
-          color: #666;
+          color: var(--ks-text-muted);
         }
         .ks-preview-sub.dark { color: #888; }
         .ks-direction-info {
@@ -1806,7 +1806,7 @@ const projects = [
           margin-top: 1.5rem;
         }
         .ks-principle-card {
-          background: #fff;
+          background: var(--ks-bg-card);
           border: 1px solid var(--ks-border);
           border-radius: 12px;
           padding: 1.25rem;
@@ -1861,7 +1861,7 @@ const projects = [
 
         /* Design System */
         .ks-design-system {
-          background: #fff;
+          background: var(--ks-bg-card);
           border: 1px solid var(--ks-border);
           border-radius: 12px;
           padding: 1.5rem;
@@ -1941,7 +1941,7 @@ const projects = [
           margin-top: 1.5rem;
         }
         .ks-outcome-card {
-          background: #fff;
+          background: var(--ks-bg-card);
           border: 1px solid var(--ks-border);
           border-radius: 12px;
           padding: 1.5rem;
@@ -2494,6 +2494,1450 @@ const projects = [
   },
   {
     id: 2,
+    title: "Liwanag",
+    category: "Digital Humanities",
+    year: "2024",
+    image: "images/liwanag-thumb.png",
+    description: `
+      <style>
+        .lw-case-study {
+          --lw-bg-primary: #1a1a1a;
+          --lw-bg-secondary: #252525;
+          --lw-bg-dark: #0d1a12;
+          --lw-bg-card: #2a2a2a;
+          --lw-text-primary: #ffffff;
+          --lw-text-secondary: #b0b0b0;
+          --lw-text-muted: #808080;
+          --lw-accent: #ff6b35;
+          --lw-accent-secondary: #ffd700;
+          --lw-cyan: #00e5cc;
+          --lw-pink: #ff1493;
+          --lw-warning: #ff3b3b;
+          --lw-border: #404040;
+          --lw-serif: 'Instrument Serif', Georgia, serif;
+          --lw-sans: 'DM Sans', system-ui, sans-serif;
+          --lw-handwriting: 'Caveat', cursive;
+          font-family: var(--lw-sans);
+          color: var(--lw-text-primary);
+          line-height: 1.7;
+        }
+        .lw-case-study * { box-sizing: border-box; }
+
+        /* Hero */
+        .lw-hero {
+          background: var(--lw-bg-dark);
+          color: #fff;
+          padding: 4rem 2rem 3rem;
+          margin: -40px -40px 0 -40px;
+          border-radius: 12px 12px 0 0;
+          position: relative;
+          overflow: hidden;
+        }
+        .lw-hero::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 6px;
+          background: repeating-linear-gradient(90deg, var(--lw-accent) 0px, var(--lw-accent) 20px, var(--lw-accent-secondary) 20px, var(--lw-accent-secondary) 40px, var(--lw-cyan) 40px, var(--lw-cyan) 60px, var(--lw-pink) 60px, var(--lw-pink) 80px);
+        }
+        .lw-hero-label {
+          font-size: 0.75rem;
+          color: var(--lw-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          margin-bottom: 1.5rem;
+        }
+        .lw-hero-title {
+          font-family: var(--lw-serif);
+          font-size: clamp(2rem, 5vw, 3.5rem);
+          font-weight: 400;
+          line-height: 1.1;
+          margin-bottom: 1.5rem;
+        }
+        .lw-hero-title em {
+          font-style: italic;
+          color: var(--lw-accent-secondary);
+        }
+        .lw-hero-subtitle {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.7);
+          max-width: 600px;
+          margin-bottom: 2rem;
+        }
+        .lw-hero-meta {
+          display: flex;
+          gap: 2rem;
+          flex-wrap: wrap;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .lw-meta-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+        .lw-meta-label {
+          font-size: 0.6875rem;
+          color: rgba(255,255,255,0.4);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+        .lw-meta-value {
+          font-size: 0.875rem;
+        }
+
+        /* Sections */
+        .lw-section {
+          padding: 3rem 0;
+        }
+        .lw-section-label {
+          font-size: 0.6875rem;
+          color: var(--lw-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          margin-bottom: 1rem;
+        }
+        .lw-section-title {
+          font-family: var(--lw-serif);
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          font-weight: 400;
+          margin-bottom: 1rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-section-text {
+          font-size: 0.9375rem;
+          color: var(--lw-text-secondary);
+          max-width: 600px;
+          margin-bottom: 1rem;
+        }
+
+        /* Full Width */
+        .lw-full-width {
+          background: var(--lw-bg-secondary);
+          margin-left: -40px;
+          margin-right: -40px;
+          padding: 3rem 40px;
+        }
+
+        /* Problem Grid */
+        .lw-problem-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
+          margin-top: 2rem;
+        }
+        .lw-stat-card {
+          background: var(--lw-bg-dark);
+          color: #fff;
+          padding: 2rem;
+          border-radius: 12px;
+          text-align: center;
+        }
+        .lw-stat-number {
+          font-family: var(--lw-serif);
+          font-size: 4rem;
+          color: var(--lw-warning);
+          line-height: 1;
+          margin-bottom: 0.5rem;
+        }
+        .lw-stat-label {
+          font-size: 0.875rem;
+          color: rgba(255,255,255,0.7);
+        }
+        .lw-problem-stories {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .lw-story-card {
+          padding-left: 1rem;
+          border-left: 3px solid var(--lw-accent);
+        }
+        .lw-story-card h4 {
+          font-size: 0.875rem;
+          font-weight: 600;
+          margin-bottom: 0.25rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-story-card p {
+          font-size: 0.8125rem;
+          color: var(--lw-text-secondary);
+          margin: 0;
+        }
+
+        /* Research */
+        .lw-research-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .lw-research-card {
+          background: var(--lw-bg-card);
+          border: 1px solid var(--lw-border);
+          border-radius: 8px;
+          padding: 1.25rem;
+        }
+        .lw-research-icon {
+          font-size: 1.25rem;
+          margin-bottom: 0.75rem;
+        }
+        .lw-research-card h4 {
+          font-size: 0.9375rem;
+          margin-bottom: 0.5rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-research-card p {
+          font-size: 0.75rem;
+          color: var(--lw-text-secondary);
+          margin: 0;
+        }
+
+        /* HMW */
+        .lw-hmw-box {
+          background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, rgba(255,107,53,0.02) 100%);
+          border-left: 3px solid var(--lw-accent);
+          padding: 1.5rem 2rem;
+          margin: 2rem 0;
+          border-radius: 0 12px 12px 0;
+        }
+        .lw-hmw-label {
+          font-size: 0.6875rem;
+          color: var(--lw-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          margin-bottom: 0.5rem;
+        }
+        .lw-hmw-text {
+          font-family: var(--lw-serif);
+          font-size: 1.25rem;
+          font-style: italic;
+          color: var(--lw-text-primary);
+          margin: 0;
+        }
+
+        /* Persona */
+        .lw-persona-card {
+          background: var(--lw-bg-card);
+          border: 1px solid var(--lw-border);
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-top: 1.5rem;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 1.5rem;
+        }
+        .lw-persona-avatar {
+          width: 80px;
+          height: 80px;
+          background: linear-gradient(135deg, var(--lw-accent) 0%, var(--lw-pink) 100%);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2rem;
+        }
+        .lw-persona-info h4 {
+          font-family: var(--lw-serif);
+          font-size: 1.25rem;
+          margin-bottom: 0.25rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-persona-role {
+          font-size: 0.8125rem;
+          color: var(--lw-text-secondary);
+          margin-bottom: 1rem;
+        }
+        .lw-persona-details {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+        }
+        .lw-persona-detail h5 {
+          font-size: 0.625rem;
+          color: var(--lw-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-bottom: 0.25rem;
+        }
+        .lw-persona-detail p {
+          font-size: 0.75rem;
+          color: var(--lw-text-secondary);
+          margin: 0;
+        }
+
+        /* Ideation */
+        .lw-sketch-area {
+          background: var(--lw-bg-card);
+          border: 1px solid var(--lw-border);
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-top: 1.5rem;
+        }
+        .lw-sketch-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px dashed var(--lw-border);
+        }
+        .lw-sketch-title {
+          font-family: var(--lw-handwriting);
+          font-size: 1.25rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-sketch-date {
+          font-size: 0.75rem;
+          color: var(--lw-text-muted);
+        }
+        .lw-concept-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+        .lw-concept-card {
+          border: 2px dashed var(--lw-border);
+          border-radius: 8px;
+          padding: 1rem;
+          background: var(--lw-bg-secondary);
+          position: relative;
+        }
+        .lw-concept-card.selected {
+          border-color: var(--lw-accent);
+          border-style: solid;
+        }
+        .lw-concept-card.selected::after {
+          content: '✓ Selected';
+          position: absolute;
+          top: -10px;
+          right: 10px;
+          background: var(--lw-accent);
+          color: #fff;
+          font-size: 0.625rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-weight: 600;
+        }
+        .lw-concept-visual {
+          height: 70px;
+          background: var(--lw-bg-primary);
+          border: 1px solid var(--lw-border);
+          border-radius: 4px;
+          margin-bottom: 0.75rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-family: var(--lw-handwriting);
+          font-size: 0.8125rem;
+          color: var(--lw-text-secondary);
+          text-align: center;
+          padding: 0.5rem;
+        }
+        .lw-concept-name {
+          font-family: var(--lw-handwriting);
+          font-size: 1.125rem;
+          margin-bottom: 0.25rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-concept-desc {
+          font-size: 0.6875rem;
+          color: var(--lw-text-secondary);
+          margin-bottom: 0.5rem;
+        }
+        .lw-concept-annotation {
+          font-family: var(--lw-handwriting);
+          font-size: 0.8125rem;
+          margin-top: 0.5rem;
+          padding-top: 0.5rem;
+          border-top: 1px dashed var(--lw-border);
+        }
+        .lw-concept-annotation.rejected { color: var(--lw-warning); }
+        .lw-concept-annotation.accepted { color: var(--lw-cyan); }
+
+        /* Wireframes */
+        .lw-wireframe-section {
+          background: var(--lw-bg-card);
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-top: 1.5rem;
+          border: 1px solid var(--lw-border);
+        }
+        .lw-wireframe-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 1.5rem;
+        }
+        .lw-wireframe-title {
+          font-family: var(--lw-handwriting);
+          font-size: 1.25rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-wireframe-iteration {
+          font-size: 0.6875rem;
+          color: var(--lw-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+        .lw-wireframe-grid {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 0.75rem;
+        }
+        .lw-wireframe-phone {
+          background: #f5f5f5;
+          border: 2px solid #ddd;
+          border-radius: 12px;
+          padding: 0.25rem;
+          aspect-ratio: 9/18;
+        }
+        .lw-wf-screen {
+          background: #e8e8e8;
+          border-radius: 8px;
+          height: 100%;
+          padding: 0.25rem;
+          display: flex;
+          flex-direction: column;
+        }
+        .lw-wf-status {
+          height: 4px;
+          background: #ccc;
+          border-radius: 2px;
+          margin-bottom: 0.25rem;
+        }
+        .lw-wf-stripe {
+          height: 2px;
+          background: repeating-linear-gradient(90deg, #bbb 0px, #bbb 3px, #ccc 3px, #ccc 6px);
+          margin-bottom: 0.25rem;
+        }
+        .lw-wf-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 0.2rem;
+        }
+        .lw-wf-block {
+          background: #d0d0d0;
+          border-radius: 2px;
+        }
+        .lw-wf-label {
+          font-size: 0.5rem;
+          color: var(--lw-text-muted);
+          text-align: center;
+          margin-top: 0.375rem;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .lw-wireframe-notes {
+          margin-top: 1rem;
+          padding-top: 1rem;
+          border-top: 1px dashed var(--lw-border);
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.75rem;
+        }
+        .lw-wf-note {
+          display: flex;
+          gap: 0.5rem;
+        }
+        .lw-note-marker {
+          width: 18px;
+          height: 18px;
+          background: var(--lw-accent);
+          color: #fff;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.625rem;
+          font-weight: 600;
+          flex-shrink: 0;
+        }
+        .lw-note-text {
+          font-size: 0.6875rem;
+          color: var(--lw-text-secondary);
+          margin: 0;
+        }
+        .lw-note-text strong { color: var(--lw-text-primary); }
+
+        /* Direction Grid */
+        .lw-direction-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .lw-direction-card {
+          border: 1px solid var(--lw-border);
+          border-radius: 12px;
+          overflow: hidden;
+          background: var(--lw-bg-card);
+          position: relative;
+        }
+        .lw-direction-card.selected {
+          border-color: var(--lw-accent);
+          border-width: 2px;
+        }
+        .lw-direction-card.selected::before {
+          content: 'Final Direction';
+          position: absolute;
+          top: 0.75rem;
+          right: 0.75rem;
+          background: var(--lw-accent);
+          color: #fff;
+          font-size: 0.5625rem;
+          padding: 0.2rem 0.4rem;
+          border-radius: 4px;
+          font-weight: 600;
+          z-index: 10;
+        }
+        .lw-direction-preview {
+          height: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.75rem;
+        }
+        .lw-direction-preview.soft { background: linear-gradient(135deg, #fff5f2 0%, #ffeee8 100%); }
+        .lw-direction-preview.brutalist { background: #000; }
+        .lw-direction-preview.cultural { background: var(--lw-bg-dark); }
+        .lw-preview-phone {
+          width: 50px;
+          height: 100px;
+          border-radius: 8px;
+          padding: 2px;
+          overflow: hidden;
+        }
+        .lw-preview-phone.soft { background: #fff; border: 1px solid #f0d0c0; }
+        .lw-preview-phone.brutalist { background: #fff; border: 2px solid #000; }
+        .lw-preview-phone.cultural { background: var(--lw-bg-dark); }
+        .lw-preview-screen {
+          height: 100%;
+          border-radius: 5px;
+          padding: 4px;
+          font-size: 4px;
+        }
+        .lw-preview-phone.soft .lw-preview-screen { background: #fffaf8; }
+        .lw-preview-phone.brutalist .lw-preview-screen { background: #fff; }
+        .lw-preview-phone.cultural .lw-preview-screen { background: #132218; }
+        .lw-preview-stripe {
+          height: 2px;
+          margin-bottom: 3px;
+        }
+        .lw-preview-phone.soft .lw-preview-stripe { background: #f5c4b0; }
+        .lw-preview-phone.brutalist .lw-preview-stripe { background: #000; }
+        .lw-preview-phone.cultural .lw-preview-stripe { background: repeating-linear-gradient(90deg, var(--lw-accent) 0px, var(--lw-accent) 2px, var(--lw-accent-secondary) 2px, var(--lw-accent-secondary) 4px, var(--lw-cyan) 4px, var(--lw-cyan) 6px, var(--lw-pink) 6px, var(--lw-pink) 8px); }
+        .lw-preview-title {
+          font-weight: 700;
+          margin-bottom: 3px;
+          font-size: 5px;
+        }
+        .lw-preview-phone.soft .lw-preview-title { color: #8b5a4a; }
+        .lw-preview-phone.brutalist .lw-preview-title { color: #000; font-family: monospace; }
+        .lw-preview-phone.cultural .lw-preview-title { color: #fff; }
+        .lw-preview-card {
+          height: 20px;
+          border-radius: 2px;
+          margin-bottom: 3px;
+        }
+        .lw-preview-phone.soft .lw-preview-card { background: linear-gradient(135deg, #f5c4b0 0%, #e8a090 100%); }
+        .lw-preview-phone.brutalist .lw-preview-card { background: #000; }
+        .lw-preview-phone.cultural .lw-preview-card { background: linear-gradient(135deg, var(--lw-accent) 0%, var(--lw-pink) 100%); }
+        .lw-direction-info {
+          padding: 1rem;
+          border-top: 1px solid var(--lw-border);
+        }
+        .lw-direction-name {
+          font-weight: 600;
+          font-size: 0.875rem;
+          margin-bottom: 0.25rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-direction-desc {
+          font-size: 0.6875rem;
+          color: var(--lw-text-secondary);
+          margin-bottom: 0.5rem;
+        }
+        .lw-direction-colors {
+          display: flex;
+          gap: 0.25rem;
+          margin-bottom: 0.5rem;
+        }
+        .lw-color-dot {
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.1);
+        }
+        .lw-direction-verdict {
+          font-size: 0.625rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          display: inline-block;
+        }
+        .lw-direction-verdict.rejected { background: rgba(255,59,59,0.2); color: var(--lw-warning); }
+        .lw-direction-verdict.accepted { background: rgba(0,229,204,0.2); color: var(--lw-cyan); }
+
+        /* Mockup Showcase */
+        .lw-mockup-showcase {
+          background: var(--lw-bg-dark);
+          border-radius: 16px;
+          padding: 2rem;
+          margin-top: 1.5rem;
+          position: relative;
+          overflow: hidden;
+        }
+        .lw-mockup-showcase::before {
+          content: '';
+          display: block;
+          height: 4px;
+          background: repeating-linear-gradient(90deg, var(--lw-accent) 0px, var(--lw-accent) 12px, var(--lw-accent-secondary) 12px, var(--lw-accent-secondary) 24px, var(--lw-cyan) 24px, var(--lw-cyan) 36px, var(--lw-pink) 36px, var(--lw-pink) 48px);
+          margin: -2rem -2rem 1.5rem -2rem;
+        }
+        .lw-mockup-header {
+          text-align: center;
+          margin-bottom: 1.5rem;
+          color: #fff;
+        }
+        .lw-mockup-header h3 {
+          font-family: var(--lw-serif);
+          font-size: 1.25rem;
+          margin-bottom: 0.25rem;
+        }
+        .lw-mockup-header p {
+          color: rgba(255,255,255,0.6);
+          font-size: 0.75rem;
+          margin: 0;
+        }
+        .lw-mockup-row {
+          display: flex;
+          justify-content: center;
+          gap: 1rem;
+          overflow-x: auto;
+          padding-bottom: 0.5rem;
+        }
+        .lw-mockup-phone {
+          flex-shrink: 0;
+          width: 140px;
+        }
+        .lw-mockup-frame {
+          background: #000;
+          border-radius: 20px;
+          padding: 5px;
+        }
+        .lw-mockup-screen {
+          background: #132218;
+          border-radius: 16px;
+          height: 280px;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        .lw-mock-status {
+          padding: 5px 8px 4px;
+          display: flex;
+          justify-content: space-between;
+          font-size: 6px;
+          color: rgba(255,255,255,0.5);
+        }
+        .lw-mock-stripe {
+          height: 3px;
+          background: repeating-linear-gradient(90deg, var(--lw-accent) 0px, var(--lw-accent) 6px, var(--lw-accent-secondary) 6px, var(--lw-accent-secondary) 12px, var(--lw-cyan) 12px, var(--lw-cyan) 18px, var(--lw-pink) 18px, var(--lw-pink) 24px);
+        }
+        .lw-mock-content {
+          flex: 1;
+          padding: 8px;
+          color: #fff;
+          display: flex;
+          flex-direction: column;
+          font-size: 7px;
+        }
+        .lw-mockup-label {
+          text-align: center;
+          margin-top: 0.5rem;
+          font-size: 0.5625rem;
+          color: rgba(255,255,255,0.5);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+
+        /* HCI Principles */
+        .lw-hci-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .lw-hci-card {
+          background: var(--lw-bg-card);
+          border: 1px solid var(--lw-border);
+          border-radius: 12px;
+          padding: 1.25rem;
+        }
+        .lw-hci-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.75rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px solid var(--lw-border);
+        }
+        .lw-hci-icon {
+          width: 36px;
+          height: 36px;
+          background: var(--lw-bg-secondary);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1rem;
+        }
+        .lw-hci-name {
+          font-weight: 600;
+          font-size: 0.875rem;
+          color: var(--lw-text-primary);
+          margin: 0;
+        }
+        .lw-hci-source {
+          font-size: 0.625rem;
+          color: var(--lw-accent);
+          margin: 0;
+        }
+        .lw-hci-body h4 {
+          font-size: 0.8125rem;
+          margin-bottom: 0.25rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-hci-body p {
+          font-size: 0.75rem;
+          color: var(--lw-text-secondary);
+          margin-bottom: 0.75rem;
+        }
+        .lw-hci-application {
+          background: var(--lw-bg-secondary);
+          border-radius: 6px;
+          padding: 0.75rem;
+          font-size: 0.75rem;
+          color: var(--lw-text-secondary);
+        }
+        .lw-hci-application strong { color: var(--lw-accent); }
+
+        /* Design System */
+        .lw-design-system {
+          background: var(--lw-bg-card);
+          border: 1px solid var(--lw-border);
+          border-radius: 12px;
+          padding: 1.5rem;
+          margin-top: 1.5rem;
+        }
+        .lw-ds-section {
+          margin-bottom: 1.5rem;
+        }
+        .lw-ds-section:last-child { margin-bottom: 0; }
+        .lw-ds-section-title {
+          font-size: 0.6875rem;
+          color: var(--lw-text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.15em;
+          margin-bottom: 0.75rem;
+        }
+        .lw-ds-colors {
+          display: flex;
+          gap: 0.75rem;
+          flex-wrap: wrap;
+        }
+        .lw-ds-color {
+          text-align: center;
+        }
+        .lw-ds-swatch {
+          width: 40px;
+          height: 40px;
+          border-radius: 8px;
+          margin-bottom: 0.375rem;
+          border: 1px solid var(--lw-border);
+        }
+        .lw-ds-color-name {
+          font-size: 0.625rem;
+          font-weight: 500;
+          color: var(--lw-text-primary);
+        }
+        .lw-ds-color-hex {
+          font-size: 0.5rem;
+          color: var(--lw-text-muted);
+          font-family: monospace;
+        }
+
+        /* Outcome */
+        .lw-outcome-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .lw-outcome-card {
+          background: var(--lw-bg-card);
+          border: 1px solid var(--lw-border);
+          border-radius: 12px;
+          padding: 1.5rem;
+          text-align: center;
+        }
+        .lw-outcome-icon {
+          font-size: 1.5rem;
+          margin-bottom: 0.75rem;
+        }
+        .lw-outcome-title {
+          font-weight: 600;
+          font-size: 0.875rem;
+          margin-bottom: 0.375rem;
+          color: var(--lw-text-primary);
+        }
+        .lw-outcome-desc {
+          font-size: 0.75rem;
+          color: var(--lw-text-secondary);
+          margin: 0;
+        }
+
+        /* Reflection */
+        .lw-reflection-box {
+          background: var(--lw-bg-dark);
+          color: #fff;
+          border-radius: 12px;
+          padding: 2rem;
+          margin-top: 1.5rem;
+        }
+        .lw-reflection-title {
+          font-family: var(--lw-serif);
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+        .lw-reflection-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+        .lw-reflection-col h4 {
+          font-size: 0.6875rem;
+          color: var(--lw-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-bottom: 0.75rem;
+        }
+        .lw-reflection-col p {
+          font-size: 0.8125rem;
+          color: rgba(255,255,255,0.8);
+          margin-bottom: 0.75rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+          .lw-problem-grid, .lw-reflection-grid, .lw-hci-grid { grid-template-columns: 1fr; }
+          .lw-research-grid, .lw-direction-grid, .lw-outcome-grid, .lw-concept-grid { grid-template-columns: 1fr; }
+          .lw-wireframe-grid { grid-template-columns: repeat(3, 1fr); }
+          .lw-wireframe-notes { grid-template-columns: 1fr; }
+          .lw-persona-card { grid-template-columns: 1fr; text-align: center; }
+          .lw-persona-avatar { margin: 0 auto; }
+          .lw-hero { margin: -40px -20px 0 -20px; padding: 2rem 1.5rem; }
+          .lw-full-width { margin-left: -20px; margin-right: -20px; padding: 2rem 20px; }
+        }
+      </style>
+
+      <div class="lw-case-study">
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Hero -->
+        <header class="lw-hero">
+          <p class="lw-hero-label">UX Case Study</p>
+          <h1 class="lw-hero-title">Liwanag<br/>Financial <em>Self-Defense</em></h1>
+          <p class="lw-hero-subtitle">A mobile app protecting vulnerable Filipinos from predatory lending and digital scams. Designed for users with low literacy, limited connectivity, and no reason to trust institutions.</p>
+          <div class="lw-hero-meta">
+            <div class="lw-meta-item">
+              <span class="lw-meta-label">Role</span>
+              <span class="lw-meta-value">UX Design, Visual Design, Prototyping</span>
+            </div>
+            <div class="lw-meta-item">
+              <span class="lw-meta-label">Duration</span>
+              <span class="lw-meta-value">3 Weeks</span>
+            </div>
+            <div class="lw-meta-item">
+              <span class="lw-meta-label">Tools</span>
+              <span class="lw-meta-value">Figma, HTML/CSS/JS</span>
+            </div>
+            <div class="lw-meta-item">
+              <span class="lw-meta-label">Focus</span>
+              <span class="lw-meta-value">Inclusive Design, Financial UX</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Problem -->
+        <section class="lw-section">
+          <p class="lw-section-label">01 — The Problem</p>
+          <h2 class="lw-section-title">Predatory lenders target those who can least afford to be exploited.</h2>
+          <p class="lw-section-text">In the Philippines, the digital financial boom has created new opportunities — and new predators. Loan apps with hidden fees. Scammers impersonating family. SMS schemes targeting the elderly.</p>
+          <p class="lw-section-text">Existing financial apps assume literacy, connectivity, and trust. What about users who have none of these?</p>
+          <div class="lw-problem-grid">
+            <div class="lw-stat-card">
+              <div class="lw-stat-number">73%</div>
+              <div class="lw-stat-label">of Filipinos have experienced attempted financial scams</div>
+            </div>
+            <div class="lw-problem-stories">
+              <div class="lw-story-card">
+                <h4>Hidden Fees</h4>
+                <p>Loan apps advertise "0% interest" but bury processing fees, service charges, and penalties in terms nobody reads.</p>
+              </div>
+              <div class="lw-story-card">
+                <h4>Family Impersonation</h4>
+                <p>Scammers hack social media accounts and message contacts asking for emergency money transfers.</p>
+              </div>
+              <div class="lw-story-card">
+                <h4>Low Literacy Targeting</h4>
+                <p>Complex financial language deliberately confuses users who can't parse legal jargon.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Research -->
+        <section class="lw-section lw-full-width">
+          <p class="lw-section-label">02 — Research</p>
+          <h2 class="lw-section-title">Understanding the users institutions ignore</h2>
+          <p class="lw-section-text">I conducted research into Filipino financial behavior, predatory lending patterns, and the specific needs of low-literacy, low-connectivity users.</p>
+          <div class="lw-research-grid">
+            <div class="lw-research-card">
+              <div class="lw-research-icon">📊</div>
+              <h4>Data Analysis</h4>
+              <p>Bangko Sentral ng Pilipinas reports on financial inclusion. SEC complaints about lending apps. News coverage of scam patterns.</p>
+            </div>
+            <div class="lw-research-card">
+              <div class="lw-research-icon">👥</div>
+              <h4>Cultural Context</h4>
+              <p>Filipino financial decisions are family-based. "Kapamilya" (family) and "utang na loob" (debt of gratitude) shape money behaviors.</p>
+            </div>
+            <div class="lw-research-card">
+              <div class="lw-research-icon">💡</div>
+              <h4>Key Insight</h4>
+              <p>Users don't need more information — they need friction at the right moments and translation of complex terms into clear consequences.</p>
+            </div>
+          </div>
+          <div class="lw-hmw-box">
+            <p class="lw-hmw-label">How Might We</p>
+            <p class="lw-hmw-text">Design financial protection that works for users who can't read fine print, don't have reliable internet, and have been burned by institutions before?</p>
+          </div>
+          <div class="lw-persona-card">
+            <div class="lw-persona-avatar">👩</div>
+            <div class="lw-persona-info">
+              <h4>Maria Santos</h4>
+              <p class="lw-persona-role">58 years old • Sari-sari store owner • Tondo, Manila</p>
+              <div class="lw-persona-details">
+                <div class="lw-persona-detail">
+                  <h5>Literacy</h5>
+                  <p>Reads slowly, avoids long text. Prefers spoken Tagalog.</p>
+                </div>
+                <div class="lw-persona-detail">
+                  <h5>Connectivity</h5>
+                  <p>Prepaid data only. Turns off mobile data to save money.</p>
+                </div>
+                <div class="lw-persona-detail">
+                  <h5>Financial Behavior</h5>
+                  <p>Sends money to children via GCash. Took a loan once, didn't understand the fees.</p>
+                </div>
+                <div class="lw-persona-detail">
+                  <h5>Pain Point</h5>
+                  <p>"I don't know who to trust anymore. Everyone wants my money."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Ideation -->
+        <section class="lw-section">
+          <p class="lw-section-label">03 — Ideation</p>
+          <h2 class="lw-section-title">Exploring protection patterns</h2>
+          <p class="lw-section-text">I sketched multiple approaches to financial protection, focusing on what would actually work for Maria — not what looks good in a portfolio.</p>
+          <div class="lw-sketch-area">
+            <div class="lw-sketch-header">
+              <span class="lw-sketch-title">Feature concepts</span>
+              <span class="lw-sketch-date">Week 1</span>
+            </div>
+            <div class="lw-concept-grid">
+              <div class="lw-concept-card">
+                <div class="lw-concept-visual">AI chatbot explains<br/>loan terms</div>
+                <h4 class="lw-concept-name">A. Smart Assistant</h4>
+                <p class="lw-concept-desc">AI-powered chatbot that answers questions about financial products in simple language.</p>
+                <p class="lw-concept-annotation rejected">❌ Requires literacy + connectivity. Still puts burden on user.</p>
+              </div>
+              <div class="lw-concept-card">
+                <div class="lw-concept-visual">Gamified financial<br/>education</div>
+                <h4 class="lw-concept-name">B. Learn & Earn</h4>
+                <p class="lw-concept-desc">Interactive lessons about spotting scams with rewards for completion.</p>
+                <p class="lw-concept-annotation rejected">❌ Education doesn't help in the moment. Patronizing.</p>
+              </div>
+              <div class="lw-concept-card selected">
+                <div class="lw-concept-visual">Friction + Translation<br/>at point of action</div>
+                <h4 class="lw-concept-name">C. Protective Friction</h4>
+                <p class="lw-concept-desc">Intervene at risky moments. Translate hidden fees into clear numbers.</p>
+                <p class="lw-concept-annotation accepted">✓ Works at the moment of need. No reading required.</p>
+              </div>
+            </div>
+          </div>
+          <div class="lw-sketch-area" style="margin-top:1rem;">
+            <div class="lw-sketch-header">
+              <span class="lw-sketch-title">Core feature sketches</span>
+              <span class="lw-sketch-date">Week 1</span>
+            </div>
+            <div class="lw-concept-grid">
+              <div class="lw-concept-card selected">
+                <div class="lw-concept-visual">⚠️ SANDALI!<br/>Unknown + large amount</div>
+                <h4 class="lw-concept-name">Scam Friction</h4>
+                <p class="lw-concept-desc">Pause before risky sends. Show red flags. Ask: "Do you really know this person?"</p>
+                <p class="lw-concept-annotation accepted">✓ The question a protective neighbor would ask</p>
+              </div>
+              <div class="lw-concept-card selected">
+                <div class="lw-concept-visual">₱5,000 borrowed<br/>₱8,050 payback 🚩</div>
+                <h4 class="lw-concept-name">Loan Decoder</h4>
+                <p class="lw-concept-desc">Scan loan offers. Expose hidden fees. Show true cost vs fair terms.</p>
+                <p class="lw-concept-annotation accepted">✓ Numbers don't require literacy</p>
+              </div>
+              <div class="lw-concept-card selected">
+                <div class="lw-concept-visual">👨‍👩‍👧 Juan ✓<br/>👨‍👩‍👧 Ana ✓</div>
+                <h4 class="lw-concept-name">Kapamilya (Family)</h4>
+                <p class="lw-concept-desc">Trusted contacts list. Transfers to family skip warnings.</p>
+                <p class="lw-concept-annotation accepted">✓ Family-based trust model</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Wireframes -->
+        <section class="lw-section lw-full-width">
+          <p class="lw-section-label">04 — Wireframes</p>
+          <h2 class="lw-section-title">Structuring the protection flow</h2>
+          <p class="lw-section-text">Low-fidelity wireframes to establish hierarchy, touch targets, and the critical warning intervention.</p>
+          <div class="lw-wireframe-section">
+            <div class="lw-wireframe-header">
+              <span class="lw-wireframe-title">Core screen flows</span>
+              <span class="lw-wireframe-iteration">Iteration 2</span>
+            </div>
+            <div class="lw-wireframe-grid">
+              <div>
+                <div class="lw-wireframe-phone">
+                  <div class="lw-wf-screen">
+                    <div class="lw-wf-status"></div>
+                    <div class="lw-wf-stripe"></div>
+                    <div class="lw-wf-content">
+                      <div class="lw-wf-block" style="height:30%;background:repeating-linear-gradient(45deg,#ccc,#ccc 2px,#bbb 2px,#bbb 4px);"></div>
+                      <div class="lw-wf-block" style="height:8%;"></div>
+                      <div class="lw-wf-block" style="height:8%;"></div>
+                      <div class="lw-wf-block" style="height:10%;background:#aaa;margin-top:auto;"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-wf-label">Onboard</p>
+              </div>
+              <div>
+                <div class="lw-wireframe-phone">
+                  <div class="lw-wf-screen">
+                    <div class="lw-wf-status"></div>
+                    <div class="lw-wf-stripe"></div>
+                    <div class="lw-wf-content">
+                      <div class="lw-wf-block" style="height:6%;"></div>
+                      <div class="lw-wf-block" style="height:25%;background:#c5c5c5;"></div>
+                      <div class="lw-wf-block" style="height:10%;"></div>
+                      <div class="lw-wf-block" style="height:10%;"></div>
+                      <div class="lw-wf-block" style="height:8%;background:#c00;margin-top:auto;"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-wf-label">Home</p>
+              </div>
+              <div>
+                <div class="lw-wireframe-phone">
+                  <div class="lw-wf-screen">
+                    <div class="lw-wf-status"></div>
+                    <div class="lw-wf-stripe"></div>
+                    <div class="lw-wf-content">
+                      <div class="lw-wf-block" style="height:6%;"></div>
+                      <div class="lw-wf-block" style="height:12%;"></div>
+                      <div class="lw-wf-block" style="flex:1;background:rgba(200,0,0,0.3);border:2px solid #c00;"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-wf-label">Warning</p>
+              </div>
+              <div>
+                <div class="lw-wireframe-phone">
+                  <div class="lw-wf-screen">
+                    <div class="lw-wf-status"></div>
+                    <div class="lw-wf-stripe"></div>
+                    <div class="lw-wf-content">
+                      <div class="lw-wf-block" style="height:6%;"></div>
+                      <div class="lw-wf-block" style="height:25%;background:rgba(200,0,0,0.2);"></div>
+                      <div class="lw-wf-block" style="height:20%;background:rgba(0,200,150,0.2);"></div>
+                      <div class="lw-wf-block" style="height:12%;background:#da0;"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-wf-label">Decoder</p>
+              </div>
+              <div>
+                <div class="lw-wireframe-phone">
+                  <div class="lw-wf-screen">
+                    <div class="lw-wf-status"></div>
+                    <div class="lw-wf-stripe"></div>
+                    <div class="lw-wf-content">
+                      <div class="lw-wf-block" style="height:6%;"></div>
+                      <div class="lw-wf-block" style="height:10%;"></div>
+                      <div class="lw-wf-block" style="height:10%;"></div>
+                      <div class="lw-wf-block" style="height:10%;"></div>
+                      <div class="lw-wf-block" style="height:10%;border:2px dashed #aaa;background:transparent;"></div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-wf-label">Contacts</p>
+              </div>
+            </div>
+            <div class="lw-wireframe-notes">
+              <div class="lw-wf-note">
+                <span class="lw-note-marker">1</span>
+                <p class="lw-note-text"><strong>Pattern stripe:</strong> Cultural identity element at top. Visual continuity + brand recognition.</p>
+              </div>
+              <div class="lw-wf-note">
+                <span class="lw-note-marker">2</span>
+                <p class="lw-note-text"><strong>Warning dominance:</strong> When risk detected, warning takes most of the screen.</p>
+              </div>
+              <div class="lw-wf-note">
+                <span class="lw-note-marker">3</span>
+                <p class="lw-note-text"><strong>Large touch targets:</strong> Minimum 48px height. Designed for older users.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Visual Direction -->
+        <section class="lw-section">
+          <p class="lw-section-label">05 — Visual Direction</p>
+          <h2 class="lw-section-title">Finding the right aesthetic</h2>
+          <p class="lw-section-text">Three distinct directions with different implications for trust, accessibility, and cultural resonance.</p>
+          <div class="lw-direction-grid">
+            <div class="lw-direction-card">
+              <div class="lw-direction-preview soft">
+                <div class="lw-preview-phone soft">
+                  <div class="lw-preview-screen">
+                    <div class="lw-preview-stripe"></div>
+                    <div class="lw-preview-title">Liwanag</div>
+                    <div class="lw-preview-card"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lw-direction-info">
+                <h4 class="lw-direction-name">A. Soft & Accessible</h4>
+                <p class="lw-direction-desc">Warm coral tones, rounded corners. Approachable but generic.</p>
+                <div class="lw-direction-colors">
+                  <div class="lw-color-dot" style="background:#ffeee8;"></div>
+                  <div class="lw-color-dot" style="background:#f5c4b0;"></div>
+                  <div class="lw-color-dot" style="background:#8b5a4a;"></div>
+                </div>
+                <span class="lw-direction-verdict rejected">❌ Too bland. Could be any app.</span>
+              </div>
+            </div>
+            <div class="lw-direction-card">
+              <div class="lw-direction-preview brutalist">
+                <div class="lw-preview-phone brutalist">
+                  <div class="lw-preview-screen">
+                    <div class="lw-preview-stripe"></div>
+                    <div class="lw-preview-title">LIWANAG</div>
+                    <div class="lw-preview-card"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lw-direction-info">
+                <h4 class="lw-direction-name">B. Brutalist</h4>
+                <p class="lw-direction-desc">High contrast black/white, thick borders. Intentionally raw.</p>
+                <div class="lw-direction-colors">
+                  <div class="lw-color-dot" style="background:#fff;"></div>
+                  <div class="lw-color-dot" style="background:#000;"></div>
+                  <div class="lw-color-dot" style="background:#ff0;"></div>
+                </div>
+                <span class="lw-direction-verdict rejected">❌ Too harsh. Alienating for older users.</span>
+              </div>
+            </div>
+            <div class="lw-direction-card selected">
+              <div class="lw-direction-preview cultural">
+                <div class="lw-preview-phone cultural">
+                  <div class="lw-preview-screen">
+                    <div class="lw-preview-stripe"></div>
+                    <div class="lw-preview-title">LIWANAG</div>
+                    <div class="lw-preview-card"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="lw-direction-info">
+                <h4 class="lw-direction-name">C. Jeepney Cultural</h4>
+                <p class="lw-direction-desc">Filipino jeepney-inspired palette. Bold but warm. Unmistakably local.</p>
+                <div class="lw-direction-colors">
+                  <div class="lw-color-dot" style="background:#0d1a12;"></div>
+                  <div class="lw-color-dot" style="background:#ff6b35;"></div>
+                  <div class="lw-color-dot" style="background:#ffd700;"></div>
+                  <div class="lw-color-dot" style="background:#00e5cc;"></div>
+                  <div class="lw-color-dot" style="background:#ff1493;"></div>
+                </div>
+                <span class="lw-direction-verdict accepted">✓ Cultural identity + accessibility</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Final Design -->
+        <section class="lw-section lw-full-width">
+          <p class="lw-section-label">06 — Final Design</p>
+          <h2 class="lw-section-title">Protection that feels like home</h2>
+          <p class="lw-section-text">The final design combines bold Filipino aesthetics with accessible patterns. Every screen announces: this app is for you.</p>
+          <div class="lw-mockup-showcase">
+            <div class="lw-mockup-header">
+              <h3>Key Screens</h3>
+              <p>Designed for low-literacy, low-connectivity, low-trust users</p>
+            </div>
+            <div class="lw-mockup-row">
+              <div class="lw-mockup-phone">
+                <div class="lw-mockup-frame">
+                  <div class="lw-mockup-screen" style="text-align:center;justify-content:center;padding:12px;">
+                    <div class="lw-mock-status"><span>9:41</span><span>📶</span></div>
+                    <div class="lw-mock-stripe"></div>
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:8px;">
+                      <div style="width:32px;height:32px;background:linear-gradient(135deg,#ff6b35,#ff1493);border-radius:8px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:14px;">💡</div>
+                      <div style="font-size:18px;font-weight:700;margin-bottom:2px;">LIWA<span style="color:#ffd700;">NAG</span></div>
+                      <div style="font-size:6px;color:rgba(255,255,255,0.6);margin-bottom:10px;">Protect your money. No hidden fees.</div>
+                      <div style="width:100%;display:flex;flex-direction:column;gap:4px;margin-bottom:8px;">
+                        <div style="background:#1a2d20;padding:6px;border-radius:5px;display:flex;align-items:center;gap:5px;font-size:6px;"><span>📤</span> Send money safely</div>
+                        <div style="background:#1a2d20;padding:6px;border-radius:5px;display:flex;align-items:center;gap:5px;font-size:6px;"><span>🛡️</span> Scam warnings</div>
+                        <div style="background:#1a2d20;padding:6px;border-radius:5px;display:flex;align-items:center;gap:5px;font-size:6px;"><span>🔍</span> See true loan costs</div>
+                      </div>
+                      <div style="width:100%;background:#ffd700;color:#0d1a12;padding:8px;border-radius:5px;font-size:9px;font-weight:700;">GET STARTED</div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-mockup-label">Onboarding</p>
+              </div>
+              <div class="lw-mockup-phone">
+                <div class="lw-mockup-frame">
+                  <div class="lw-mockup-screen">
+                    <div class="lw-mock-status"><span>9:41</span><span>📶</span></div>
+                    <div class="lw-mock-stripe"></div>
+                    <div class="lw-mock-content">
+                      <div style="font-size:5px;color:rgba(255,255,255,0.4);text-transform:uppercase;">Good morning</div>
+                      <div style="font-size:14px;font-weight:700;margin-bottom:6px;">MARIA</div>
+                      <div style="background:linear-gradient(135deg,#ff6b35,#ff1493);border-radius:8px;padding:8px;margin-bottom:8px;">
+                        <div style="font-size:5px;opacity:0.8;">Your Balance</div>
+                        <div style="font-size:16px;font-weight:700;">₱12,450</div>
+                        <div style="display:flex;gap:4px;margin-top:5px;">
+                          <div style="flex:1;background:rgba(0,0,0,0.25);padding:5px;border-radius:4px;font-size:5px;font-weight:600;text-align:center;">📤 SEND</div>
+                          <div style="flex:1;background:rgba(0,0,0,0.25);padding:5px;border-radius:4px;font-size:5px;font-weight:600;text-align:center;">📥 RECEIVE</div>
+                        </div>
+                      </div>
+                      <div style="font-size:5px;color:rgba(255,255,255,0.4);margin-bottom:4px;">TOOLS</div>
+                      <div style="background:#1a2d20;border-radius:5px;padding:6px;margin-bottom:4px;display:flex;align-items:center;gap:5px;">
+                        <div style="width:18px;height:18px;background:linear-gradient(135deg,#00e5cc,#00a99d);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;">🛡️</div>
+                        <div><div style="font-size:8px;font-weight:600;">SHIELD</div><div style="font-size:5px;color:rgba(255,255,255,0.5);">Scam protection</div></div>
+                      </div>
+                      <div style="background:#1a2d20;border-radius:5px;padding:6px;display:flex;align-items:center;gap:5px;">
+                        <div style="width:18px;height:18px;background:linear-gradient(135deg,#ffd700,#ff6b35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;">🔍</div>
+                        <div><div style="font-size:8px;font-weight:600;">TRUTH</div><div style="font-size:5px;color:rgba(255,255,255,0.5);">Decode loan terms</div></div>
+                      </div>
+                      <div style="background:#ff3b3b;margin:auto -8px -8px;padding:6px;display:flex;align-items:center;gap:4px;font-size:5px;font-weight:600;"><span>🚨</span>New scam: "Free load" stealing PINs</div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-mockup-label">Home</p>
+              </div>
+              <div class="lw-mockup-phone">
+                <div class="lw-mockup-frame">
+                  <div class="lw-mockup-screen">
+                    <div class="lw-mock-status"><span>9:41</span><span>📶</span></div>
+                    <div class="lw-mock-stripe"></div>
+                    <div class="lw-mock-content">
+                      <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+                        <div style="width:20px;height:20px;background:#1a2d20;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:8px;">←</div>
+                        <div style="font-size:12px;font-weight:700;">SEND MONEY</div>
+                      </div>
+                      <div style="background:#1a2d20;padding:6px;border-radius:6px;margin-bottom:5px;display:flex;align-items:center;gap:6px;">
+                        <div style="width:24px;height:24px;background:rgba(255,59,59,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;">👤</div>
+                        <div><div style="font-size:8px;font-weight:600;">+63 917 *** 4821</div><div style="font-size:5px;color:#ff3b3b;">Unknown contact</div></div>
+                      </div>
+                      <div style="background:#1a2d20;padding:8px;border-radius:6px;text-align:center;margin-bottom:5px;">
+                        <div style="font-size:5px;color:rgba(255,255,255,0.5);">AMOUNT</div>
+                        <div style="font-size:18px;font-weight:700;color:#ffd700;">₱5,000</div>
+                      </div>
+                      <div style="flex:1;background:rgba(255,59,59,0.1);border:2px solid #ff3b3b;border-radius:8px;padding:8px;display:flex;flex-direction:column;">
+                        <div style="display:flex;align-items:center;gap:4px;margin-bottom:5px;"><span>🚨</span><span style="font-size:11px;font-weight:700;color:#ff3b3b;">WAIT</span></div>
+                        <div style="font-size:6px;color:rgba(255,255,255,0.8);margin-bottom:6px;">⚠ Never sent to this number<br/>⚠ Large amount to unknown<br/>⚠ Matches scam patterns</div>
+                        <div style="font-size:8px;font-weight:700;text-align:center;margin-bottom:6px;">DO YOU REALLY KNOW THIS PERSON?</div>
+                        <div style="background:#fff;color:#0d1a12;padding:6px;border-radius:5px;font-size:8px;font-weight:700;text-align:center;">🚫 DON'T SEND</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-mockup-label">Scam Friction</p>
+              </div>
+              <div class="lw-mockup-phone">
+                <div class="lw-mockup-frame">
+                  <div class="lw-mockup-screen">
+                    <div class="lw-mock-status"><span>9:41</span><span>📶</span></div>
+                    <div class="lw-mock-stripe"></div>
+                    <div class="lw-mock-content">
+                      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+                        <div style="width:20px;height:20px;background:#1a2d20;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:8px;">←</div>
+                        <div style="font-size:12px;font-weight:700;">TRUTH</div>
+                      </div>
+                      <div style="font-size:6px;color:rgba(255,255,255,0.6);margin-bottom:6px;">We found the real cost of your loan.</div>
+                      <div style="background:rgba(255,59,59,0.1);border:1px solid rgba(255,59,59,0.3);border-radius:6px;padding:6px;margin-bottom:4px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:7px;color:#ff3b3b;font-weight:700;">🚩 THEIR OFFER</span><span style="font-size:5px;background:#ff3b3b;color:#fff;padding:1px 4px;border-radius:2px;">PREDATORY</span></div>
+                        <div style="font-size:5px;display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">Borrowed</span><span>₱5,000</span></div>
+                        <div style="font-size:5px;display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><span style="color:rgba(255,255,255,0.6);">"Processing fee"</span><span>₱750</span></div>
+                        <div style="font-size:5px;display:flex;justify-content:space-between;padding:2px 0;"><span style="color:rgba(255,255,255,0.6);">You pay back</span><span style="font-size:10px;color:#ff3b3b;font-weight:700;">₱8,050</span></div>
+                      </div>
+                      <div style="text-align:center;font-size:5px;color:rgba(255,255,255,0.4);padding:2px;">— VS —</div>
+                      <div style="background:rgba(0,229,204,0.1);border:1px solid rgba(0,229,204,0.3);border-radius:6px;padding:6px;margin-bottom:4px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"><span style="font-size:7px;color:#00e5cc;font-weight:700;">✓ FAIR TERMS</span><span style="font-size:5px;background:#00e5cc;color:#0d1a12;padding:1px 4px;border-radius:2px;">TRANSPARENT</span></div>
+                        <div style="font-size:5px;display:flex;justify-content:space-between;padding:2px 0;"><span style="color:rgba(255,255,255,0.6);">You pay back</span><span style="font-size:10px;color:#00e5cc;font-weight:700;">₱5,600</span></div>
+                      </div>
+                      <div style="background:linear-gradient(135deg,#ffd700,#ff6b35);border-radius:6px;padding:10px;text-align:center;">
+                        <div style="font-size:6px;color:rgba(0,0,0,0.6);">You would save</div>
+                        <div style="font-size:16px;font-weight:700;color:#0d1a12;">₱2,450</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="lw-mockup-label">Loan Decoder</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- HCI Principles -->
+        <section class="lw-section">
+          <p class="lw-section-label">07 — HCI Foundations</p>
+          <h2 class="lw-section-title">Design decisions grounded in research</h2>
+          <p class="lw-section-text">Every interaction connects to established HCI principles, adapted for users who've been ignored by mainstream design.</p>
+          <div class="lw-hci-grid">
+            <div class="lw-hci-card">
+              <div class="lw-hci-header">
+                <div class="lw-hci-icon">⏳</div>
+                <div><h4 class="lw-hci-name">Intentional Friction</h4><p class="lw-hci-source">Interaction Design</p></div>
+              </div>
+              <div class="lw-hci-body">
+                <h4>The Principle</h4>
+                <p>Strategic friction prevents errors and protects users from impulsive decisions.</p>
+                <div class="lw-hci-application"><strong>Applied:</strong> Scam warning interrupts the send flow. "Don't Send" is prominent — proceeding requires extra effort.</div>
+              </div>
+            </div>
+            <div class="lw-hci-card">
+              <div class="lw-hci-header">
+                <div class="lw-hci-icon">👁️</div>
+                <div><h4 class="lw-hci-name">Recognition Over Recall</h4><p class="lw-hci-source">Nielsen's Heuristics</p></div>
+              </div>
+              <div class="lw-hci-body">
+                <h4>The Principle</h4>
+                <p>Minimize memory load. Show information rather than requiring users to remember it.</p>
+                <div class="lw-hci-application"><strong>Applied:</strong> Loan comparison shows both terms side-by-side. Red vs. green immediately communicates which is bad.</div>
+              </div>
+            </div>
+            <div class="lw-hci-card">
+              <div class="lw-hci-header">
+                <div class="lw-hci-icon">🎨</div>
+                <div><h4 class="lw-hci-name">Color as Information</h4><p class="lw-hci-source">Visual Design Theory</p></div>
+              </div>
+              <div class="lw-hci-body">
+                <h4>The Principle</h4>
+                <p>Color carries semantic meaning. Used consistently, it communicates status without words.</p>
+                <div class="lw-hci-application"><strong>Applied:</strong> Red = danger/predatory. Cyan = safe/verified. Yellow = action. Pattern stripe = cultural identity.</div>
+              </div>
+            </div>
+            <div class="lw-hci-card">
+              <div class="lw-hci-header">
+                <div class="lw-hci-icon">🌍</div>
+                <div><h4 class="lw-hci-name">Cultural Appropriateness</h4><p class="lw-hci-source">Inclusive Design</p></div>
+              </div>
+              <div class="lw-hci-body">
+                <h4>The Principle</h4>
+                <p>Design must respect cultural context. What works in Silicon Valley may fail elsewhere.</p>
+                <div class="lw-hci-application"><strong>Applied:</strong> "Kapamilya" reflects Filipino financial decision-making. Jeepney colors signal "this is ours."</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Design System -->
+        <section class="lw-section lw-full-width">
+          <p class="lw-section-label">08 — Design System</p>
+          <h2 class="lw-section-title">Visual language documentation</h2>
+          <div class="lw-design-system">
+            <div class="lw-ds-section">
+              <h4 class="lw-ds-section-title">Jeepney Color Palette</h4>
+              <div class="lw-ds-colors">
+                <div class="lw-ds-color"><div class="lw-ds-swatch" style="background:#0d1a12;"></div><p class="lw-ds-color-name">Deep Green</p><p class="lw-ds-color-hex">#0d1a12</p></div>
+                <div class="lw-ds-color"><div class="lw-ds-swatch" style="background:#ff6b35;"></div><p class="lw-ds-color-name">Orange</p><p class="lw-ds-color-hex">#ff6b35</p></div>
+                <div class="lw-ds-color"><div class="lw-ds-swatch" style="background:#ffd700;"></div><p class="lw-ds-color-name">Yellow</p><p class="lw-ds-color-hex">#ffd700</p></div>
+                <div class="lw-ds-color"><div class="lw-ds-swatch" style="background:#00e5cc;"></div><p class="lw-ds-color-name">Cyan</p><p class="lw-ds-color-hex">#00e5cc</p></div>
+                <div class="lw-ds-color"><div class="lw-ds-swatch" style="background:#ff1493;"></div><p class="lw-ds-color-name">Pink</p><p class="lw-ds-color-hex">#ff1493</p></div>
+                <div class="lw-ds-color"><div class="lw-ds-swatch" style="background:#ff3b3b;"></div><p class="lw-ds-color-name">Red</p><p class="lw-ds-color-hex">#ff3b3b</p></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Outcome -->
+        <section class="lw-section">
+          <p class="lw-section-label">09 — Outcome</p>
+          <h2 class="lw-section-title">What this project demonstrates</h2>
+          <div class="lw-outcome-grid">
+            <div class="lw-outcome-card">
+              <div class="lw-outcome-icon">🛡️</div>
+              <h4 class="lw-outcome-title">Design from the Margins</h4>
+              <p class="lw-outcome-desc">Started with the most vulnerable users. If it works for Maria, it works for everyone.</p>
+            </div>
+            <div class="lw-outcome-card">
+              <div class="lw-outcome-icon">🎨</div>
+              <h4 class="lw-outcome-title">Cultural Identity</h4>
+              <p class="lw-outcome-desc">Rejected generic aesthetics. Filipino users deserve design that reflects their visual culture.</p>
+            </div>
+            <div class="lw-outcome-card">
+              <div class="lw-outcome-icon">⚡</div>
+              <h4 class="lw-outcome-title">Protective Friction</h4>
+              <p class="lw-outcome-desc">Good UX isn't always about removing friction — sometimes it's about adding the right kind.</p>
+            </div>
+          </div>
+          <div class="lw-reflection-box">
+            <h3 class="lw-reflection-title">Reflection</h3>
+            <div class="lw-reflection-grid">
+              <div class="lw-reflection-col">
+                <h4>What Worked</h4>
+                <p>The jeepney aesthetic landed — bold without being overwhelming. The color system communicates risk without requiring reading.</p>
+                <p>Scam friction feels like a protective neighbor, not a patronizing institution.</p>
+              </div>
+              <div class="lw-reflection-col">
+                <h4>What I'd Explore Next</h4>
+                <p>User testing with actual target users in the Philippines — does the cultural resonance translate?</p>
+                <p>Offline-first architecture. Voice interface for spoken Tagalog.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    `,
+    wireframeEmbed: "",
+    protoDesktopEmbed: "",
+    protoMobileEmbed: "",
+    mockups: [],
+    demoLink: "liwanag-prototype.html",
+    processSteps: [],
+    tools: ["Figma", "HTML/CSS/JS", "Inclusive Design", "Financial UX", "Cultural Design", "Prototyping"]
+  },
+  {
+    id: 3,
     title: "The Connection",
     category: "Digital Humanities",
     year: "2024",
@@ -2557,7 +4001,7 @@ const projects = [
     tools: ["Twine", "HTML/CSS/JS", "Figma", "Digital Illustration", "Narrative Design", "UX Research"]
   },
   {
-    id: 3,
+    id: 4,
     title: "Aerotech",
     category: "Passion Project",
     year: "2024",

@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liwanag — Interactive Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Schibsted+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0d1a12;
+      --bg-card: #132218;
+      --bg-elevated: #1a2d20;
+      --yellow: #ffd700;
+      --orange: #ff6b35;
+      --pink: #ff1493;
+      --cyan: #00e5cc;
+      --red: #ff3b3b;
+      --white: #ffffff;
+      --white-muted: rgba(255,255,255,0.7);
+      --white-dim: rgba(255,255,255,0.4);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Schibsted Grotesk', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: #0a0a0a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      color: #fff;
+    }
+
+    .prototype-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .prototype-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: #666;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .prototype-hint {
+      font-size: 0.75rem;
+      color: #444;
+    }
+
+    /* iPhone Frame */
+    .iphone-frame {
+      width: 375px;
+      height: 812px;
+      background: #1a1a1a;
+      border-radius: 55px;
+      padding: 18px;
+      box-shadow: 
+        0 0 0 3px #333,
+        0 50px 100px -20px rgba(0,0,0,0.8),
+        inset 0 0 10px rgba(255,255,255,0.05);
+      position: relative;
+    }
+
+    .iphone-frame::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 28px;
+      background: #1a1a1a;
+      border-radius: 0 0 20px 20px;
+      z-index: 100;
+    }
+
+    .iphone-frame::after {
+      content: '';
+      position: absolute;
+      top: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 6px;
+      background: #333;
+      border-radius: 10px;
+      z-index: 101;
+    }
+
+    .iphone-screen {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      border-radius: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Screen Container */
+    .screens-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .screen.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Status Bar */
+    .status-bar {
+      padding: 14px 24px 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Pattern Stripe */
+    .pattern-stripe {
+      height: 5px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--orange) 0px,
+        var(--orange) 10px,
+        var(--yellow) 10px,
+        var(--yellow) 20px,
+        var(--cyan) 20px,
+        var(--cyan) 30px,
+        var(--pink) 30px,
+        var(--pink) 40px
+      );
+    }
+
+    .screen-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Clickable Elements */
+    .clickable {
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .clickable:hover {
+      opacity: 0.85;
+    }
+
+    .clickable:active {
+      transform: scale(0.98);
+    }
+
+    /* ========================================
+       SCREEN: ONBOARDING
+       ======================================== */
+    
+    #screen-onboarding .screen-content {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .onboarding-logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--pink) 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
+      font-size: 36px;
+    }
+
+    .onboarding-title {
+      font-family: var(--font-display);
+      font-size: 56px;
+      line-height: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .onboarding-title span {
+      color: var(--yellow);
+    }
+
+    .onboarding-tagline {
+      font-size: 14px;
+      color: var(--white-muted);
+      margin-bottom: 32px;
+    }
+
+    .onboarding-features {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .onboarding-feature {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 14px 16px;
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .feature-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .onboarding-audio {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cyan);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      border: 1px dashed var(--cyan);
+      border-radius: 100px;
+    }
+
+    .onboarding-start {
+      width: 100%;
+      background: var(--yellow);
+      color: var(--bg-dark);
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ========================================
+       SCREEN: HOME
+       ======================================== */
+
+    .home-header {
+      margin-bottom: 20px;
+    }
+
+    .home-greeting {
+      font-size: 12px;
+      color: var(--white-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .home-name {
+      font-family: var(--font-display);
+      font-size: 44px;
+      line-height: 1;
+    }
+
+    .balance-card {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--pink) 100%);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .balance-card::before {
+      content: '₱';
+      position: absolute;
+      right: -10px;
+      bottom: -30px;
+      font-family: var(--font-display);
+      font-size: 140px;
+      opacity: 0.15;
+      line-height: 1;
+    }
+
+    .balance-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.85;
+      margin-bottom: 4px;
+    }
+
+    .balance-amount {
+      font-family: var(--font-display);
+      font-size: 44px;
+      margin-bottom: 16px;
+    }
+
+    .balance-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .balance-btn {
+      flex: 1;
+      background: rgba(0,0,0,0.25);
+      border: none;
+      color: var(--white);
+      padding: 14px;
+      border-radius: 10px;
+      font-family: var(--font-display);
+      font-size: 16px;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .home-section-label {
+      font-family: var(--font-display);
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      color: var(--white-dim);
+      margin-bottom: 12px;
+    }
+
+    .tools-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tool-item {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tool-item:hover {
+      border-color: var(--yellow);
+    }
+
+    .tool-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .tool-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .tool-icon.shield { background: linear-gradient(135deg, var(--cyan) 0%, #00a99d 100%); }
+    .tool-icon.truth { background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 100%); }
+    .tool-icon.family { background: linear-gradient(135deg, var(--pink) 0%, #cc1177 100%); }
+
+    .tool-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+    }
+
+    .tool-desc {
+      font-size: 11px;
+      color: var(--white-dim);
+    }
+
+    .tool-arrow {
+      color: var(--white-dim);
+      font-size: 20px;
+    }
+
+    .alert-banner {
+      background: var(--red);
+      margin: auto -20px -20px -20px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .alert-icon {
+      font-size: 18px;
+    }
+
+    .alert-text {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .alert-arrow {
+      font-size: 16px;
+    }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      background: var(--bg-card);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 12px 16px 28px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--white-dim);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: none;
+      border: none;
+    }
+
+    .nav-item.active {
+      color: var(--yellow);
+    }
+
+    .nav-icon {
+      font-size: 22px;
+    }
+
+    /* ========================================
+       SCREEN: SEND
+       ======================================== */
+
+    .screen-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 20px;
+    }
+
+    .screen-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--white-dim);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input-field {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 16px;
+      color: var(--white);
+      font-size: 16px;
+      font-family: var(--font-body);
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--yellow);
+    }
+
+    .amount-display {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .amount-value {
+      font-family: var(--font-display);
+      font-size: 48px;
+      color: var(--yellow);
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .keypad-btn {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 18px;
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 24px;
+    }
+
+    .keypad-btn:active {
+      background: var(--bg-elevated);
+    }
+
+    .send-btn {
+      width: 100%;
+      background: var(--yellow);
+      color: var(--bg-dark);
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-size: 20px;
+      margin-top: auto;
+    }
+
+    /* ========================================
+       SCREEN: WARNING
+       ======================================== */
+
+    .recipient-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .recipient-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--white-dim);
+      margin-bottom: 10px;
+    }
+
+    .recipient-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .recipient-avatar {
+      width: 50px;
+      height: 50px;
+      background: rgba(255,59,59,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .recipient-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+    }
+
+    .recipient-status {
+      font-size: 12px;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .amount-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .amount-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--white-dim);
+      margin-bottom: 4px;
+    }
+
+    .warning-card {
+      background: rgba(255,59,59,0.1);
+      border: 2px solid var(--red);
+      border-radius: 14px;
+      padding: 16px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .warning-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .warning-icon {
+      font-size: 20px;
+    }
+
+    .warning-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: var(--red);
+    }
+
+    .warning-list {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+
+    .warning-list li {
+      font-size: 13px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,59,59,0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .warning-list li:last-child {
+      border-bottom: none;
+    }
+
+    .warning-list li::before {
+      content: '⚠';
+      font-size: 12px;
+    }
+
+    .warning-question {
+      font-family: var(--font-display);
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .btn-cancel {
+      background: var(--white);
+      color: var(--bg-dark);
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-family: var(--font-display);
+      font-size: 20px;
+    }
+
+    .btn-proceed {
+      background: transparent;
+      color: var(--white-dim);
+      border: none;
+      padding: 12px;
+      font-size: 13px;
+      text-decoration: underline;
+    }
+
+    /* ========================================
+       SCREEN: LOAN DECODER
+       ======================================== */
+
+    .decoder-intro {
+      font-size: 14px;
+      color: var(--white-muted);
+      margin-bottom: 20px;
+    }
+
+    .comparison-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .loan-card {
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .loan-card.predatory {
+      background: rgba(255,59,59,0.1);
+      border: 1px solid rgba(255,59,59,0.3);
+    }
+
+    .loan-card.fair {
+      background: rgba(0,229,204,0.1);
+      border: 1px solid rgba(0,229,204,0.3);
+    }
+
+    .loan-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .loan-label {
+      font-family: var(--font-display);
+      font-size: 16px;
+    }
+
+    .loan-card.predatory .loan-label { color: var(--red); }
+    .loan-card.fair .loan-label { color: var(--cyan); }
+
+    .loan-tag {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      border-radius: 4px;
+    }
+
+    .loan-card.predatory .loan-tag {
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .loan-card.fair .loan-tag {
+      background: var(--cyan);
+      color: var(--bg-dark);
+    }
+
+    .loan-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 6px 0;
+    }
+
+    .loan-row-label {
+      color: var(--white-muted);
+    }
+
+    .loan-row-value {
+      font-weight: 600;
+    }
+
+    .loan-total {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 8px;
+      padding-top: 8px;
+    }
+
+    .loan-card.predatory .loan-total .loan-row-value {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--red);
+    }
+
+    .loan-card.fair .loan-total .loan-row-value {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--cyan);
+    }
+
+    .versus {
+      text-align: center;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--white-dim);
+      padding: 8px 0;
+    }
+
+    .savings-card {
+      background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 100%);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    .savings-label {
+      font-size: 13px;
+      color: rgba(0,0,0,0.6);
+      margin-bottom: 4px;
+    }
+
+    .savings-amount {
+      font-family: var(--font-display);
+      font-size: 40px;
+      color: var(--bg-dark);
+    }
+
+    /* ========================================
+       SCREEN: CONTACTS
+       ======================================== */
+
+    .contacts-intro {
+      font-size: 14px;
+      color: var(--white-muted);
+      margin-bottom: 20px;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .contact-item {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .contact-item.verified {
+      border-color: rgba(0,229,204,0.3);
+    }
+
+    .contact-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .contact-info {
+      flex: 1;
+    }
+
+    .contact-name {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 2px;
+    }
+
+    .contact-relation {
+      font-size: 11px;
+      color: var(--white-dim);
+    }
+
+    .contact-status {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .contact-status.verified {
+      background: rgba(0,229,204,0.2);
+      color: var(--cyan);
+    }
+
+    .contact-status.pending {
+      background: rgba(255,215,0,0.2);
+      color: var(--yellow);
+    }
+
+    .add-contact-btn {
+      width: 100%;
+      background: transparent;
+      border: 2px dashed rgba(255,255,255,0.2);
+      color: var(--white-muted);
+      padding: 16px;
+      border-radius: 14px;
+      font-family: var(--font-display);
+      font-size: 18px;
+    }
+
+    /* Screen indicator */
+    .screen-indicator {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #333;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .indicator-dot.active {
+      background: var(--yellow);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    .indicator-dot:hover {
+      background: #555;
+    }
+
+    .indicator-dot.active:hover {
+      background: var(--yellow);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="prototype-header">
+    <h1 class="prototype-title">LIWANAG PROTOTYPE</h1>
+    <p class="prototype-hint">Click buttons and elements to navigate</p>
+  </div>
+
+  <div class="iphone-frame">
+    <div class="iphone-screen">
+      <div class="screens-container">
+
+        <!-- SCREEN: ONBOARDING -->
+        <div class="screen active" id="screen-onboarding">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="pattern-stripe"></div>
+          <div class="screen-content">
+            <div class="onboarding-logo">💡</div>
+            <h1 class="onboarding-title">LIWA<span>NAG</span></h1>
+            <p class="onboarding-tagline">Protect your money. No hidden fees.</p>
+
+            <div class="onboarding-features">
+              <div class="onboarding-feature">
+                <div class="feature-icon">📤</div>
+                <span class="feature-text">Send money safely</span>
+              </div>
+              <div class="onboarding-feature">
+                <div class="feature-icon">🛡️</div>
+                <span class="feature-text">Scam warnings</span>
+              </div>
+              <div class="onboarding-feature">
+                <div class="feature-icon">🔍</div>
+                <span class="feature-text">See true loan costs</span>
+              </div>
+            </div>
+
+            <div class="onboarding-audio clickable">
+              <span>🔊</span> Listen to this
+            </div>
+
+            <button class="onboarding-start clickable" onclick="goTo('screen-home')">GET STARTED</button>
+          </div>
+        </div>
+
+        <!-- SCREEN: HOME -->
+        <div class="screen" id="screen-home">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="pattern-stripe"></div>
+          <div class="screen-content">
+            <div class="home-header">
+              <p class="home-greeting">Good morning</p>
+              <h1 class="home-name">MARIA</h1>
+            </div>
+
+            <div class="balance-card">
+              <p class="balance-label">Your Balance</p>
+              <p class="balance-amount">₱12,450</p>
+              <div class="balance-actions">
+                <button class="balance-btn clickable" onclick="goTo('screen-send')">📤 SEND</button>
+                <button class="balance-btn clickable">📥 RECEIVE</button>
+              </div>
+            </div>
+
+            <p class="home-section-label">TOOLS</p>
+            <div class="tools-list">
+              <div class="tool-item clickable" onclick="goTo('screen-decoder')">
+                <div class="tool-left">
+                  <div class="tool-icon shield">🛡️</div>
+                  <div>
+                    <p class="tool-name">SHIELD</p>
+                    <p class="tool-desc">Scam protection</p>
+                  </div>
+                </div>
+                <span class="tool-arrow">→</span>
+              </div>
+              <div class="tool-item clickable" onclick="goTo('screen-decoder')">
+                <div class="tool-left">
+                  <div class="tool-icon truth">🔍</div>
+                  <div>
+                    <p class="tool-name">TRUTH</p>
+                    <p class="tool-desc">Decode loan terms</p>
+                  </div>
+                </div>
+                <span class="tool-arrow">→</span>
+              </div>
+            </div>
+
+            <div class="alert-banner clickable">
+              <span class="alert-icon">🚨</span>
+              <span class="alert-text">New scam: "Free load" stealing PINs</span>
+              <span class="alert-arrow">→</span>
+            </div>
+          </div>
+
+          <nav class="bottom-nav">
+            <button class="nav-item active clickable">
+              <span class="nav-icon">🏠</span>
+              Home
+            </button>
+            <button class="nav-item clickable">
+              <span class="nav-icon">📋</span>
+              History
+            </button>
+            <button class="nav-item clickable" onclick="goTo('screen-contacts')">
+              <span class="nav-icon">👤</span>
+              Account
+            </button>
+          </nav>
+        </div>
+
+        <!-- SCREEN: SEND -->
+        <div class="screen" id="screen-send">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="pattern-stripe"></div>
+          <div class="screen-content">
+            <div class="screen-header">
+              <button class="back-btn clickable" onclick="goTo('screen-home')">←</button>
+              <h1 class="screen-title">SEND MONEY</h1>
+            </div>
+
+            <div class="input-group">
+              <label class="input-label">Send to</label>
+              <input type="text" class="input-field" placeholder="+63 917 *** 4821" value="+63 917 *** 4821" readonly>
+            </div>
+
+            <div class="amount-display">
+              <p class="amount-label">Amount</p>
+              <p class="amount-value">₱5,000</p>
+            </div>
+
+            <div class="keypad">
+              <button class="keypad-btn clickable">1</button>
+              <button class="keypad-btn clickable">2</button>
+              <button class="keypad-btn clickable">3</button>
+              <button class="keypad-btn clickable">4</button>
+              <button class="keypad-btn clickable">5</button>
+              <button class="keypad-btn clickable">6</button>
+              <button class="keypad-btn clickable">7</button>
+              <button class="keypad-btn clickable">8</button>
+              <button class="keypad-btn clickable">9</button>
+              <button class="keypad-btn clickable">.</button>
+              <button class="keypad-btn clickable">0</button>
+              <button class="keypad-btn clickable">⌫</button>
+            </div>
+
+            <button class="send-btn clickable" onclick="goTo('screen-warning')">CONTINUE</button>
+          </div>
+        </div>
+
+        <!-- SCREEN: WARNING -->
+        <div class="screen" id="screen-warning">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="pattern-stripe"></div>
+          <div class="screen-content">
+            <div class="screen-header">
+              <button class="back-btn clickable" onclick="goTo('screen-send')">←</button>
+              <h1 class="screen-title">SEND MONEY</h1>
+            </div>
+
+            <div class="recipient-card">
+              <p class="recipient-label">Sending to</p>
+              <div class="recipient-info">
+                <div class="recipient-avatar">👤</div>
+                <div>
+                  <p class="recipient-name">+63 917 *** 4821</p>
+                  <p class="recipient-status">Unknown contact</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="amount-card">
+              <p class="amount-label">Amount</p>
+              <p class="amount-value">₱5,000</p>
+            </div>
+
+            <div class="warning-card">
+              <div class="warning-header">
+                <span class="warning-icon">🚨</span>
+                <span class="warning-title">WAIT</span>
+              </div>
+              <ul class="warning-list">
+                <li>Never sent to this number before</li>
+                <li>Large amount to unknown person</li>
+                <li>Matches known scam patterns</li>
+              </ul>
+              <p class="warning-question">DO YOU REALLY KNOW THIS PERSON?</p>
+              <div class="action-buttons">
+                <button class="btn-cancel clickable" onclick="goTo('screen-home')">🚫 DON'T SEND</button>
+                <button class="btn-proceed clickable" onclick="goTo('screen-home')">I know them, continue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN: LOAN DECODER -->
+        <div class="screen" id="screen-decoder">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="pattern-stripe"></div>
+          <div class="screen-content">
+            <div class="screen-header">
+              <button class="back-btn clickable" onclick="goTo('screen-home')">←</button>
+              <h1 class="screen-title">TRUTH</h1>
+            </div>
+
+            <p class="decoder-intro">We found the real cost of your loan offer.</p>
+
+            <div class="comparison-cards">
+              <div class="loan-card predatory">
+                <div class="loan-header">
+                  <span class="loan-label">🚩 THEIR OFFER</span>
+                  <span class="loan-tag">Predatory</span>
+                </div>
+                <div class="loan-row">
+                  <span class="loan-row-label">Borrowed</span>
+                  <span class="loan-row-value">₱5,000</span>
+                </div>
+                <div class="loan-row">
+                  <span class="loan-row-label">"Processing fee"</span>
+                  <span class="loan-row-value">₱750</span>
+                </div>
+                <div class="loan-row">
+                  <span class="loan-row-label">"Service charge"</span>
+                  <span class="loan-row-value">₱500</span>
+                </div>
+                <div class="loan-row">
+                  <span class="loan-row-label">Interest (6 mo.)</span>
+                  <span class="loan-row-value">₱1,800</span>
+                </div>
+                <div class="loan-row loan-total">
+                  <span class="loan-row-label">You pay back</span>
+                  <span class="loan-row-value">₱8,050</span>
+                </div>
+              </div>
+
+              <p class="versus">— VS —</p>
+
+              <div class="loan-card fair">
+                <div class="loan-header">
+                  <span class="loan-label">✓ FAIR TERMS</span>
+                  <span class="loan-tag">Transparent</span>
+                </div>
+                <div class="loan-row">
+                  <span class="loan-row-label">Borrowed</span>
+                  <span class="loan-row-value">₱5,000</span>
+                </div>
+                <div class="loan-row">
+                  <span class="loan-row-label">Interest (6 mo.)</span>
+                  <span class="loan-row-value">₱600</span>
+                </div>
+                <div class="loan-row loan-total">
+                  <span class="loan-row-label">You pay back</span>
+                  <span class="loan-row-value">₱5,600</span>
+                </div>
+              </div>
+
+              <div class="savings-card">
+                <p class="savings-label">You would save</p>
+                <p class="savings-amount">₱2,450</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN: CONTACTS -->
+        <div class="screen" id="screen-contacts">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="pattern-stripe"></div>
+          <div class="screen-content">
+            <div class="screen-header">
+              <button class="back-btn clickable" onclick="goTo('screen-home')">←</button>
+              <h1 class="screen-title">FAMILY</h1>
+            </div>
+
+            <p class="contacts-intro">People you trust. Transfers to them skip the warning screens.</p>
+
+            <div class="contact-list">
+              <div class="contact-item verified clickable">
+                <div class="contact-avatar">JR</div>
+                <div class="contact-info">
+                  <p class="contact-name">Juan Reyes</p>
+                  <p class="contact-relation">Son</p>
+                </div>
+                <span class="contact-status verified">Verified</span>
+              </div>
+              <div class="contact-item verified clickable">
+                <div class="contact-avatar">AR</div>
+                <div class="contact-info">
+                  <p class="contact-name">Ana Reyes</p>
+                  <p class="contact-relation">Daughter</p>
+                </div>
+                <span class="contact-status verified">Verified</span>
+              </div>
+              <div class="contact-item clickable">
+                <div class="contact-avatar">PS</div>
+                <div class="contact-info">
+                  <p class="contact-name">Pedro Santos</p>
+                  <p class="contact-relation">Neighbor</p>
+                </div>
+                <span class="contact-status pending">Pending</span>
+              </div>
+            </div>
+
+            <button class="add-contact-btn clickable">+ ADD TRUSTED CONTACT</button>
+          </div>
+
+          <nav class="bottom-nav">
+            <button class="nav-item clickable" onclick="goTo('screen-home')">
+              <span class="nav-icon">🏠</span>
+              Home
+            </button>
+            <button class="nav-item clickable">
+              <span class="nav-icon">📋</span>
+              History
+            </button>
+            <button class="nav-item active clickable">
+              <span class="nav-icon">👤</span>
+              Account
+            </button>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-indicator">
+    <div class="indicator-dot active" onclick="goTo('screen-onboarding')"></div>
+    <div class="indicator-dot" onclick="goTo('screen-home')"></div>
+    <div class="indicator-dot" onclick="goTo('screen-send')"></div>
+    <div class="indicator-dot" onclick="goTo('screen-warning')"></div>
+    <div class="indicator-dot" onclick="goTo('screen-decoder')"></div>
+    <div class="indicator-dot" onclick="goTo('screen-contacts')"></div>
+  </div>
+
+  <script>
+    const screens = ['screen-onboarding', 'screen-home', 'screen-send', 'screen-warning', 'screen-decoder', 'screen-contacts'];
+    
+    function goTo(screenId) {
+      // Hide all screens
+      document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+      });
+      
+      // Show target screen
+      document.getElementById(screenId).classList.add('active');
+      
+      // Update indicators
+      document.querySelectorAll('.indicator-dot').forEach((dot, index) => {
+        dot.classList.remove('active');
+        if (screens[index] === screenId) {
+          dot.classList.add('active');
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
