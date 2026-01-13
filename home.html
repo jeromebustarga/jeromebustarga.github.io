@@ -277,6 +277,114 @@ body {
   100% { top: 130%; opacity: 0; }
 }
 
+/* Lightbulb - Inside hero section */
+.lightbulb-container {
+  position: relative;
+  margin-bottom: 48px;
+  animation: lightbulbFloatUp 1.2s ease-out forwards;
+}
+
+@keyframes lightbulbFloatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.lightbulb {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.bulb-on {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 30px rgba(244, 121, 33, 0.7)) drop-shadow(0 0 60px rgba(244, 121, 33, 0.4));
+  animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 30px rgba(244, 121, 33, 0.7)) drop-shadow(0 0 60px rgba(244, 121, 33, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(244, 121, 33, 0.9)) drop-shadow(0 0 80px rgba(244, 121, 33, 0.6));
+  }
+}
+
+/* Radial light effect from bulb */
+.radial-light {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, 
+    rgba(244, 121, 33, 0.12) 0%,
+    rgba(244, 121, 33, 0.06) 35%,
+    transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+  animation: radialPulse 3s ease-in-out infinite;
+}
+
+@keyframes radialPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Light rays animation */
+.light-rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110px;
+  height: 110px;
+  animation: rotate 25s linear infinite;
+  z-index: 1;
+}
+
+.ray {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(244, 121, 33, 0.35), transparent);
+  transform-origin: 50% 0%;
+  border-radius: 1px;
+}
+
+.ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+.ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); }
+.ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); }
+.ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); }
+.ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); }
+.ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); }
+.ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); }
+.ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); }
+
+@keyframes rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 /* Subtle grid pattern */
 .bg-grid {
   position: fixed;
@@ -291,106 +399,6 @@ body {
   -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
 }
 
-/* Icon Dropdown Menu */
-.icon-dropdown {
-  position: fixed;
-  top: 24px;
-  right: 30px;
-  z-index: 10001;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body.scrolled .icon-dropdown {
-  top: auto;
-  bottom: 30px;
-  right: auto;
-  left: 30px;
-}
-
-.icon-dropdown-btn {
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  color: var(--text-secondary);
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(20px);
-}
-
-.icon-dropdown-btn:hover {
-  background: rgba(244, 121, 33, 0.06);
-  border-color: rgba(244, 121, 33, 0.2);
-  color: var(--accent);
-}
-
-.icon-menu {
-  display: none;
-  position: absolute;
-  top: 54px;
-  right: 0;
-  flex-direction: column;
-  gap: 6px;
-  padding: 10px;
-  background: rgba(17, 17, 17, 0.95);
-  border: 1px solid var(--border-subtle);
-  border-radius: 14px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-}
-
-body.scrolled .icon-menu {
-  top: auto;
-  bottom: 54px;
-  right: auto;
-  left: 0;
-}
-
-.icon-menu.show {
-  display: flex;
-  animation: menuSlide 0.25s ease;
-}
-
-@keyframes menuSlide {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-body.scrolled .icon-menu.show {
-  animation: menuSlideUp 0.25s ease;
-}
-
-@keyframes menuSlideUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.icon-menu a {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  color: var(--text-secondary);
-  font-size: 15px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.icon-menu a:hover {
-  background: rgba(244, 121, 33, 0.08);
-  border-color: rgba(244, 121, 33, 0.15);
-  color: var(--accent);
-}
-
 /* Navigation */
 nav {
   position: fixed;
@@ -398,7 +406,6 @@ nav {
   left: 0;
   right: 0;
   padding: 20px 48px;
-  padding-right: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -409,8 +416,10 @@ nav {
   border-bottom: 1px solid var(--border-subtle);
 }
 
-body.scrolled nav {
-  padding-right: 48px;
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
 .logo {
@@ -485,6 +494,78 @@ body.scrolled nav {
   color: var(--text-primary);
 }
 
+/* Icon Dropdown Menu - now inside nav */
+.icon-dropdown {
+  position: relative;
+}
+
+.icon-dropdown-btn {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.icon-dropdown-btn:hover {
+  background: rgba(244, 121, 33, 0.06);
+  border-color: rgba(244, 121, 33, 0.2);
+  color: var(--accent);
+}
+
+.icon-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: rgba(17, 17, 17, 0.95);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.icon-menu.show {
+  display: flex;
+  animation: menuSlide 0.25s ease;
+}
+
+@keyframes menuSlide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.icon-menu a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.icon-menu a:hover {
+  background: rgba(244, 121, 33, 0.08);
+  border-color: rgba(244, 121, 33, 0.15);
+  color: var(--accent);
+}
+
 /* Mobile hamburger menu */
 .hamburger {
   display: none;
@@ -520,6 +601,7 @@ body.scrolled nav {
 @media (max-width: 640px) {
   .hamburger {
     display: flex;
+    order: 2;
   }
 
   .nav-links {
@@ -551,6 +633,10 @@ body.scrolled nav {
     padding: 18px 0;
     font-size: 15px;
     border-bottom: 1px solid var(--border-subtle);
+  }
+  
+  .icon-dropdown {
+    order: 1;
   }
 }
 
@@ -1064,11 +1150,6 @@ footer {
 @media (max-width: 1024px) {
   nav {
     padding: 18px 40px;
-    padding-right: 90px;
-  }
-
-  body.scrolled nav {
-    padding-right: 40px;
   }
 
   section {
@@ -1125,9 +1206,34 @@ footer {
   .animated-lines {
     display: none;
   }
+  
+  /* Lightbulb mobile optimizations */
+  .bulb-on {
+    filter: drop-shadow(0 0 20px rgba(244, 121, 33, 0.6));
+    animation: none;
+  }
+  
+  .radial-light {
+    animation: none;
+    opacity: 0.6;
+    width: 220px;
+    height: 220px;
+  }
+  
+  .light-rays {
+    animation: rotate 35s linear infinite;
+  }
+  
+  .lightbulb {
+    width: 75px;
+    height: 75px;
+  }
+  
+  .lightbulb-container {
+    margin-bottom: 36px;
+  }
 
   nav,
-  .icon-dropdown-btn,
   .icon-menu {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -1136,15 +1242,6 @@ footer {
   nav {
     background: rgba(10, 10, 10, 0.98);
     padding: 16px 24px;
-    padding-right: 80px;
-  }
-
-  body.scrolled nav {
-    padding-right: 24px;
-  }
-
-  .icon-dropdown-btn {
-    background: rgba(17, 17, 17, 0.98);
   }
 
   .icon-menu {
@@ -1159,15 +1256,9 @@ footer {
     width: 28px;
     height: 28px;
   }
-
-  .icon-dropdown {
-    top: 18px;
-    right: 20px;
-  }
-
-  body.scrolled .icon-dropdown {
-    bottom: 20px;
-    left: 20px;
+  
+  .nav-right {
+    gap: 16px;
   }
 
   .icon-dropdown-btn {
@@ -1273,6 +1364,29 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .lightbulb {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .lightbulb-container {
+    margin-bottom: 28px;
+  }
+  
+  .radial-light {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .light-rays {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .ray {
+    height: 50px;
+  }
+
   .hero-content h1 {
     font-size: 36px;
   }
@@ -1348,23 +1462,6 @@ footer {
 </div>
 <div class="bg-grid"></div>
 
-<div class="icon-dropdown">
-  <button class="icon-dropdown-btn" id="iconDropdownBtn" aria-label="Navigation menu">
-    <i class="fa-solid fa-grip"></i>
-  </button>
-  <div class="icon-menu" id="iconMenu">
-    <a href="index.html" title="Home" aria-label="Home">
-      <i class="fa-solid fa-house"></i>
-    </a>
-    <a href="about.html" title="About Me" aria-label="About Me">
-      <i class="fa-solid fa-user"></i>
-    </a>
-    <a href="warpzone.html" title="Warp Zone" aria-label="Warp Zone">
-      <i class="fa-solid fa-rocket"></i>
-    </a>
-  </div>
-</div>
-
 <nav>
   <a href="#mainContent" class="logo" id="logoNav">
     <div class="logo-icon">
@@ -1375,20 +1472,56 @@ footer {
       <span class="logo-text-alt">It's Jerome's World</span>
     </span>
   </a>
-  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#work">Work</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-right">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="icon-dropdown">
+      <button class="icon-dropdown-btn" id="iconDropdownBtn" aria-label="Navigation menu">
+        <i class="fa-solid fa-grip"></i>
+      </button>
+      <div class="icon-menu" id="iconMenu">
+        <a href="index.html" title="Home" aria-label="Home">
+          <i class="fa-solid fa-house"></i>
+        </a>
+        <a href="about.html" title="About Me" aria-label="About Me">
+          <i class="fa-solid fa-user"></i>
+        </a>
+        <a href="warpzone.html" title="Warp Zone" aria-label="Warp Zone">
+          <i class="fa-solid fa-rocket"></i>
+        </a>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <main id="mainContent">
   <section class="hero-section">
+    <!-- Lightbulb with glow effect -->
+    <div class="lightbulb-container">
+      <div class="radial-light"></div>
+      <div class="light-rays">
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+        <div class="ray"></div>
+      </div>
+      <div class="lightbulb">
+        <img src="images/logo.png" alt="Jerome Bustarga" class="bulb-on">
+      </div>
+    </div>
+    
     <div class="hero-badge">
       <i class="fa-solid fa-circle"></i>
       Available for Projects
@@ -1702,7 +1835,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Scroll event for logo change and icon menu position
+// Scroll event for logo change
 const logoNav = document.getElementById('logoNav');
 
 window.addEventListener('scroll', () => {
@@ -1710,10 +1843,8 @@ window.addEventListener('scroll', () => {
   
   if (scrollY > 100) {
     logoNav.classList.add('scrolled');
-    document.body.classList.add('scrolled');
   } else {
     logoNav.classList.remove('scrolled');
-    document.body.classList.remove('scrolled');
   }
 });
 
