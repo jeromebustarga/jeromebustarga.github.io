@@ -3938,6 +3938,951 @@ const projects = [
   },
   {
     id: 3,
+    title: "SSS Accessibility Audit",
+    category: "Accessibility",
+    year: "2024",
+    image: "images/sss-audit-thumb.png",
+    description: `
+      <style>
+        .sss-case-study {
+          --sss-bg-primary: #1a1a1a;
+          --sss-bg-secondary: #252525;
+          --sss-bg-dark: #1a1a2e;
+          --sss-bg-card: #2a2a2a;
+          --sss-text-primary: #ffffff;
+          --sss-text-secondary: #b0b0b0;
+          --sss-text-muted: #808080;
+          --sss-accent: #4da6ff;
+          --sss-accent-dark: #0066cc;
+          --sss-error: #ff6b6b;
+          --sss-error-light: rgba(255,107,107,0.15);
+          --sss-warning: #ffb347;
+          --sss-warning-light: rgba(255,179,71,0.15);
+          --sss-success: #6bcf6b;
+          --sss-success-light: rgba(107,207,107,0.15);
+          --sss-border: #404040;
+          --sss-serif: 'Instrument Serif', Georgia, serif;
+          --sss-sans: 'DM Sans', system-ui, sans-serif;
+          --sss-mono: 'IBM Plex Mono', monospace;
+          font-family: var(--sss-sans);
+          color: var(--sss-text-primary);
+          line-height: 1.7;
+        }
+        .sss-case-study * { box-sizing: border-box; }
+
+        /* Hero */
+        .sss-hero {
+          background: var(--sss-bg-dark);
+          color: #fff;
+          padding: 4rem 2rem 3rem;
+          margin: -40px -40px 0 -40px;
+          border-radius: 12px 12px 0 0;
+        }
+        .sss-hero-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: rgba(255,255,255,0.1);
+          padding: 0.375rem 0.75rem;
+          border-radius: 100px;
+          font-size: 0.6875rem;
+          margin-bottom: 1.5rem;
+        }
+        .sss-hero-badge-dot {
+          width: 8px;
+          height: 8px;
+          background: var(--sss-error);
+          border-radius: 50%;
+        }
+        .sss-hero-title {
+          font-family: var(--sss-serif);
+          font-size: clamp(2rem, 5vw, 3.5rem);
+          font-weight: 400;
+          line-height: 1.1;
+          margin-bottom: 1.5rem;
+        }
+        .sss-hero-title em {
+          font-style: italic;
+          color: var(--sss-error);
+        }
+        .sss-hero-subtitle {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.7);
+          max-width: 600px;
+          margin-bottom: 2rem;
+        }
+        .sss-hero-meta {
+          display: flex;
+          gap: 2rem;
+          flex-wrap: wrap;
+          padding-top: 1.5rem;
+          border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .sss-meta-item {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+        }
+        .sss-meta-label {
+          font-size: 0.6875rem;
+          color: rgba(255,255,255,0.4);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+        }
+        .sss-meta-value {
+          font-size: 0.875rem;
+        }
+
+        /* Sections */
+        .sss-section {
+          padding: 3rem 0;
+        }
+        .sss-section-label {
+          font-size: 0.6875rem;
+          color: var(--sss-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.2em;
+          margin-bottom: 1rem;
+        }
+        .sss-section-title {
+          font-family: var(--sss-serif);
+          font-size: clamp(1.5rem, 3vw, 2rem);
+          font-weight: 400;
+          margin-bottom: 1rem;
+          color: var(--sss-text-primary);
+        }
+        .sss-section-text {
+          font-size: 0.9375rem;
+          color: var(--sss-text-secondary);
+          max-width: 600px;
+          margin-bottom: 1rem;
+        }
+
+        /* Full Width */
+        .sss-full-width {
+          background: var(--sss-bg-secondary);
+          margin-left: -40px;
+          margin-right: -40px;
+          padding: 3rem 40px;
+        }
+
+        /* Summary Grid */
+        .sss-summary-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .sss-summary-card {
+          background: var(--sss-bg-card);
+          border: 1px solid var(--sss-border);
+          border-radius: 10px;
+          padding: 1.25rem;
+          text-align: center;
+        }
+        .sss-summary-card.critical {
+          border-color: var(--sss-error);
+          background: var(--sss-error-light);
+        }
+        .sss-summary-card.serious {
+          border-color: var(--sss-warning);
+          background: var(--sss-warning-light);
+        }
+        .sss-summary-number {
+          font-family: var(--sss-serif);
+          font-size: 2.5rem;
+          line-height: 1;
+          margin-bottom: 0.375rem;
+        }
+        .sss-summary-card.critical .sss-summary-number { color: var(--sss-error); }
+        .sss-summary-card.serious .sss-summary-number { color: var(--sss-warning); }
+        .sss-summary-label {
+          font-size: 0.75rem;
+          color: var(--sss-text-secondary);
+        }
+
+        /* Legal Box */
+        .sss-legal-box {
+          background: rgba(77,166,255,0.1);
+          border-left: 3px solid var(--sss-accent);
+          padding: 1.25rem 1.5rem;
+          border-radius: 0 8px 8px 0;
+          margin: 1.5rem 0;
+        }
+        .sss-legal-title {
+          font-weight: 600;
+          margin-bottom: 0.375rem;
+          color: var(--sss-accent);
+          font-size: 0.875rem;
+        }
+        .sss-legal-text {
+          font-size: 0.8125rem;
+          color: var(--sss-text-secondary);
+        }
+        .sss-legal-text code {
+          font-family: var(--sss-mono);
+          background: rgba(255,255,255,0.1);
+          padding: 0.125rem 0.375rem;
+          border-radius: 3px;
+          font-size: 0.75rem;
+        }
+
+        /* Methodology */
+        .sss-method-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .sss-method-card {
+          background: var(--sss-bg-card);
+          border: 1px solid var(--sss-border);
+          border-radius: 10px;
+          padding: 1.25rem;
+        }
+        .sss-method-icon {
+          width: 40px;
+          height: 40px;
+          background: var(--sss-bg-secondary);
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.25rem;
+          margin-bottom: 0.75rem;
+        }
+        .sss-method-title {
+          font-weight: 600;
+          margin-bottom: 0.375rem;
+          font-size: 0.9375rem;
+          color: var(--sss-text-primary);
+        }
+        .sss-method-desc {
+          font-size: 0.75rem;
+          color: var(--sss-text-secondary);
+        }
+
+        /* WCAG Principles */
+        .sss-wcag-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 0.75rem;
+          margin-top: 1.5rem;
+        }
+        .sss-wcag-card {
+          background: var(--sss-bg-card);
+          border: 1px solid var(--sss-border);
+          border-radius: 8px;
+          padding: 1rem;
+          text-align: center;
+        }
+        .sss-wcag-letter {
+          font-family: var(--sss-serif);
+          font-size: 1.75rem;
+          color: var(--sss-accent);
+          margin-bottom: 0.25rem;
+        }
+        .sss-wcag-name {
+          font-weight: 600;
+          font-size: 0.8125rem;
+          margin-bottom: 0.25rem;
+          color: var(--sss-text-primary);
+        }
+        .sss-wcag-desc {
+          font-size: 0.625rem;
+          color: var(--sss-text-muted);
+        }
+
+        /* Issue Cards */
+        .sss-finding-category {
+          margin-bottom: 2rem;
+        }
+        .sss-category-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 1rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px solid var(--sss-border);
+        }
+        .sss-category-icon {
+          width: 32px;
+          height: 32px;
+          background: var(--sss-accent);
+          color: #000;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.875rem;
+          font-weight: 700;
+        }
+        .sss-category-title {
+          font-family: var(--sss-serif);
+          font-size: 1.25rem;
+          color: var(--sss-text-primary);
+        }
+        .sss-category-count {
+          margin-left: auto;
+          font-size: 0.6875rem;
+          color: var(--sss-text-muted);
+          background: var(--sss-bg-secondary);
+          padding: 0.25rem 0.5rem;
+          border-radius: 100px;
+        }
+        .sss-issue-card {
+          background: var(--sss-bg-card);
+          border: 1px solid var(--sss-border);
+          border-radius: 10px;
+          margin-bottom: 0.75rem;
+          overflow: hidden;
+        }
+        .sss-issue-header {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.75rem 1rem;
+          background: var(--sss-bg-secondary);
+          border-bottom: 1px solid var(--sss-border);
+        }
+        .sss-issue-severity {
+          font-size: 0.5625rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          padding: 0.2rem 0.5rem;
+          border-radius: 3px;
+        }
+        .sss-issue-severity.critical { background: var(--sss-error); color: #fff; }
+        .sss-issue-severity.serious { background: var(--sss-warning); color: #000; }
+        .sss-issue-severity.moderate { background: #ffc107; color: #000; }
+        .sss-issue-title {
+          font-weight: 600;
+          font-size: 0.8125rem;
+          flex: 1;
+          color: var(--sss-text-primary);
+        }
+        .sss-issue-wcag {
+          font-family: var(--sss-mono);
+          font-size: 0.625rem;
+          color: var(--sss-text-muted);
+          background: var(--sss-bg-primary);
+          padding: 0.2rem 0.375rem;
+          border-radius: 3px;
+        }
+        .sss-issue-body {
+          padding: 1rem;
+        }
+        .sss-issue-desc {
+          font-size: 0.8125rem;
+          color: var(--sss-text-secondary);
+          margin-bottom: 0.75rem;
+        }
+        .sss-issue-code {
+          background: #1e1e2e;
+          color: #a6e3a1;
+          font-family: var(--sss-mono);
+          font-size: 0.6875rem;
+          padding: 0.75rem;
+          border-radius: 6px;
+          overflow-x: auto;
+        }
+        .sss-issue-code .bad { color: #f38ba8; text-decoration: line-through; }
+        .sss-issue-code .good { color: #a6e3a1; }
+
+        /* Visual Comparison */
+        .sss-issue-visual {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+          margin-top: 0.75rem;
+        }
+        .sss-visual-box {
+          border-radius: 6px;
+          overflow: hidden;
+          border: 1px solid var(--sss-border);
+        }
+        .sss-visual-label {
+          font-size: 0.5625rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          padding: 0.375rem 0.625rem;
+          background: var(--sss-bg-secondary);
+          border-bottom: 1px solid var(--sss-border);
+        }
+        .sss-visual-label.before { background: var(--sss-error-light); color: var(--sss-error); }
+        .sss-visual-label.after { background: var(--sss-success-light); color: var(--sss-success); }
+        .sss-visual-content {
+          padding: 0.75rem;
+          background: var(--sss-bg-card);
+          min-height: 60px;
+          font-size: 0.6875rem;
+        }
+
+        /* Recommendations */
+        .sss-rec-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .sss-rec-card {
+          background: var(--sss-bg-card);
+          border: 1px solid var(--sss-border);
+          border-radius: 10px;
+          padding: 1.25rem;
+        }
+        .sss-rec-priority {
+          display: inline-block;
+          font-size: 0.5625rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          padding: 0.2rem 0.5rem;
+          border-radius: 3px;
+          margin-bottom: 0.625rem;
+        }
+        .sss-rec-priority.p1 { background: var(--sss-error); color: #fff; }
+        .sss-rec-priority.p2 { background: var(--sss-warning); color: #000; }
+        .sss-rec-priority.p3 { background: #90caf9; color: #000; }
+        .sss-rec-title {
+          font-weight: 600;
+          font-size: 0.875rem;
+          margin-bottom: 0.375rem;
+          color: var(--sss-text-primary);
+        }
+        .sss-rec-desc {
+          font-size: 0.75rem;
+          color: var(--sss-text-secondary);
+          margin-bottom: 0.5rem;
+        }
+        .sss-rec-effort {
+          font-size: 0.625rem;
+          color: var(--sss-text-muted);
+        }
+
+        /* Checklist */
+        .sss-checklist-category {
+          margin-bottom: 1.5rem;
+        }
+        .sss-checklist-title {
+          font-weight: 600;
+          font-size: 0.9375rem;
+          margin-bottom: 0.75rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--sss-text-primary);
+        }
+        .sss-checklist-items {
+          display: flex;
+          flex-direction: column;
+          gap: 0.375rem;
+        }
+        .sss-checklist-item {
+          display: flex;
+          align-items: center;
+          gap: 0.625rem;
+          padding: 0.625rem 0.875rem;
+          background: var(--sss-bg-card);
+          border: 1px solid var(--sss-border);
+          border-radius: 6px;
+          font-size: 0.75rem;
+        }
+        .sss-checklist-status {
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.625rem;
+          flex-shrink: 0;
+        }
+        .sss-checklist-status.fail { background: var(--sss-error); color: #fff; }
+        .sss-checklist-status.pass { background: var(--sss-success); color: #fff; }
+        .sss-checklist-text {
+          flex: 1;
+          color: var(--sss-text-secondary);
+        }
+        .sss-checklist-wcag {
+          font-family: var(--sss-mono);
+          font-size: 0.5625rem;
+          color: var(--sss-text-muted);
+          background: var(--sss-bg-secondary);
+          padding: 0.125rem 0.25rem;
+          border-radius: 2px;
+        }
+
+        /* Outcome */
+        .sss-outcome-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+          margin-top: 1.5rem;
+        }
+        .sss-outcome-card {
+          background: var(--sss-bg-card);
+          border: 1px solid var(--sss-border);
+          border-radius: 10px;
+          padding: 1.5rem;
+          text-align: center;
+        }
+        .sss-outcome-icon {
+          font-size: 1.5rem;
+          margin-bottom: 0.75rem;
+        }
+        .sss-outcome-title {
+          font-weight: 600;
+          font-size: 0.875rem;
+          margin-bottom: 0.375rem;
+          color: var(--sss-text-primary);
+        }
+        .sss-outcome-desc {
+          font-size: 0.75rem;
+          color: var(--sss-text-secondary);
+          margin: 0;
+        }
+
+        /* Reflection */
+        .sss-reflection-box {
+          background: var(--sss-bg-dark);
+          color: #fff;
+          border-radius: 12px;
+          padding: 2rem;
+          margin-top: 1.5rem;
+        }
+        .sss-reflection-title {
+          font-family: var(--sss-serif);
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+        .sss-reflection-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+        .sss-reflection-col h4 {
+          font-size: 0.6875rem;
+          color: var(--sss-accent);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          margin-bottom: 0.75rem;
+        }
+        .sss-reflection-col p {
+          font-size: 0.8125rem;
+          color: rgba(255,255,255,0.8);
+          margin-bottom: 0.75rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+          .sss-summary-grid { grid-template-columns: repeat(2, 1fr); }
+          .sss-method-grid, .sss-reflection-grid, .sss-issue-visual { grid-template-columns: 1fr; }
+          .sss-wcag-grid { grid-template-columns: repeat(2, 1fr); }
+          .sss-rec-grid, .sss-outcome-grid { grid-template-columns: 1fr; }
+          .sss-hero { margin: -40px -20px 0 -20px; padding: 2rem 1.5rem; }
+          .sss-full-width { margin-left: -20px; margin-right: -20px; padding: 2rem 20px; }
+        }
+      </style>
+
+      <div class="sss-case-study">
+        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+        <!-- Hero -->
+        <header class="sss-hero">
+          <div class="sss-hero-badge">
+            <span class="sss-hero-badge-dot"></span>
+            <span>Accessibility Audit</span>
+          </div>
+          <h1 class="sss-hero-title">SSS Philippines Portal<br/><em>Accessibility Audit</em></h1>
+          <p class="sss-hero-subtitle">A WCAG 2.1 AA compliance evaluation of the Philippine Social Security System website — a critical government service used by 40+ million members, many elderly or disabled.</p>
+          <div class="sss-hero-meta">
+            <div class="sss-meta-item">
+              <span class="sss-meta-label">Subject</span>
+              <span class="sss-meta-value">sss.gov.ph / My.SSS Portal</span>
+            </div>
+            <div class="sss-meta-item">
+              <span class="sss-meta-label">Standard</span>
+              <span class="sss-meta-value">WCAG 2.1 Level AA</span>
+            </div>
+            <div class="sss-meta-item">
+              <span class="sss-meta-label">Duration</span>
+              <span class="sss-meta-value">2 Weeks</span>
+            </div>
+            <div class="sss-meta-item">
+              <span class="sss-meta-label">Tools</span>
+              <span class="sss-meta-value">axe, WAVE, Manual Testing</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Executive Summary -->
+        <section class="sss-section">
+          <p class="sss-section-label">01 — Executive Summary</p>
+          <h2 class="sss-section-title">The SSS portal fails to meet basic accessibility standards.</h2>
+          <p class="sss-section-text">The Social Security System website serves over 40 million Filipino members — including elderly pensioners, overseas workers, and persons with disabilities. Despite legal mandates, the portal presents significant barriers.</p>
+          <div class="sss-summary-grid">
+            <div class="sss-summary-card critical">
+              <div class="sss-summary-number">12</div>
+              <div class="sss-summary-label">Critical Issues</div>
+            </div>
+            <div class="sss-summary-card serious">
+              <div class="sss-summary-number">18</div>
+              <div class="sss-summary-label">Serious Issues</div>
+            </div>
+            <div class="sss-summary-card">
+              <div class="sss-summary-number">24</div>
+              <div class="sss-summary-label">Moderate Issues</div>
+            </div>
+            <div class="sss-summary-card">
+              <div class="sss-summary-number">38%</div>
+              <div class="sss-summary-label">WCAG Compliance</div>
+            </div>
+          </div>
+          <div class="sss-legal-box">
+            <p class="sss-legal-title">Legal Requirement</p>
+            <p class="sss-legal-text">Philippine government websites are legally required to meet WCAG 2.0 AA standards under <code>DICT Memorandum Circular 004</code> and the <code>Magna Carta for Persons with Disabilities (RA 7277)</code>.</p>
+          </div>
+        </section>
+
+        <!-- Methodology -->
+        <section class="sss-section sss-full-width">
+          <p class="sss-section-label">02 — Methodology</p>
+          <h2 class="sss-section-title">How I conducted the audit</h2>
+          <p class="sss-section-text">A combination of automated tools and manual testing to identify accessibility barriers across all four WCAG principles.</p>
+          <div class="sss-method-grid">
+            <div class="sss-method-card">
+              <div class="sss-method-icon">🔍</div>
+              <h4 class="sss-method-title">Automated Testing</h4>
+              <p class="sss-method-desc">Used axe DevTools and WAVE to scan for programmatically detectable issues: missing alt text, color contrast failures, missing form labels.</p>
+            </div>
+            <div class="sss-method-card">
+              <div class="sss-method-icon">⌨️</div>
+              <h4 class="sss-method-title">Keyboard Navigation</h4>
+              <p class="sss-method-desc">Tested all interactive elements using only keyboard. Checked focus visibility, tab order, and keyboard traps.</p>
+            </div>
+            <div class="sss-method-card">
+              <div class="sss-method-icon">📱</div>
+              <h4 class="sss-method-title">Screen Reader Testing</h4>
+              <p class="sss-method-desc">Navigated key user flows with NVDA and VoiceOver. Evaluated announcement clarity and form accessibility.</p>
+            </div>
+            <div class="sss-method-card">
+              <div class="sss-method-icon">🧠</div>
+              <h4 class="sss-method-title">Cognitive Review</h4>
+              <p class="sss-method-desc">Assessed readability, error messaging, and navigation predictability for users with cognitive impairments.</p>
+            </div>
+          </div>
+          <div class="sss-wcag-grid">
+            <div class="sss-wcag-card">
+              <div class="sss-wcag-letter">P</div>
+              <h4 class="sss-wcag-name">Perceivable</h4>
+              <p class="sss-wcag-desc">Can users perceive the content?</p>
+            </div>
+            <div class="sss-wcag-card">
+              <div class="sss-wcag-letter">O</div>
+              <h4 class="sss-wcag-name">Operable</h4>
+              <p class="sss-wcag-desc">Can users operate the interface?</p>
+            </div>
+            <div class="sss-wcag-card">
+              <div class="sss-wcag-letter">U</div>
+              <h4 class="sss-wcag-name">Understandable</h4>
+              <p class="sss-wcag-desc">Can users understand the content?</p>
+            </div>
+            <div class="sss-wcag-card">
+              <div class="sss-wcag-letter">R</div>
+              <h4 class="sss-wcag-name">Robust</h4>
+              <p class="sss-wcag-desc">Does it work with assistive tech?</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Key Findings -->
+        <section class="sss-section">
+          <p class="sss-section-label">03 — Key Findings</p>
+          <h2 class="sss-section-title">Critical accessibility barriers</h2>
+          <p class="sss-section-text">The most severe barriers preventing users with disabilities from accessing SSS services.</p>
+
+          <!-- Perceivable -->
+          <div class="sss-finding-category">
+            <div class="sss-category-header">
+              <div class="sss-category-icon">P</div>
+              <h3 class="sss-category-title">Perceivable</h3>
+              <span class="sss-category-count">8 issues</span>
+            </div>
+            <div class="sss-issue-card">
+              <div class="sss-issue-header">
+                <span class="sss-issue-severity critical">Critical</span>
+                <span class="sss-issue-title">CAPTCHA inaccessible to screen readers</span>
+                <span class="sss-issue-wcag">1.1.1</span>
+              </div>
+              <div class="sss-issue-body">
+                <p class="sss-issue-desc">The login CAPTCHA is image-based with no audio alternative. Blind users cannot complete login without sighted assistance — a complete barrier.</p>
+                <div class="sss-issue-visual">
+                  <div class="sss-visual-box">
+                    <div class="sss-visual-label before">Current</div>
+                    <div class="sss-visual-content" style="text-align:center;">
+                      <div style="background:repeating-linear-gradient(45deg,#555,#555 3px,#666 3px,#666 6px);height:32px;display:flex;align-items:center;justify-content:center;font-family:serif;font-style:italic;letter-spacing:4px;color:#fff;margin-bottom:4px;">xK9mP2</div>
+                      <span style="color:var(--sss-text-muted);">Enter text above</span>
+                    </div>
+                  </div>
+                  <div class="sss-visual-box">
+                    <div class="sss-visual-label after">Fixed</div>
+                    <div class="sss-visual-content" style="text-align:center;">
+                      <div style="background:var(--sss-bg-secondary);border:1px solid var(--sss-border);border-radius:4px;padding:8px;">
+                        <span>✓ I'm not a robot</span><br/>
+                        <span style="color:var(--sss-accent);font-size:0.625rem;">🔊 Audio option available</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="sss-issue-card">
+              <div class="sss-issue-header">
+                <span class="sss-issue-severity serious">Serious</span>
+                <span class="sss-issue-title">Insufficient color contrast</span>
+                <span class="sss-issue-wcag">1.4.3</span>
+              </div>
+              <div class="sss-issue-body">
+                <p class="sss-issue-desc">Light gray text on white backgrounds fails the 4.5:1 contrast ratio. Navigation links and helper text are difficult to read for users with low vision.</p>
+                <div class="sss-issue-visual">
+                  <div class="sss-visual-box">
+                    <div class="sss-visual-label before">2.8:1 ratio</div>
+                    <div class="sss-visual-content" style="background:#f0f0f0;">
+                      <span style="color:#999;">Enter your SS Number</span>
+                    </div>
+                  </div>
+                  <div class="sss-visual-box">
+                    <div class="sss-visual-label after">7:1 ratio</div>
+                    <div class="sss-visual-content" style="background:#f0f0f0;">
+                      <span style="color:#333;">Enter your SS Number</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Operable -->
+          <div class="sss-finding-category">
+            <div class="sss-category-header">
+              <div class="sss-category-icon">O</div>
+              <h3 class="sss-category-title">Operable</h3>
+              <span class="sss-category-count">9 issues</span>
+            </div>
+            <div class="sss-issue-card">
+              <div class="sss-issue-header">
+                <span class="sss-issue-severity critical">Critical</span>
+                <span class="sss-issue-title">No visible focus indicators</span>
+                <span class="sss-issue-wcag">2.4.7</span>
+              </div>
+              <div class="sss-issue-body">
+                <p class="sss-issue-desc">When navigating by keyboard, there is no visible indication of which element has focus. Users who cannot use a mouse have no way to track their position.</p>
+                <div class="sss-issue-code">
+                  <span class="bad">*:focus { outline: none; }</span><br/><br/>
+                  <span class="good">*:focus { outline: 2px solid #003366; outline-offset: 2px; }</span>
+                </div>
+              </div>
+            </div>
+            <div class="sss-issue-card">
+              <div class="sss-issue-header">
+                <span class="sss-issue-severity critical">Critical</span>
+                <span class="sss-issue-title">Session timeout without warning</span>
+                <span class="sss-issue-wcag">2.2.1</span>
+              </div>
+              <div class="sss-issue-body">
+                <p class="sss-issue-desc">The portal logs users out after 5 minutes with no warning. Users with motor impairments who need more time lose their work.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Understandable -->
+          <div class="sss-finding-category">
+            <div class="sss-category-header">
+              <div class="sss-category-icon">U</div>
+              <h3 class="sss-category-title">Understandable</h3>
+              <span class="sss-category-count">7 issues</span>
+            </div>
+            <div class="sss-issue-card">
+              <div class="sss-issue-header">
+                <span class="sss-issue-severity critical">Critical</span>
+                <span class="sss-issue-title">Form inputs missing labels</span>
+                <span class="sss-issue-wcag">3.3.2</span>
+              </div>
+              <div class="sss-issue-body">
+                <p class="sss-issue-desc">Form fields use placeholder text instead of proper labels. Screen readers announce "edit text" with no context.</p>
+                <div class="sss-issue-code">
+                  <span class="bad">&lt;input placeholder="SS Number"&gt;</span><br/><br/>
+                  <span class="good">&lt;label for="ss"&gt;SS Number&lt;/label&gt;</span><br/>
+                  <span class="good">&lt;input id="ss" aria-describedby="ss-hint"&gt;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="sss-section sss-full-width">
+          <p class="sss-section-label">04 — Recommendations</p>
+          <h2 class="sss-section-title">Prioritized fixes</h2>
+          <p class="sss-section-text">Remediation recommendations ordered by severity, user impact, and implementation effort.</p>
+          <div class="sss-rec-grid">
+            <div class="sss-rec-card">
+              <span class="sss-rec-priority p1">Priority 1</span>
+              <h4 class="sss-rec-title">Replace inaccessible CAPTCHA</h4>
+              <p class="sss-rec-desc">Implement reCAPTCHA v3 or accessible alternatives with audio option.</p>
+              <p class="sss-rec-effort">Effort: Medium · Impact: Critical</p>
+            </div>
+            <div class="sss-rec-card">
+              <span class="sss-rec-priority p1">Priority 1</span>
+              <h4 class="sss-rec-title">Add form labels</h4>
+              <p class="sss-rec-desc">Associate every input with a visible label element.</p>
+              <p class="sss-rec-effort">Effort: Low · Impact: Critical</p>
+            </div>
+            <div class="sss-rec-card">
+              <span class="sss-rec-priority p1">Priority 1</span>
+              <h4 class="sss-rec-title">Restore focus indicators</h4>
+              <p class="sss-rec-desc">Remove outline:none. Implement visible focus states.</p>
+              <p class="sss-rec-effort">Effort: Low · Impact: Critical</p>
+            </div>
+            <div class="sss-rec-card">
+              <span class="sss-rec-priority p2">Priority 2</span>
+              <h4 class="sss-rec-title">Session timeout warnings</h4>
+              <p class="sss-rec-desc">Warn users 2 minutes before timeout with extend option.</p>
+              <p class="sss-rec-effort">Effort: Medium · Impact: Serious</p>
+            </div>
+            <div class="sss-rec-card">
+              <span class="sss-rec-priority p2">Priority 2</span>
+              <h4 class="sss-rec-title">Fix color contrast</h4>
+              <p class="sss-rec-desc">Ensure 4.5:1 minimum for all text.</p>
+              <p class="sss-rec-effort">Effort: Low · Impact: Serious</p>
+            </div>
+            <div class="sss-rec-card">
+              <span class="sss-rec-priority p3">Priority 3</span>
+              <h4 class="sss-rec-title">Add skip links</h4>
+              <p class="sss-rec-desc">Implement "Skip to main content" link on every page.</p>
+              <p class="sss-rec-effort">Effort: Low · Impact: Moderate</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Checklist -->
+        <section class="sss-section">
+          <p class="sss-section-label">05 — Audit Checklist</p>
+          <h2 class="sss-section-title">WCAG 2.1 AA Compliance Summary</h2>
+          <div class="sss-checklist-category">
+            <h4 class="sss-checklist-title"><span style="color:var(--sss-accent);">P</span> Perceivable</h4>
+            <div class="sss-checklist-items">
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status fail">✗</span>
+                <span class="sss-checklist-text">Non-text content has text alternatives</span>
+                <span class="sss-checklist-wcag">1.1.1</span>
+              </div>
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status fail">✗</span>
+                <span class="sss-checklist-text">Color contrast meets 4.5:1 for normal text</span>
+                <span class="sss-checklist-wcag">1.4.3</span>
+              </div>
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status pass">✓</span>
+                <span class="sss-checklist-text">Text can be resized to 200%</span>
+                <span class="sss-checklist-wcag">1.4.4</span>
+              </div>
+            </div>
+          </div>
+          <div class="sss-checklist-category">
+            <h4 class="sss-checklist-title"><span style="color:var(--sss-accent);">O</span> Operable</h4>
+            <div class="sss-checklist-items">
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status fail">✗</span>
+                <span class="sss-checklist-text">All functionality available via keyboard</span>
+                <span class="sss-checklist-wcag">2.1.1</span>
+              </div>
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status fail">✗</span>
+                <span class="sss-checklist-text">Focus indicator is visible</span>
+                <span class="sss-checklist-wcag">2.4.7</span>
+              </div>
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status fail">✗</span>
+                <span class="sss-checklist-text">Skip navigation mechanism provided</span>
+                <span class="sss-checklist-wcag">2.4.1</span>
+              </div>
+            </div>
+          </div>
+          <div class="sss-checklist-category">
+            <h4 class="sss-checklist-title"><span style="color:var(--sss-accent);">U</span> Understandable</h4>
+            <div class="sss-checklist-items">
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status fail">✗</span>
+                <span class="sss-checklist-text">Input fields have visible labels</span>
+                <span class="sss-checklist-wcag">3.3.2</span>
+              </div>
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status fail">✗</span>
+                <span class="sss-checklist-text">Error messages are descriptive</span>
+                <span class="sss-checklist-wcag">3.3.1</span>
+              </div>
+              <div class="sss-checklist-item">
+                <span class="sss-checklist-status pass">✓</span>
+                <span class="sss-checklist-text">Navigation is consistent</span>
+                <span class="sss-checklist-wcag">3.2.3</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Outcome -->
+        <section class="sss-section sss-full-width">
+          <p class="sss-section-label">06 — Outcome</p>
+          <h2 class="sss-section-title">What this project demonstrates</h2>
+          <div class="sss-outcome-grid">
+            <div class="sss-outcome-card">
+              <div class="sss-outcome-icon">🔍</div>
+              <h4 class="sss-outcome-title">Systematic Evaluation</h4>
+              <p class="sss-outcome-desc">Methodical application of WCAG criteria with automated and manual testing.</p>
+            </div>
+            <div class="sss-outcome-card">
+              <div class="sss-outcome-icon">📋</div>
+              <h4 class="sss-outcome-title">Clear Documentation</h4>
+              <p class="sss-outcome-desc">Issues documented with severity ratings, code examples, and remediation guidance.</p>
+            </div>
+            <div class="sss-outcome-card">
+              <div class="sss-outcome-icon">✨</div>
+              <h4 class="sss-outcome-title">Design Solutions</h4>
+              <p class="sss-outcome-desc">Proposed fixes that maintain brand identity while resolving accessibility barriers.</p>
+            </div>
+          </div>
+          <div class="sss-reflection-box">
+            <h3 class="sss-reflection-title">Reflection</h3>
+            <div class="sss-reflection-grid">
+              <div class="sss-reflection-col">
+                <h4>What This Reveals</h4>
+                <p>Government services often fail the users who need them most. The SSS serves elderly pensioners, overseas workers, and people with disabilities — yet the portal creates barriers at every step.</p>
+                <p>Accessibility isn't just compliance — it's ensuring critical services are usable by those they're meant to serve.</p>
+              </div>
+              <div class="sss-reflection-col">
+                <h4>What I'd Do Next</h4>
+                <p>Conduct usability testing with actual PWD users in the Philippines. Partner with organizations like PWAG for validation.</p>
+                <p>Expand audit to the My.SSS mobile app, which has even more severe issues.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    `,
+    wireframeEmbed: "",
+    protoDesktopEmbed: "",
+    protoMobileEmbed: "",
+    mockups: [],
+    demoLink: "",
+    processSteps: [],
+    tools: ["WCAG 2.1", "axe DevTools", "WAVE", "NVDA", "VoiceOver", "Manual Testing", "Figma"]
+  },
+  {
+    id: 4,
     title: "The Connection",
     category: "Digital Humanities",
     year: "2024",
@@ -4001,7 +4946,7 @@ const projects = [
     tools: ["Twine", "HTML/CSS/JS", "Figma", "Digital Illustration", "Narrative Design", "UX Research"]
   },
   {
-    id: 4,
+    id: 5,
     title: "Aerotech",
     category: "Passion Project",
     year: "2024",
