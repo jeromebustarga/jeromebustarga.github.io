@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Repository - Jerome's World</title>
     <link rel="icon" type="image/png" href="images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,197 +17,388 @@
         }
 
         :root {
-            --terminal-bg: #0d0d0d;
+            --terminal-bg: #0a0a0a;
             --terminal-orange: #f47921;
-            --terminal-amber: #ff8c3a;
-            --terminal-dim: #d96a1a;
-            --panel-bg: rgba(20, 20, 20, 0.6);
-            --border-color: rgba(244, 121, 33, 0.2);
-            --text-primary: #e8e8e8;
-            --text-secondary: #909090;
-            --text-dim: #606060;
-            --accent-orange: #f47921;
-            --success-color: #00ff88;
-            --error-color: #ff4444;
+            --terminal-amber: #ff9642;
+            --terminal-dim: #c45a10;
+            --panel-bg: rgba(18, 18, 18, 0.85);
+            --border-color: rgba(244, 121, 33, 0.15);
+            --border-hover: rgba(244, 121, 33, 0.4);
+            --text-primary: #fafafa;
+            --text-secondary: #a0a0a0;
+            --text-dim: #505050;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --warning-color: #eab308;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--terminal-bg);
-            color: var(--terminal-orange);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            padding: 20px;
-            gap: 20px;
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 0.8s ease;
         }
 
-        body.loaded {
-            opacity: 1;
+        body.loaded { opacity: 1; }
+
+        a, button, .project-item { 
+            -webkit-tap-highlight-color: rgba(244, 121, 33, 0.1); 
         }
 
-        /* Terminal Font */
-        .terminal-text {
-            font-family: 'Courier New', Consolas, Monaco, monospace;
-        }
-
-        /* Background Orbs Effect */
-        .bg-orbs {
+        /* Background Effects */
+        .bg-effects {
             position: fixed;
             inset: 0;
-            z-index: -1;
-            overflow: hidden;
+            z-index: 0;
             pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(244, 121, 33, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(244, 121, 33, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
         }
 
         .orb {
             position: absolute;
             border-radius: 50%;
             filter: blur(120px);
-            opacity: 0.04;
+            opacity: 0.06;
         }
 
         .orb1 {
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, var(--terminal-orange), transparent);
-            top: -250px;
+            background: radial-gradient(circle, var(--terminal-orange), transparent 70%);
+            top: -300px;
             left: -200px;
-            animation: float 25s ease-in-out infinite;
+            animation: orbFloat 30s ease-in-out infinite;
         }
 
         .orb2 {
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, var(--terminal-dim), transparent);
-            bottom: -200px;
-            right: -150px;
-            animation: float 30s ease-in-out infinite reverse;
+            background: radial-gradient(circle, var(--terminal-amber), transparent 70%);
+            bottom: -250px;
+            right: -200px;
+            animation: orbFloat 25s ease-in-out infinite reverse;
         }
 
-        @keyframes float {
+        @keyframes orbFloat {
             0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(80px, -80px) scale(1.05); }
-            66% { transform: translate(-60px, 80px) scale(0.95); }
+            33% { transform: translate(60px, -60px) scale(1.05); }
+            66% { transform: translate(-40px, 60px) scale(0.95); }
         }
 
-        /* Left Panel Container */
+        /* Navigation Bar */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .nav-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .nav-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--terminal-orange);
+        }
+
+        .nav-title span {
+            color: var(--text-dim);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            background: rgba(244, 121, 33, 0.1);
+            border-color: var(--border-hover);
+            color: var(--terminal-orange);
+        }
+
+        /* Mobile Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px;
+            z-index: 999;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+        }
+
+        .mobile-menu-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-menu-link:hover,
+        .mobile-menu-link:active {
+            background: rgba(244, 121, 33, 0.1);
+            border-color: var(--border-hover);
+            color: var(--terminal-orange);
+        }
+
+        .mobile-menu-link i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ==================== DESKTOP LAYOUT ==================== */
+        .desktop-layout {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 20px;
+            padding: 80px 20px 20px;
+            height: 100vh;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
         .left-panel {
-            width: 450px;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            height: calc(100vh - 100px);
         }
 
-        /* Terminal Window */
-        .terminal-container {
+        /* Panel Styling */
+        .panel {
             background: var(--panel-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
-            padding: 20px;
-            height: 400px;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             position: relative;
-            overflow-y: auto;
             backdrop-filter: blur(20px);
-            box-shadow: 0 0 60px rgba(244, 121, 33, 0.1);
+            overflow: hidden;
         }
 
-        .terminal-container::before {
-            content: 'TERMINAL';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: var(--terminal-bg);
-            padding: 0 10px;
-            color: var(--terminal-dim);
-            font-size: 12px;
-            letter-spacing: 2px;
-            font-weight: 600;
+        .panel-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        /* Custom Scrollbar */
-        .terminal-container::-webkit-scrollbar,
-        .projects-container::-webkit-scrollbar {
+        .panel-indicator {
             width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--terminal-orange);
+            box-shadow: 0 0 10px var(--terminal-orange);
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .terminal-container::-webkit-scrollbar-track,
-        .projects-container::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 4px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        .terminal-container::-webkit-scrollbar-thumb,
-        .projects-container::-webkit-scrollbar-thumb {
-            background: rgba(244, 121, 33, 0.3);
-            border-radius: 4px;
+        .panel-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
         }
 
-        .terminal-container::-webkit-scrollbar-thumb:hover,
-        .projects-container::-webkit-scrollbar-thumb:hover {
-            background: rgba(244, 121, 33, 0.5);
+        /* Terminal */
+        .terminal-panel {
+            height: 380px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .terminal-content {
-            font-size: 14px;
-            line-height: 1.6;
+        .terminal-body {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .terminal-body::-webkit-scrollbar { width: 6px; }
+        .terminal-body::-webkit-scrollbar-track { background: transparent; }
+        .terminal-body::-webkit-scrollbar-thumb { 
+            background: rgba(244, 121, 33, 0.3); 
+            border-radius: 3px; 
+        }
+
+        .ascii-art {
+            color: var(--terminal-dim);
+            font-size: 9px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            white-space: pre;
+            opacity: 0.6;
+        }
+
+        .terminal-welcome {
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .terminal-welcome.highlight {
+            color: var(--terminal-orange);
+        }
+
+        .terminal-history {
+            margin: 12px 0;
         }
 
         .terminal-line {
-            margin-bottom: 5px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 4px;
         }
 
         .prompt {
             color: var(--terminal-orange);
-            margin-right: 5px;
-            font-family: 'Courier New', monospace;
+            margin-right: 8px;
+            white-space: nowrap;
+            user-select: none;
+        }
+
+        .prompt-user { color: var(--success-color); }
+        .prompt-path { color: var(--terminal-amber); }
+        .prompt-symbol { color: var(--text-secondary); }
+
+        .terminal-input-wrapper {
+            display: flex;
+            align-items: center;
+            flex: 1;
         }
 
         .terminal-input {
             background: transparent;
             border: none;
-            color: var(--terminal-orange);
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
             outline: none;
             flex: 1;
             caret-color: var(--terminal-orange);
+            min-width: 0;
         }
 
-        .terminal-output {
-            color: var(--text-secondary);
-            margin: 10px 0;
-            padding-left: 20px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .terminal-error {
-            color: var(--error-color);
-            margin: 10px 0;
-            padding-left: 20px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .terminal-success {
-            color: var(--success-color);
-            margin: 10px 0;
-            padding-left: 20px;
-            font-family: 'Courier New', monospace;
-        }
-
-        /* Blinking cursor */
         .cursor {
-            display: inline-block;
             width: 8px;
             height: 16px;
             background: var(--terminal-orange);
-            animation: blink 1s infinite;
-            vertical-align: middle;
-            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+            flex-shrink: 0;
         }
 
         @keyframes blink {
@@ -213,404 +406,1079 @@
             51%, 100% { opacity: 0; }
         }
 
-        /* Projects List */
-        .projects-container {
-            background: var(--panel-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
-            padding: 20px;
+        .output { color: var(--text-secondary); padding-left: 16px; margin: 4px 0; }
+        .output-success { color: var(--success-color); padding-left: 16px; margin: 4px 0; }
+        .output-error { color: var(--error-color); padding-left: 16px; margin: 4px 0; }
+        .output-warning { color: var(--warning-color); padding-left: 16px; margin: 4px 0; }
+        .output-dir { color: var(--terminal-amber); padding-left: 16px; margin: 4px 0; }
+
+        /* Projects Panel */
+        .projects-panel {
             flex: 1;
-            overflow-y: auto;
-            position: relative;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 60px rgba(244, 121, 33, 0.1);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
-        .projects-container::before {
-            content: 'PROJECTS';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: var(--terminal-bg);
-            padding: 0 10px;
-            color: var(--terminal-dim);
-            font-size: 12px;
-            letter-spacing: 2px;
-            font-weight: 600;
+        .projects-body {
+            flex: 1;
+            padding: 16px 20px;
+            overflow-y: auto;
+        }
+
+        .projects-body::-webkit-scrollbar { width: 6px; }
+        .projects-body::-webkit-scrollbar-track { background: transparent; }
+        .projects-body::-webkit-scrollbar-thumb { 
+            background: rgba(244, 121, 33, 0.3); 
+            border-radius: 3px; 
         }
 
         .project-group {
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
+        .project-group:last-child { margin-bottom: 0; }
+
         .project-group-title {
-            color: var(--terminal-amber);
-            font-size: 14px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
             font-weight: 600;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
+            color: var(--terminal-amber);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
             border-bottom: 1px solid var(--border-color);
-            font-family: 'Inter', sans-serif;
+            letter-spacing: 1px;
         }
 
         .project-item {
-            color: var(--text-secondary);
-            padding: 8px 0 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 13px;
-            position: relative;
-            font-family: 'Courier New', monospace;
-        }
-
-        .project-item::before {
-            content: '/';
-            position: absolute;
-            left: 8px;
-            color: var(--terminal-dim);
-            opacity: 0.5;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
         }
 
         .project-item:hover {
-            color: var(--terminal-orange);
-            padding-left: 25px;
-            text-shadow: 0 0 10px rgba(244, 121, 33, 0.3);
+            background: rgba(244, 121, 33, 0.05);
+            border-color: var(--border-color);
         }
 
         .project-item.active {
-            color: var(--terminal-orange);
-            background: rgba(244, 121, 33, 0.05);
-            border-left: 2px solid var(--terminal-orange);
+            background: rgba(244, 121, 33, 0.1);
+            border-color: var(--border-hover);
         }
 
-        /* Right Panel - Preview */
-        .preview-container {
+        .project-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(244, 121, 33, 0.1);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--terminal-orange);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .project-info {
             flex: 1;
-            background: var(--panel-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 20px;
-            padding: 20px;
-            position: relative;
+            min-width: 0;
+        }
+
+        .project-codename {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .project-codename::before {
+            content: '/';
+            color: var(--terminal-dim);
+            margin-right: 4px;
+        }
+
+        .project-meta {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .project-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .project-status.live { background: var(--success-color); box-shadow: 0 0 8px var(--success-color); }
+        .project-status.dev { background: var(--warning-color); }
+        .project-status.planned { background: var(--text-dim); }
+
+        /* Preview Panel */
+        .preview-panel {
+            height: calc(100vh - 100px);
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 0 60px rgba(244, 121, 33, 0.1);
         }
 
-        .preview-container::before {
-            content: 'PREVIEW';
-            position: absolute;
-            top: -12px;
-            left: 20px;
-            background: var(--terminal-bg);
-            padding: 0 10px;
-            color: var(--terminal-dim);
-            font-size: 12px;
-            letter-spacing: 2px;
-            font-weight: 600;
+        .preview-body {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
         }
 
         .preview-frame {
             flex: 1;
-            background: rgba(13, 13, 13, 0.5);
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             overflow: hidden;
             position: relative;
-        }
-
-        .preview-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: white;
-        }
-
-        .preview-placeholder {
-            width: 100%;
-            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-dim);
-            font-size: 14px;
+        }
+
+        .preview-placeholder {
             text-align: center;
-            padding: 20px;
-            font-family: 'Inter', sans-serif;
+            padding: 40px;
         }
 
-        .preview-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .preview-placeholder-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            background: rgba(244, 121, 33, 0.1);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
             color: var(--terminal-orange);
+            font-size: 32px;
+        }
+
+        .preview-placeholder-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .preview-placeholder-text {
+            font-size: 13px;
+            color: var(--text-dim);
+            line-height: 1.6;
+        }
+
+        /* Project Detail View */
+        .project-detail {
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        .project-detail-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(244, 121, 33, 0.2), rgba(244, 121, 33, 0.05));
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+            font-size: 40px;
+            color: var(--terminal-orange);
+        }
+
+        .project-detail-codename {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 14px;
-            font-family: 'Courier New', monospace;
+            color: var(--terminal-dim);
+            margin-bottom: 8px;
         }
 
-        .loading-dots::after {
-            content: '';
-            animation: dots 1.5s infinite;
-        }
-
-        @keyframes dots {
-            0% { content: ''; }
-            25% { content: '.'; }
-            50% { content: '..'; }
-            75% { content: '...'; }
-        }
-
-        .view-site-btn {
-            margin-top: 20px;
-            padding: 14px 32px;
-            background: var(--accent-orange);
-            color: var(--terminal-bg);
-            border: 1px solid var(--accent-orange);
-            border-radius: 8px;
+        .project-detail-name {
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            align-self: flex-end;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
         }
 
-        .view-site-btn:hover {
+        .project-detail-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 500px;
+            margin-bottom: 32px;
+        }
+
+        .project-detail-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .tech-tag {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .project-detail-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .project-link {
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .project-link-primary {
+            background: var(--terminal-orange);
+            color: var(--terminal-bg);
+            border: 1px solid var(--terminal-orange);
+        }
+
+        .project-link-primary:hover {
             background: var(--terminal-amber);
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(244, 121, 33, 0.3);
         }
 
-        .view-site-btn:disabled {
+        .project-link-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .project-link-secondary:hover {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text-dim);
-            cursor: not-allowed;
-            transform: none;
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* ASCII Art Header */
-        .ascii-header {
-            color: var(--terminal-dim);
+        .project-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(244, 121, 33, 0.1);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
             font-size: 12px;
-            line-height: 1;
-            margin-bottom: 20px;
-            white-space: pre;
-            font-family: 'Courier New', monospace;
-            opacity: 0.8;
-            letter-spacing: 0;
+            color: var(--terminal-orange);
+            margin-top: 24px;
         }
 
-        /* Responsive adjustments */
+        /* Loading State */
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--border-color);
+            border-top-color: var(--terminal-orange);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        /* ==================== MOBILE LAYOUT ==================== */
+        .mobile-layout {
+            display: none;
+            position: relative;
+            z-index: 1;
+            padding: 80px 16px 40px;
+            min-height: 100vh;
+        }
+
+        .mobile-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .mobile-header-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: rgba(244, 121, 33, 0.1);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            color: var(--terminal-orange);
+            font-size: 24px;
+        }
+
+        .mobile-header-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .mobile-header-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .mobile-terminal-notice {
+            background: rgba(244, 121, 33, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mobile-terminal-notice i {
+            color: var(--terminal-orange);
+            font-size: 18px;
+        }
+
+        .mobile-terminal-notice-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .mobile-projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mobile-project-card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-project-card:hover,
+        .mobile-project-card:active {
+            background: rgba(244, 121, 33, 0.05);
+            border-color: var(--border-hover);
+        }
+
+        .mobile-project-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        .mobile-project-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: rgba(244, 121, 33, 0.1);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--terminal-orange);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .mobile-project-title-wrap {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .mobile-project-name {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .mobile-project-codename {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--terminal-dim);
+        }
+
+        .mobile-project-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .mobile-project-status.live { background: var(--success-color); box-shadow: 0 0 8px var(--success-color); }
+        .mobile-project-status.dev { background: var(--warning-color); }
+        .mobile-project-status.planned { background: var(--text-dim); }
+
+        .mobile-project-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .mobile-project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .mobile-tech-tag {
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .mobile-project-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .mobile-project-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-project-btn-primary {
+            background: var(--terminal-orange);
+            color: var(--terminal-bg);
+        }
+
+        .mobile-project-btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .mobile-project-coming-soon {
+            padding: 10px 16px;
+            background: rgba(244, 121, 33, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--terminal-dim);
+            text-align: center;
+        }
+
+        .mobile-section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--terminal-amber);
+            letter-spacing: 1px;
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* ==================== RESPONSIVE ==================== */
         @media (max-width: 1200px) {
-            .left-panel {
-                width: 400px;
+            .desktop-layout {
+                grid-template-columns: 380px 1fr;
             }
         }
 
-        @media (max-width: 900px) {
-            body {
-                flex-direction: column;
+        @media (max-width: 1024px) {
+            .desktop-layout {
+                grid-template-columns: 340px 1fr;
+                gap: 16px;
+                padding: 76px 16px 16px;
             }
-            .left-panel {
-                width: 100%;
-                flex-direction: row;
-                height: 40vh;
+
+            .terminal-panel { height: 340px; }
+            .ascii-art { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+            
+            .desktop-layout {
+                display: none;
             }
-            .terminal-container,
-            .projects-container {
-                width: 50%;
-                height: 100%;
+
+            .mobile-layout {
+                display: block;
             }
-            .preview-container {
-                height: 50vh;
+
+            .orb { animation: none; opacity: 0.03; }
+        }
+
+        @media (max-width: 480px) {
+            .nav-bar {
+                padding: 0 16px;
+            }
+
+            .nav-title {
+                font-size: 12px;
+            }
+
+            .mobile-layout {
+                padding: 70px 12px 32px;
+            }
+
+            .mobile-header-title {
+                font-size: 20px;
+            }
+
+            .mobile-project-card {
+                padding: 16px;
             }
         }
 
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-                gap: 10px;
+        @media (max-width: 360px) {
+            .nav-logo {
+                width: 28px;
+                height: 28px;
             }
-            .left-panel {
-                flex-direction: column;
-                height: auto;
-            }
-            .terminal-container,
-            .projects-container {
-                width: 100%;
-                height: 250px;
-            }
-            .back-btn {
-                top: 15px;
-                left: 15px;
-                width: 40px;
-                height: 40px;
-                font-size: 18px;
+
+            .nav-title {
+                font-size: 11px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Background Effects -->
-    <div class="bg-orbs">
+    <div class="bg-effects">
+        <div class="bg-grid"></div>
         <div class="orb orb1"></div>
         <div class="orb orb2"></div>
     </div>
 
-    <!-- Left Panel -->
-    <div class="left-panel">
-        <!-- Terminal -->
-        <div class="terminal-container">
-            <div class="terminal-content" id="terminalContent">
-                <div class="ascii-header">
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+        <a href="index.html" class="nav-brand">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="Logo">
+            </div>
+            <span class="nav-title">jerome<span>@</span>repository</span>
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">
+                <i class="fa-solid fa-house"></i>
+                Home
+            </a>
+            <a href="warpzone.html" class="nav-link">
+                <i class="fa-solid fa-rocket"></i>
+                Warpzone
+            </a>
+            <a href="about.html" class="nav-link">
+                <i class="fa-solid fa-user"></i>
+                About
+            </a>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html" class="mobile-menu-link">
+            <i class="fa-solid fa-house"></i>
+            Home
+        </a>
+        <a href="warpzone.html" class="mobile-menu-link">
+            <i class="fa-solid fa-rocket"></i>
+            Warpzone
+        </a>
+        <a href="about.html" class="mobile-menu-link">
+            <i class="fa-solid fa-user"></i>
+            About
+        </a>
+    </div>
+
+    <!-- ==================== DESKTOP LAYOUT ==================== -->
+    <div class="desktop-layout">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <!-- Terminal Panel -->
+            <div class="panel terminal-panel">
+                <div class="panel-header">
+                    <div class="panel-indicator"></div>
+                    <span class="panel-title">Terminal</span>
+                </div>
+                <div class="terminal-body" id="terminalBody">
+                    <div class="ascii-art">
  ____  _____ ____   ___  ____ ___ _____ ___  ______   __
 |  _ \| ____|  _ \ / _ \/ ___|_ _|_   _/ _ \|  _ \ \ / /
 | |_) |  _| | |_) | | | \___ \| |  | || | | | |_) \ V / 
-|  _ <| |___| |__/| |_| |___) | |  | || |_| |  _ < | |  
-|_| \_\_____|_|    \___/|____/___| |_| \___/|_| \_\|_|  
+|  _ <| |___|  __/| |_| |___) | |  | || |_| |  _ < | |  
+|_| \_\_____|_|    \___/|____/___| |_| \___/|_| \_\|_|</div>
+                    <div class="terminal-welcome highlight">Repository System v2.0</div>
+                    <div class="terminal-welcome">Type 'help' for commands</div>
+                    <div class="terminal-history" id="terminalHistory"></div>
+                    <div class="terminal-line">
+                        <span class="prompt">
+                            <span class="prompt-user">jerome</span><span class="prompt-symbol">@</span><span class="prompt-path">repo</span><span class="prompt-symbol">:~$</span>
+                        </span>
+                        <div class="terminal-input-wrapper">
+                            <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                            <span class="cursor"></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="terminal-output">System initialized...</div>
-                <div class="terminal-output">Welcome to Jerome's Repository</div>
-                <div class="terminal-output">Type 'help' for available commands</div>
-                <div class="terminal-output">Type 'warpzone' to go back to warpzone</div>
-                <div class="terminal-output">Type 'home' to go to homepage</div>
-                <div id="terminalHistory"></div>
-                <div class="terminal-line">
-                    <span class="prompt">jerome@world:~/repository$</span>
-                    <input type="text" class="terminal-input" id="terminalInput" autofocus>
-                    <span class="cursor"></span>
+            </div>
+
+            <!-- Projects Panel -->
+            <div class="panel projects-panel">
+                <div class="panel-header">
+                    <div class="panel-indicator"></div>
+                    <span class="panel-title">Directory</span>
+                </div>
+                <div class="projects-body">
+                    <div class="project-group">
+                        <div class="project-group-title">/web-apps</div>
+                        <div class="project-item" data-project="uplift">
+                            <div class="project-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                            <div class="project-info">
+                                <div class="project-codename">uplift</div>
+                                <div class="project-meta">Resource Management Platform</div>
+                            </div>
+                            <div class="project-status live"></div>
+                        </div>
+                        <div class="project-item" data-project="cubby">
+                            <div class="project-icon"><i class="fa-solid fa-store"></i></div>
+                            <div class="project-info">
+                                <div class="project-codename">cubby</div>
+                                <div class="project-meta">Campus Marketplace</div>
+                            </div>
+                            <div class="project-status live"></div>
+                        </div>
+                        <div class="project-item" data-project="r2s">
+                            <div class="project-icon"><i class="fa-solid fa-rocket"></i></div>
+                            <div class="project-info">
+                                <div class="project-codename">r2s</div>
+                                <div class="project-meta">Space Exploration Platform</div>
+                            </div>
+                            <div class="project-status live"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-group">
+                        <div class="project-group-title">/experiments</div>
+                        <div class="project-item" data-project="genart">
+                            <div class="project-icon"><i class="fa-solid fa-palette"></i></div>
+                            <div class="project-info">
+                                <div class="project-codename">genart</div>
+                                <div class="project-meta">Generative Art Gallery</div>
+                            </div>
+                            <div class="project-status dev"></div>
+                        </div>
+                        <div class="project-item" data-project="mirror">
+                            <div class="project-icon"><i class="fa-solid fa-chart-line"></i></div>
+                            <div class="project-info">
+                                <div class="project-codename">mirror</div>
+                                <div class="project-meta">Algorithm Visualization</div>
+                            </div>
+                            <div class="project-status dev"></div>
+                        </div>
+                    </div>
+
+                    <div class="project-group">
+                        <div class="project-group-title">/advocacy</div>
+                        <div class="project-item" data-project="konektado">
+                            <div class="project-icon"><i class="fa-solid fa-globe"></i></div>
+                            <div class="project-info">
+                                <div class="project-codename">konektado</div>
+                                <div class="project-meta">Digital Divide Research</div>
+                            </div>
+                            <div class="project-status planned"></div>
+                        </div>
+                        <div class="project-item" data-project="liwanag">
+                            <div class="project-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                            <div class="project-info">
+                                <div class="project-codename">liwanag</div>
+                                <div class="project-meta">Financial Protection App</div>
+                            </div>
+                            <div class="project-status planned"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Projects List -->
-        <div class="projects-container">
-            <div class="project-group">
-                <div class="project-group-title"># Web Applications</div>
-                <div class="project-item" data-project="uplift-ksmo">uplift-ksmo</div>
-                <div class="project-item" data-project="creighton-cubby">creighton-cubby</div>
-                <div class="project-item" data-project="race2space">race2space</div>
+        <!-- Preview Panel -->
+        <div class="panel preview-panel">
+            <div class="panel-header">
+                <div class="panel-indicator"></div>
+                <span class="panel-title">Preview</span>
             </div>
-            
-            <div class="project-group">
-                <div class="project-group-title"># Creative Experiments</div>
-                <div class="project-item" data-project="generative-art">generative-art</div>
-                <div class="project-item" data-project="3d-visualizer">3d-visualizer</div>
-                <div class="project-item" data-project="audio-reactive">audio-reactive</div>
-            </div>
-            
-            <div class="project-group">
-                <div class="project-group-title"># Digital Humanities</div>
-                <div class="project-item" data-project="data-stories">data-stories</div>
-                <div class="project-item" data-project="archive-explorer">archive-explorer</div>
-                <div class="project-item" data-project="text-analysis">text-analysis</div>
+            <div class="preview-body">
+                <div class="preview-frame" id="previewFrame">
+                    <div class="preview-placeholder">
+                        <div class="preview-placeholder-icon">
+                            <i class="fa-solid fa-folder-open"></i>
+                        </div>
+                        <div class="preview-placeholder-title">Select a Project</div>
+                        <div class="preview-placeholder-text">
+                            Click a project from the directory<br>or type <span style="color: var(--terminal-orange);">cd [codename]</span> in terminal
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Right Panel - Preview -->
-    <div class="preview-container">
-        <div class="preview-frame" id="previewFrame">
-            <div class="preview-placeholder">
-                <div>
-                    <div style="margin-bottom: 20px; color: var(--terminal-orange); font-size: 24px;">
-                        <i class="fa-solid fa-code"></i>
+    <!-- ==================== MOBILE LAYOUT ==================== -->
+    <div class="mobile-layout">
+        <div class="mobile-header">
+            <div class="mobile-header-icon">
+                <i class="fa-solid fa-folder-tree"></i>
+            </div>
+            <h1 class="mobile-header-title">Project Repository</h1>
+            <p class="mobile-header-subtitle">Browse my work and experiments</p>
+        </div>
+
+        <div class="mobile-terminal-notice">
+            <i class="fa-solid fa-terminal"></i>
+            <div class="mobile-terminal-notice-text">
+                Terminal interface available on desktop for the full experience
+            </div>
+        </div>
+
+        <div class="mobile-projects-list">
+            <!-- Web Apps -->
+            <div class="mobile-section-title">/web-apps</div>
+            
+            <div class="mobile-project-card">
+                <div class="mobile-project-header">
+                    <div class="mobile-project-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                    <div class="mobile-project-title-wrap">
+                        <div class="mobile-project-name">Uplift KSMO</div>
+                        <div class="mobile-project-codename">/uplift</div>
                     </div>
-                    <div style="font-size: 16px; color: var(--text-primary); margin-bottom: 10px;">
-                        NO PROJECT SELECTED
+                    <div class="mobile-project-status live"></div>
+                </div>
+                <div class="mobile-project-desc">
+                    Resource management platform for distributing essentials to the homeless. Features inventory tracking and volunteer coordination.
+                </div>
+                <div class="mobile-project-tech">
+                    <span class="mobile-tech-tag">Django</span>
+                    <span class="mobile-tech-tag">Python</span>
+                    <span class="mobile-tech-tag">SQLite</span>
+                </div>
+                <div class="mobile-project-actions">
+                    <a href="https://upliftksmo.pythonanywhere.com" target="_blank" class="mobile-project-btn mobile-project-btn-primary">
+                        <i class="fa-solid fa-external-link"></i> View Site
+                    </a>
+                    <a href="https://github.com/jhb09808/Capstone-UpliftReimagined" target="_blank" class="mobile-project-btn mobile-project-btn-secondary">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="mobile-project-card">
+                <div class="mobile-project-header">
+                    <div class="mobile-project-icon"><i class="fa-solid fa-store"></i></div>
+                    <div class="mobile-project-title-wrap">
+                        <div class="mobile-project-name">Creighton Cubby</div>
+                        <div class="mobile-project-codename">/cubby</div>
                     </div>
-                    <div style="font-size: 13px; color: var(--text-dim);">
-                        Type a project name in the terminal<br>
-                        or click a project from the list
+                    <div class="mobile-project-status live"></div>
+                </div>
+                <div class="mobile-project-desc">
+                    Campus marketplace for Creighton students to buy, sell, and trade items within the university community.
+                </div>
+                <div class="mobile-project-tech">
+                    <span class="mobile-tech-tag">Django</span>
+                    <span class="mobile-tech-tag">Python</span>
+                    <span class="mobile-tech-tag">SQLite</span>
+                </div>
+                <div class="mobile-project-actions">
+                    <a href="https://creightoncubby2024.pythonanywhere.com" target="_blank" class="mobile-project-btn mobile-project-btn-primary">
+                        <i class="fa-solid fa-external-link"></i> View Site
+                    </a>
+                    <a href="https://github.com/jhb09808/Project-CreightonCubby" target="_blank" class="mobile-project-btn mobile-project-btn-secondary">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="mobile-project-card">
+                <div class="mobile-project-header">
+                    <div class="mobile-project-icon"><i class="fa-solid fa-rocket"></i></div>
+                    <div class="mobile-project-title-wrap">
+                        <div class="mobile-project-name">Race2Space</div>
+                        <div class="mobile-project-codename">/r2s</div>
                     </div>
+                    <div class="mobile-project-status live"></div>
+                </div>
+                <div class="mobile-project-desc">
+                    Platform highlighting achievements of developing countries in space exploration with interactive profiles.
+                </div>
+                <div class="mobile-project-tech">
+                    <span class="mobile-tech-tag">Django</span>
+                    <span class="mobile-tech-tag">Python</span>
+                    <span class="mobile-tech-tag">SQLite</span>
+                </div>
+                <div class="mobile-project-actions">
+                    <a href="https://race2space.pythonanywhere.com" target="_blank" class="mobile-project-btn mobile-project-btn-primary">
+                        <i class="fa-solid fa-external-link"></i> View Site
+                    </a>
+                    <a href="https://github.com/jhb09808/Project-Race2Space" target="_blank" class="mobile-project-btn mobile-project-btn-secondary">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+
+            <!-- Experiments -->
+            <div class="mobile-section-title">/experiments</div>
+
+            <div class="mobile-project-card">
+                <div class="mobile-project-header">
+                    <div class="mobile-project-icon"><i class="fa-solid fa-palette"></i></div>
+                    <div class="mobile-project-title-wrap">
+                        <div class="mobile-project-name">Generative Art Gallery</div>
+                        <div class="mobile-project-codename">/genart</div>
+                    </div>
+                    <div class="mobile-project-status dev"></div>
+                </div>
+                <div class="mobile-project-desc">
+                    Interactive generative art experiments exploring algorithmic aesthetics and flow fields.
+                </div>
+                <div class="mobile-project-tech">
+                    <span class="mobile-tech-tag">p5.js</span>
+                    <span class="mobile-tech-tag">WebGL</span>
+                    <span class="mobile-tech-tag">Canvas API</span>
+                </div>
+                <div class="mobile-project-coming-soon">
+                    <i class="fa-solid fa-clock"></i> In Development
+                </div>
+            </div>
+
+            <div class="mobile-project-card">
+                <div class="mobile-project-header">
+                    <div class="mobile-project-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div class="mobile-project-title-wrap">
+                        <div class="mobile-project-name">The Algorithm Mirror</div>
+                        <div class="mobile-project-codename">/mirror</div>
+                    </div>
+                    <div class="mobile-project-status dev"></div>
+                </div>
+                <div class="mobile-project-desc">
+                    Research project visualizing YouTube algorithms through aesthetic data art.
+                </div>
+                <div class="mobile-project-tech">
+                    <span class="mobile-tech-tag">Data Viz</span>
+                    <span class="mobile-tech-tag">Python</span>
+                    <span class="mobile-tech-tag">D3.js</span>
+                </div>
+                <div class="mobile-project-coming-soon">
+                    <i class="fa-solid fa-clock"></i> In Development
+                </div>
+            </div>
+
+            <!-- Advocacy -->
+            <div class="mobile-section-title">/advocacy</div>
+
+            <div class="mobile-project-card">
+                <div class="mobile-project-header">
+                    <div class="mobile-project-icon"><i class="fa-solid fa-globe"></i></div>
+                    <div class="mobile-project-title-wrap">
+                        <div class="mobile-project-name">Konektado?</div>
+                        <div class="mobile-project-codename">/konektado</div>
+                    </div>
+                    <div class="mobile-project-status planned"></div>
+                </div>
+                <div class="mobile-project-desc">
+                    Advocacy project addressing digital literacy and the digital divide in the Philippines.
+                </div>
+                <div class="mobile-project-tech">
+                    <span class="mobile-tech-tag">UX Research</span>
+                    <span class="mobile-tech-tag">Advocacy</span>
+                </div>
+                <div class="mobile-project-coming-soon">
+                    <i class="fa-solid fa-lightbulb"></i> Coming Soon
+                </div>
+            </div>
+
+            <div class="mobile-project-card">
+                <div class="mobile-project-header">
+                    <div class="mobile-project-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div class="mobile-project-title-wrap">
+                        <div class="mobile-project-name">Liwanag</div>
+                        <div class="mobile-project-codename">/liwanag</div>
+                    </div>
+                    <div class="mobile-project-status planned"></div>
+                </div>
+                <div class="mobile-project-desc">
+                    Financial protection app designed for Filipino users against digital fraud.
+                </div>
+                <div class="mobile-project-tech">
+                    <span class="mobile-tech-tag">UX Design</span>
+                    <span class="mobile-tech-tag">Mobile</span>
+                </div>
+                <div class="mobile-project-coming-soon">
+                    <i class="fa-solid fa-lightbulb"></i> Coming Soon
                 </div>
             </div>
         </div>
-        <button class="view-site-btn" id="viewSiteBtn" disabled>VIEW SITE</button>
     </div>
 
     <script>
-        // Page load animation
+        // Page load
         window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.body.classList.add('loaded');
-            }, 100);
+            setTimeout(() => document.body.classList.add('loaded'), 100);
         });
 
-        // Project data with preview URLs and actual site URLs
+        // Mobile menu toggle
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        hamburgerBtn.addEventListener('click', () => {
+            hamburgerBtn.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.hamburger') && !e.target.closest('.mobile-menu')) {
+                hamburgerBtn.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            }
+        });
+
+        // Project Data with codenames
         const projects = {
-            // Web Applications (Real Projects)
-            'uplift-ksmo': {
+            'uplift': {
                 name: 'Uplift KSMO',
-                preview: 'https://upliftksmo.pythonanywhere.com',
-                url: 'https://upliftksmo.pythonanywhere.com',
+                codename: 'uplift',
+                icon: 'fa-hand-holding-heart',
                 description: 'Resource management platform for Uplift, an organization distributing essentials and food to the homeless via mobile vans. Features inventory tracking, delivery scheduling, and volunteer coordination.',
                 tech: ['Django', 'Python', 'SQLite', 'HTML/CSS/JS'],
-                github: 'https://github.com/jhb09808/Capstone-UpliftReimagined'
+                url: 'https://upliftksmo.pythonanywhere.com',
+                github: 'https://github.com/jhb09808/Capstone-UpliftReimagined',
+                status: 'live'
             },
-            'creighton-cubby': {
+            'cubby': {
                 name: 'Creighton Cubby',
-                preview: 'https://creightoncubby2024.pythonanywhere.com',
-                url: 'https://creightoncubby2024.pythonanywhere.com',
-                description: 'A dedicated online marketplace for Creighton University students to buy, sell, and trade items within the campus community. Features secure user authentication and messaging.',
+                codename: 'cubby',
+                icon: 'fa-store',
+                description: 'A dedicated online marketplace for Creighton University students to buy, sell, and trade items within the campus community. Features secure user authentication and real-time messaging.',
                 tech: ['Django', 'Python', 'SQLite', 'HTML/CSS/JS'],
-                github: 'https://github.com/jhb09808/Project-CreightonCubby'
+                url: 'https://creightoncubby2024.pythonanywhere.com',
+                github: 'https://github.com/jhb09808/Project-CreightonCubby',
+                status: 'live'
             },
-            'race2space': {
+            'r2s': {
                 name: 'Race2Space',
-                preview: 'https://race2space.pythonanywhere.com',
-                url: 'https://race2space.pythonanywhere.com',
+                codename: 'r2s',
+                icon: 'fa-rocket',
                 description: 'A platform highlighting the remarkable achievements and ambitions of developing countries in space exploration. Features country profiles, interactive maps, and in-depth articles.',
                 tech: ['Django', 'Python', 'SQLite', 'HTML/CSS/JS'],
-                github: 'https://github.com/jhb09808/Project-Race2Space'
+                url: 'https://race2space.pythonanywhere.com',
+                github: 'https://github.com/jhb09808/Project-Race2Space',
+                status: 'live'
             },
-            // Creative Experiments (placeholders)
-            'generative-art': {
+            'genart': {
                 name: 'Generative Art Gallery',
-                preview: 'https://example.com/preview/art',
-                url: 'https://example.com/art',
-                description: 'Interactive generative art experiments',
-                tech: ['p5.js', 'WebGL', 'Canvas API']
+                codename: 'genart',
+                icon: 'fa-palette',
+                description: 'Interactive generative art experiments exploring algorithmic aesthetics, flow fields, and particle systems. Created with p5.js and WebGL for real-time visual experiences.',
+                tech: ['p5.js', 'WebGL', 'Canvas API', 'JavaScript'],
+                status: 'dev'
             },
-            '3d-visualizer': {
-                name: '3D Data Visualizer',
-                preview: 'https://example.com/preview/3d',
-                url: 'https://example.com/3d',
-                description: '3D visualization of complex datasets',
-                tech: ['Three.js', 'WebGL', 'D3.js']
+            'mirror': {
+                name: 'The Algorithm Mirror',
+                codename: 'mirror',
+                icon: 'fa-chart-line',
+                description: 'Research project visualizing YouTube recommendation algorithms through aesthetic data art, making complex algorithmic systems tangible and understandable.',
+                tech: ['Data Visualization', 'Python', 'D3.js', 'Research'],
+                status: 'dev'
             },
-            'audio-reactive': {
-                name: 'Audio Reactive Visuals',
-                preview: 'https://example.com/preview/audio',
-                url: 'https://example.com/audio',
-                description: 'Real-time audio visualization system',
-                tech: ['Web Audio API', 'p5.js', 'GLSL Shaders']
+            'konektado': {
+                name: 'Konektado?',
+                codename: 'konektado',
+                icon: 'fa-globe',
+                description: 'Advocacy project addressing digital literacy and the digital divide in the Philippines. Aims to bridge the gap between connected and disconnected communities.',
+                tech: ['UX Research', 'Advocacy', 'Digital Humanities'],
+                status: 'planned'
             },
-            // Digital Humanities (placeholders)
-            'data-stories': {
-                name: 'Interactive Data Stories',
-                preview: 'https://example.com/preview/stories',
-                url: 'https://example.com/stories',
-                description: 'Narrative-driven data visualization',
-                tech: ['Svelte', 'D3.js', 'ScrollMagic']
-            },
-            'archive-explorer': {
-                name: 'Digital Archive Explorer',
-                preview: 'https://example.com/preview/archive',
-                url: 'https://example.com/archive',
-                description: 'Interactive exploration of digital archives',
-                tech: ['React', 'ElasticSearch', 'IIIF']
-            },
-            'text-analysis': {
-                name: 'Text Analysis Tool',
-                preview: 'https://example.com/preview/text',
-                url: 'https://example.com/text',
-                description: 'NLP-powered text analysis and visualization',
-                tech: ['Python', 'spaCy', 'Plotly']
+            'liwanag': {
+                name: 'Liwanag',
+                codename: 'liwanag',
+                icon: 'fa-shield-halved',
+                description: 'Financial protection app designed for Filipino users, focusing on security awareness and protection against digital financial fraud.',
+                tech: ['UX Design', 'Mobile', 'Financial Literacy'],
+                status: 'planned'
             }
         };
 
@@ -618,17 +1486,21 @@
         let commandHistory = [];
         let historyIndex = -1;
 
+        // DOM Elements
         const terminalInput = document.getElementById('terminalInput');
         const terminalHistory = document.getElementById('terminalHistory');
+        const terminalBody = document.getElementById('terminalBody');
         const previewFrame = document.getElementById('previewFrame');
-        const viewSiteBtn = document.getElementById('viewSiteBtn');
 
-        // Terminal input handling
+        // Terminal functionality
         terminalInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
-                executeCommand(this.value.trim());
-                commandHistory.push(this.value);
-                historyIndex = commandHistory.length;
+                const cmd = this.value.trim();
+                if (cmd) {
+                    executeCommand(cmd);
+                    commandHistory.push(cmd);
+                    historyIndex = commandHistory.length;
+                }
                 this.value = '';
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
@@ -649,82 +1521,115 @@
         });
 
         function executeCommand(command) {
-            // Add command to history display
-            const commandLine = document.createElement('div');
-            commandLine.className = 'terminal-line';
-            commandLine.innerHTML = `<span class="prompt">jerome@world:~/repository$</span> <span style="color: var(--terminal-orange); font-family: 'Courier New', monospace;">${command}</span>`;
-            terminalHistory.appendChild(commandLine);
+            // Add command to display
+            const cmdLine = document.createElement('div');
+            cmdLine.className = 'terminal-line';
+            cmdLine.innerHTML = `
+                <span class="prompt">
+                    <span class="prompt-user">jerome</span><span class="prompt-symbol">@</span><span class="prompt-path">repo</span><span class="prompt-symbol">:~$</span>
+                </span>
+                <span style="color: var(--text-primary)">${escapeHtml(command)}</span>
+            `;
+            terminalHistory.appendChild(cmdLine);
 
-            // Process command
-            const cmd = command.toLowerCase();
-            
-            if (cmd === 'help') {
+            const cmd = command.toLowerCase().trim();
+            const parts = cmd.split(/\s+/);
+            const mainCmd = parts[0];
+            const arg = parts[1] || '';
+
+            if (mainCmd === 'help') {
                 addOutput('Available commands:', 'output');
-                addOutput('  help       - Show this help message', 'output');
-                addOutput('  list       - List all projects', 'output');
-                addOutput('  clear      - Clear terminal', 'output');
-                addOutput('  info       - Show current project info', 'output');
+                addOutput('  help          Show this help', 'output');
+                addOutput('  ls            List all projects', 'output');
+                addOutput('  cd [name]     Open project', 'output');
+                addOutput('  info          Current project info', 'output');
+                addOutput('  open          Open current project URL', 'output');
+                addOutput('  clear         Clear terminal', 'output');
                 addOutput('', 'output');
-                addOutput('Navigation commands:', 'output');
-                addOutput('  warpzone   - Return to warpzone', 'output');
-                addOutput('  home       - Go to homepage', 'output');
-                addOutput('  about      - Go to about page', 'output');
-                addOutput('', 'output');
-                addOutput('Or type any project name to preview it', 'output');
-            } else if (cmd === 'clear') {
+                addOutput('Navigation:', 'output');
+                addOutput('  cd ~          Go to homepage', 'output');
+                addOutput('  cd warp       Go to warpzone', 'output');
+                addOutput('  cd about      Go to about page', 'output');
+            } else if (mainCmd === 'clear' || mainCmd === 'cls') {
                 terminalHistory.innerHTML = '';
-                addOutput('Terminal cleared', 'success');
-            } else if (cmd === 'list' || cmd === 'ls') {
-                addOutput('Available projects:', 'output');
-                Object.keys(projects).forEach(key => {
-                    addOutput(`  • ${key}`, 'output');
-                });
-            } else if (cmd === 'info') {
-                if (currentProject) {
-                    const proj = projects[currentProject];
-                    addOutput(`Project: ${proj.name}`, 'success');
-                    addOutput(`Description: ${proj.description}`, 'output');
-                    addOutput(`Technologies: ${proj.tech.join(', ')}`, 'output');
-                    if (proj.github) {
-                        addOutput(`GitHub: ${proj.github}`, 'output');
-                    }
+            } else if (mainCmd === 'ls' || mainCmd === 'list' || mainCmd === 'dir') {
+                addOutput('/web-apps', 'output-dir');
+                addOutput('  uplift    cubby    r2s', 'output');
+                addOutput('/experiments', 'output-dir');
+                addOutput('  genart    mirror', 'output');
+                addOutput('/advocacy', 'output-dir');
+                addOutput('  konektado    liwanag', 'output');
+            } else if (mainCmd === 'cd') {
+                if (!arg) {
+                    addOutput('Usage: cd [project-name]', 'output-error');
+                    addOutput('Type "ls" to see available projects', 'output');
+                } else if (arg === '~' || arg === 'home') {
+                    addOutput('Navigating to homepage...', 'output-success');
+                    setTimeout(() => window.location.href = 'index.html', 800);
+                } else if (arg === 'warp' || arg === 'warpzone') {
+                    addOutput('Launching warpzone...', 'output-success');
+                    setTimeout(() => window.location.href = 'warpzone.html', 800);
+                } else if (arg === 'about') {
+                    addOutput('Going to about...', 'output-success');
+                    setTimeout(() => window.location.href = 'about.html', 800);
+                } else if (arg === '..' || arg === '-') {
+                    addOutput('Already at root directory', 'output');
+                } else if (projects[arg]) {
+                    loadProject(arg);
+                    addOutput(`Opening /${arg}...`, 'output-success');
                 } else {
-                    addOutput('No project currently selected', 'error');
+                    addOutput(`Directory not found: ${arg}`, 'output-error');
+                    addOutput('Type "ls" to see available projects', 'output');
                 }
-            } else if (cmd === 'warpzone' || cmd === 'warp') {
-                addOutput('Returning to warpzone...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'warpzone.html';
-                }, 1000);
-            } else if (cmd === 'home') {
-                addOutput('Going to homepage...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'index2.html';
-                }, 1000);
-            } else if (cmd === 'about') {
-                addOutput('Going to about page...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'about.html';
-                }, 1000);
-            } else if (projects[cmd]) {
-                loadProject(cmd);
-            } else if (cmd === '') {
-                // Empty command, do nothing
+            } else if (mainCmd === 'info') {
+                if (currentProject && projects[currentProject]) {
+                    const p = projects[currentProject];
+                    addOutput(`Project: ${p.name}`, 'output-success');
+                    addOutput(`Codename: /${p.codename}`, 'output');
+                    addOutput(`Status: ${p.status}`, 'output');
+                    addOutput(`Tech: ${p.tech.join(', ')}`, 'output');
+                    if (p.url) addOutput(`URL: ${p.url}`, 'output');
+                    if (p.github) addOutput(`GitHub: ${p.github}`, 'output');
+                } else {
+                    addOutput('No project selected', 'output-error');
+                    addOutput('Use "cd [name]" to open a project', 'output');
+                }
+            } else if (mainCmd === 'open') {
+                if (currentProject && projects[currentProject] && projects[currentProject].url) {
+                    addOutput(`Opening ${projects[currentProject].name}...`, 'output-success');
+                    setTimeout(() => window.open(projects[currentProject].url, '_blank'), 500);
+                } else if (currentProject) {
+                    addOutput('This project has no live URL yet', 'output-warning');
+                } else {
+                    addOutput('No project selected', 'output-error');
+                }
+            } else if (mainCmd === 'pwd') {
+                addOutput(currentProject ? `/repo/${currentProject}` : '/repo', 'output');
+            } else if (mainCmd === 'whoami') {
+                addOutput('jerome', 'output');
+            } else if (mainCmd === 'date') {
+                addOutput(new Date().toString(), 'output');
+            } else if (mainCmd === 'echo') {
+                addOutput(parts.slice(1).join(' ') || '', 'output');
             } else {
-                addOutput(`Command not found: ${command}`, 'error');
+                addOutput(`Command not found: ${mainCmd}`, 'output-error');
                 addOutput("Type 'help' for available commands", 'output');
             }
 
-            // Scroll terminal to bottom
-            const terminal = document.querySelector('.terminal-container');
-            terminal.scrollTop = terminal.scrollHeight;
+            terminalBody.scrollTop = terminalBody.scrollHeight;
         }
 
-        function addOutput(text, type = 'output') {
+        function addOutput(text, className) {
             const output = document.createElement('div');
-            output.className = `terminal-${type}`;
+            output.className = className;
             output.textContent = text;
             terminalHistory.appendChild(output);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
 
         function loadProject(projectKey) {
@@ -732,166 +1637,80 @@
             if (!project) return;
 
             currentProject = projectKey;
-            
-            // Update terminal
-            addOutput(`Loading ${project.name}...`, 'success');
-            
-            // Update active state in list
+
+            // Update active state
             document.querySelectorAll('.project-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.dataset.project === projectKey) {
-                    item.classList.add('active');
-                }
+                item.classList.toggle('active', item.dataset.project === projectKey);
             });
 
-            // Show loading state
+            // Show loading
             previewFrame.innerHTML = `
-                <div class="preview-loading">
-                    <div>LOADING PROJECT<span class="loading-dots"></span></div>
+                <div class="loading-state">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading /${projectKey}...</div>
                 </div>
             `;
 
-            // Simulate loading and show preview
+            // Show project detail
             setTimeout(() => {
-                // Check if it's a real project with live URL
-                const isLiveProject = project.url && !project.url.includes('example.com');
+                const isLive = project.status === 'live' && project.url;
                 
                 previewFrame.innerHTML = `
-                    <div class="preview-placeholder" style="background: linear-gradient(135deg, rgba(244, 121, 33, 0.02), rgba(13, 13, 13, 0.5));">
-                        <div style="max-width: 600px;">
-                            <div style="font-size: 28px; margin-bottom: 20px; color: var(--terminal-orange); font-weight: 300;">
-                                ${project.name}
-                            </div>
-                            <div style="font-size: 14px; margin-bottom: 20px; color: var(--text-secondary); line-height: 1.6;">
-                                ${project.description}
-                            </div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-                                ${project.tech.map(tech => `
-                                    <span style="
-                                        padding: 6px 16px;
-                                        background: rgba(255, 255, 255, 0.03);
-                                        border: 1px solid rgba(255, 255, 255, 0.08);
-                                        border-radius: 20px;
-                                        font-size: 12px;
-                                        color: var(--text-secondary);
-                                    ">${tech}</span>
-                                `).join('')}
-                            </div>
-                            ${project.github ? `
-                            <div style="margin-top: 20px;">
-                                <a href="${project.github}" target="_blank" style="
-                                    color: var(--terminal-orange);
-                                    font-size: 13px;
-                                    text-decoration: none;
-                                    display: inline-flex;
-                                    align-items: center;
-                                    gap: 8px;
-                                    opacity: 0.8;
-                                    transition: opacity 0.3s;
-                                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
-                                    <i class="fa-brands fa-github"></i> View on GitHub
+                    <div class="project-detail">
+                        <div class="project-detail-icon">
+                            <i class="fa-solid ${project.icon}"></i>
+                        </div>
+                        <div class="project-detail-codename">/${project.codename}</div>
+                        <div class="project-detail-name">${project.name}</div>
+                        <div class="project-detail-desc">${project.description}</div>
+                        <div class="project-detail-tech">
+                            ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                        </div>
+                        <div class="project-detail-links">
+                            ${isLive ? `
+                                <a href="${project.url}" target="_blank" class="project-link project-link-primary">
+                                    <i class="fa-solid fa-external-link"></i>
+                                    View Live Site
                                 </a>
-                            </div>
                             ` : ''}
-                            ${!isLiveProject ? `
-                            <div style="margin-top: 30px; padding: 20px; border: 1px solid var(--border-color); border-radius: 8px; background: rgba(244, 121, 33, 0.02);">
-                                <div style="color: var(--terminal-orange); font-size: 12px; font-family: 'Courier New', monospace;">
-                                    // Project preview coming soon
-                                </div>
-                            </div>
+                            ${project.github ? `
+                                <a href="${project.github}" target="_blank" class="project-link project-link-secondary">
+                                    <i class="fa-brands fa-github"></i>
+                                    View on GitHub
+                                </a>
                             ` : ''}
                         </div>
+                        ${!isLive ? `
+                            <div class="project-status-badge">
+                                <i class="fa-solid fa-clock"></i>
+                                ${project.status === 'dev' ? 'In Development' : 'Coming Soon'}
+                            </div>
+                        ` : ''}
                     </div>
                 `;
-                
-                viewSiteBtn.disabled = !isLiveProject;
-            }, 1500);
+            }, 600);
         }
 
-        // Project list click handling
+        // Project item clicks
         document.querySelectorAll('.project-item').forEach(item => {
             item.addEventListener('click', function() {
                 const projectKey = this.dataset.project;
-                terminalInput.value = projectKey;
-                executeCommand(projectKey);
+                loadProject(projectKey);
             });
         });
 
-        // View site button
-        viewSiteBtn.addEventListener('click', function() {
-            if (currentProject && projects[currentProject]) {
-                window.open(projects[currentProject].url, '_blank');
-            }
-        });
-
-        // Keep focus on terminal input
+        // Keep focus on terminal
         document.addEventListener('click', function(e) {
-            if (!e.target.closest('.view-site-btn')) {
+            if (!e.target.closest('.project-item') && 
+                !e.target.closest('.project-link') && 
+                !e.target.closest('.nav-link') &&
+                !e.target.closest('.mobile-layout')) {
                 terminalInput.focus();
             }
         });
 
         // Initial focus
         terminalInput.focus();
-
-        // Mouse trail effect with p5.js (matching your portfolio)
-        new p5((p) => {
-            let trails = [];
-            
-            p.setup = () => {
-                const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-                canvas.position(0, 0);
-                canvas.style('pointer-events', 'none');
-                canvas.style('z-index', '9998');
-                canvas.style('position', 'fixed');
-                canvas.style('top', '0');
-                canvas.style('left', '0');
-                p.clear();
-                p.noStroke();
-            };
-
-            p.draw = () => {
-                p.clear();
-                
-                for (let i = trails.length - 1; i >= 0; i--) {
-                    const point = trails[i];
-                    
-                    // Subtle white glow
-                    p.fill(255, 255, 255, point.alpha * 0.08);
-                    p.ellipse(point.x, point.y, point.size * 2);
-                    
-                    // Core
-                    p.fill(255, 255, 255, point.alpha * 0.3);
-                    p.ellipse(point.x, point.y, point.size);
-                    
-                    point.alpha -= 3;
-                    point.size *= 0.96;
-                    if (point.alpha <= 0) trails.splice(i, 1);
-                }
-
-                const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-                if (d > 0) {
-                    const steps = p.max(1, d * 0.5);
-                    for (let i = 0; i <= steps; i++) {
-                        const t = i / steps;
-                        const x = p.lerp(p.pmouseX, p.mouseX, t);
-                        const y = p.lerp(p.pmouseY, p.mouseY, t);
-                        trails.push({
-                            x,
-                            y,
-                            size: p.random(6, 10),
-                            alpha: p.random(120, 150)
-                        });
-                    }
-                }
-
-                if (trails.length > 600) trails.splice(0, trails.length - 600);
-            };
-
-            p.windowResized = () => {
-                p.resizeCanvas(p.windowWidth, p.windowHeight);
-            };
-        });
     </script>
 </body>
 </html>
