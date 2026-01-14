@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 <title>GreenX Aerospace - Brand Identity</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -16,6 +16,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -24,6 +25,8 @@ body {
   color: #e8e8e8;
   overflow-x: hidden;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Navigation - CRITICAL: This must stay fixed! */
@@ -40,6 +43,7 @@ nav {
   z-index: 10002 !important;
   background: rgba(13, 13, 13, 0.98);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   transform: translateZ(0);
   will-change: transform;
@@ -65,6 +69,7 @@ nav {
   justify-content: center;
   font-size: 16px;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .logo-icon img {
@@ -82,6 +87,9 @@ nav {
   display: flex;
   align-items: center;
   gap: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
 }
 
 .back-link:hover {
@@ -336,6 +344,7 @@ section:last-of-type {
   position: relative;
   z-index: 2;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .logo-card:hover {
@@ -383,6 +392,7 @@ section:last-of-type {
 .final-logo-showcase {
   background: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 80px 60px;
@@ -537,6 +547,7 @@ section:last-of-type {
 .font-sample {
   background: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 60px;
@@ -586,6 +597,7 @@ section:last-of-type {
 .process-step {
   background: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   overflow: hidden;
@@ -674,6 +686,7 @@ section:last-of-type {
   aspect-ratio: 1;
   background: rgba(13, 13, 13, 0.95);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   overflow: hidden;
@@ -735,8 +748,8 @@ section:last-of-type {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -847,77 +860,712 @@ footer {
   text-align: center;
 }
 
-/* Responsive */
+/* ============================================
+   RESPONSIVE BREAKPOINTS - TABLET (1024px)
+   ============================================ */
 @media (max-width: 1024px) {
   .container {
     padding: 0 40px;
   }
 
+  .brand-hero h1 {
+    font-size: 52px;
+  }
+
+  .section-header h2 {
+    font-size: 42px;
+  }
+
   .logo-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   .process-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   .mockups-gallery {
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .journey-intro {
+    padding: 48px 40px;
+  }
+
+  .final-logo-showcase {
+    padding: 60px 40px;
+  }
+
+  .final-logo-container {
+    padding: 40px;
+  }
+
+  .font-display {
+    font-size: 48px;
   }
 }
 
+/* ============================================
+   RESPONSIVE BREAKPOINTS - SMALL TABLET (768px)
+   ============================================ */
 @media (max-width: 768px) {
   nav {
-    padding: 20px 30px !important;
+    padding: 16px 20px !important;
+    gap: 12px;
   }
-  
+
+  .logo {
+    font-size: 16px;
+    gap: 8px;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo span {
+    display: inline;
+  }
+
+  .back-link {
+    font-size: 13px;
+    gap: 6px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+
+  .back-link span {
+    display: none;
+  }
+
   .container {
-    padding: 0 30px;
+    padding: 0 24px;
   }
 
   .brand-hero {
-    padding: 140px 30px 80px;
+    min-height: 80vh;
+    padding: 100px 24px 60px;
   }
 
   .brand-hero h1 {
-    font-size: 42px;
+    font-size: 38px;
+    margin-bottom: 20px;
   }
 
   .brand-hero p {
-    font-size: 17px;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  section {
+    min-height: auto;
+    padding: 80px 0;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-header h2 {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+
+  .section-header p {
+    font-size: 15px;
+  }
+
+  .subsection-header {
+    margin: 60px 0 32px;
+  }
+
+  .subsection-header h3 {
+    font-size: 24px;
+  }
+
+  .subsection-header p {
+    font-size: 14px;
+  }
+
+  .journey-intro {
+    padding: 32px 24px;
+    margin-bottom: 48px;
+    border-radius: 12px;
+  }
+
+  .journey-intro h3 {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .journey-intro p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .logo-card {
+    padding: 24px 20px;
+  }
+
+  .logo-card-title {
+    font-size: 10px;
+    margin-bottom: 16px;
+  }
+
+  .logo-placeholder {
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+
+  .logo-card p {
+    font-size: 13px;
+  }
+
+  .final-logo-showcase {
+    padding: 40px 24px;
+    margin-bottom: 40px;
+    border-radius: 12px;
+  }
+
+  .final-logo-container {
+    padding: 24px;
+    margin-bottom: 28px;
+  }
+
+  .final-logo-description {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .color-palette {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 100%;
+  }
+
+  .color-box {
+    border-radius: 10px;
+    margin-bottom: 12px;
+  }
+
+  .color-code {
+    font-size: 12px;
+  }
+
+  .improvements-box {
+    padding: 28px 20px;
+    border-radius: 10px;
+  }
+
+  .improvements-box h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .improvements-list {
+    gap: 14px;
+  }
+
+  .improvements-list li {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .improvements-list li i {
+    font-size: 16px;
+  }
+
+  .improvements-list li span {
+    font-size: 14px;
+  }
+
+  .story-block {
+    margin-bottom: 40px;
+  }
+
+  .story-block h3 {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .story-block p {
+    font-size: 15px;
+  }
+
+  .font-sample {
+    padding: 32px 24px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+  }
+
+  .font-name {
+    font-size: 11px;
+    margin-bottom: 16px;
+  }
+
+  .font-display {
+    font-size: 32px;
+    margin-bottom: 14px;
+    word-break: break-word;
+  }
+
+  .font-description {
+    font-size: 14px;
+  }
+
+  .process-grid {
+    gap: 20px;
+  }
+
+  .process-step {
+    border-radius: 10px;
+  }
+
+  .process-image {
+    padding: 20px;
+  }
+
+  .process-content {
+    padding: 24px 20px;
+  }
+
+  .process-number {
+    font-size: 10px;
+    margin-bottom: 10px;
+  }
+
+  .process-content h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .process-content p {
+    font-size: 13px;
+  }
+
+  .process-explanation {
+    margin-top: 40px;
+    padding: 28px 20px;
+    border-radius: 10px;
+  }
+
+  .process-explanation p {
+    font-size: 14px;
+  }
+
+  .mockups-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .mockup-item {
+    border-radius: 10px;
+  }
+
+  footer {
+    padding: 60px 24px;
+  }
+
+  footer .back-link {
+    font-size: 15px;
+    background: transparent;
+    padding: 0;
+  }
+
+  footer .back-link span {
+    display: inline;
+  }
+
+  /* Lightbox mobile adjustments */
+  .lightbox {
+    padding: 20px;
+  }
+
+  .lightbox-close {
+    top: -60px;
+    right: 50%;
+    transform: translateX(50%);
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+  }
+
+  .lightbox-close:hover {
+    transform: translateX(50%) rotate(90deg);
+  }
+
+  /* Switch container mobile */
+  .switch-container {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .switch {
+    width: 52px;
+    height: 30px;
+  }
+
+  .slider:before {
+    height: 22px;
+    width: 22px;
+  }
+
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS - MOBILE (480px)
+   ============================================ */
+@media (max-width: 480px) {
+  nav {
+    padding: 14px 16px !important;
+  }
+
+  .logo {
+    font-size: 14px;
+    gap: 6px;
+  }
+
+  .logo-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .back-link {
+    font-size: 12px;
+    padding: 6px 10px;
+    min-height: 40px;
+    min-width: 40px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .brand-hero {
+    min-height: 70vh;
+    padding: 90px 16px 50px;
+  }
+
+  .brand-hero h1 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .brand-hero p {
+    font-size: 14px;
   }
 
   section {
     padding: 60px 0;
   }
 
+  .section-header {
+    margin-bottom: 36px;
+  }
+
   .section-header h2 {
-    font-size: 36px;
+    font-size: 26px;
+  }
+
+  .section-header p {
+    font-size: 14px;
+  }
+
+  .subsection-header {
+    margin: 48px 0 24px;
+  }
+
+  .subsection-header h3 {
+    font-size: 20px;
   }
 
   .journey-intro {
-    padding: 40px 30px;
+    padding: 24px 16px;
+    margin-bottom: 36px;
+  }
+
+  .journey-intro h3 {
+    font-size: 18px;
+  }
+
+  .journey-intro p {
+    font-size: 14px;
+  }
+
+  .logo-card {
+    padding: 20px 16px;
   }
 
   .final-logo-showcase {
-    padding: 50px 30px;
+    padding: 28px 16px;
+    margin-bottom: 32px;
   }
 
-  .improvements-box {
-    padding: 32px 24px;
+  .final-logo-container {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .final-logo-description {
+    font-size: 14px;
   }
 
   .color-palette {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .color-code {
+    font-size: 11px;
+  }
+
+  .improvements-box {
+    padding: 20px 16px;
+  }
+
+  .improvements-box h4 {
+    font-size: 16px;
+  }
+
+  .improvements-list li {
+    padding: 14px 12px;
+    gap: 10px;
+  }
+
+  .improvements-list li span {
+    font-size: 13px;
+  }
+
+  .story-block h3 {
+    font-size: 20px;
+  }
+
+  .story-block p {
+    font-size: 14px;
+  }
+
+  .font-sample {
+    padding: 24px 16px;
+  }
+
+  .font-display {
+    font-size: 24px;
+  }
+
+  .process-content {
+    padding: 20px 16px;
   }
 
   .mockups-gallery {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
 
-  .font-display {
-    font-size: 40px;
+  .mockup-item {
+    aspect-ratio: 4/3;
   }
+
+  .process-explanation {
+    padding: 20px 16px;
+  }
+
+  footer {
+    padding: 48px 16px;
+  }
+
+  /* Comet animation scaled down for mobile */
+  .comet {
+    width: 30px;
+    height: 30px;
+  }
+
+  .comet::before {
+    width: 120px;
+    height: 3px;
+  }
+
+  .comet::after {
+    width: 80px;
+  }
+}
+
+/* ============================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 768px) {
+  /* Disable hover transforms on touch devices */
+  .logo-card:hover,
+  .process-step:hover,
+  .mockup-item:hover {
+    transform: none;
+  }
+
+  .color-swatch:hover .color-box {
+    transform: none;
+  }
+
+  .improvements-list li:hover {
+    transform: none;
+  }
+
+  /* Reduce animation complexity */
+  .font-sample:hover {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(13, 13, 13, 0.95);
+  }
+}
+
+/* Detect touch devices and remove hover effects */
+@media (hover: none) and (pointer: coarse) {
+  .logo-card:hover,
+  .process-step:hover,
+  .mockup-item:hover,
+  .improvements-list li:hover {
+    transform: none !important;
+    background: inherit;
+  }
+
+  .color-swatch:hover .color-box {
+    transform: none !important;
+  }
+
+  /* Add active states for touch feedback */
+  .logo-card:active,
+  .process-step:active,
+  .mockup-item:active {
+    opacity: 0.8;
+    transition: opacity 0.1s ease;
+  }
+
+  .improvements-list li:active {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .back-link:active {
+    opacity: 0.7;
+  }
+}
+
+/* ============================================
+   SAFE AREA INSETS (notch/home indicator)
+   ============================================ */
+@supports (padding: max(0px)) {
+  nav {
+    padding-left: max(20px, env(safe-area-inset-left)) !important;
+    padding-right: max(20px, env(safe-area-inset-right)) !important;
+  }
+
+  .container {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+
+  footer {
+    padding-bottom: max(60px, calc(60px + env(safe-area-inset-bottom)));
+  }
+
+  .switch-container {
+    bottom: max(20px, calc(20px + env(safe-area-inset-bottom)));
+    right: max(20px, env(safe-area-inset-right));
+  }
+}
+
+/* ============================================
+   LANDSCAPE MOBILE ADJUSTMENTS
+   ============================================ */
+@media (max-height: 500px) and (orientation: landscape) {
+  .brand-hero {
+    min-height: 100vh;
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+
+  .brand-hero h1 {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .brand-hero p {
+    font-size: 14px;
+  }
+
+  section {
+    min-height: auto;
+    padding: 60px 0;
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY IMPROVEMENTS
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .comet {
+    animation: none !important;
+  }
+
+  .page-loader {
+    transition: none !important;
+  }
+
+  .content-wrapper {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Focus states for keyboard navigation */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #8DC63F;
+  outline-offset: 2px;
+}
+
+.switch input:focus-visible + .slider {
+  outline: 2px solid #8DC63F;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .logo-card,
+  .font-sample,
+  .process-step,
+  .mockup-item {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .back-link,
+  .section-header p,
+  .subsection-header p {
+    color: #c0c0c0;
+  }
+}
+
+/* Dark mode is default, but ensure it works with system preference */
+@media (prefers-color-scheme: light) {
+  /* Keep dark theme - this is a space/aerospace theme */
 }
 </style>
 </head>
@@ -938,7 +1586,7 @@ footer {
   </a>
   <a href="logobranding.html" class="back-link">
      <i class="fa-solid fa-arrow-left"></i>
-     Back to Logo & Branding
+     <span>Back to Logo & Branding</span>
    </a>
 </nav>
 
@@ -1264,7 +1912,7 @@ footer {
   <div class="container">
     <a href="branding.html" class="back-link" style="justify-content: center; font-size: 16px;">
      <i class="fa-solid fa-arrow-left"></i>
-     Back to Logo & Branding
+     <span>Back to Logo & Branding</span>
    </a>
   </div>
 </footer>
@@ -1283,7 +1931,7 @@ footer {
 <!-- Lightbox Modal -->
 <div class="lightbox" id="lightbox">
   <div class="lightbox-content">
-    <button class="lightbox-close" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">
       <i class="fa-solid fa-times"></i>
     </button>
     <img id="lightbox-img" src="" alt="">
@@ -1291,6 +1939,11 @@ footer {
 </div>
 
 <script>
+// Detect if device is mobile/touch
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                 window.matchMedia('(max-width: 768px)').matches ||
+                 ('ontouchstart' in window);
+
 // Entry Animation
 window.addEventListener('load', () => {
   setTimeout(() => {
@@ -1325,11 +1978,16 @@ function makeImagesClickable() {
   
   allImages.forEach(img => {
     img.style.cursor = 'pointer';
-    img.addEventListener('click', (e) => {
+    
+    // Use both click and touch events for better mobile support
+    const openLightbox = (e) => {
       e.stopPropagation();
       lightboxImg.src = img.src;
       lightbox.classList.add('active');
-    });
+      document.body.style.overflow = 'hidden'; // Prevent background scroll
+    };
+    
+    img.addEventListener('click', openLightbox);
   });
 }
 
@@ -1338,6 +1996,7 @@ window.addEventListener('load', makeImagesClickable);
 
 function closeLightbox() {
   lightbox.classList.remove('active');
+  document.body.style.overflow = ''; // Restore scroll
 }
 
 lightbox.addEventListener('click', (e) => {
@@ -1352,22 +2011,38 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Prevent zoom on double tap for lightbox on iOS
+lightbox.addEventListener('touchend', (e) => {
+  e.preventDefault();
+  if (e.target === lightbox) {
+    closeLightbox();
+  }
+});
+
 // Constellation effect with power switch
 const constellationSwitch = document.getElementById('constellationSwitch');
 let constellationSketch;
 
-// Auto-start constellation on page load
+// Only auto-start constellation on desktop for performance
 window.addEventListener('load', () => {
   // Wait for entry animation to finish
   setTimeout(() => {
-    constellationSwitch.checked = true;
-    constellationSwitch.dispatchEvent(new Event('change'));
+    // Only auto-enable on non-mobile devices
+    if (!isMobile) {
+      constellationSwitch.checked = true;
+      constellationSwitch.dispatchEvent(new Event('change'));
+    }
   }, 2200);
 });
 
 constellationSwitch.addEventListener('change', () => {
   if (constellationSwitch.checked) {
     // Start constellation effect with aerospace theme
+    // Use fewer stars on mobile for performance
+    const starCount = isMobile ? 40 : 100;
+    const connectionDistance = isMobile ? 100 : 140;
+    const mouseConnectionDistance = isMobile ? 120 : 180;
+    
     constellationSketch = new p5((p) => {
       let stars = [];
       
@@ -1377,7 +2052,7 @@ constellationSwitch.addEventListener('change', () => {
         canvas.addClass('active');
         
         // Create initial stars with space/aerospace theme
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < starCount; i++) {
           stars.push({
             x: p.random(p.width),
             y: p.random(p.height),
@@ -1402,9 +2077,11 @@ constellationSwitch.addEventListener('change', () => {
           let twinkleEffect = p.sin(p.frameCount * s.twinkle) * 0.5 + 0.5;
           p.noStroke();
           
-          // Outer glow
-          p.fill(s.color[0], s.color[1], s.color[2], s.opacity * twinkleEffect * 60);
-          p.ellipse(s.x, s.y, s.size * 3);
+          // Outer glow (simplified on mobile)
+          if (!isMobile) {
+            p.fill(s.color[0], s.color[1], s.color[2], s.opacity * twinkleEffect * 60);
+            p.ellipse(s.x, s.y, s.size * 3);
+          }
           
           // Core
           p.fill(s.color[0], s.color[1], s.color[2], s.opacity * twinkleEffect * 255);
@@ -1416,73 +2093,77 @@ constellationSwitch.addEventListener('change', () => {
         for (let i = 0; i < stars.length; i++) {
           for (let j = i + 1; j < stars.length; j++) {
             let d = p.dist(stars[i].x, stars[i].y, stars[j].x, stars[j].y);
-            if (d < 140) {
-              let alpha = p.map(d, 0, 140, 80, 0);
+            if (d < connectionDistance) {
+              let alpha = p.map(d, 0, connectionDistance, 80, 0);
               p.stroke(141, 198, 63, alpha);
               p.line(stars[i].x, stars[i].y, stars[j].x, stars[j].y);
             }
           }
         }
 
-        // Draw lines to mouse for nearby stars (interactive)
-        p.strokeWeight(1.5);
-        for (let s of stars) {
-          let d = p.dist(s.x, s.y, p.mouseX, p.mouseY);
-          if (d < 180) {
-            let alpha = p.map(d, 0, 180, 120, 0);
-            p.stroke(141, 198, 63, alpha);
-            p.line(s.x, s.y, p.mouseX, p.mouseY);
-          }
-        }
-
-        // Stronger effect when mouse is pressed
-        if (p.mouseIsPressed) {
-          p.strokeWeight(2);
-          // Create "orbital" effect
-          p.noFill();
-          p.stroke(141, 198, 63, 100);
-          p.ellipse(p.mouseX, p.mouseY, 100, 100);
-          
+        // Draw lines to mouse/touch for nearby stars (interactive) - desktop only
+        if (!isMobile) {
+          p.strokeWeight(1.5);
           for (let s of stars) {
             let d = p.dist(s.x, s.y, p.mouseX, p.mouseY);
-            if (d < 220) {
-              let alpha = p.map(d, 0, 220, 180, 0);
+            if (d < mouseConnectionDistance) {
+              let alpha = p.map(d, 0, mouseConnectionDistance, 120, 0);
               p.stroke(141, 198, 63, alpha);
               p.line(s.x, s.y, p.mouseX, p.mouseY);
+            }
+          }
+
+          // Stronger effect when mouse is pressed
+          if (p.mouseIsPressed) {
+            p.strokeWeight(2);
+            // Create "orbital" effect
+            p.noFill();
+            p.stroke(141, 198, 63, 100);
+            p.ellipse(p.mouseX, p.mouseY, 100, 100);
+            
+            for (let s of stars) {
+              let d = p.dist(s.x, s.y, p.mouseX, p.mouseY);
+              if (d < 220) {
+                let alpha = p.map(d, 0, 220, 180, 0);
+                p.stroke(141, 198, 63, alpha);
+                p.line(s.x, s.y, p.mouseX, p.mouseY);
+              }
             }
           }
         }
       };
       
-      // Add star on click with rocket trail effect
-      p.mousePressed = () => {
-        // Add main star
-        stars.push({
-          x: p.mouseX,
-          y: p.mouseY,
-          size: p.random(3, 6),
-          opacity: p.random(0.8, 1),
-          twinkle: p.random(0.01, 0.03),
-          color: [141, 198, 63] // GreenX Green
-        });
-        
-        // Add trail stars
-        for (let i = 0; i < 3; i++) {
+      // Add star on click with rocket trail effect - desktop only
+      if (!isMobile) {
+        p.mousePressed = () => {
+          // Add main star
           stars.push({
-            x: p.mouseX + p.random(-20, 20),
-            y: p.mouseY + p.random(-20, 20),
-            size: p.random(1, 3),
-            opacity: p.random(0.4, 0.7),
-            twinkle: p.random(0.015, 0.03),
-            color: [173, 216, 230] // Light blue
+            x: p.mouseX,
+            y: p.mouseY,
+            size: p.random(3, 6),
+            opacity: p.random(0.8, 1),
+            twinkle: p.random(0.01, 0.03),
+            color: [141, 198, 63] // GreenX Green
           });
-        }
-        
-        if (stars.length > 150) {
-          stars.splice(0, 4); // Remove oldest 4
-        }
-        return false;
-      };
+          
+          // Add trail stars
+          for (let i = 0; i < 3; i++) {
+            stars.push({
+              x: p.mouseX + p.random(-20, 20),
+              y: p.mouseY + p.random(-20, 20),
+              size: p.random(1, 3),
+              opacity: p.random(0.4, 0.7),
+              twinkle: p.random(0.015, 0.03),
+              color: [173, 216, 230] // Light blue
+            });
+          }
+          
+          if (stars.length > 150) {
+            stars.splice(0, 4); // Remove oldest 4
+          }
+          return false;
+        };
+      }
       
       p.windowResized = () => {
         p.resizeCanvas(p.windowWidth, p.windowHeight);
