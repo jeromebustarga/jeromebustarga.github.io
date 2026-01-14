@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Jerome Bustarga - Developer Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+<title>Jerome Bustarga - Portfolio</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
@@ -13,175 +13,367 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #0d0d0d;
   color: #e8e8e8;
-  overflow-x: hidden;
   line-height: 1.6;
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Overlay at startup */
-#overlay {
-  position: fixed;
-  inset: 0;
-  background: #0d0d0d;
-  z-index: 9999;
-  transition: opacity 2s ease;
-}
+/* ========================================
+   MOBILE LAYOUT (Default - Mobile First)
+   ======================================== */
 
-/* Radial light effect from bulb */
-.radial-light {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 200vw;
-  height: 200vw;
-  transform: translate(-50%, -50%) scale(0);
-  background: radial-gradient(circle at center, 
-    rgba(244, 121, 33, 0.15) 0%,
-    rgba(244, 121, 33, 0.08) 10%,
-    rgba(13, 13, 13, 0) 40%);
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body.power-on .radial-light {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  top: min(180px, 25vh);
-}
-
-/* Icon Dropdown Menu - starts in navbar, moves to lower left on scroll */
-.icon-dropdown {
-  position: fixed;
-  top: 24px;
-  right: 30px;
-  z-index: 10001;
-  opacity: 0;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: none;
-}
-
-body.power-on .icon-dropdown {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* When scrolled, move to lower left */
-body.scrolled .icon-dropdown {
-  top: auto;
-  bottom: 30px;
-  right: auto;
-  left: 30px;
-}
-
-.icon-dropdown-btn {
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  color: #a0a0a0;
-  font-size: 20px;
-  cursor: pointer;
+/* Mobile Header */
+.mobile-header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(20px);
+  gap: 12px;
+  padding: 20px;
+  background: linear-gradient(to bottom, rgba(13, 13, 13, 1) 0%, rgba(13, 13, 13, 0.95) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(244, 121, 33, 0.15);
 }
 
-.icon-dropdown-btn:hover {
-  background: rgba(244, 121, 33, 0.08);
-  border-color: rgba(244, 121, 33, 0.3);
-  color: #f47921;
+.mobile-logo {
+  width: 40px;
+  height: 40px;
 }
 
-.icon-menu {
-  display: none;
-  position: absolute;
-  top: 58px;
-  right: 0;
-  flex-direction: column;
-  gap: 8px;
-  padding: 12px;
-  background: rgba(20, 20, 20, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  backdrop-filter: blur(20px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
+.mobile-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(244, 121, 33, 0.6));
 }
 
-/* When scrolled to lower left, dropdown should go up */
-body.scrolled .icon-menu {
-  top: auto;
-  bottom: 58px;
-  right: auto;
-  left: 0;
-}
-
-.icon-menu.show {
-  display: flex;
-  animation: slideDown 0.3s ease;
-}
-
-body.scrolled .icon-menu.show {
-  animation: slideUp 0.3s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.icon-menu a {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  color: #a0a0a0;
+.mobile-title {
   font-size: 18px;
+  font-weight: 600;
+  color: #e8e8e8;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+  display: block;
+  padding: 20px;
+  padding-bottom: 40px;
+}
+
+.nav-section {
+  margin-bottom: 32px;
+}
+
+.nav-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(244, 121, 33, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 16px;
+  background: rgba(244, 121, 33, 0.08);
+  border: 1px solid rgba(244, 121, 33, 0.25);
+  border-radius: 12px;
   text-decoration: none;
+  color: #e8e8e8;
   transition: all 0.3s ease;
 }
 
-.icon-menu a:hover {
-  background: rgba(244, 121, 33, 0.08);
-  border-color: rgba(244, 121, 33, 0.3);
-  color: #f47921;
-  transform: translateY(-2px);
+.nav-btn:active {
+  background: rgba(244, 121, 33, 0.2);
+  border-color: rgba(244, 121, 33, 0.5);
+  transform: scale(0.98);
 }
+
+.nav-btn-icon {
+  font-size: 28px;
+  color: #f47921;
+}
+
+.nav-btn-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Full width button variant */
+.nav-btn.full-width {
+  grid-column: span 2;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+}
+
+.nav-btn.full-width .nav-btn-icon {
+  font-size: 24px;
+}
+
+.nav-btn.full-width .nav-btn-label {
+  font-size: 14px;
+}
+
+/* Mobile Footer */
+.mobile-footer {
+  display: block;
+  text-align: center;
+  padding: 24px 20px;
+  font-size: 11px;
+  color: rgba(244, 121, 33, 0.4);
+  letter-spacing: 1px;
+  border-top: 1px solid rgba(244, 121, 33, 0.1);
+}
+
+/* ========================================
+   MOBILE RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Small phones (480px) */
+@media (max-width: 480px) {
+  .mobile-header {
+    padding: 16px;
+    gap: 10px;
+  }
+  
+  .mobile-logo {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .mobile-title {
+    font-size: 16px;
+  }
+  
+  .mobile-nav {
+    padding: 16px;
+  }
+  
+  .nav-section {
+    margin-bottom: 24px;
+  }
+  
+  .nav-section-title {
+    font-size: 10px;
+    margin-bottom: 12px;
+  }
+  
+  .nav-grid {
+    gap: 10px;
+  }
+  
+  .nav-btn {
+    padding: 20px 12px;
+    gap: 8px;
+  }
+  
+  .nav-btn-icon {
+    font-size: 24px;
+  }
+  
+  .nav-btn-label {
+    font-size: 11px;
+  }
+  
+  .nav-btn.full-width {
+    padding: 16px 20px;
+    gap: 12px;
+  }
+  
+  .nav-btn.full-width .nav-btn-icon {
+    font-size: 20px;
+  }
+  
+  .nav-btn.full-width .nav-btn-label {
+    font-size: 12px;
+  }
+  
+  .mobile-footer {
+    padding: 20px 16px;
+    font-size: 10px;
+  }
+}
+
+/* Very small phones (360px) */
+@media (max-width: 360px) {
+  .mobile-header {
+    padding: 14px 12px;
+  }
+  
+  .mobile-logo {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .mobile-title {
+    font-size: 15px;
+  }
+  
+  .mobile-nav {
+    padding: 14px 12px;
+  }
+  
+  .nav-btn {
+    padding: 18px 10px;
+  }
+  
+  .nav-btn-icon {
+    font-size: 22px;
+  }
+  
+  .nav-btn-label {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* Safe area insets for notched phones */
+@supports (padding: max(0px)) {
+  .mobile-header {
+    padding-top: max(20px, env(safe-area-inset-top));
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+  
+  .mobile-nav {
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+  
+  .mobile-footer {
+    padding-bottom: max(24px, calc(24px + env(safe-area-inset-bottom)));
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .nav-btn {
+    min-height: 70px; /* Good touch target */
+  }
+  
+  .nav-btn:hover {
+    background: rgba(244, 121, 33, 0.08);
+    border-color: rgba(244, 121, 33, 0.25);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* Focus states for accessibility */
+.nav-btn:focus-visible {
+  outline: 2px solid #f47921;
+  outline-offset: 2px;
+}
+
+.start-button:focus-visible {
+  outline: 2px solid #f47921;
+  outline-offset: 2px;
+}
+
+/* ========================================
+   DESKTOP LAYOUT (Game Mode)
+   ======================================== */
+
+@media (min-width: 769px) {
+  body {
+    overflow: hidden;
+    touch-action: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Hide mobile elements on desktop */
+  .mobile-header,
+  .mobile-nav,
+  .mobile-footer {
+    display: none !important;
+  }
+
+  /* Show desktop game elements */
+  .lightbulb-container {
+    display: flex !important;
+  }
+  
+  #gameContainer {
+    display: none !important;
+  }
+  
+  body.power-on #gameContainer {
+    display: flex !important;
+  }
+  
+  .desktop-footer {
+    display: none !important;
+  }
+  
+  body.power-on .desktop-footer {
+    display: block !important;
+  }
+}
+
+/* Hide desktop elements on mobile */
+@media (max-width: 768px) {
+  .lightbulb-container,
+  #gameContainer,
+  .desktop-footer {
+    display: none !important;
+  }
+
+  .mobile-header,
+  .mobile-nav,
+  .mobile-footer {
+    display: block !important;
+  }
+  
+  body.power-on {
+    overflow: auto;
+    position: static;
+  }
+}
+
+/* ========================================
+   DESKTOP GAME STYLES
+   ======================================== */
 
 /* Lightbulb Power Button */
 .lightbulb-container {
@@ -190,50 +382,41 @@ body.scrolled .icon-menu.show {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10000;
-  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 body.power-on .lightbulb-container {
-  position: absolute;
-  top: min(180px, 25vh);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 5;
+  top: 40px;
+  left: 60px;
+  transform: translate(0, 0);
+  z-index: 10001;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.logo-wrapper {
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+
+body.power-on .logo-wrapper {
+  display: flex;
 }
 
 .lightbulb {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   position: relative;
-  transition: all 0.6s ease;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-body.power-on .lightbulb {
-  animation: none;
-}
-
-.lightbulb:hover {
-  transform: scale(1.1);
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
-  }
 }
 
 .bulb-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: all 0.6s ease;
 }
 
 .bulb-off {
@@ -253,1264 +436,1139 @@ body.power-on .bulb-on {
   display: block;
 }
 
-/* Light rays animation when on */
-.light-rays {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 120px;
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-
-body.power-on .light-rays {
-  opacity: 1;
-  animation: rotate 20s linear infinite;
-}
-
-.ray {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 2px;
-  height: 70px;
-  background: linear-gradient(to bottom, rgba(244, 121, 33, 0.4), transparent);
-  transform-origin: 50% 0%;
-}
-
-.ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
-.ray:nth-child(2) { transform: translate(-50%, -100%) rotate(45deg); }
-.ray:nth-child(3) { transform: translate(-50%, -100%) rotate(90deg); }
-.ray:nth-child(4) { transform: translate(-50%, -100%) rotate(135deg); }
-.ray:nth-child(5) { transform: translate(-50%, -100%) rotate(180deg); }
-.ray:nth-child(6) { transform: translate(-50%, -100%) rotate(225deg); }
-.ray:nth-child(7) { transform: translate(-50%, -100%) rotate(270deg); }
-.ray:nth-child(8) { transform: translate(-50%, -100%) rotate(315deg); }
-
-@keyframes rotate {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Main Content Fade-in */
-main {
-  opacity: 0;
-  transition: opacity 2s ease;
-}
-
-body.power-on {
-  background: #0d0d0d;
-}
-
-/* Subtle gradient orbs background */
-.bg-orbs {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* Background text effect */
-.bg-text {
-  position: fixed;
-  font-size: 18vw;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.05);
-  white-space: nowrap;
-  user-select: none;
-  pointer-events: none;
-  z-index: 0;
-  letter-spacing: -0.05em;
-  line-height: 1;
-}
-
-.bg-text-1 {
-  top: 10%;
-  left: -3%;
-}
-
-.bg-text-2 {
-  top: 38%;
-  right: -3%;
-}
-
-.bg-text-3 {
-  bottom: 3%;
-  left: -3%;
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0;
-  transition: opacity 1.5s ease;
-}
-
-body.power-on .orb {
-  opacity: 0.08;
-  animation: float 25s ease-in-out infinite;
-}
-
-.orb1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #404040, transparent);
-  top: -250px;
-  left: -200px;
-  animation-delay: 0s;
-}
-
-.orb2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, #303030, transparent);
-  bottom: -200px;
-  right: -150px;
-  animation-delay: 8s;
-}
-
-.orb3 {
-  width: 550px;
-  height: 550px;
-  background: radial-gradient(circle, #353535, transparent);
-  top: 40%;
-  right: 10%;
-  animation-delay: 16s;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(80px, -80px) scale(1.05); }
-  66% { transform: translate(-60px, 80px) scale(0.95); }
-}
-
-/* Navigation */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 24px 60px;
-  padding-right: 100px; /* Extra space for icon menu */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px; /* Space between elements */
-  z-index: 1000;
-  background: rgba(13, 13, 13, 0.7);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transform: translateY(-100%);
-  transition: transform 0.8s ease;
-}
-
-/* When scrolled, remove extra padding since menu moved */
-body.scrolled nav {
-  padding-right: 60px;
-}
-
-.logo-icon img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-body.power-on nav {
-  transform: translateY(0);
-}
-
-.logo {
-  font-size: 18px;
-  font-weight: 500;
-  color: #ffffff;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  letter-spacing: -0.02em;
-}
-
-.logo-text {
-  transition: opacity 0.3s ease;
-  position: relative;
-}
-
-.logo-text-alt {
-  position: absolute;
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  white-space: nowrap;
-}
-
-.logo.scrolled .logo-text {
-  opacity: 0;
-}
-
-.logo.scrolled .logo-text-alt {
-  opacity: 1;
-}
-
-.logo-icon {
-  width: 35px;
-  height: 35px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
+.logo-name {
+  font-size: 20px;
   font-weight: 600;
+  color: #e8e8e8;
+  letter-spacing: 1px;
+  white-space: nowrap;
 }
 
-.nav-links {
-  display: flex;
-  gap: 40px;
-  list-style: none;
-}
-
-.nav-links a {
-  color: #909090;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 400;
-  transition: color 0.3s ease;
-  position: relative;
-  letter-spacing: 0.02em;
-}
-
-.nav-links a:hover {
+.start-button {
+  padding: 16px 50px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 2px solid rgba(244, 121, 33, 0.4);
   color: #f47921;
-}
-
-.nav-links a::before {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: #f47921;
-  transition: width 0.3s ease;
-}
-
-.nav-links a:hover::before {
-  width: 100%;
-}
-
-/* Sections */
-section {
-  position: relative;
-  z-index: 1;
-  padding: 120px 60px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-/* Hero Section */
-.hero-section {
-  min-height: 122vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding-top: 100px;
-}
-
-.hero-content {
-  max-width: 800px;
-}
-
-.hero-label {
-  display: inline-block;
-  padding: 8px 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 400;
-  color: #b0b0b0;
-  margin-bottom: 30px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.hero-content h1 {
-  font-size: 72px;
-  font-weight: 300;
-  line-height: 1.1;
-  margin-bottom: 30px;
-  color: #ffffff;
-  letter-spacing: -0.03em;
-}
-
-.hero-content h1 .highlight {
-  font-weight: 400;
-  background: linear-gradient(135deg, #f47921, #ff8c3a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-content p {
   font-size: 18px;
-  line-height: 1.8;
-  color: #909090;
-  margin-bottom: 50px;
-  font-weight: 300;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-cta {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-  align-items: center;
-}
-
-.btn {
-  padding: 14px 32px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   border-radius: 8px;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 400;
+  cursor: pointer;
   transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  letter-spacing: 0.02em;
+  backdrop-filter: blur(10px);
 }
 
-.btn-primary {
-  background: #f47921;
-  color: #0d0d0d;
-  border: 1px solid #f47921;
-}
-
-.btn-primary:hover {
-  background: #ff8c3a;
-  border-color: #ff8c3a;
+.start-button:hover {
+  background: rgba(244, 121, 33, 0.2);
+  border-color: rgba(244, 121, 33, 0.6);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(244, 121, 33, 0.3);
 }
 
-.btn-secondary {
-  background: transparent;
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.start-button:active {
+  transform: scale(0.98);
 }
 
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+body.power-on .start-button {
+  display: none;
 }
 
-/* Section Title */
-.section-title {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 60px;
-}
-
-.section-title h2 {
-  font-size: 42px;
-  font-weight: 300;
-  margin-bottom: 16px;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-}
-
-.section-title p {
-  font-size: 16px;
-  color: #707070;
-  font-weight: 300;
-}
-
-/* Work Section */
-.work-section {
-  padding: 0 60px 140px 60px;
-}
-
-.projects-container {
-  display: grid;
-  gap: 60px;
-}
-
-.project-item {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  padding: 60px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
-}
-
-.project-item:first-child {
-  border-top: none;
-}
-
-.project-item.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.project-item:nth-child(even) {
-  grid-template-columns: 1fr 1fr;
-}
-
-.project-item:nth-child(even) .project-visual {
-  order: 2;
-}
-
-.project-visual {
-  position: relative;
-  aspect-ratio: 16/10;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.4s ease;
-}
-
-.project-visual:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
-}
-
-.project-placeholder {
-  position: absolute;
+#gameContainer {
+  position: fixed;
   inset: 0;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
-  font-size: 48px;
-  color: rgba(255, 255, 255, 0.1);
+  z-index: 2;
+  padding: 10px;
 }
 
-.project-image {
+#gameContainer.hide-cursor,
+#gameContainer.hide-cursor * {
+  cursor: none !important;
+}
+
+.game-arena {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  max-height: 70vh;
+  background: rgba(20, 20, 20, 0.6);
+  border: 2px solid rgba(244, 121, 33, 0.2);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(244, 121, 33, 0.1);
+  pointer-events: none;
+}
+
+.character {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  transition: none;
+  z-index: 100;
+}
+
+/* MAIN LEVEL - GRID BASED PLATFORMER */
+.main-level {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
+  display: none;
 }
 
-.project-visual:hover .project-image {
-  transform: scale(1.05);
+.main-level.active {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  gap: 1px;
+  background: rgba(244, 121, 33, 0.1);
 }
 
-.project-details {
-  padding: 20px 0;
-}
-
-.project-number {
-  font-size: 12px;
-  color: #606060;
-  margin-bottom: 16px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.project-details h3 {
-  font-size: 32px;
-  font-weight: 300;
-  margin-bottom: 20px;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-}
-
-.project-details p {
-  font-size: 15px;
-  line-height: 1.8;
-  color: #808080;
-  margin-bottom: 28px;
-  font-weight: 300;
-}
-
-.project-tech {
+.main-grid-cell {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 28px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(244, 121, 33, 0.15);
 }
 
-.tech-tag {
-  padding: 6px 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.main-grid-cell.wall {
+  background: linear-gradient(135deg, #f47921, #d96a1a);
+  border: 1px solid #c25a15;
+  box-shadow: inset 0 0.5px 1px rgba(255, 255, 255, 0.2),
+              inset 0 -0.5px 1px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.main-grid-cell.path {
+  background: transparent;
+  border: none;
+}
+
+/* Doors */
+.door {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.door-icon {
+  font-size: 52px;
+  color: #f47921;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.door.can-enter .door-icon {
+  text-shadow: 0 0 30px rgba(244, 121, 33, 0.8),
+               0 0 60px rgba(244, 121, 33, 0.6),
+               0 0 90px rgba(244, 121, 33, 0.4);
+  animation: iconPulse 0.8s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    text-shadow: 0 0 30px rgba(244, 121, 33, 0.8),
+                 0 0 60px rgba(244, 121, 33, 0.6),
+                 0 0 90px rgba(244, 121, 33, 0.4);
+  }
+  50% {
+    text-shadow: 0 0 40px rgba(244, 121, 33, 1),
+                 0 0 80px rgba(244, 121, 33, 0.8),
+                 0 0 120px rgba(244, 121, 33, 0.6);
+  }
+}
+
+.door-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #f47921;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+  line-height: 1;
+  transition: all 0.3s ease;
+}
+
+.door.can-enter .door-label {
+  text-shadow: 0 0 10px rgba(244, 121, 33, 0.6);
+}
+
+/* STUDIO LEVEL - GRID BASED MAZE */
+.studio-level {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.studio-level.active {
+  display: grid;
+  grid-template-columns: repeat(30, 1fr);
+  grid-template-rows: repeat(20, 1fr);
+  gap: 1px;
+  background: rgba(244, 121, 33, 0.1);
+}
+
+.grid-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(244, 121, 33, 0.15);
+}
+
+.grid-cell.wall {
+  background: linear-gradient(135deg, #f47921, #d96a1a);
+  border: 1px solid #c25a15;
+  box-shadow: inset 0 0.5px 1px rgba(255, 255, 255, 0.2),
+              inset 0 -0.5px 1px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.grid-cell.path {
+  background: transparent;
+  border: none;
+}
+
+/* Studio Doors */
+.studio-door {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.studio-door-icon {
+  font-size: 52px;
+  color: #f47921;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.studio-door.can-enter .studio-door-icon {
+  text-shadow: 0 0 30px rgba(244, 121, 33, 0.8),
+               0 0 60px rgba(244, 121, 33, 0.6),
+               0 0 90px rgba(244, 121, 33, 0.4);
+  animation: iconPulse 0.8s ease-in-out infinite;
+}
+
+.studio-door-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #f47921;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.studio-door.can-enter .studio-door-label {
+  text-shadow: 0 0 10px rgba(244, 121, 33, 0.6);
+}
+
+.game-instructions {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: rgba(244, 121, 33, 0.7);
+  font-size: 14px;
+  letter-spacing: 1px;
+  animation: fadeOutInstructions 4s ease-in-out forwards;
+  z-index: 10003;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  background: rgba(13, 13, 13, 0.9);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+@keyframes fadeOutInstructions {
+  0% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+.key-hint {
+  display: inline-block;
+  background: rgba(244, 121, 33, 0.15);
+  border: 1px solid rgba(244, 121, 33, 0.4);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin: 0 2px;
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.entrance-prompt {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(244, 121, 33, 0.95);
+  color: #0d0d0d;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 60;
+}
+
+.door.can-enter .entrance-prompt,
+.studio-door.can-enter .entrance-prompt {
+  opacity: 1;
+  animation: bounce 0.6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, -8px); }
+}
+
+/* Level indicator */
+.level-indicator {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  background: rgba(244, 121, 33, 0.15);
+  border: 1px solid rgba(244, 121, 33, 0.3);
+  padding: 6px 14px;
   border-radius: 20px;
   font-size: 12px;
-  color: #909090;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-}
-
-.project-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 400;
-  transition: all 0.3s ease;
-  letter-spacing: 0.02em;
-}
-
-.project-link:hover {
-  gap: 12px;
   color: #f47921;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  z-index: 100;
 }
 
-.project-link i {
+.desktop-footer {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10002;
   font-size: 12px;
-  transition: transform 0.3s ease;
-}
-
-/* Skills Section */
-.skills-section {
-  padding: 0 60px 140px 60px;
-}
-
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 32px;
-}
-
-.skill-card {
-  padding: 48px 36px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  transition: all 0.4s ease;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.skill-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.skill-card:hover {
-  background: rgba(244, 121, 33, 0.03);
-  border-color: rgba(244, 121, 33, 0.2);
-  transform: translateY(-4px);
-}
-
-.skill-icon {
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #ffffff;
-  margin-bottom: 24px;
-  transition: all 0.3s ease;
-}
-
-.skill-card:hover .skill-icon {
-  background: rgba(244, 121, 33, 0.08);
-  border-color: rgba(244, 121, 33, 0.3);
-  color: #f47921;
-}
-
-.skill-card h3 {
-  font-size: 20px;
-  font-weight: 400;
-  margin-bottom: 12px;
-  color: #ffffff;
-  letter-spacing: -0.01em;
-}
-
-.skill-card p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #808080;
-  font-weight: 300;
-}
-
-/* Contact Section */
-.contact-section {
-  padding: 140px 60px;
-  text-align: center;
-}
-
-.contact-content h2 {
-  font-size: 48px;
-  font-weight: 300;
-  margin-bottom: 20px;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-}
-
-.contact-content p {
-  font-size: 16px;
-  color: #808080;
-  margin-bottom: 40px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  font-weight: 300;
-  line-height: 1.7;
-}
-
-.social-links {
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-}
-
-.social-link {
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #909090;
-  text-decoration: none;
-  font-size: 18px;
-  transition: all 0.3s ease;
-}
-
-.social-link:hover {
-  background: rgba(244, 121, 33, 0.08);
-  border-color: rgba(244, 121, 33, 0.3);
-  color: #f47921;
-  transform: translateY(-2px);
-}
-
-/* Footer */
-footer {
-  padding: 40px 60px;
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  color: #606060;
-  font-size: 13px;
-  font-weight: 300;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .section-title {
-    min-height: 80vh;
-    padding: 40px 30px;
-  }
-
-  .section-title h2 {
-    font-size: 32px;
-  }
-
-  section {
-    padding: 80px 30px;
-  }
-
-  .work-section,
-  .skills-section {
-    padding: 0 30px 80px 30px;
-  }
-
-  nav {
-    padding: 20px 30px;
-  }
-
-  .nav-links {
-    gap: 24px;
-  }
-
-  .hero-content h1 {
-    font-size: 42px;
-  }
-
-  .hero-content p {
-    font-size: 16px;
-  }
-
-  .project-item {
-    grid-template-columns: 1fr !important;
-    gap: 40px;
-  }
-
-  .project-item:nth-child(even) .project-visual {
-    order: 0;
-  }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-cta {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-</style>
-
-<style>
-/* RESPONSIVE FIXES FOR FULLSCREEN */
-/* Adjust lightbulb and radial light based on viewport height */
-@media (max-height: 800px) {
-  body.power-on .lightbulb-container {
-    top: min(120px, 18vh);
-  }
-  body.power-on .radial-light {
-    top: min(120px, 18vh);
-  }
-}
-
-@media (max-height: 700px) {
-  body.power-on .lightbulb-container {
-    top: min(100px, 15vh);
-  }
-  body.power-on .radial-light {
-    top: min(100px, 15vh);
-  }
-}
-
-@media (max-height: 600px) {
-  body.power-on .lightbulb-container {
-    top: min(80px, 12vh);
-  }
-  body.power-on .radial-light {
-    top: min(80px, 12vh);
-  }
-}
-
-@media (min-height: 1200px) {
-  body.power-on .lightbulb-container {
-    top: min(220px, 20vh);
-  }
-  body.power-on .radial-light {
-    top: min(220px, 20vh);
-  }
-}
-
-/* Hero content responsive spacing */
-@media (max-height: 700px) {
-  .hero-section {
-    min-height: 100vh;
-    padding-top: 60px;
-  }
-  .hero-content h1 {
-    font-size: clamp(48px, 8vw, 72px);
-  }
-}
-
-@media (min-height: 900px) {
-  .hero-section {
-    padding-top: min(100px, 12vh);
-  }
-}
-
-@media (min-width: 1920px) {
-  body.power-on .lightbulb-container {
-    top: min(240px, 20vh);
-  }
-  body.power-on .radial-light {
-    top: min(240px, 20vh);
-  }
-}
-
-/* Ultra-wide screen adjustments */
-@media (min-width: 2560px) {
-  .hero-content h1 {
-    font-size: clamp(72px, 5vw, 96px);
-  }
-  body.power-on .lightbulb-container {
-    top: min(280px, 18vh);
-  }
-  body.power-on .radial-light {
-    top: min(280px, 18vh);
-  }
+  color: rgba(244, 121, 33, 0.5);
+  letter-spacing: 1px;
+  display: none;
 }
 </style>
 </head>
 <body>
 
-<div id="overlay"></div>
-<div class="radial-light"></div>
+<!-- ========================================
+     MOBILE LAYOUT
+     ======================================== -->
 
-<div class="bg-orbs">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-  <div class="bg-text bg-text-1">DESIGN EMPOWER</div>
-  <div class="bg-text bg-text-2">CODE UPLIFT</div>
-  <div class="bg-text bg-text-3">CREATE INSPIRE</div>
-</div>
-
-<div class="icon-dropdown">
-  <button class="icon-dropdown-btn" id="iconDropdownBtn">
-    <i class="fa-solid fa-grip"></i>
-  </button>
-  <div class="icon-menu" id="iconMenu">
-    <a href="index.html" title="Home" aria-label="Home">
-      <i class="fa-solid fa-home"></i>
-    </a>
-    <a href="about.html" title="About Me" aria-label="About Me">
-      <i class="fa-solid fa-user"></i>
-    </a>
-    <a href="warpzone.html" title="Warp Zone" aria-label="Warp Zone">
-      <i class="fa-solid fa-rocket"></i>
-    </a>
-  </div>
-</div>
-
-<div class="lightbulb-container" id="lightbulbContainer">
-  <div class="light-rays">
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-    <div class="ray"></div>
-  </div>
-  <div class="lightbulb" id="lightbulb">
-    <img src="images/logof.png" alt="Power Lightbulb Off" class="bulb-image bulb-off">
-    <img src="images/logo.png" alt="Power Lightbulb On" class="bulb-image bulb-on">
-  </div>
-</div>
-
-<nav>
-  <a href="#mainContent" class="logo" id="logoNav">
-    <div class="logo-icon">
+<header class="mobile-header">
+  <div class="mobile-logo">
     <img src="images/logo.png" alt="Jerome Bustarga Logo">
+  </div>
+  <h1 class="mobile-title">Jerome Bustarga</h1>
+</header>
+
+<nav class="mobile-nav">
+  <section class="nav-section">
+    <h2 class="nav-section-title">Main</h2>
+    <div class="nav-grid">
+      <a href="index2.html" class="nav-btn">
+        <i class="fa-solid fa-home nav-btn-icon"></i>
+        <span class="nav-btn-label">Home</span>
+      </a>
+      <a href="about.html" class="nav-btn">
+        <i class="fa-solid fa-user-circle nav-btn-icon"></i>
+        <span class="nav-btn-label">About</span>
+      </a>
+      <a href="repository.html" class="nav-btn full-width">
+        <i class="fa-solid fa-door-open nav-btn-icon"></i>
+        <span class="nav-btn-label">Repository</span>
+      </a>
     </div>
-    <span class="logo-text-wrapper" style="position: relative;">
-      <span class="logo-text">Jerome Bustarga</span>
-      <span class="logo-text-alt">It's Jerome's World</span>
-    </span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#work">Work</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  </section>
+
+  <section class="nav-section">
+    <h2 class="nav-section-title">Studio</h2>
+    <div class="nav-grid">
+      <a href="film.html" class="nav-btn">
+        <i class="fa-solid fa-film nav-btn-icon"></i>
+        <span class="nav-btn-label">Film</span>
+      </a>
+      <a href="logobranding.html" class="nav-btn">
+        <i class="fa-solid fa-tag nav-btn-icon"></i>
+        <span class="nav-btn-label">Branding</span>
+      </a>
+      <a href="illustrations.html" class="nav-btn">
+        <i class="fa-solid fa-palette nav-btn-icon"></i>
+        <span class="nav-btn-label">Illustrations</span>
+      </a>
+      <a href="3d-art.html" class="nav-btn">
+        <i class="fa-solid fa-cube nav-btn-icon"></i>
+        <span class="nav-btn-label">3D Art</span>
+      </a>
+      <a href="webdesign.html" class="nav-btn full-width">
+        <i class="fa-solid fa-code nav-btn-icon"></i>
+        <span class="nav-btn-label">Web Design</span>
+      </a>
+    </div>
+  </section>
 </nav>
 
-<main id="mainContent">
-  <section id="home" class="hero-section">
-    <div class="hero-content">
-      <h1>It's <span class="highlight">Jerome's world</span> and you're just living in it</h1>
-      <p>
-        Crafting digital experiences that seamlessly blend functionality with refined aesthetics. 
-        Focused on creating products that are both beautiful and purposeful.
-      </p>
-      <div class="hero-cta">
-        <a href="#work" class="btn btn-primary">
-          View Work
-          <i class="fa-solid fa-arrow-down"></i>
-        </a>
-        <a href="#contact" class="btn btn-secondary">
-          Get In Touch
-          <i class="fa-solid fa-arrow-right"></i>
-        </a>
-      </div>
+<footer class="mobile-footer">
+  © 2025 Jerome Bustarga. All rights reserved.
+</footer>
+
+
+<!-- ========================================
+     DESKTOP GAME LAYOUT
+     ======================================== -->
+
+<div class="lightbulb-container" id="lightbulbContainer">
+  <div class="logo-wrapper">
+    <div class="lightbulb" id="lightbulb">
+      <img src="logo-off.png" alt="Logo Off" class="bulb-image bulb-off" id="bulbOff">
+      <img src="images/logo.png" alt="Logo On" class="bulb-image bulb-on" id="bulbOn">
     </div>
-  </section>
-
-  <section id="work" class="work-section">
-    <div class="section-title">
-      <h2>Featured Work</h2>
-      <p>Recent projects and collaborations</p>
-    </div>
-
-    <div class="projects-container">
-      <!-- Project 1 - Illustrations -->
-      <div class="project-item">
-        <div class="project-visual">
-         <img src="images/illustrations.png" alt="Illustrations Portfolio Preview" class="project-image" loading="lazy">
-        </div>
-        <div class="project-details">
-          <div class="project-number">01</div>
-          <h3>Illustrations</h3>
-          <p>Creating vibrant digital and hand-drawn illustrations that bring stories to life. From character design to editorial illustrations, combining artistic vision with technical skill to produce compelling visual narratives.</p>
-          <div class="project-tech">
-            <span class="tech-tag">Adobe Illustrator</span>
-            <span class="tech-tag">Sketchbook</span>
-            <span class="tech-tag">Character Design</span>
-            <span class="tech-tag">Digital Art</span>
-          </div>
-          <a href="illustrations.html" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Project 2 - Logo & Branding -->
-      <div class="project-item">
-        <div class="project-visual">
-  <img src="images/logobranding.png" alt="Logo & Branding Portfolio Preview" class="project-image" loading="lazy">
-</div>
-        <div class="project-details">
-          <div class="project-number">02</div>
-          <h3>Logo & Branding</h3>
-          <p>Creating distinctive visual identities that capture brand essence. From concept to execution, crafting memorable logos and comprehensive brand systems that resonate with audiences and build lasting recognition.</p>
-          <div class="project-tech">
-            <span class="tech-tag">Adobe Illustrator</span>
-            <span class="tech-tag">Figma</span>
-            <span class="tech-tag">Brand Strategy</span>
-            <span class="tech-tag">Typography</span>
-          </div>
-          <a href="logobranding.html" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Project 3 - Web Design -->
-      <div class="project-item">
-        <div class="project-visual">
-  <img src="images/webdesign.png" alt="Web Design Portfolio Preview" class="project-image" loading="lazy">
-</div>
-        <div class="project-details">
-          <div class="project-number">03</div>
-          <h3>Web Design</h3>
-          <p>Designing beautiful, user-centered digital experiences with intuitive interfaces. Crafting responsive layouts and interactive prototypes that balance aesthetics with usability and accessibility standards.</p>
-          <div class="project-tech">
-            <span class="tech-tag">Figma</span>
-            <span class="tech-tag">UI/UX Design</span>
-            <span class="tech-tag">Responsive Design</span>
-            <span class="tech-tag">Prototyping</span>
-          </div>
-          <a href="#" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-
-      <!-- Project 4 - Research -->
-      <div class="project-item">
-        <div class="project-visual">
-  <img src="images/research.png" alt="Research Portfolio Preview" class="project-image" loading="lazy">
-</div>
-        <div class="project-details">
-          <div class="project-number">04</div>
-          <h3>Research</h3>
-          <p>Exploring emerging technologies and innovative solutions through systematic investigation. Conducting user studies, prototyping new concepts, and documenting findings for future development and implementation.</p>
-          <div class="project-tech">
-            <span class="tech-tag">UX Research</span>
-            <span class="tech-tag">Data Analysis</span>
-            <span class="tech-tag">User Testing</span>
-            <span class="tech-tag">Documentation</span>
-          </div>
-          <a href="#" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-<section id="skills" class="skills-section">
-  <div class="section-title">
-    <h2>Expertise</h2>
-    <p>Core competencies and technical skills</p>
+    <div class="logo-name">Jerome Bustarga</div>
   </div>
+  <button class="start-button" id="startButton">Start</button>
+</div>
 
-  <div class="skills-grid">
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-code"></i>
-      </div>
-      <h3>Web Development</h3>
-      <p>Building full-stack web applications with Django, Python, Spring Boot, and Java with scalable architecture.</p>
+<div id="gameContainer">
+  <div class="game-arena" id="gameArena">
+    <div class="level-indicator" id="levelIndicator">Main Hub</div>
+    
+    <div class="character" id="character">
+      <canvas id="characterCanvas" width="40" height="60"></canvas>
     </div>
 
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-palette"></i>
-      </div>
-      <h3>Graphic Design</h3>
-      <p>Creating visual content with Photoshop, Illustrator, and InDesign for impactful brand communication.</p>
-    </div>
+    <!-- MAIN LEVEL - GRID PLATFORMER -->
+    <div class="main-level" id="mainLevel"></div>
 
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-video"></i>
-      </div>
-      <h3>Video Production</h3>
-      <p>Producing cinematic content with Premiere Pro, After Effects, and professional filmmaking techniques.</p>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-camera"></i>
-      </div>
-      <h3>Photography</h3>
-      <p>Capturing compelling visuals with professional photo editing and visual storytelling expertise.</p>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-pen-nib"></i>
-      </div>
-      <h3>Branding & Design</h3>
-      <p>Developing comprehensive brand identities with logo design and cohesive design systems.</p>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-wand-magic-sparkles"></i>
-      </div>
-      <h3>Motion Graphics</h3>
-      <p>Animating dynamic visuals with After Effects for engaging motion design and visual effects.</p>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-chart-line"></i>
-      </div>
-      <h3>Data Analytics</h3>
-      <p>Analyzing and visualizing data to uncover insights and drive data-informed decision making.</p>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">
-        <i class="fa-solid fa-book-open"></i>
-      </div>
-      <h3>Digital Humanities</h3>
-      <p>Applying computational methods to humanistic inquiry, bridging technology and liberal arts.</p>
-    </div>
+    <!-- STUDIO LEVEL - GRID MAZE -->
+    <div class="studio-level" id="studioLevel"></div>
   </div>
-</section>
+</div>
 
-  <section id="contact" class="contact-section">
-    <div class="contact-content">
-      <h2>Let's Connect</h2>
-      <p>Open to discussing new projects, creative collaborations, or opportunities to bring your ideas to life.</p>
-      
-      <div class="hero-cta">
-        <a href="mailto:your.email@example.com" class="btn btn-primary">
-          <i class="fa-solid fa-envelope"></i>
-          Send Message
-        </a>
-      </div>
-
-      <div class="social-links" style="margin-top: 40px;">
-        <a href="https://github.com/jhb09808" target="_blank" class="social-link">
-          <i class="fa-brands fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/jeromebustarga0321/" target="_blank" class="social-link">
-          <i class="fa-brands fa-linkedin"></i>
-        </a>
-        <a href="#" class="social-link">
-          <i class="fa-brands fa-twitter"></i>
-        </a>
-        <a href="#" class="social-link">
-          <i class="fa-brands fa-dribbble"></i>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <p>© 2025 Jerome Bustarga. Thoughtfully designed & built.</p>
-  </footer>
-</main>
+<footer class="desktop-footer">
+  © 2025 Jerome Bustarga. All rights reserved.
+</footer>
 
 <script>
-// Lightbulb power functionality
-const lightbulbContainer = document.getElementById('lightbulbContainer');
-const lightbulb = document.getElementById('lightbulb');
-const overlay = document.getElementById('overlay');
-const main = document.getElementById('mainContent');
+// Only run game code on desktop
+const isDesktop = window.innerWidth >= 769;
 
-let isPoweredOn = false;
+if (isDesktop) {
+  const lightbulbContainer = document.getElementById('lightbulbContainer');
+  const startButton = document.getElementById('startButton');
+  const levelIndicator = document.getElementById('levelIndicator');
+  let isPoweredOn = false;
 
-lightbulb.addEventListener('click', () => {
-  if (!isPoweredOn) {
-    isPoweredOn = true;
-    document.body.classList.add('power-on');
-    setTimeout(() => {
-      overlay.style.opacity = '0';
-      main.style.opacity = '1';
-      setTimeout(() => overlay.style.display = 'none', 2000);
-    }, 300);
-  }
-});
-
-// Icon dropdown menu toggle
-const iconDropdownBtn = document.getElementById('iconDropdownBtn');
-const iconMenu = document.getElementById('iconMenu');
-
-iconDropdownBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  iconMenu.classList.toggle('show');
-});
-
-// Close dropdown when clicking outside
-window.addEventListener('click', (e) => {
-  if (!e.target.closest('.icon-dropdown')) {
-    iconMenu.classList.remove('show');
-  }
-});
-
-// Scroll animations
-const observerOptions = {
-  threshold: 0.2,
-  rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
+  startButton.addEventListener('click', () => {
+    if (!isPoweredOn) {
+      isPoweredOn = true;
+      document.body.classList.add('power-on');
+      
+      // Show instructions
+      const instructions = document.createElement('div');
+      instructions.className = 'game-instructions';
+      instructions.id = 'gameInstructions';
+      instructions.innerHTML = `
+        Use <span class="key-hint">←</span> <span class="key-hint">→</span> to move • <span class="key-hint">↑</span> to jump • <span class="key-hint">SPACE</span> to enter doors
+      `;
+      document.body.appendChild(instructions);
+      
+      requestAnimationFrame(() => {
+        const arenaRect = gameArena.getBoundingClientRect();
+        const cellWidth = arenaRect.width / 30;
+        const cellHeight = arenaRect.height / 20;
+        
+        charX = (cellWidth * 15) - 20;
+        charY = (cellHeight * 10) - 30;
+        
+        character.style.left = charX + 'px';
+        character.style.top = charY + 'px';
+        
+        isGrounded = false;
+        velocityY = 0;
+        physicsActive = true;
+      });
     }
   });
-}, observerOptions);
 
-// Observe all project items and skill cards
-document.querySelectorAll('.project-item, .skill-card').forEach(item => {
-  observer.observe(item);
-});
+  const gameContainer = document.getElementById('gameContainer');
 
-// Smooth scrolling for navigation
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-// Subtle parallax effect on scroll
-let lastScrollY = window.scrollY;
-const logoNav = document.getElementById('logoNav');
-const bgTexts = document.querySelectorAll('.bg-text');
-
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY;
-  const orbs = document.querySelectorAll('.orb');
-  
-  // Orb parallax
-  orbs.forEach((orb, index) => {
-    const speed = (index + 1) * 0.2;
-    orb.style.transform = `translateY(${scrollY * speed}px)`;
-  });
-  
-  // Background text parallax
-  bgTexts.forEach((text, index) => {
-    let speed = 0.3;
-    let direction;
+  document.addEventListener('mousemove', (e) => {
+    if (!isPoweredOn) return;
     
-    // Alternate directions: 0 moves right, 1 moves left, 2 moves right
-    if (index === 0) {
-      direction = 1; // moves right
-    } else if (index === 1) {
-      direction = -1; // moves left
+    const rect = gameContainer.getBoundingClientRect();
+    const isInside = (
+      e.clientX >= rect.left &&
+      e.clientX <= rect.right &&
+      e.clientY >= rect.top &&
+      e.clientY <= rect.bottom
+    );
+    
+    if (isInside) {
+      gameContainer.classList.add('hide-cursor');
     } else {
-      direction = 1; // moves right
+      gameContainer.classList.remove('hide-cursor');
     }
-    
-    text.style.transform = `translateX(${scrollY * speed * direction}px)`;
   });
-  
-  // Change logo text on scroll and move icon menu
-  if (scrollY > 100) {
-    logoNav.classList.add('scrolled');
-    document.body.classList.add('scrolled');
-  } else {
-    logoNav.classList.remove('scrolled');
-    document.body.classList.remove('scrolled');
-  }
-  
-  lastScrollY = scrollY;
-});
 
-// Refined mouse trail with p5.js
-new p5((p) => {
-  let trails = [];
-  
-  p.setup = () => {
-    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-    canvas.position(0, 0);
-    canvas.style('pointer-events', 'none');
-    canvas.style('z-index', '9998');
-    canvas.style('position', 'fixed');
-    canvas.style('top', '0');
-    canvas.style('left', '0');
-    p.clear();
-    p.noStroke();
+  const charCanvas = document.getElementById('characterCanvas');
+  const charCtx = charCanvas.getContext('2d');
+
+  function drawCharacter() {
+    charCtx.clearRect(0, 0, 40, 60);
+    charCtx.fillStyle = '#f47921';
+    charCtx.fillRect(12, 8, 16, 16);
+    charCtx.fillStyle = '#0d0d0d';
+    charCtx.fillRect(15, 13, 4, 4);
+    charCtx.fillRect(21, 13, 4, 4);
+    charCtx.fillStyle = '#e8e8e8';
+    charCtx.fillRect(10, 24, 20, 20);
+    charCtx.fillStyle = '#f47921';
+    charCtx.fillRect(10, 30, 20, 4);
+    charCtx.fillStyle = '#a0a0a0';
+    charCtx.fillRect(12, 44, 6, 12);
+    charCtx.fillRect(22, 44, 6, 12);
+  }
+
+  drawCharacter();
+
+  const character = document.getElementById('character');
+  const gameArena = document.getElementById('gameArena');
+  const mainLevel = document.getElementById('mainLevel');
+  const studioLevel = document.getElementById('studioLevel');
+
+  let charX = 100;
+  let charY = 100;
+  let velocityX = 0;
+  let velocityY = 0;
+  let isGrounded = false;
+  let currentLevel = 'main';
+  let physicsActive = false;
+
+  const GRAVITY = 0.6;
+  const JUMP_FORCE = -14;
+  const MOVE_SPEED = 5;
+  const MAX_FALL_SPEED = 12;
+
+  const keys = {
+    ArrowLeft: false,
+    ArrowRight: false,
+    ArrowUp: false,
+    ArrowDown: false,
+    Space: false
   };
 
-  p.draw = () => {
-    p.clear();
-    
-    for (let i = trails.length - 1; i >= 0; i--) {
-      const point = trails[i];
-      
-      // Subtle white glow
-      p.fill(255, 255, 255, point.alpha * 0.08);
-      p.ellipse(point.x, point.y, point.size * 2);
-      
-      // Core
-      p.fill(255, 255, 255, point.alpha * 0.3);
-      p.ellipse(point.x, point.y, point.size);
-      
-      point.alpha -= 3;
-      point.size *= 0.96;
-      if (point.alpha <= 0) trails.splice(i, 1);
-    }
+  // Main level grid layout
+  const mainLevelGrid = [];
 
-    const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
-    if (d > 0) {
-      const steps = p.max(1, d * 0.5);
-      for (let i = 0; i <= steps; i++) {
-        const t = i / steps;
-        const x = p.lerp(p.pmouseX, p.mouseX, t);
-        const y = p.lerp(p.pmouseY, p.mouseY, t);
-        trails.push({
-          x,
-          y,
-          size: p.random(6, 10),
-          alpha: p.random(120, 150)
-        });
+  for (let row = 0; row < 20; row++) {
+    mainLevelGrid[row] = [];
+    for (let col = 0; col < 30; col++) {
+      if (row === 0 || row === 19 || col === 0 || col === 29) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else if (row >= 17) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else if (col >= 3 && col <= 9 && row === 14) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else if (col >= 5 && col <= 11 && row === 10) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else if (col >= 20 && col <= 26 && row === 14) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else if (col >= 18 && col <= 24 && row === 10) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else if (col >= 13 && col <= 16 && row === 6) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else if (col >= 12 && col <= 17 && row === 13) {
+        mainLevelGrid[row][col] = 1;
+      }
+      else {
+        mainLevelGrid[row][col] = 0;
       }
     }
+  }
 
-    if (trails.length > 600) trails.splice(0, trails.length - 600);
-  };
+  const mainDoorData = [
+    { row: 12, col: 6, id: 'doorRepository', icon: 'fa-door-open', label: 'Repository', type: 'repository' },
+    { row: 8, col: 21, id: 'doorStudio', icon: 'fa-door-open', label: 'Studio', type: 'studio' },
+    { row: 4, col: 14, id: 'doorHome', icon: 'fa-door-closed', label: 'Home', type: 'home' },
+    { row: 12, col: 23, id: 'doorAbout', icon: 'fa-user-circle', label: 'About', type: 'about' }
+  ];
 
-  p.windowResized = () => {
-    p.resizeCanvas(p.windowWidth, p.windowHeight);
-  };
-});
+  const studioMazeGrid = [];
+
+  for (let row = 0; row < 20; row++) {
+    studioMazeGrid[row] = [];
+    for (let col = 0; col < 30; col++) {
+      if (row === 0 || row === 19 || col === 0 || col === 29) {
+        studioMazeGrid[row][col] = 1;
+      }
+      else if ((col === 7 || col === 15 || col === 22) && (row < 6 || (row > 9 && row < 13) || row > 16)) {
+        studioMazeGrid[row][col] = 1;
+      }
+      else if ((row === 7 || row === 14) && (col < 6 || (col > 9 && col < 14) || (col > 17 && col < 21) || col > 24)) {
+        studioMazeGrid[row][col] = 1;
+      }
+      else {
+        studioMazeGrid[row][col] = 0;
+      }
+    }
+  }
+
+  const studioDoorData = [
+    { row: 4, col: 4, id: 'doorIllustrations', icon: 'fa-palette', label: 'Illustrations', type: 'illustrations' },
+    { row: 11, col: 11, id: 'doorBranding', icon: 'fa-tag', label: 'Branding', type: 'branding' },
+    { row: 4, col: 19, id: 'door3DArt', icon: 'fa-cube', label: '3D Art', type: '3dart' },
+    { row: 4, col: 26, id: 'doorWebdesign', icon: 'fa-code', label: 'Web Design', type: 'webdesign' },
+    { row: 4, col: 11, id: 'doorFilm', icon: 'fa-film', label: 'Film', type: 'film' },
+    { row: 11, col: 19, id: 'doorBack', icon: 'fa-arrow-left', label: 'Back', type: 'back' }
+  ];
+
+  function buildMainGrid() {
+    mainLevel.innerHTML = '';
+    
+    for (let row = 0; row < mainLevelGrid.length; row++) {
+      for (let col = 0; col < mainLevelGrid[row].length; col++) {
+        const cell = document.createElement('div');
+        cell.className = 'main-grid-cell';
+        cell.dataset.row = row;
+        cell.dataset.col = col;
+        
+        if (mainLevelGrid[row][col] === 1) {
+          cell.classList.add('wall');
+        } else {
+          cell.classList.add('path');
+        }
+        
+        const doorInfo = mainDoorData.find(d => d.row === row && d.col === col);
+        if (doorInfo) {
+          const door = document.createElement('div');
+          door.className = 'door';
+          door.id = doorInfo.id;
+          door.dataset.type = doorInfo.type;
+          
+          const prompt = document.createElement('div');
+          prompt.className = 'entrance-prompt';
+          prompt.textContent = 'Press SPACE';
+          
+          const icon = document.createElement('div');
+          icon.className = 'door-icon';
+          icon.innerHTML = `<i class="fa-solid ${doorInfo.icon}"></i>`;
+          
+          const label = document.createElement('div');
+          label.className = 'door-label';
+          label.textContent = doorInfo.label;
+          
+          door.appendChild(prompt);
+          door.appendChild(icon);
+          door.appendChild(label);
+          cell.appendChild(door);
+        }
+        
+        mainLevel.appendChild(cell);
+      }
+    }
+  }
+
+  function buildStudioGrid() {
+    studioLevel.innerHTML = '';
+    
+    for (let row = 0; row < studioMazeGrid.length; row++) {
+      for (let col = 0; col < studioMazeGrid[row].length; col++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        cell.dataset.row = row;
+        cell.dataset.col = col;
+        
+        if (studioMazeGrid[row][col] === 1) {
+          cell.classList.add('wall');
+        } else {
+          cell.classList.add('path');
+        }
+        
+        const doorInfo = studioDoorData.find(d => d.row === row && d.col === col);
+        if (doorInfo) {
+          const door = document.createElement('div');
+          door.className = 'studio-door';
+          door.id = doorInfo.id;
+          door.dataset.type = doorInfo.type;
+          
+          const prompt = document.createElement('div');
+          prompt.className = 'entrance-prompt';
+          prompt.textContent = 'Press SPACE';
+          
+          const icon = document.createElement('div');
+          icon.className = 'studio-door-icon';
+          icon.innerHTML = `<i class="fa-solid ${doorInfo.icon}"></i>`;
+          
+          const label = document.createElement('div');
+          label.className = 'studio-door-label';
+          label.textContent = doorInfo.label;
+          
+          door.appendChild(prompt);
+          door.appendChild(icon);
+          door.appendChild(label);
+          cell.appendChild(door);
+        }
+        
+        studioLevel.appendChild(cell);
+      }
+    }
+  }
+
+  buildMainGrid();
+  buildStudioGrid();
+  mainLevel.classList.add('active');
+
+  function switchToStudioLevel() {
+    currentLevel = 'studio';
+    mainLevel.classList.remove('active');
+    studioLevel.classList.add('active');
+    levelIndicator.textContent = 'Studio';
+    
+    // Update instructions
+    const existingInstructions = document.getElementById('gameInstructions');
+    if (existingInstructions) existingInstructions.remove();
+    const instructions = document.createElement('div');
+    instructions.className = 'game-instructions';
+    instructions.id = 'gameInstructions';
+    instructions.innerHTML = `
+      Use <span class="key-hint">←</span> <span class="key-hint">↑</span> <span class="key-hint">↓</span> <span class="key-hint">→</span> to move • <span class="key-hint">SPACE</span> to enter doors
+    `;
+    document.body.appendChild(instructions);
+    
+    velocityX = 0;
+    velocityY = 0;
+    isGrounded = false;
+    physicsActive = false;
+    
+    setTimeout(() => {
+      const arenaRect = gameArena.getBoundingClientRect();
+      const cellWidth = arenaRect.width / 30;
+      const cellHeight = arenaRect.height / 20;
+      
+      charX = (cellWidth * 17) + (cellWidth / 2) - 20;
+      charY = (cellHeight * 11) + (cellHeight / 2) - 30;
+      
+      character.style.left = charX + 'px';
+      character.style.top = charY + 'px';
+      
+      physicsActive = true;
+    }, 100);
+  }
+
+  function switchToMainLevel() {
+    currentLevel = 'main';
+    studioLevel.classList.remove('active');
+    mainLevel.classList.add('active');
+    levelIndicator.textContent = 'Main Hub';
+    
+    // Update instructions
+    const existingInstructions = document.getElementById('gameInstructions');
+    if (existingInstructions) existingInstructions.remove();
+    const instructions = document.createElement('div');
+    instructions.className = 'game-instructions';
+    instructions.id = 'gameInstructions';
+    instructions.innerHTML = `
+      Use <span class="key-hint">←</span> <span class="key-hint">→</span> to move • <span class="key-hint">↑</span> to jump • <span class="key-hint">SPACE</span> to enter doors
+    `;
+    document.body.appendChild(instructions);
+    
+    velocityX = 0;
+    velocityY = 0;
+    isGrounded = false;
+    physicsActive = false;
+    
+    requestAnimationFrame(() => {
+      const arenaRect = gameArena.getBoundingClientRect();
+      const cellWidth = arenaRect.width / 30;
+      const cellHeight = arenaRect.height / 20;
+      
+      charX = (cellWidth * 15) - 20;
+      charY = (cellHeight * 10) - 30;
+      
+      character.style.left = charX + 'px';
+      character.style.top = charY + 'px';
+      
+      physicsActive = true;
+    });
+  }
+
+  // Keyboard controls
+  window.addEventListener('keydown', (e) => {
+    if (e.code in keys || e.code === 'Space') {
+      e.preventDefault();
+      if (e.code === 'Space') {
+        keys.Space = true;
+        checkDoorEntry();
+      } else if (e.code === 'ArrowUp') {
+        keys.ArrowUp = true;
+        if (currentLevel === 'main' && isGrounded) {
+          velocityY = JUMP_FORCE;
+          isGrounded = false;
+        }
+      } else {
+        keys[e.code] = true;
+      }
+    }
+  });
+
+  window.addEventListener('keyup', (e) => {
+    if (e.code in keys || e.code === 'Space') {
+      if (e.code === 'Space') {
+        keys.Space = false;
+      } else {
+        keys[e.code] = false;
+      }
+    }
+  });
+
+  function getWalls() {
+    if (currentLevel === 'main') {
+      return Array.from(document.querySelectorAll('.main-grid-cell.wall'));
+    } else {
+      return Array.from(document.querySelectorAll('.grid-cell.wall'));
+    }
+  }
+
+  function checkPlatformCollision(x, y, width, height) {
+    const walls = getWalls();
+    const arenaRect = gameArena.getBoundingClientRect();
+    
+    const charWidth = 40;
+    const charHeight = 60;
+    
+    const charBox = {
+      left: arenaRect.left + x,
+      right: arenaRect.left + x + charWidth,
+      top: arenaRect.top + y,
+      bottom: arenaRect.top + y + charHeight
+    };
+    
+    for (let wall of walls) {
+      const wallRect = wall.getBoundingClientRect();
+      
+      if (charBox.bottom >= wallRect.top - 2 &&
+          charBox.bottom <= wallRect.top + 15 &&
+          charBox.right > wallRect.left + 5 &&
+          charBox.left < wallRect.right - 5 &&
+          velocityY >= 0) {
+        return {
+          collision: true,
+          platformTop: wallRect.top - arenaRect.top
+        };
+      }
+    }
+    
+    return { collision: false };
+  }
+
+  function isWallAt(x, y) {
+    const arenaRect = gameArena.getBoundingClientRect();
+    const charWidth = 40;
+    const charHeight = 60;
+    
+    const margin = 6;
+    const charBox = {
+      left: arenaRect.left + x + margin,
+      right: arenaRect.left + x + charWidth - margin,
+      top: arenaRect.top + y + margin,
+      bottom: arenaRect.top + y + charHeight - margin
+    };
+    
+    const walls = getWalls();
+    
+    for (let wall of walls) {
+      const wallRect = wall.getBoundingClientRect();
+      
+      const overlapping = !(
+        charBox.right < wallRect.left ||
+        charBox.left > wallRect.right ||
+        charBox.bottom < wallRect.top ||
+        charBox.top > wallRect.bottom
+      );
+      
+      if (overlapping) {
+        return true;
+      }
+    }
+    
+    return false;
+  }
+
+  function moveCharacter() {
+    if (!isPoweredOn || !physicsActive) {
+      requestAnimationFrame(moveCharacter);
+      return;
+    }
+    
+    const arenaRect = gameArena.getBoundingClientRect();
+    const charWidth = 40;
+    const charHeight = 60;
+    
+    if (currentLevel === 'main') {
+      if (keys.ArrowLeft) {
+        velocityX = -MOVE_SPEED;
+      } else if (keys.ArrowRight) {
+        velocityX = MOVE_SPEED;
+      } else {
+        velocityX = 0;
+      }
+      
+      if (!isGrounded) {
+        velocityY += GRAVITY;
+        if (velocityY > MAX_FALL_SPEED) {
+          velocityY = MAX_FALL_SPEED;
+        }
+      }
+      
+      let newX = charX + velocityX;
+      let newY = charY + velocityY;
+      
+      if (newX < 5) newX = 5;
+      if (newX > arenaRect.width - charWidth - 5) newX = arenaRect.width - charWidth - 5;
+      
+      if (!isWallAt(newX, charY)) {
+        charX = newX;
+      } else {
+        velocityX = 0;
+      }
+      
+      const collision = checkPlatformCollision(charX, newY, charWidth, charHeight);
+      
+      if (collision.collision) {
+        charY = collision.platformTop - charHeight + 2;
+        velocityY = 0;
+        isGrounded = true;
+      } else {
+        if (!isWallAt(charX, newY)) {
+          charY = newY;
+          isGrounded = false;
+        } else {
+          if (velocityY > 0) {
+            velocityY = 0;
+            isGrounded = true;
+          }
+        }
+      }
+      
+      if (charY > arenaRect.height - charHeight - 5) {
+        charY = arenaRect.height - charHeight - 5;
+        velocityY = 0;
+        isGrounded = true;
+      }
+      
+      if (isGrounded) {
+        const stillOnGround = checkPlatformCollision(charX, charY + 2, charWidth, charHeight);
+        if (!stillOnGround.collision && charY < arenaRect.height - charHeight - 5) {
+          isGrounded = false;
+        }
+      }
+      
+    } else {
+      let newX = charX;
+      let newY = charY;
+      const speed = 4;
+      
+      if (keys.ArrowLeft && charX > 5) {
+        newX = charX - speed;
+      }
+      if (keys.ArrowRight && charX < arenaRect.width - charWidth - 5) {
+        newX = charX + speed;
+      }
+      if (keys.ArrowUp && charY > 5) {
+        newY = charY - speed;
+      }
+      if (keys.ArrowDown && charY < arenaRect.height - charHeight - 5) {
+        newY = charY + speed;
+      }
+      
+      if (!isWallAt(newX, charY)) {
+        charX = newX;
+      }
+      
+      if (!isWallAt(charX, newY)) {
+        charY = newY;
+      }
+    }
+    
+    character.style.left = charX + 'px';
+    character.style.top = charY + 'px';
+    
+    checkDoorCollision();
+    requestAnimationFrame(moveCharacter);
+  }
+
+  function checkDoorCollision() {
+    const charRect = character.getBoundingClientRect();
+    
+    if (currentLevel === 'main') {
+      const doors = document.querySelectorAll('.door');
+      doors.forEach(door => {
+        updateDoorState(door, isColliding(charRect, door.getBoundingClientRect()));
+      });
+    } else {
+      const studioDoors = document.querySelectorAll('.studio-door');
+      studioDoors.forEach(door => {
+        updateDoorState(door, isColliding(charRect, door.getBoundingClientRect()));
+      });
+    }
+  }
+
+  function updateDoorState(door, colliding) {
+    if (colliding) {
+      door.classList.add('can-enter');
+    } else {
+      door.classList.remove('can-enter');
+    }
+  }
+
+  function isColliding(rect1, rect2) {
+    return !(rect1.right < rect2.left || 
+             rect1.left > rect2.right || 
+             rect1.bottom < rect2.top || 
+             rect1.top > rect2.bottom);
+  }
+
+  function checkDoorEntry() {
+    let activeDoor;
+    
+    if (currentLevel === 'main') {
+      activeDoor = document.querySelector('.door.can-enter');
+    } else {
+      activeDoor = document.querySelector('.studio-door.can-enter');
+    }
+    
+    if (activeDoor) {
+      const doorType = activeDoor.dataset.type;
+      
+      if (doorType === 'studio') {
+        switchToStudioLevel();
+      } else if (doorType === 'back') {
+        switchToMainLevel();
+      } else {
+        enterDoor(doorType);
+      }
+    }
+  }
+
+  function enterDoor(doorType) {
+    switch(doorType) {
+      case 'repository':
+        window.location.href = 'repository.html';
+        break;
+      case 'home':
+        window.location.href = 'index2.html';
+        break;
+      case 'about':
+        window.location.href = 'about.html';
+        break;
+      case 'illustrations':
+        window.location.href = 'illustrations.html';
+        break;
+      case 'branding':
+        window.location.href = 'logobranding.html';
+        break;
+      case 'webdesign':
+        window.location.href = 'webdesign.html';
+        break;
+      case 'film':
+        window.location.href = 'film.html';
+        break;
+      case '3dart':
+        window.location.href = '3d-art.html';
+        break;
+    }
+  }
+
+  moveCharacter();
+
+  // Mouse trail effect
+  new p5((p) => {
+    let trails = [];
+    
+    p.setup = () => {
+      const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+      canvas.position(0, 0);
+      canvas.style('pointer-events', 'none');
+      canvas.style('z-index', '1');
+      canvas.style('position', 'fixed');
+      canvas.style('top', '0');
+      canvas.style('left', '0');
+      p.clear();
+      p.noStroke();
+    };
+
+    p.draw = () => {
+      p.clear();
+      
+      for (let i = trails.length - 1; i >= 0; i--) {
+        const point = trails[i];
+        
+        p.fill(255, 255, 255, point.alpha * 0.08);
+        p.ellipse(point.x, point.y, point.size * 2);
+        
+        p.fill(255, 255, 255, point.alpha * 0.3);
+        p.ellipse(point.x, point.y, point.size);
+        
+        point.alpha -= 3;
+        point.size *= 0.96;
+        if (point.alpha <= 0) trails.splice(i, 1);
+      }
+
+      const d = p.dist(p.mouseX, p.mouseY, p.pmouseX, p.pmouseY);
+      if (d > 0) {
+        const steps = p.max(1, d * 0.5);
+        for (let i = 0; i <= steps; i++) {
+          const t = i / steps;
+          const x = p.lerp(p.pmouseX, p.mouseX, t);
+          const y = p.lerp(p.pmouseY, p.mouseY, t);
+          trails.push({
+            x,
+            y,
+            size: p.random(6, 10),
+            alpha: p.random(120, 150)
+          });
+        }
+      }
+
+      if (trails.length > 600) trails.splice(0, trails.length - 600);
+    };
+
+    p.windowResized = () => {
+      p.resizeCanvas(p.windowWidth, p.windowHeight);
+    };
+  });
+}
 </script>
 </body>
 </html>
