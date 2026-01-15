@@ -985,6 +985,133 @@ section {
   transform: translateX(4px);
 }
 
+/* Warpzone CTA Section */
+.warpzone-cta-section {
+  padding: 60px 60px 100px;
+  max-width: 1300px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.warpzone-cta-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 56px 72px;
+  background: rgba(244, 121, 33, 0.03);
+  border: 1px solid rgba(244, 121, 33, 0.12);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.warpzone-cta-content {
+  flex: 1;
+  max-width: 480px;
+}
+
+.warpzone-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(244, 121, 33, 0.08);
+  border: 1px solid rgba(244, 121, 33, 0.2);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+.warpzone-cta-content h2 {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.warpzone-cta-content p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 28px;
+  font-weight: 300;
+}
+
+.warpzone-cta-visual {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.warp-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(244, 121, 33, 0.25);
+  border-radius: 50%;
+  animation: warpPulse 3s ease-in-out infinite;
+}
+
+.ring-1 {
+  width: 80px;
+  height: 80px;
+  animation-delay: 0s;
+}
+
+.ring-2 {
+  width: 130px;
+  height: 130px;
+  animation-delay: 0.5s;
+  border-color: rgba(244, 121, 33, 0.18);
+}
+
+.ring-3 {
+  width: 180px;
+  height: 180px;
+  animation-delay: 1s;
+  border-color: rgba(244, 121, 33, 0.1);
+}
+
+.warp-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle, var(--accent) 0%, rgba(244, 121, 33, 0.4) 50%, transparent 70%);
+  border-radius: 50%;
+  animation: coreGlow 2s ease-in-out infinite;
+}
+
+@keyframes warpPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.6;
+  }
+}
+
+@keyframes coreGlow {
+  0%, 100% {
+    box-shadow: 0 0 16px rgba(244, 121, 33, 0.5), 0 0 32px rgba(244, 121, 33, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(244, 121, 33, 0.7), 0 0 48px rgba(244, 121, 33, 0.4);
+  }
+}
+
 /* Skills Section */
 .skills-section {
   padding: 60px 60px 140px;
@@ -1163,6 +1290,14 @@ footer {
     padding: 60px 40px 100px;
   }
 
+  .warpzone-cta-section {
+    padding: 40px 40px 80px;
+  }
+
+  .warpzone-cta-container {
+    padding: 48px 56px;
+  }
+
   .contact-section {
     padding: 100px 40px;
   }
@@ -1329,6 +1464,53 @@ footer {
     font-size: 13px;
   }
 
+  /* Warpzone CTA responsive */
+  .warpzone-cta-section {
+    padding: 40px 24px 60px;
+  }
+
+  .warpzone-cta-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 36px 28px;
+    gap: 32px;
+  }
+
+  .warpzone-cta-content {
+    max-width: 100%;
+  }
+
+  .warpzone-icon {
+    margin: 0 auto 20px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .warpzone-cta-content h2 {
+    font-size: 26px;
+  }
+
+  .warpzone-cta-content p {
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .warpzone-cta-visual {
+    width: 180px;
+    height: 180px;
+  }
+
+  .ring-1 { width: 60px; height: 60px; }
+  .ring-2 { width: 100px; height: 100px; }
+  .ring-3 { width: 140px; height: 140px; }
+  .warp-core { width: 24px; height: 24px; }
+
+  /* Disable warpzone animations on mobile */
+  .warp-ring, .warp-core {
+    animation: none;
+  }
+
   .skills-grid {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -1419,6 +1601,35 @@ footer {
     padding: 5px 10px;
     font-size: 10px;
   }
+
+  /* Warpzone smaller mobile */
+  .warpzone-cta-container {
+    padding: 28px 20px;
+  }
+
+  .warpzone-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .warpzone-cta-content h2 {
+    font-size: 22px;
+  }
+
+  .warpzone-cta-content p {
+    font-size: 13px;
+  }
+
+  .warpzone-cta-visual {
+    width: 140px;
+    height: 140px;
+  }
+
+  .ring-1 { width: 45px; height: 45px; }
+  .ring-2 { width: 75px; height: 75px; }
+  .ring-3 { width: 105px; height: 105px; }
+  .warp-core { width: 20px; height: 20px; }
 
   .contact-content h2 {
     font-size: 32px;
@@ -1632,6 +1843,29 @@ footer {
           </a>
         </div>
       </article>
+    </div>
+  </section>
+
+  <!-- Warpzone CTA Section -->
+  <section class="warpzone-cta-section">
+    <div class="warpzone-cta-container">
+      <div class="warpzone-cta-content">
+        <div class="warpzone-icon">
+          <i class="fa-solid fa-rocket"></i>
+        </div>
+        <h2>Enter the Warpzone</h2>
+        <p>Explore more projects, experiments, and creative explorations in an interactive experience.</p>
+        <a href="warpzone.html" class="btn btn-primary">
+          Launch Warpzone
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+      <div class="warpzone-cta-visual">
+        <div class="warp-ring ring-1"></div>
+        <div class="warp-ring ring-2"></div>
+        <div class="warp-ring ring-3"></div>
+        <div class="warp-core"></div>
+      </div>
     </div>
   </section>
 
