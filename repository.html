@@ -920,16 +920,6 @@
             color: var(--text-secondary);
         }
 
-        .mobile-project-coming-soon {
-            padding: 10px 16px;
-            background: rgba(244, 121, 33, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 12px;
-            color: var(--terminal-dim);
-            text-align: center;
-        }
-
         .mobile-section-title {
             font-family: 'JetBrains Mono', monospace;
             font-size: 12px;
@@ -1134,41 +1124,33 @@
                     
                     <div class="project-group">
                         <div class="project-group-title">/experiments</div>
-                        <div class="project-item" data-project="genart">
-                            <div class="project-icon"><i class="fa-solid fa-palette"></i></div>
+                        <div class="project-item" data-project="decay">
+                            <div class="project-icon"><i class="fa-solid fa-biohazard"></i></div>
                             <div class="project-info">
-                                <div class="project-codename">genart</div>
-                                <div class="project-meta">Generative Art Gallery</div>
+                                <div class="project-codename">decay</div>
+                                <div class="project-meta">Image Corruption Simulator</div>
                             </div>
-                            <div class="project-status dev"></div>
+                            <div class="project-status live"></div>
                         </div>
                         <div class="project-item" data-project="mirror">
                             <div class="project-icon"><i class="fa-solid fa-chart-line"></i></div>
                             <div class="project-info">
                                 <div class="project-codename">mirror</div>
-                                <div class="project-meta">Algorithm Visualization</div>
+                                <div class="project-meta">Algorithm Visualization Research</div>
                             </div>
-                            <div class="project-status dev"></div>
+                            <div class="project-status live"></div>
                         </div>
                     </div>
 
                     <div class="project-group">
                         <div class="project-group-title">/advocacy</div>
-                        <div class="project-item" data-project="konektado">
-                            <div class="project-icon"><i class="fa-solid fa-globe"></i></div>
+                        <div class="project-item" data-project="koneksyon">
+                            <div class="project-icon"><i class="fa-solid fa-globe-asia"></i></div>
                             <div class="project-info">
-                                <div class="project-codename">konektado</div>
-                                <div class="project-meta">Digital Divide Research</div>
+                                <div class="project-codename">koneksyon</div>
+                                <div class="project-meta">Philippine Internet Map</div>
                             </div>
-                            <div class="project-status planned"></div>
-                        </div>
-                        <div class="project-item" data-project="liwanag">
-                            <div class="project-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                            <div class="project-info">
-                                <div class="project-codename">liwanag</div>
-                                <div class="project-meta">Financial Protection App</div>
-                            </div>
-                            <div class="project-status planned"></div>
+                            <div class="project-status live"></div>
                         </div>
                     </div>
                 </div>
@@ -1304,23 +1286,25 @@
 
             <div class="mobile-project-card">
                 <div class="mobile-project-header">
-                    <div class="mobile-project-icon"><i class="fa-solid fa-palette"></i></div>
+                    <div class="mobile-project-icon"><i class="fa-solid fa-biohazard"></i></div>
                     <div class="mobile-project-title-wrap">
-                        <div class="mobile-project-name">Generative Art Gallery</div>
-                        <div class="mobile-project-codename">/genart</div>
+                        <div class="mobile-project-name">Digital Decay</div>
+                        <div class="mobile-project-codename">/decay</div>
                     </div>
-                    <div class="mobile-project-status dev"></div>
+                    <div class="mobile-project-status live"></div>
                 </div>
                 <div class="mobile-project-desc">
-                    Interactive generative art experiments exploring algorithmic aesthetics and flow fields.
+                    Real-time image corruption simulator exploring digital preservation themes. Watch images rot through various decay algorithms.
                 </div>
                 <div class="mobile-project-tech">
-                    <span class="mobile-tech-tag">p5.js</span>
-                    <span class="mobile-tech-tag">WebGL</span>
-                    <span class="mobile-tech-tag">Canvas API</span>
+                    <span class="mobile-tech-tag">Rust</span>
+                    <span class="mobile-tech-tag">WebAssembly</span>
+                    <span class="mobile-tech-tag">React</span>
                 </div>
-                <div class="mobile-project-coming-soon">
-                    <i class="fa-solid fa-clock"></i> In Development
+                <div class="mobile-project-actions">
+                    <a href="https://github.com/jhb09808/digital-decay" target="_blank" class="mobile-project-btn mobile-project-btn-secondary">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
                 </div>
             </div>
 
@@ -1331,18 +1315,23 @@
                         <div class="mobile-project-name">The Algorithm Mirror</div>
                         <div class="mobile-project-codename">/mirror</div>
                     </div>
-                    <div class="mobile-project-status dev"></div>
+                    <div class="mobile-project-status live"></div>
                 </div>
                 <div class="mobile-project-desc">
-                    Research project visualizing YouTube algorithms through aesthetic data art.
+                    A web-based tool that transforms YouTube watch histories into interactive visualizations, revealing how recommendation algorithms shape our viewing habits.
                 </div>
                 <div class="mobile-project-tech">
-                    <span class="mobile-tech-tag">Data Viz</span>
-                    <span class="mobile-tech-tag">Python</span>
-                    <span class="mobile-tech-tag">D3.js</span>
+                    <span class="mobile-tech-tag">JavaScript</span>
+                    <span class="mobile-tech-tag">p5.js</span>
+                    <span class="mobile-tech-tag">Gemini API</span>
                 </div>
-                <div class="mobile-project-coming-soon">
-                    <i class="fa-solid fa-clock"></i> In Development
+                <div class="mobile-project-actions">
+                    <a href="https://jeromebustarga.com/algorithm-mirror/" target="_blank" class="mobile-project-btn mobile-project-btn-primary">
+                        <i class="fa-solid fa-external-link"></i> Try Tool
+                    </a>
+                    <a href="research.html" class="mobile-project-btn mobile-project-btn-secondary">
+                        <i class="fa-solid fa-file-lines"></i> Research
+                    </a>
                 </div>
             </div>
 
@@ -1351,43 +1340,25 @@
 
             <div class="mobile-project-card">
                 <div class="mobile-project-header">
-                    <div class="mobile-project-icon"><i class="fa-solid fa-globe"></i></div>
+                    <div class="mobile-project-icon"><i class="fa-solid fa-globe-asia"></i></div>
                     <div class="mobile-project-title-wrap">
-                        <div class="mobile-project-name">Konektado?</div>
-                        <div class="mobile-project-codename">/konektado</div>
+                        <div class="mobile-project-name">Koneksyon</div>
+                        <div class="mobile-project-codename">/koneksyon</div>
                     </div>
-                    <div class="mobile-project-status planned"></div>
+                    <div class="mobile-project-status live"></div>
                 </div>
                 <div class="mobile-project-desc">
-                    Advocacy project addressing digital literacy and the digital divide in the Philippines.
+                    Interactive visualization of internet connectivity disparities across Philippine regions using 2024 government survey data.
                 </div>
                 <div class="mobile-project-tech">
-                    <span class="mobile-tech-tag">UX Research</span>
-                    <span class="mobile-tech-tag">Advocacy</span>
+                    <span class="mobile-tech-tag">React</span>
+                    <span class="mobile-tech-tag">Leaflet</span>
+                    <span class="mobile-tech-tag">GeoJSON</span>
                 </div>
-                <div class="mobile-project-coming-soon">
-                    <i class="fa-solid fa-lightbulb"></i> Coming Soon
-                </div>
-            </div>
-
-            <div class="mobile-project-card">
-                <div class="mobile-project-header">
-                    <div class="mobile-project-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                    <div class="mobile-project-title-wrap">
-                        <div class="mobile-project-name">Liwanag</div>
-                        <div class="mobile-project-codename">/liwanag</div>
-                    </div>
-                    <div class="mobile-project-status planned"></div>
-                </div>
-                <div class="mobile-project-desc">
-                    Financial protection app designed for Filipino users against digital fraud.
-                </div>
-                <div class="mobile-project-tech">
-                    <span class="mobile-tech-tag">UX Design</span>
-                    <span class="mobile-tech-tag">Mobile</span>
-                </div>
-                <div class="mobile-project-coming-soon">
-                    <i class="fa-solid fa-lightbulb"></i> Coming Soon
+                <div class="mobile-project-actions">
+                    <a href="https://github.com/jhb09808/philippine-internet-map" target="_blank" class="mobile-project-btn mobile-project-btn-secondary">
+                        <i class="fa-brands fa-github"></i> GitHub
+                    </a>
                 </div>
             </div>
         </div>
@@ -1448,37 +1419,34 @@
                 github: 'https://github.com/jhb09808/Project-Race2Space',
                 status: 'live'
             },
-            'genart': {
-                name: 'Generative Art Gallery',
-                codename: 'genart',
-                icon: 'fa-palette',
-                description: 'Interactive generative art experiments exploring algorithmic aesthetics, flow fields, and particle systems. Created with p5.js and WebGL for real-time visual experiences.',
-                tech: ['p5.js', 'WebGL', 'Canvas API', 'JavaScript'],
-                status: 'dev'
+            'decay': {
+                name: 'Digital Decay',
+                codename: 'decay',
+                icon: 'fa-biohazard',
+                description: 'Real-time image corruption simulator exploring digital preservation themes. Built with Rust compiled to WebAssembly for native-speed pixel manipulation. Features multiple decay algorithms including bit rot, JPEG artifacts, color drift, and more.',
+                tech: ['Rust', 'WebAssembly', 'React', 'Canvas API'],
+                github: 'https://github.com/jhb09808/digital-decay',
+                status: 'live'
             },
             'mirror': {
                 name: 'The Algorithm Mirror',
                 codename: 'mirror',
                 icon: 'fa-chart-line',
-                description: 'Research project visualizing YouTube recommendation algorithms through aesthetic data art, making complex algorithmic systems tangible and understandable.',
-                tech: ['Data Visualization', 'Python', 'D3.js', 'Research'],
-                status: 'dev'
+                description: 'A web-based tool that transforms YouTube watch histories into interactive visualizations, revealing how recommendation algorithms shape our viewing habits through aesthetic data art. Achieved 91.2% categorization accuracy with 89.7% cost reduction using a hybrid AI approach.',
+                tech: ['JavaScript', 'p5.js', 'Canvas API', 'Gemini API'],
+                url: 'https://jeromebustarga.com/algorithm-mirror/',
+                paper: 'https://docs.google.com/document/d/1V7ndLPRx0Is2lB1Wk0kGXrQkSlPFbhMlZViS57otasE/edit?usp=sharing',
+                research: 'research.html',
+                status: 'live'
             },
-            'konektado': {
-                name: 'Konektado?',
-                codename: 'konektado',
-                icon: 'fa-globe',
-                description: 'Advocacy project addressing digital literacy and the digital divide in the Philippines. Aims to bridge the gap between connected and disconnected communities.',
-                tech: ['UX Research', 'Advocacy', 'Digital Humanities'],
-                status: 'planned'
-            },
-            'liwanag': {
-                name: 'Liwanag',
-                codename: 'liwanag',
-                icon: 'fa-shield-halved',
-                description: 'Financial protection app designed for Filipino users, focusing on security awareness and protection against digital financial fraud.',
-                tech: ['UX Design', 'Mobile', 'Financial Literacy'],
-                status: 'planned'
+            'koneksyon': {
+                name: 'Koneksyon',
+                codename: 'koneksyon',
+                icon: 'fa-globe-asia',
+                description: 'Interactive visualization of internet connectivity disparities across Philippine regions using 2024 government survey data. Features region comparison, multiple metrics, and color-coded mapping to make the digital divide tangible.',
+                tech: ['React', 'Leaflet', 'GeoJSON', 'Data Visualization'],
+                github: 'https://github.com/jhb09808/philippine-internet-map',
+                status: 'live'
             }
         };
 
@@ -1556,9 +1524,9 @@
                 addOutput('/web-apps', 'output-dir');
                 addOutput('  uplift    cubby    r2s', 'output');
                 addOutput('/experiments', 'output-dir');
-                addOutput('  genart    mirror', 'output');
+                addOutput('  decay    mirror', 'output');
                 addOutput('/advocacy', 'output-dir');
-                addOutput('  konektado    liwanag', 'output');
+                addOutput('  koneksyon', 'output');
             } else if (mainCmd === 'cd') {
                 if (!arg) {
                     addOutput('Usage: cd [project-name]', 'output-error');
@@ -1590,6 +1558,7 @@
                     addOutput(`Tech: ${p.tech.join(', ')}`, 'output');
                     if (p.url) addOutput(`URL: ${p.url}`, 'output');
                     if (p.github) addOutput(`GitHub: ${p.github}`, 'output');
+                    if (p.paper) addOutput(`Paper: ${p.paper}`, 'output');
                 } else {
                     addOutput('No project selected', 'output-error');
                     addOutput('Use "cd [name]" to open a project', 'output');
@@ -1598,6 +1567,9 @@
                 if (currentProject && projects[currentProject] && projects[currentProject].url) {
                     addOutput(`Opening ${projects[currentProject].name}...`, 'output-success');
                     setTimeout(() => window.open(projects[currentProject].url, '_blank'), 500);
+                } else if (currentProject && projects[currentProject] && projects[currentProject].github) {
+                    addOutput(`Opening ${projects[currentProject].name} GitHub...`, 'output-success');
+                    setTimeout(() => window.open(projects[currentProject].github, '_blank'), 500);
                 } else if (currentProject) {
                     addOutput('This project has no live URL yet', 'output-warning');
                 } else {
@@ -1653,7 +1625,9 @@
 
             // Show project detail
             setTimeout(() => {
-                const isLive = project.status === 'live' && project.url;
+                const hasUrl = project.status === 'live' && project.url;
+                const hasGithub = project.github;
+                const hasResearch = project.research;
                 
                 previewFrame.innerHTML = `
                     <div class="project-detail">
@@ -1667,20 +1641,26 @@
                             ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
                         </div>
                         <div class="project-detail-links">
-                            ${isLive ? `
+                            ${hasUrl ? `
                                 <a href="${project.url}" target="_blank" class="project-link project-link-primary">
                                     <i class="fa-solid fa-external-link"></i>
-                                    View Live Site
+                                    ${projectKey === 'mirror' ? 'Try the Tool' : 'View Live Site'}
                                 </a>
                             ` : ''}
-                            ${project.github ? `
-                                <a href="${project.github}" target="_blank" class="project-link project-link-secondary">
+                            ${hasResearch ? `
+                                <a href="${project.research}" class="project-link project-link-secondary">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                    View Research
+                                </a>
+                            ` : ''}
+                            ${hasGithub ? `
+                                <a href="${project.github}" target="_blank" class="project-link ${hasUrl || hasResearch ? 'project-link-secondary' : 'project-link-primary'}">
                                     <i class="fa-brands fa-github"></i>
                                     View on GitHub
                                 </a>
                             ` : ''}
                         </div>
-                        ${!isLive ? `
+                        ${project.status !== 'live' ? `
                             <div class="project-status-badge">
                                 <i class="fa-solid fa-clock"></i>
                                 ${project.status === 'dev' ? 'In Development' : 'Coming Soon'}
