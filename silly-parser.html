@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILLY Grammar Parser</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SILLY Grammar Parser</h1>
+        <p class="subtitle">CSC 533: Programming Languages — Parse Tree Generator</p>
+        
+        <div class="input-section">
+            <div class="input-row">
+                <div>
+                    <label for="parseType">Parse as:</label>
+                    <select id="parseType">
+                        <optgroup label="Primitives">
+                            <option value="id">Identifier</option>
+                            <option value="expr">Expression</option>
+                            <option value="list">List</option>
+                        </optgroup>
+                        <optgroup label="Statements">
+                            <option value="statement">Statement (any)</option>
+                            <option value="assign">Assignment</option>
+                            <option value="var">Var Declaration</option>
+                            <option value="print">Print</option>
+                            <option value="exit">Exit</option>
+                        </optgroup>
+                        <optgroup label="Control Flow">
+                            <option value="if">If Statement</option>
+                            <option value="while">While Loop</option>
+                            <option value="repeat">Repeat Loop</option>
+                        </optgroup>
+                        <optgroup label="Subroutines">
+                            <option value="sub">Subroutine Declaration</option>
+                            <option value="call">Subroutine Call</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div style="flex: 1;">
+                    <label for="inputCode">Input:</label>
+                    <input type="text" id="inputCode" placeholder="Enter code to parse..." value="(x + 10)">
+                </div>
+                <div style="align-self: flex-end;">
+                    <button onclick="parse()">Parse</button>
+                </div>
+            </div>
+            
+            <div class="examples">
+                <div class="examples-title">Quick examples (click to load):</div>
+                <div class="example-buttons" id="exampleButtons"></div>
+            </div>
+        </div>
+        
+        <div class="result-section">
+            <div class="result-header">
+                <span class="result-title">Parse Tree</span>
+                <div class="header-buttons">
+                    <button class="toggle-view" id="btnText" onclick="setView('text')">Text</button>
+                    <button class="toggle-view active" id="btnVisual" onclick="setView('visual')">Visual</button>
+                    <button class="toggle-view" id="btnBW" onclick="toggleColor()">B&W</button>
+                    <span class="status" id="status"></span>
+                </div>
+            </div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="treeOutput" class="tree-container colored"></div>
+            
+            <div class="legend" id="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #2563eb;"></div>
+                    <span>Non-terminal</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #059669;"></div>
+                    <span>Terminal</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #7c3aed;"></div>
+                    <span>Keyword</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #dc2626;"></div>
+                    <span>Operator</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grammar-ref">
+            <h3>SILLY v.25 Grammar Reference</h3>
+            <pre>
+&lt;statement&gt;  --&gt; &lt;assign&gt; | &lt;var&gt; | &lt;print&gt; | &lt;if&gt; | &lt;while&gt; |
+                 &lt;repeat&gt; | &lt;sub&gt; | &lt;call&gt; | &lt;exit&gt;
+
+&lt;assign&gt;     --&gt; &lt;id&gt; 'gets' &lt;expr&gt;
+&lt;var&gt;        --&gt; 'var' &lt;assign&gt;
+&lt;print&gt;      --&gt; 'print' &lt;expr&gt;
+
+&lt;if&gt;         --&gt; 'if' &lt;expr&gt; 'then' &lt;body&gt; 
+                 { 'elseif' &lt;expr&gt; 'then' &lt;body&gt; } 
+                 [ 'else' &lt;body&gt; ] 'endif'
+
+&lt;while&gt;      --&gt; 'while' &lt;expr&gt; 'do' &lt;body&gt; 'endwhile'
+&lt;repeat&gt;     --&gt; 'repeat' &lt;expr&gt; 'times' &lt;body&gt; 'endrepeat'
+
+&lt;body&gt;       --&gt; { &lt;statement&gt; }
+
+&lt;sub&gt;        --&gt; 'sub' &lt;id&gt; '(' { &lt;id&gt; } ')' 'does' &lt;body&gt; 'endsub'
+&lt;call&gt;       --&gt; 'call' &lt;id&gt; '(' { &lt;expr&gt; } ')'
+&lt;exit&gt;       --&gt; 'exit'
+
+&lt;expr&gt;       --&gt; &lt;integer&gt; | &lt;boolean&gt; | &lt;string&gt; | &lt;list&gt; | &lt;id&gt; | 
+                 '(' &lt;unary-op&gt; &lt;expr&gt; ')' | '(' &lt;expr&gt; &lt;binary-op&gt; &lt;expr&gt; ')'
+
+&lt;id&gt;         --&gt; &lt;letter&gt; { (&lt;letter&gt; | &lt;digit&gt;) }
+&lt;integer&gt;    --&gt; [ '-' ] &lt;digit&gt; { &lt;digit&gt; }
+&lt;string&gt;     --&gt; '"' { &lt;nwnq&gt; } '"'
+&lt;boolean&gt;    --&gt; 'true' | 'false'  
+&lt;list&gt;       --&gt; '['  { &lt;expr&gt; } ']'
+
+&lt;letter&gt;     --&gt; 'a' | 'b' | 'c' | ... | 'z' | 'A' | 'B' | 'C' | ... | 'Z'
+&lt;digit&gt;      --&gt; '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' 
+&lt;nwnq&gt;       --&gt; any non-whitespace character other than '"' or '\''
+
+&lt;unary-op&gt;   --&gt; '!' | '#' 
+&lt;binary-op&gt;  --&gt; '&amp;' | '|' | '+' | '*' | '/' | '%' | '^' | '@' |
+                 '='  | '\'  | '&gt;' | '&lt;'</pre>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
