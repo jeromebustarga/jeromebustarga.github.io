@@ -488,3 +488,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updateExamples();
     parse();
 });
+
+// Make functions globally accessible for onclick handlers
+window.parse = parse;
+window.setView = setView;
+window.toggleColor = toggleColor;
+window.zoomIn = zoomIn;
+window.zoomOut = zoomOut;
+window.zoomReset = zoomReset;
+window.loadExample = loadExample;
