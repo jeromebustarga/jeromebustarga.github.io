@@ -179,8 +179,9 @@ button:hover {
 
 /* Tree Container */
 .tree-container {
-    overflow-x: auto;
+    overflow: auto;
     padding: 20px 0;
+    max-height: 600px;
 }
 
 /* Visual Tree */
@@ -406,6 +407,16 @@ button:hover {
 
 .zoom-btn:hover {
     background: #d5d5d5;
+}
+
+.zoom-btn.save-btn {
+    background: #059669;
+    color: white;
+    border-color: #059669;
+}
+
+.zoom-btn.save-btn:hover {
+    background: #047857;
 }
 
 #zoomLevel {

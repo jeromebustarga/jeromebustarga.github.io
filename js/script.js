@@ -332,14 +332,14 @@ function toggleColor() {
 
 function zoomIn() {
     if (zoomLevel < 200) {
-        zoomLevel += 20;
+        zoomLevel += 10;
         updateZoom();
     }
 }
 
 function zoomOut() {
-    if (zoomLevel > 40) {
-        zoomLevel -= 20;
+    if (zoomLevel > 10) {
+        zoomLevel -= 10;
         updateZoom();
     }
 }
@@ -355,6 +355,74 @@ function updateZoom() {
     if (wrapper) {
         wrapper.style.transform = `scale(${zoomLevel / 100})`;
     }
+}
+
+function savePNG() {
+    const wrapper = document.querySelector('.tree-wrapper');
+    if (!wrapper) {
+        alert('No tree to save. Parse something first!');
+        return;
+    }
+    
+    const tree = wrapper.querySelector('.tree');
+    
+    // Clone the tree to a temporary container - completely unconstrained
+    const tempContainer = document.createElement('div');
+    tempContainer.style.cssText = `
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 9999;
+        background-color: #ffffff;
+        padding: 20px;
+        padding-bottom: 60px;
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        overflow: visible;
+    `;
+    
+    // Add color mode class
+    if (colorMode === 'bw') {
+        tempContainer.classList.add('bw');
+    } else {
+        tempContainer.classList.add('colored');
+    }
+    
+    const clonedTree = tree.cloneNode(true);
+    tempContainer.appendChild(clonedTree);
+    document.body.appendChild(tempContainer);
+    
+    // Wait for render, then get actual dimensions
+    setTimeout(() => {
+        const rect = tempContainer.getBoundingClientRect();
+        
+        html2canvas(tempContainer, {
+            backgroundColor: '#ffffff',
+            scale: 2,
+            logging: false,
+            width: rect.width,
+            height: rect.height + 40,
+            scrollX: 0,
+            scrollY: -window.scrollY,
+            windowWidth: rect.width,
+            windowHeight: rect.height + 40
+        }).then(canvas => {
+            document.body.removeChild(tempContainer);
+            
+            const link = document.createElement('a');
+            const input = document.getElementById('inputCode').value;
+            const safeName = input.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20) || 'tree';
+            link.download = `parse-tree-${safeName}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }).catch(err => {
+            document.body.removeChild(tempContainer);
+            alert('Error saving image. Try again.');
+            console.error(err);
+        });
+    }, 200);
 }
 
 function displayTree(tree) {
@@ -496,4 +564,5 @@ window.toggleColor = toggleColor;
 window.zoomIn = zoomIn;
 window.zoomOut = zoomOut;
 window.zoomReset = zoomReset;
+window.savePNG = savePNG;
 window.loadExample = loadExample;
