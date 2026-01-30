@@ -274,6 +274,7 @@ class Parser {
 // === TREE RENDERING ===
 let viewMode = 'visual';
 let colorMode = 'colored';
+let zoomLevel = 100;
 
 function renderTreeVisual(node) {
     if (!node.children || node.children.length === 0) {
@@ -329,12 +330,39 @@ function toggleColor() {
     legend.classList.toggle('bw', colorMode === 'bw');
 }
 
+function zoomIn() {
+    if (zoomLevel < 200) {
+        zoomLevel += 20;
+        updateZoom();
+    }
+}
+
+function zoomOut() {
+    if (zoomLevel > 40) {
+        zoomLevel -= 20;
+        updateZoom();
+    }
+}
+
+function zoomReset() {
+    zoomLevel = 100;
+    updateZoom();
+}
+
+function updateZoom() {
+    document.getElementById('zoomLevel').textContent = zoomLevel + '%';
+    const wrapper = document.querySelector('.tree-wrapper');
+    if (wrapper) {
+        wrapper.style.transform = `scale(${zoomLevel / 100})`;
+    }
+}
+
 function displayTree(tree) {
     const output = document.getElementById('treeOutput');
     output.dataset.tree = JSON.stringify(tree);
     
     if (viewMode === 'visual') {
-        output.innerHTML = `<div class="tree"><ul><li>${renderTreeVisual(tree)}</li></ul></div>`;
+        output.innerHTML = `<div class="tree-wrapper" style="transform: scale(${zoomLevel / 100})"><div class="tree"><ul><li>${renderTreeVisual(tree)}</li></ul></div></div>`;
     } else {
         output.innerHTML = `<div class="text-tree">${escapeHtml(renderTreeText(tree, '', true))}</div>`;
     }

@@ -61,6 +61,12 @@
                     <button class="toggle-view" id="btnText" onclick="setView('text')">Text</button>
                     <button class="toggle-view active" id="btnVisual" onclick="setView('visual')">Visual</button>
                     <button class="toggle-view" id="btnBW" onclick="toggleColor()">B&W</button>
+                    <span class="zoom-controls">
+                        <button class="zoom-btn" onclick="zoomOut()">−</button>
+                        <span id="zoomLevel">100%</span>
+                        <button class="zoom-btn" onclick="zoomIn()">+</button>
+                        <button class="zoom-btn" onclick="zoomReset()">Reset</button>
+                    </span>
                     <span class="status" id="status"></span>
                 </div>
             </div>

@@ -383,3 +383,39 @@ button:hover {
     background: #fff !important;
     border: 2px solid #000;
 }
+
+/* Zoom Controls */
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 10px;
+    padding-left: 10px;
+    border-left: 1px solid #ccc;
+}
+
+.zoom-btn {
+    background: #e5e5e5;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 36px;
+}
+
+.zoom-btn:hover {
+    background: #d5d5d5;
+}
+
+#zoomLevel {
+    font-size: 13px;
+    min-width: 45px;
+    text-align: center;
+    color: #555;
+}
+
+.tree-wrapper {
+    transform-origin: top center;
+    transition: transform 0.2s ease;
+}
