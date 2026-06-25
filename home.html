@@ -843,146 +843,93 @@ section {
   margin: 0 auto 120px;
 }
 
-/* Work Section */
+/* Work Section — Gallery */
 .work-section {
   padding: 60px 60px 140px;
 }
 
-.projects-grid {
-  display: grid;
-  gap: 24px;
+/* Masonry columns */
+.gallery-grid {
+  column-count: 3;
+  column-gap: 24px;
 }
 
-.project-card {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  padding: 48px;
+.gallery-card {
+  position: relative;
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 24px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
   opacity: 0;
   transform: translateY(24px);
-  transition: all 0.6s ease, background 0.3s ease, border-color 0.3s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease;
 }
 
-.project-card.visible {
+.gallery-card.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-.project-card:hover {
-  background: rgba(255, 255, 255, 0.03);
+.gallery-card:hover {
   border-color: var(--border-light);
 }
 
-.project-card:nth-child(even) {
-  grid-template-columns: 1fr 1.1fr;
-}
-
-.project-card:nth-child(even) .project-visual {
-  order: 2;
-}
-
-.project-visual {
+/* Placeholder media area — varied heights drive the masonry rhythm */
+.gallery-media {
   position: relative;
-  aspect-ratio: 16/11;
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.4s ease;
-}
-
-.project-card:hover .project-visual {
-  transform: scale(1.02);
-}
-
-.project-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.project-card:hover .project-image {
-  transform: scale(1.05);
-}
-
-.project-content {
-  padding: 16px 0;
-}
-
-.project-number {
-  font-size: 11px;
-  color: var(--accent);
-  margin-bottom: 16px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-}
-
-.project-content h3 {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 400;
-  margin-bottom: 16px;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
-
-.project-content p {
-  font-size: 14px;
-  line-height: 1.75;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
-  font-weight: 300;
-}
-
-.project-tags {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 28px;
+  align-items: center;
+  justify-content: center;
+  height: 240px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(244, 121, 33, 0.12), transparent 60%),
+    linear-gradient(160deg, #1a1a1a, #0e0e0e);
+  color: rgba(255, 255, 255, 0.16);
+  overflow: hidden;
 }
 
-.tag {
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-subtle);
+.gallery-card.size-s .gallery-media { height: 180px; }
+.gallery-card.size-l .gallery-media { height: 320px; }
+.gallery-card.size-xl .gallery-media { height: 400px; }
+
+.gallery-media i {
+  font-size: 38px;
+  transition: transform 0.4s ease, color 0.4s ease;
+}
+
+.gallery-card:hover .gallery-media i {
+  transform: scale(1.12);
+  color: rgba(244, 121, 33, 0.55);
+}
+
+.gallery-content {
+  padding: 20px 22px 24px;
+}
+
+.gallery-tag {
+  display: inline-block;
+  padding: 5px 13px;
+  background: rgba(244, 121, 33, 0.1);
+  border: 1px solid rgba(244, 121, 33, 0.25);
   border-radius: 100px;
   font-size: 11px;
-  color: var(--text-secondary);
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  transition: all 0.2s ease;
-}
-
-.project-card:hover .tag {
-  border-color: var(--border-light);
-}
-
-.project-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-primary);
-  text-decoration: none;
-  font-size: 13px;
-  font-weight: 400;
-  transition: all 0.3s ease;
-}
-
-.project-link i {
-  font-size: 11px;
-  transition: transform 0.3s ease;
-}
-
-.project-link:hover {
   color: var(--accent);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
 }
 
-.project-link:hover i {
-  transform: translateX(4px);
+.gallery-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
 /* Warpzone CTA Section */
@@ -1306,24 +1253,19 @@ footer {
     padding: 36px 40px;
   }
 
-  .project-card {
-    padding: 36px;
-    gap: 40px;
+  .gallery-grid {
+    column-count: 2;
   }
 }
 
 @media (max-width: 900px) {
-  .project-card {
-    grid-template-columns: 1fr !important;
-    gap: 32px;
+  .gallery-grid {
+    column-count: 2;
+    column-gap: 18px;
   }
 
-  .project-card:nth-child(even) .project-visual {
-    order: 0;
-  }
-
-  .project-visual {
-    aspect-ratio: 16/10;
+  .gallery-card {
+    margin-bottom: 18px;
   }
 }
 
@@ -1451,17 +1393,16 @@ footer {
     padding: 40px 24px 80px;
   }
 
-  .project-card {
-    padding: 24px;
+  .gallery-grid {
+    column-count: 1;
+  }
+
+  .gallery-card {
     border-radius: 16px;
   }
 
-  .project-content h3 {
-    font-size: 26px;
-  }
-
-  .project-content p {
-    font-size: 13px;
+  .gallery-title {
+    font-size: 20px;
   }
 
   /* Warpzone CTA responsive */
@@ -1585,20 +1526,16 @@ footer {
     font-size: 32px;
   }
 
-  .project-card {
-    padding: 20px;
+  .gallery-content {
+    padding: 18px 18px 20px;
   }
 
-  .project-content h3 {
-    font-size: 22px;
+  .gallery-title {
+    font-size: 19px;
   }
 
-  .project-tags {
-    gap: 6px;
-  }
-
-  .tag {
-    padding: 5px 10px;
+  .gallery-tag {
+    padding: 5px 11px;
     font-size: 10px;
   }
 
@@ -1759,90 +1696,94 @@ footer {
       <p>A selection of recent projects and creative explorations</p>
     </div>
 
-    <div class="projects-grid">
-      <!-- Project 1 - Illustrations -->
-      <article class="project-card">
-        <div class="project-visual">
-          <img src="images/illustrations.png" alt="Illustrations Portfolio Preview" class="project-image" loading="lazy">
+    <div class="gallery-grid">
+      <!-- Placeholder 01 -->
+      <a href="#" class="gallery-card size-l">
+        <div class="gallery-media">
+          <i class="fa-solid fa-laptop-code"></i>
         </div>
-        <div class="project-content">
-          <div class="project-number">01</div>
-          <h3>Illustrations</h3>
-          <p>Creating vibrant digital and hand-drawn illustrations that bring stories to life. From character design to editorial work, combining artistic vision with technical skill.</p>
-          <div class="project-tags">
-            <span class="tag">Adobe Illustrator</span>
-            <span class="tag">Character Design</span>
-            <span class="tag">Digital Art</span>
-          </div>
-          <a href="illustrations.html" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
+        <div class="gallery-content">
+          <span class="gallery-tag">Web Design</span>
+          <h3 class="gallery-title">Project Title 01</h3>
         </div>
-      </article>
+      </a>
 
-      <!-- Project 2 - Logo & Branding -->
-      <article class="project-card">
-        <div class="project-visual">
-          <img src="images/logobranding.png" alt="Logo & Branding Portfolio Preview" class="project-image" loading="lazy">
+      <!-- Placeholder 02 -->
+      <a href="#" class="gallery-card size-s">
+        <div class="gallery-media">
+          <i class="fa-solid fa-palette"></i>
         </div>
-        <div class="project-content">
-          <div class="project-number">02</div>
-          <h3>Logo & Branding</h3>
-          <p>Creating distinctive visual identities that capture brand essence. Crafting memorable logos and comprehensive brand systems that resonate with audiences.</p>
-          <div class="project-tags">
-            <span class="tag">Brand Strategy</span>
-            <span class="tag">Identity Design</span>
-            <span class="tag">Typography</span>
-          </div>
-          <a href="logobranding.html" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
+        <div class="gallery-content">
+          <span class="gallery-tag">Graphic Design</span>
+          <h3 class="gallery-title">Project Title 02</h3>
         </div>
-      </article>
+      </a>
 
-      <!-- Project 3 - Web Design -->
-      <article class="project-card">
-        <div class="project-visual">
-          <img src="images/webdesign.png" alt="Web Design Portfolio Preview" class="project-image" loading="lazy">
+      <!-- Placeholder 03 -->
+      <a href="#" class="gallery-card">
+        <div class="gallery-media">
+          <i class="fa-solid fa-vector-square"></i>
         </div>
-        <div class="project-content">
-          <div class="project-number">03</div>
-          <h3>Web Design</h3>
-          <p>Designing beautiful, user-centered digital experiences with intuitive interfaces. Crafting responsive layouts that balance aesthetics with usability.</p>
-          <div class="project-tags">
-            <span class="tag">UI/UX Design</span>
-            <span class="tag">Figma</span>
-            <span class="tag">Prototyping</span>
-          </div>
-          <a href="webdesign.html" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
+        <div class="gallery-content">
+          <span class="gallery-tag">UI/UX</span>
+          <h3 class="gallery-title">Project Title 03</h3>
         </div>
-      </article>
+      </a>
 
-      <!-- Project 4 - Research -->
-      <article class="project-card">
-        <div class="project-visual">
-          <img src="images/research.png" alt="Research Portfolio Preview" class="project-image" loading="lazy">
+      <!-- Placeholder 04 -->
+      <a href="#" class="gallery-card size-l">
+        <div class="gallery-media">
+          <i class="fa-solid fa-pen-nib"></i>
         </div>
-        <div class="project-content">
-          <div class="project-number">04</div>
-          <h3>Research</h3>
-          <p>Exploring emerging technologies through systematic investigation. Conducting user studies, prototyping concepts, and documenting findings for future development.</p>
-          <div class="project-tags">
-            <span class="tag">UX Research</span>
-            <span class="tag">Data Analysis</span>
-            <span class="tag">User Testing</span>
-          </div>
-          <a href="research.html" class="project-link">
-            View Projects
-            <i class="fa-solid fa-arrow-right"></i>
-          </a>
+        <div class="gallery-content">
+          <span class="gallery-tag">Illustration</span>
+          <h3 class="gallery-title">Project Title 04</h3>
         </div>
-      </article>
+      </a>
+
+      <!-- Placeholder 05 -->
+      <a href="#" class="gallery-card">
+        <div class="gallery-media">
+          <i class="fa-solid fa-bullseye"></i>
+        </div>
+        <div class="gallery-content">
+          <span class="gallery-tag">Branding</span>
+          <h3 class="gallery-title">Project Title 05</h3>
+        </div>
+      </a>
+
+      <!-- Placeholder 06 -->
+      <a href="#" class="gallery-card size-s">
+        <div class="gallery-media">
+          <i class="fa-solid fa-flask"></i>
+        </div>
+        <div class="gallery-content">
+          <span class="gallery-tag">Research</span>
+          <h3 class="gallery-title">Project Title 06</h3>
+        </div>
+      </a>
+
+      <!-- Placeholder 07 -->
+      <a href="#" class="gallery-card size-l">
+        <div class="gallery-media">
+          <i class="fa-solid fa-film"></i>
+        </div>
+        <div class="gallery-content">
+          <span class="gallery-tag">Motion</span>
+          <h3 class="gallery-title">Project Title 07</h3>
+        </div>
+      </a>
+
+      <!-- Placeholder 08 -->
+      <a href="#" class="gallery-card">
+        <div class="gallery-media">
+          <i class="fa-solid fa-camera"></i>
+        </div>
+        <div class="gallery-content">
+          <span class="gallery-tag">Photography</span>
+          <h3 class="gallery-title">Project Title 08</h3>
+        </div>
+      </a>
     </div>
   </section>
 
@@ -2047,8 +1988,8 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Observe all project cards and skill cards
-document.querySelectorAll('.project-card, .skill-card').forEach(item => {
+// Observe all gallery cards and skill cards
+document.querySelectorAll('.gallery-card, .skill-card').forEach(item => {
   observer.observe(item);
 });
 
