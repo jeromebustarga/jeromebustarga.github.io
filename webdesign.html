@@ -345,9 +345,20 @@ footer { padding: 40px 48px; text-align: center; border-top: 1px solid var(--bor
   .gallery-item-title { font-size: 18px; }
   .modal-title { font-size: 28px; }
 }
+
+/* Embed mode: show only the project modal (used when loaded inside an iframe) */
+body.embed-mode { background: transparent; }
+body.embed-mode .bg-gradient,
+body.embed-mode .bg-grid,
+body.embed-mode nav,
+body.embed-mode main,
+body.embed-mode canvas,
+body.embed-mode .modal-close,
+body.embed-mode .modal-embedded-close { display: none !important; }
 </style>
 </head>
 <body>
+<script>if(new URLSearchParams(location.search).has('embed'))document.body.classList.add('embed-mode');</script>
 
 <div class="bg-gradient">
   <div class="gradient-orb gradient-orb-1"></div>
@@ -4642,7 +4653,11 @@ function openModal(item) {
   document.body.style.overflow = 'hidden';
 }
 
+const EMBED = new URLSearchParams(location.search).has('embed');
+
 function closeModal() {
+  // When embedded in the home-page overlay, let the parent close the iframe
+  if (EMBED) { window.parent.postMessage('closeProjectModal', '*'); return; }
   modal.classList.remove('active');
   document.body.style.overflow = 'auto';
   modalClose.style.display = 'flex'; // Reset close button visibility

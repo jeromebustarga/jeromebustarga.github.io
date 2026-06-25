@@ -945,6 +945,61 @@ section {
   line-height: 1.25;
 }
 
+/* Project overlay — opens a project case study in an iframe, closeable */
+.project-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.project-overlay.active {
+  display: block;
+  animation: overlayFadeIn 0.3s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.project-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.project-overlay-close {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 10001;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.7);
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.project-overlay-close:hover {
+  background: rgba(244, 121, 33, 0.15);
+  border-color: rgba(244, 121, 33, 0.4);
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+
 /* Warpzone CTA Section */
 .warpzone-cta-section {
   padding: 60px 60px 100px;
@@ -1711,7 +1766,7 @@ footer {
 
     <div class="gallery-grid">
       <!-- Aerotech -->
-      <a href="webdesign.html#project-5" class="gallery-card size-l">
+      <a href="webdesign.html#project-5" data-project="5" class="gallery-card size-l">
         <div class="gallery-media">
           <img src="images/aerotech.png" alt="Aerotech Web Design" loading="lazy">
         </div>
@@ -1722,7 +1777,7 @@ footer {
       </a>
 
       <!-- iJay Notable Alumni -->
-      <a href="webdesign.html#project-6" class="gallery-card size-l">
+      <a href="webdesign.html#project-6" data-project="6" class="gallery-card size-l">
         <div class="gallery-media">
           <img src="images/ijay-alumni-thumb.png" alt="iJay Notable Alumni" loading="lazy">
         </div>
@@ -2130,6 +2185,51 @@ if (!isTouchDevice) {
     };
   });
 }
+</script>
+
+<!-- Project case-study overlay -->
+<div class="project-overlay" id="projectOverlay" aria-hidden="true">
+  <button class="project-overlay-close" id="projectOverlayClose" aria-label="Close project">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <iframe id="projectFrame" class="project-frame" title="Project case study"></iframe>
+</div>
+
+<script>
+(function () {
+  const overlay = document.getElementById('projectOverlay');
+  const frame = document.getElementById('projectFrame');
+  const closeBtn = document.getElementById('projectOverlayClose');
+
+  function openOverlay(id) {
+    frame.src = 'webdesign.html?embed=1#project-' + id;
+    overlay.classList.add('active');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove('active');
+    overlay.setAttribute('aria-hidden', 'true');
+    frame.src = 'about:blank';
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.gallery-card[data-project]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      openOverlay(card.dataset.project);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeOverlay);
+  window.addEventListener('message', (e) => {
+    if (e.data === 'closeProjectModal') closeOverlay();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closeOverlay();
+  });
+})();
 </script>
 </body>
 </html>
