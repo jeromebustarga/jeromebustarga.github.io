@@ -906,6 +906,19 @@ section {
   color: rgba(244, 121, 33, 0.55);
 }
 
+.gallery-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery-card:hover .gallery-media img {
+  transform: scale(1.05);
+}
+
 .gallery-content {
   padding: 20px 22px 24px;
 }
@@ -1697,25 +1710,25 @@ footer {
     </div>
 
     <div class="gallery-grid">
-      <!-- Placeholder 01 -->
-      <a href="#" class="gallery-card size-l">
+      <!-- Aerotech -->
+      <a href="webdesign.html#project-5" class="gallery-card size-l">
         <div class="gallery-media">
-          <i class="fa-solid fa-laptop-code"></i>
+          <img src="images/aerotech.png" alt="Aerotech Web Design" loading="lazy">
         </div>
         <div class="gallery-content">
           <span class="gallery-tag">Web Design</span>
-          <h3 class="gallery-title">Project Title 01</h3>
+          <h3 class="gallery-title">Aerotech</h3>
         </div>
       </a>
 
-      <!-- Placeholder 02 -->
-      <a href="#" class="gallery-card size-s">
+      <!-- iJay Notable Alumni -->
+      <a href="webdesign.html#project-6" class="gallery-card size-l">
         <div class="gallery-media">
-          <i class="fa-solid fa-palette"></i>
+          <img src="images/ijay-alumni-thumb.png" alt="iJay Notable Alumni" loading="lazy">
         </div>
         <div class="gallery-content">
-          <span class="gallery-tag">Graphic Design</span>
-          <h3 class="gallery-title">Project Title 02</h3>
+          <span class="gallery-tag">Web Design</span>
+          <h3 class="gallery-title">iJay Notable Alumni</h3>
         </div>
       </a>
 

@@ -4393,6 +4393,16 @@ projects.forEach((item, index) => {
   galleryGrid.appendChild(galleryItem);
 });
 
+// Deep-link support: open a project directly via URL hash (e.g. webdesign.html#project-5)
+function openProjectFromHash() {
+  const match = window.location.hash.match(/^#project-(\d+)$/);
+  if (!match) return;
+  const proj = projects.find(p => p.id === Number(match[1]));
+  if (proj) openModal(proj);
+}
+window.addEventListener('load', openProjectFromHash);
+window.addEventListener('hashchange', openProjectFromHash);
+
 // Intersection Observer for scroll animations
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
