@@ -1567,9 +1567,17 @@ input:focus-visible {
 @media (prefers-color-scheme: light) {
   /* Keep dark theme - this is a space/aerospace theme */
 }
+
+/* Embed mode: chrome-free for the home-page modal overlay (?embed=1) */
+body.embed-mode nav,
+body.embed-mode footer,
+body.embed-mode .page-loader,
+body.embed-mode canvas { display: none !important; }
+body.embed-mode .content-wrapper { padding-top: 48px; }
 </style>
 </head>
 <body>
+<script>if(new URLSearchParams(location.search).has('embed'))document.body.classList.add('embed-mode');</script>
 
 <!-- Page Loader with Comet Animation -->
 <div class="page-loader" id="pageLoader">
