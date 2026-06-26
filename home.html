@@ -1647,6 +1647,11 @@ footer {
   }
 }
 </style>
+<style>/* safe-area-notch-fix */
+@supports (padding: max(0px)) {
+  nav { padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important; }
+}
+</style>
 </head>
 <body>
 

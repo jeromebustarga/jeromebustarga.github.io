@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Lā Kūkahekahe 2026 — Jerome Bustarga</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -85,6 +85,11 @@
     body.embed-mode footer{display:none}
     body.embed-mode .hero{padding-top:70px}
   </style>
+<style>/* safe-area-notch-fix */
+@supports (padding: max(0px)) {
+  nav { padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important; }
+}
+</style>
 </head>
 <body>
   <script>if(new URLSearchParams(location.search).has('embed'))document.body.classList.add('embed-mode');</script>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Konektado? — The Digital Divide in the Philippines</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -956,6 +956,11 @@
       }
     }
   </style>
+<style>/* safe-area-notch-fix */
+@supports (padding: max(0px)) {
+  nav { padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important; }
+}
+</style>
 </head>
 <body>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
 <title>3D Art - Jerome Bustarga</title>
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -1040,6 +1040,11 @@ footer {
     font-size: 15px;
     border-bottom: 1px solid var(--border-subtle);
   }
+}
+</style>
+<style>/* safe-area-notch-fix */
+@supports (padding: max(0px)) {
+  nav { padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important; }
 }
 </style>
 </head>
