@@ -862,15 +862,15 @@ section {
 
 /* Masonry columns */
 .gallery-grid {
-  column-count: 3;
-  column-gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
 }
 
 .gallery-card {
   position: relative;
   display: block;
-  break-inside: avoid;
-  margin-bottom: 24px;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 18px;
@@ -1334,18 +1334,14 @@ footer {
   }
 
   .gallery-grid {
-    column-count: 2;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 900px) {
   .gallery-grid {
-    column-count: 2;
-    column-gap: 18px;
-  }
-
-  .gallery-card {
-    margin-bottom: 18px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
   }
 }
 
@@ -1474,7 +1470,7 @@ footer {
   }
 
   .gallery-grid {
-    column-count: 1;
+    grid-template-columns: 1fr;
   }
 
   .gallery-card {
