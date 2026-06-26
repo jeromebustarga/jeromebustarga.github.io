@@ -415,6 +415,19 @@ nav {
   border-bottom: 1px solid var(--border-subtle);
 }
 
+/* Solid bar over the status-bar / notch strip so scrolled content never shows above the nav */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top, 0px);
+  background: rgb(10, 10, 10);
+  z-index: 1001;
+  pointer-events: none;
+}
+
 .nav-right {
   display: flex;
   align-items: center;
