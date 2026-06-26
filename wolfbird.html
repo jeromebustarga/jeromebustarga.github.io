@@ -130,6 +130,35 @@
 
   /* sketch + inspiration band */
   .band-pine{background:var(--pine);color:var(--cream)}
+  .sketch-layout{display:grid;grid-template-columns:1.22fr 1fr;gap:48px;align-items:start;margin-top:40px}
+  .sketch-imgs{display:flex;flex-direction:column;gap:26px}
+  figure.sketch{background:#fff;padding:14px 14px 6px;border-radius:7px;box-shadow:0 20px 44px rgba(0,0,0,.36)}
+  figure.sketch img{width:100%;display:block;border-radius:3px}
+  figure.sketch figcaption{font-family:"Oswald",sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:.6rem;color:var(--bronze);padding-top:12px;text-align:center}
+  .sketch-layout .feat{margin-top:6px}
+
+  /* inspiration */
+  .insp-layout{display:grid;grid-template-columns:1.3fr .9fr;gap:50px;align-items:center;margin-top:36px}
+  .influences{list-style:none;margin-top:30px}
+  .influences li{display:flex;gap:16px;padding:15px 0;border-top:1px solid rgba(236,226,204,.16)}
+  .influences li:last-child{border-bottom:1px solid rgba(236,226,204,.16)}
+  .influences .ix{font-family:"Oswald",sans-serif;color:var(--amber);font-size:.8rem;letter-spacing:.08em;padding-top:4px}
+  .influences b{font-family:"Fraunces",serif;font-weight:600;display:block;font-size:1.05rem;color:var(--cream)}
+  .influences span{font-size:.93rem;color:#bdb293}
+  .insp-badge{display:flex;justify-content:center}
+  .badge-svg{width:100%;max-width:300px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.32))}
+  /* heated rivalry image cluster */
+  .insp-cluster{position:relative;width:100%;aspect-ratio:1/1;max-width:470px;margin:0 auto}
+  .ic{position:absolute;width:47%;margin:0;background:#fff;padding:8px 8px 11px;border-radius:4px;
+      box-shadow:0 12px 26px rgba(0,0,0,.36);
+      transition:transform .4s cubic-bezier(.2,.75,.2,1),box-shadow .4s;cursor:pointer}
+  .ic img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:2px}
+  .ic1{top:1%;left:5%;transform:rotate(-8deg);z-index:2}
+  .ic2{top:0%;left:44%;transform:rotate(6deg);z-index:3}
+  .ic3{top:30%;left:25%;transform:rotate(-3deg);z-index:4}
+  .ic4{top:51%;left:1%;transform:rotate(5deg);z-index:2}
+  .ic5{top:49%;left:47%;transform:rotate(-6deg);z-index:3}
+  .ic:hover,.ic.active{transform:scale(1.18) rotate(0deg);z-index:20;box-shadow:0 28px 52px rgba(0,0,0,.5)}
   .band-pine h2{color:var(--cream)}
   .band-pine .sec-head .eyebrow,.band-pine .sec-num{color:var(--amber)}
   .band-pine .lead{color:#d9cfb4}
@@ -194,7 +223,7 @@
     .hero-art{order:-1;margin-bottom:10px}
     .hero-art img{max-width:300px;width:80%}
     .hero-copy h1{font-size:clamp(2.8rem,13vw,4rem)}
-    .twocol,.can-show,.carrier-show,.sys-grid{grid-template-columns:1fr;gap:34px}
+    .twocol,.can-show,.carrier-show,.sys-grid,.sketch-layout,.insp-layout{grid-template-columns:1fr;gap:34px}
     .mock-grid{grid-template-columns:1fr}
     .mock-big{grid-row:auto}
     section{padding:64px 0}
@@ -262,25 +291,57 @@
   </div>
 </section>
 
-<!-- ===== CONCEPT / SKETCHES ===== -->
+<!-- ===== INSPIRATION ===== -->
 <section class="band-pine">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">02</span><span class="eyebrow">Concept &amp; Sketches</span></div>
+    <div class="sec-head"><span class="sec-num">02</span><span class="eyebrow">Inspiration</span></div>
+    <h2>Built from a Canadian summer.</h2>
+    <div class="insp-layout">
+      <div class="insp-copy">
+        <p class="lead">The world came first. I pulled from the quiet of the Canadian backcountry — still water at dawn, a cabin with smoke in the pines, the lonely call of a loon across the lake.</p>
+        <p>Vintage craft-beverage labels and weathered lodge signage shaped the lettering and ornament. The brand's emotional center came from Rachel Reid's novel <em>Heated Rivalry</em> — the source of the dock, the closeness in the illustration, and the name on the can.</p>
+        <ul class="influences">
+          <li><span class="ix">01</span><div><b>The backcountry</b><span>Cottages, pines, loons, and still lakes at first light.</span></div></li>
+          <li><span class="ix">02</span><div><b>Vintage craft labels</b><span>Hand-tuned serifs, flourishes, and a muted heritage palette.</span></div></li>
+          <li><span class="ix">03</span><div><b>Heated Rivalry</b><span>Rachel Reid's novel — the warmth that frames the scene.</span></div></li>
+        </ul>
+      </div>
+      <div class="insp-cluster" aria-label="Heated Rivalry inspiration images">
+        <figure class="ic ic1"><img src="images/insp-1.png" alt="Heated Rivalry inspiration"></figure>
+        <figure class="ic ic2"><img src="images/insp-2.png" alt="Heated Rivalry inspiration"></figure>
+        <figure class="ic ic3"><img src="images/insp-3.png" alt="Heated Rivalry inspiration"></figure>
+        <figure class="ic ic4"><img src="images/insp-4.png" alt="Heated Rivalry inspiration"></figure>
+        <figure class="ic ic5"><img src="images/insp-5.png" alt="Heated Rivalry inspiration"></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONCEPT / SKETCHES ===== -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><span class="eyebrow">Concept &amp; Sketches</span></div>
     <h2>Three directions, one world.</h2>
     <p class="lead">Before committing, I explored three illustration routes and tested the wordmark until the lettering felt crafted instead of corporate.</p>
-    <ul class="feat" style="margin-top:30px;max-width:760px">
-      <li><span class="dot"></span><div><b>The lakeside cottage</b><span>A cabin and pines framed by crossed hockey sticks — heritage and sport in one mark.</span></div></li>
-      <li><span class="dot"></span><div><b>The dock at sunrise</b><span>Two figures looking out over the water. Warm, human, and unmistakably "lake season." This one won.</span></div></li>
-      <li><span class="dot"></span><div><b>The face-off</b><span>Two players nose to nose with the loon set between them like a crest.</span></div></li>
-      <li><span class="dot"></span><div><b>Lettering studies</b><span>Vintage, rustic, and modern-condensed wordmarks — landing on a hand-built vintage serif.</span></div></li>
-    </ul>
+    <div class="sketch-layout">
+      <div class="sketch-imgs">
+        <figure class="sketch"><img src="images/sketch-cans.png" alt="Three can concept sketches in pencil"><figcaption>Can concepts — pencil studies</figcaption></figure>
+        <figure class="sketch"><img src="images/sketch-lettering.png" alt="Wolf Bird wordmark lettering studies"><figcaption>Wordmark lettering studies</figcaption></figure>
+      </div>
+      <ul class="feat">
+        <li><span class="dot"></span><div><b>The lakeside cottage</b><span>A cabin and pines framed by crossed hockey sticks — heritage and sport in one mark.</span></div></li>
+        <li><span class="dot"></span><div><b>The dock at sunrise</b><span>Two figures looking out over the water. Warm, human, and unmistakably "lake season." This one won.</span></div></li>
+        <li><span class="dot"></span><div><b>The face-off</b><span>Two players nose to nose with the loon set between them like a crest.</span></div></li>
+        <li><span class="dot"></span><div><b>Lettering studies</b><span>Vintage, rustic, and modern-condensed wordmarks — landing on a hand-built vintage serif.</span></div></li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <!-- ===== CAN ===== -->
-<section>
+<section class="band-pine">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">03</span><span class="eyebrow">The Can</span></div>
+    <div class="sec-head"><span class="sec-num">04</span><span class="eyebrow">The Can</span></div>
     <h2>A label that does two jobs at once.</h2>
     <p class="lead">A full wraparound illustration on one side; a working information panel on the other — designed to meet real beverage conventions.</p>
     <div class="can-show">
@@ -296,9 +357,9 @@
 </section>
 
 <!-- ===== CARRIER ===== -->
-<section class="band-pine">
+<section>
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">04</span><span class="eyebrow">The Carrier</span></div>
+    <div class="sec-head"><span class="sec-num">05</span><span class="eyebrow">The Carrier</span></div>
     <h2>One landscape, four cans.</h2>
     <div class="carrier-show">
       <div>
@@ -313,7 +374,7 @@
 <!-- ===== MOCKUPS ===== -->
 <section class="band-amber">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><span class="eyebrow">In Context</span></div>
+    <div class="sec-head"><span class="sec-num">06</span><span class="eyebrow">In Context</span></div>
     <h2>Tested in three dimensions.</h2>
     <p class="lead">Rendered in Photoshop to check how the scene wraps, how the panel sits, and how the four-pack reads on a shelf.</p>
     <div class="mock-grid">
@@ -329,7 +390,7 @@
 <!-- ===== DESIGN SYSTEM ===== -->
 <section>
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">06</span><span class="eyebrow">Design System</span></div>
+    <div class="sec-head"><span class="sec-num">07</span><span class="eyebrow">Design System</span></div>
     <h2>The kit behind the brand.</h2>
     <div class="sys-grid">
       <div>
@@ -374,5 +435,14 @@
   </div>
 </footer>
 
+<script>
+  document.querySelectorAll('.insp-cluster .ic').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const on=el.classList.contains('active');
+      el.parentElement.querySelectorAll('.ic').forEach(x=>x.classList.remove('active'));
+      if(!on) el.classList.add('active');
+    });
+  });
+</script>
 </body>
 </html>
