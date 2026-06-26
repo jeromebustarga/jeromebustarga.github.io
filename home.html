@@ -1809,14 +1809,14 @@ footer {
         </div>
       </a>
 
-      <!-- Placeholder 05 -->
-      <a href="#" class="gallery-card">
+      <!-- GreenX Aerospace -->
+      <a href="GreenXAerospace.html" data-src="GreenXAerospace.html" class="gallery-card size-l">
         <div class="gallery-media">
-          <i class="fa-solid fa-bullseye"></i>
+          <i class="fa-solid fa-leaf"></i>
         </div>
         <div class="gallery-content">
           <span class="gallery-tag">Branding</span>
-          <h3 class="gallery-title">Project Title 05</h3>
+          <h3 class="gallery-title">GreenX Aerospace</h3>
         </div>
       </a>
 
@@ -2201,8 +2201,8 @@ if (!isTouchDevice) {
   const frame = document.getElementById('projectFrame');
   const closeBtn = document.getElementById('projectOverlayClose');
 
-  function openOverlay(id) {
-    frame.src = 'webdesign.html?embed=1#project-' + id;
+  function openOverlay(src) {
+    frame.src = src;
     overlay.classList.add('active');
     overlay.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -2215,10 +2215,13 @@ if (!isTouchDevice) {
     document.body.style.overflow = '';
   }
 
-  document.querySelectorAll('.gallery-card[data-project]').forEach(card => {
+  document.querySelectorAll('.gallery-card[data-project], .gallery-card[data-src]').forEach(card => {
     card.addEventListener('click', (e) => {
       e.preventDefault();
-      openOverlay(card.dataset.project);
+      const src = card.dataset.project
+        ? 'webdesign.html?embed=1#project-' + card.dataset.project
+        : card.dataset.src;
+      openOverlay(src);
     });
   });
 
