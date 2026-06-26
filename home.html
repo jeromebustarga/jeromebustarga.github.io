@@ -41,7 +41,7 @@ body {
   font-family: var(--font-body);
   background: var(--bg-primary);
   color: var(--text-primary);
-  overflow-x: hidden;
+  overflow-x: clip;   /* clip (not hidden) so it doesn't break position:sticky */
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -860,6 +860,41 @@ section {
   padding: 60px 60px 140px;
 }
 
+/* Pinned "deal" stage — pile of cards at bottom-center, dealt one per scroll */
+.deal-track { position: relative; }
+.deal-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+}
+.deal-stage .section-header { margin-bottom: 8px; }
+.deal-stage .gallery-grid { width: 100%; max-width: 1180px; margin: 0 auto; }
+/* compact cards so all rows fit one screen while dealing */
+.deal-stage .gallery-media,
+.deal-stage .gallery-card.size-l .gallery-media,
+.deal-stage .gallery-card.size-s .gallery-media { height: 150px; }
+.deal-stage .gallery-content { padding: 14px 18px 16px; }
+.deal-stage .gallery-title { font-size: 18px; }
+
+/* On phones the pin can't fit a multi-row grid — fall back to a normal section */
+@media (max-width: 900px) {
+  .deal-track { height: auto !important; }
+  .deal-stage {
+    position: static; height: auto; min-height: 0; overflow: visible;
+    display: block;
+  }
+  .deal-stage .gallery-media,
+  .deal-stage .gallery-card.size-l .gallery-media,
+  .deal-stage .gallery-card.size-s .gallery-media { height: 200px; }
+}
+
 /* Masonry columns */
 .gallery-grid {
   display: grid;
@@ -876,11 +911,13 @@ section {
   border-radius: 18px;
   overflow: hidden;
   text-decoration: none;
-  /* Starts below ("the deck"); dealt up into place by the scroll script below. */
+  /* Position fully controlled by the deal script below: cards sit in a pile at
+     the bottom-center of the viewport and are dealt into their grid slot on scroll. */
   opacity: 0;
-  transform: translateY(160px);
+  transform-origin: center center;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 /* When JS isn't available / reduced motion, just show them */
@@ -1774,6 +1811,8 @@ footer {
   <div class="section-divider"></div>
 
   <section id="work" class="work-section">
+   <div class="deal-track" id="dealTrack">
+    <div class="deal-stage" id="dealStage">
     <div class="section-header">
       <span class="section-label">Portfolio</span>
       <h2>Featured Work</h2>
@@ -1880,6 +1919,8 @@ footer {
         </div>
       </a>
     </div>
+    </div>
+   </div>
   </section>
 
   <!-- Warpzone CTA Section -->
@@ -2088,39 +2129,82 @@ document.querySelectorAll('.skill-card').forEach(item => {
   observer.observe(item);
 });
 
-// ===== Featured Work — deal the cards in one-by-one on scroll =====
+// ===== Featured Work — pinned deck: a pile at bottom-center, one card dealt per scroll =====
 (function () {
+  const track = document.getElementById('dealTrack');
+  const stage = document.getElementById('dealStage');
   const cards = Array.from(document.querySelectorAll('.gallery-grid .gallery-card'));
-  if (!cards.length) return;
+  if (!track || !stage || !cards.length) return;
 
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.body.classList.add('no-deal');
-    return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const N = cards.length;
+  const PER = 300;            // px of scroll to deal one card (one "scroll" ≈ one card)
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+  let enabled = false, slots = [], trackTop = 0, ticking = false;
+
+  function clearCards() {
+    cards.forEach(c => { c.style.opacity = ''; c.style.transform = ''; c.style.zIndex = ''; c.style.pointerEvents = ''; });
   }
 
-  let ticking = false;
-  function deal() {
-    ticking = false;
-    const vh = window.innerHeight;
-    const start = vh * 0.92;   // a card begins rising when its top crosses here
-    const span  = vh * 0.30;   // tight window → each card snaps up quickly
-    const STAGGER = 70;        // extra px of scroll per card → clearly one at a time
-
-    cards.forEach((c, i) => {
-      const top = c.getBoundingClientRect().top;
-      let t = (start - top - i * STAGGER) / span;
-      t = t < 0 ? 0 : (t > 1 ? 1 : t);
-      const e = 1 - Math.pow(1 - t, 3);          // easeOutCubic
-      c.style.opacity = e;
-      c.style.transform = `translateY(${(1 - e) * 160}px)`;  // rise straight up from below
+  function measure() {
+    // Slot centers in the PINNED viewport (stage top == 0). Layout-based, so valid any time.
+    cards.forEach(c => { c.style.transform = 'none'; c.style.opacity = '1'; });
+    const sy = window.scrollY, sx = window.scrollX;
+    const stageTop = stage.getBoundingClientRect().top + sy;
+    slots = cards.map(c => {
+      const r = c.getBoundingClientRect();
+      return { cx: r.left + sx + r.width / 2, cy: (r.top + sy + r.height / 2) - stageTop };
     });
   }
-  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(deal); } }
+
+  function frame() {
+    ticking = false;
+    if (!enabled) return;
+    const vh = window.innerHeight, vw = window.innerWidth;
+    // computed fresh each frame so it can't go stale when content above shifts
+    const trackTop = track.getBoundingClientRect().top + window.scrollY;
+    const scrolled = window.scrollY - trackTop;        // 0 when the stage first pins
+    const deckX = vw / 2, deckY = vh - Math.min(vh * 0.15, 120);
+    const prog = scrolled / PER;                        // progress in "cards"
+
+    cards.forEach((c, i) => {
+      const s = slots[i];
+      if (scrolled < -40) { c.style.opacity = '0'; c.style.transform = 'none'; c.style.pointerEvents = 'none'; return; }
+      const e = easeOut(Math.max(0, Math.min(1, prog - i)));   // 0 = in pile, 1 = dealt
+      const depth = Math.max(0, i - prog);                     // how deep in the pile
+      c.style.opacity = (prog > i - 5) ? '1' : '0';            // show ~5 cards of the pile
+
+      const dx = (deckX - s.cx) * (1 - e);
+      const dy = (deckY - s.cy) * (1 - e);
+      const scale = 0.42 + 0.58 * e;
+      const tilt = (1 - e) * ((i % 2 ? 1 : -1) * (4 + Math.min(depth, 3) * 2));
+      c.style.transform = `translate(${dx}px, ${dy}px) rotate(${tilt}deg) scale(${scale})`;
+      c.style.zIndex = e >= 1 ? '' : String(900 - i);
+      c.style.pointerEvents = e >= 0.96 ? 'auto' : 'none';
+    });
+  }
+
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(frame); } }
+
+  function setup() {
+    const small = window.innerWidth <= 900;
+    if (reduce || small) {
+      enabled = false; track.style.height = ''; clearCards();
+      document.body.classList.add('no-deal');
+      return;
+    }
+    document.body.classList.remove('no-deal');
+    enabled = true;
+    track.style.height = (window.innerHeight + N * PER + window.innerHeight * 0.35) + 'px';
+    measure();
+    frame();
+  }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  window.addEventListener('load', deal);
-  deal();
+  window.addEventListener('resize', setup);
+  window.addEventListener('load', setup);
+  setup();
 })();
 
 // Smooth scrolling for navigation
