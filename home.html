@@ -876,14 +876,19 @@ section {
   border-radius: 18px;
   overflow: hidden;
   text-decoration: none;
+  /* Starts in the "deck"; dealt into place by the scroll script below.
+     transform-origin lower-right so it pivots in like a dealt card. */
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s ease;
+  transform: translate(120px, 70px) rotate(9deg) scale(0.9);
+  transform-origin: 80% 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform, opacity;
 }
 
-.gallery-card.visible {
+/* When JS isn't available / reduced motion, just show them */
+.no-deal .gallery-card {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 .gallery-card:hover {
@@ -2080,10 +2085,49 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Observe all gallery cards and skill cards
-document.querySelectorAll('.gallery-card, .skill-card').forEach(item => {
+// Observe skill cards (gallery cards are handled by the deal script below)
+document.querySelectorAll('.skill-card').forEach(item => {
   observer.observe(item);
 });
+
+// ===== Featured Work — deal the cards in one-by-one on scroll =====
+(function () {
+  const cards = Array.from(document.querySelectorAll('.gallery-grid .gallery-card'));
+  if (!cards.length) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.body.classList.add('no-deal');
+    return;
+  }
+
+  let ticking = false;
+  function deal() {
+    ticking = false;
+    const vh = window.innerHeight;
+    const start = vh * 0.96;   // a card begins dealing when its top crosses here
+    const span  = vh * 0.42;   // scroll distance over which one card finishes
+    const STAGGER = 46;        // extra px of scroll per card → strictly one at a time
+
+    cards.forEach((c, i) => {
+      const top = c.getBoundingClientRect().top;
+      let t = (start - top - i * STAGGER) / span;
+      t = t < 0 ? 0 : (t > 1 ? 1 : t);
+      const e = 1 - Math.pow(1 - t, 3);          // easeOutCubic
+      const tx  = (1 - e) * 120;
+      const ty  = (1 - e) * 70;
+      const rot = (1 - e) * 9;
+      const sc  = 0.9 + 0.1 * e;
+      c.style.opacity = e;
+      c.style.transform = `translate(${tx}px, ${ty}px) rotate(${rot}deg) scale(${sc})`;
+    });
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(deal); } }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  window.addEventListener('load', deal);
+  deal();
+})();
 
 // Smooth scrolling for navigation
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
