@@ -241,15 +241,10 @@
 
   <aside class="rail" aria-label="Full continuous infographic">
     <figure>
-      <span class="rail-label"><span class="pip"></span> THE FULL PIECE · 8000&nbsp;PX</span>
-      <div class="pdf-frame" id="pdfFrame">
-        <canvas id="pdfCanvas" role="img" aria-label="Full continuous infographic: The Lifecycle of Typhoons, from formation through the PAGASA warning signals."></canvas>
-        <img class="pdf-fallback" src="images/IllustratedInfographics_ContinuousGraphic_JeromeBustarga.png" alt="Full continuous infographic: The Lifecycle of Typhoons." />
-        <div class="pdf-loading">Loading…</div>
-      </div>
+      <span class="rail-label"><span class="pip"></span> THE FULL PIECE</span>
+      <img src="images/typhoons-continuous.jpg" alt="Full continuous infographic: The Lifecycle of Typhoons, from formation through the PAGASA warning signals." loading="lazy" />
       <figcaption>
-        <span>Continuous graphic · vector PDF · 300 ppi</span>
-        <a href="images/IllustratedInfographics_ContinuousGraphic_JeromeBustarga.pdf" download>Download PDF ↓</a>
+        <span>Continuous graphic · the complete piece</span>
       </figcaption>
     </figure>
   </aside>
@@ -306,64 +301,6 @@
     </div>
   </div>
 </footer>
-
-<!-- PDF.js renders the tall single-page PDF crisp at any width -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script>
-(function(){
-  var PDF_URL = 'images/IllustratedInfographics_ContinuousGraphic_JeromeBustarga.pdf';
-  var frame  = document.getElementById('pdfFrame');
-  var canvas = document.getElementById('pdfCanvas');
-  if(!frame || !canvas) return;
-
-  function useFallback(){ frame.classList.add('is-fallback'); }
-
-  // If the library didn't load (offline / blocked), show the PNG.
-  if(typeof pdfjsLib === 'undefined'){ useFallback(); return; }
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
-  var ctx = canvas.getContext('2d');
-  var pageRef = null, rendering = false, queued = false;
-
-  function render(){
-    if(!pageRef) return;
-    if(rendering){ queued = true; return; }
-    rendering = true;
-
-    var cssWidth = frame.clientWidth || 440;
-    var dpr = Math.min(window.devicePixelRatio || 1, 2.5);
-    var base = pageRef.getViewport({ scale: 1 });
-    var scale = (cssWidth / base.width) * dpr;
-
-    // Guard against exceeding browser canvas limits on very tall pages.
-    var projectedH = base.height * scale;
-    if(projectedH > 15000){ scale = scale * (15000 / projectedH); }
-
-    var vp = pageRef.getViewport({ scale: scale });
-    canvas.width  = Math.floor(vp.width);
-    canvas.height = Math.floor(vp.height);
-    canvas.style.width  = cssWidth + 'px';
-    canvas.style.height = (vp.height / dpr) + 'px';
-
-    pageRef.render({ canvasContext: ctx, viewport: vp }).promise.then(function(){
-      frame.classList.add('is-ready');
-      rendering = false;
-      if(queued){ queued = false; render(); }
-    }).catch(function(){ rendering = false; useFallback(); });
-  }
-
-  pdfjsLib.getDocument(PDF_URL).promise
-    .then(function(pdf){ return pdf.getPage(1); })
-    .then(function(page){ pageRef = page; render(); })
-    .catch(function(){ useFallback(); }); // missing/invalid PDF -> PNG
-
-  var t;
-  window.addEventListener('resize', function(){
-    clearTimeout(t); t = setTimeout(render, 200);
-  });
-})();
-</script>
 
 </body>
 </html>
