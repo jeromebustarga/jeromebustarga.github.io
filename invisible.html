@@ -161,44 +161,34 @@ body::before{
 .chapter__title em{font-style:italic;color:var(--cyan)}
 .chapter__desc{font-size:16px;color:var(--ink-dim);max-width:54ch;margin-top:6px}
 
-/* contact-sheet style gallery: staggered */
-.sheet{display:grid;grid-template-columns:repeat(12,1fr);gap:28px;align-items:start}
+/* book gallery — true aspect ratios (no cropping), 2-up, click to enlarge */
+.sheet{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;align-items:start}
 .plate{display:flex;flex-direction:column;gap:14px}
 .plate__frame{
-  position:relative;background:var(--bg-soft);border:1px solid var(--rule);overflow:hidden;
+  position:relative;background:var(--bg-soft);border:1px solid var(--rule);
+  overflow:hidden;border-radius:6px;cursor:zoom-in;
+  transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease;
 }
-.plate__frame .slot{
-  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  color:var(--ink-fade);text-align:center;padding:20px;gap:6px;
-}
-.plate__frame .slot .tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan)}
-.plate__frame .slot .desc{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.05em;line-height:1.5}
-.plate__frame::after{
-  content:'';position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(45deg,transparent 0 26px,rgba(174,184,208,.03) 26px 27px);
-}
+.plate__frame:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.4)}
+.plate__frame img{display:block;width:100%;height:auto}
 .plate__cap{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-fade);line-height:1.55;display:flex;gap:10px}
 .plate__cap .pg{color:var(--cyan);flex-shrink:0}
 .plate__cap b{color:var(--ink);font-weight:500}
-.plate__frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
-.plate__frame:has(img)::after{display:none}
 .hero__book img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 
-/* aspect helpers */
-.r-land .plate__frame{aspect-ratio:16/10}
-.r-tall .plate__frame{aspect-ratio:3/4}
-.r-sq .plate__frame{aspect-ratio:1/1}
-.r-wide .plate__frame{aspect-ratio:21/9}
+/* full-width emphasis + centered portrait covers */
+.plate.wide{grid-column:1 / -1}
+.plate.cover{grid-column:1 / -1;max-width:480px;width:100%;margin-inline:auto}
 
-/* spans + offsets for staggered feel */
-.c8{grid-column:span 8}
-.c7{grid-column:span 7}
-.c6{grid-column:span 6}
-.c5{grid-column:span 5}
-.c4{grid-column:span 4}
-.c12{grid-column:span 12}
-.push{margin-top:56px}
-.push-lg{margin-top:96px}
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:9999;background:rgba(5,9,18,.95);display:none;
+  align-items:center;justify-content:center;padding:24px;cursor:zoom-out;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.lb.open{display:flex}
+.lb img{max-width:95vw;max-height:92vh;width:auto;height:auto;border:1px solid var(--rule);
+  box-shadow:0 30px 90px rgba(0,0,0,.7);border-radius:4px}
+.lb__close{position:fixed;top:18px;right:22px;font-family:'JetBrains Mono',monospace;font-size:20px;
+  color:var(--ink-dim);cursor:pointer;line-height:1;z-index:10000}
+.lb__close:hover{color:var(--cyan)}
 
 /* ============ APPROACH ============ */
 .approach{padding:110px 0;border-top:1px solid var(--rule)}
@@ -245,8 +235,8 @@ body::before{
   .intro{grid-template-columns:1fr;gap:44px;padding:80px 0}
   .stats{gap:32px 20px}
   .stat--big,.stat--med,.stat--med2{grid-column:span 6}
-  .c8,.c7,.c6,.c5,.c4,.c12{grid-column:span 12}
-  .push,.push-lg{margin-top:0}
+  .sheet{grid-template-columns:1fr;gap:24px}
+  .plate.cover{max-width:100%}
   .approach__grid{grid-template-columns:1fr;gap:34px}
   .colophon__grid{grid-template-columns:repeat(2,1fr);gap:34px}
   .colophon__quote{text-align:left}
@@ -348,23 +338,23 @@ body.embed-mode .hero{min-height:auto}
   </div>
 
   <div class="sheet">
-    <div class="plate c7 r-land">
+    <div class="plate cover">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-01.png" alt="Cover" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.1</span><span><b>Cover.</b> The title split by a rising curve — generative network mesh emerging from negative space.</span></div>
     </div>
-    <div class="plate c5 r-tall push">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-02.png" alt="Pixel portrait spread" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.2</span><span><b>Pixel portrait.</b> Each square is one video; each color, a category. Real watch history as abstract art.</span></div>
     </div>
-    <div class="plate c5 r-land">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-05.png" alt="Skyscraper and Philippines pixel map spread" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.8</span><span><b>Unstable ground.</b> "You cannot build a skyscraper on unstable ground." The personal origin spread.</span></div>
     </div>
-    <div class="plate c7 r-land push">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-06.png" alt="Chapter one cityscape opener" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.10</span><span><b>Chapter one opener.</b> A rural-to-urban skyline walking the reader across the divide, an algorithmic dome overhead.</span></div>
     </div>
-    <div class="plate c12 r-wide">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-07.png" alt="Algorithm signals and filter bubble diagrams" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.12</span><span><b>How it steers you.</b> Three custom line-art infographics: the signal funnel, the filter bubble, and the path to agency.</span></div>
     </div>
@@ -388,23 +378,23 @@ body.embed-mode .hero{min-height:auto}
   </div>
 
   <div class="sheet">
-    <div class="plate c5 r-tall">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-08.png" alt="Chapter two privacy architecture" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.14</span><span><b>Chapter two opener.</b> A line-art diagram of local, on-device processing — a tool that reveals surveillance without doing it.</span></div>
     </div>
-    <div class="plate c7 r-land">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-09.png" alt="Research findings data spread" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.16</span><span><b>The data spread.</b> 82,164 videos rendered as a content-concentration ring and a late-night temporal dial.</span></div>
     </div>
-    <div class="plate c7 r-wide push">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-10.png" alt="User A diversity decline pixel grid" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.18</span><span><b>User A.</b> Eighteen months of viewing collapsing from rainbow to a single hue — a feed narrowing in real time.</span></div>
     </div>
-    <div class="plate c5 r-land push">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-11.png" alt="Perspective corridor of category tiles" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.20</span><span><b>"I feel manipulated."</b> A one-point corridor of colored tiles vanishing to a point — viewing history as a hallway.</span></div>
     </div>
-    <div class="plate c12 r-wide">
+    <div class="plate wide">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-12.png" alt="Pixel-art participants and particle figure" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.22</span><span><b>Not against AI.</b> Twelve pixel-art participants beside a figure dissolving into colored particles — the human at the center.</span></div>
     </div>
@@ -427,15 +417,15 @@ body.embed-mode .hero{min-height:auto}
     </div>
   </div>
   <div class="sheet">
-    <div class="plate c6 r-land">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-13.png" alt="Four platform feeds spread" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.24</span><span><b>Beyond YouTube.</b> Four recommendation feeds in the book's palette — the same framework applied across platforms.</span></div>
     </div>
-    <div class="plate c6 r-land push">
+    <div class="plate">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-14.png" alt="Closing eye and walking figure spread" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.26</span><span><b>The closing spread.</b> An iris built from data, a lone figure walking into a field of falling color. "The reflection awaits."</span></div>
     </div>
-    <div class="plate c12 r-land">
+    <div class="plate cover">
       <div class="plate__frame"><img src="images/Invisible by Design - Book Design Project-15.png" alt="Back cover" loading="lazy"></div>
       <div class="plate__cap"><span class="pg">pp.28</span><span><b>Back cover.</b> Full trade-back anatomy — hook headline, jacket copy, endorsement, author bio, and barcode.</span></div>
     </div>
@@ -499,5 +489,25 @@ body.embed-mode .hero{min-height:auto}
 </footer>
 
 </div>
+
+<!-- Lightbox -->
+<div class="lb" id="lb" aria-hidden="true">
+  <span class="lb__close" id="lbClose" aria-label="Close">✕</span>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<script>
+(function(){
+  var lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg'), lbClose=document.getElementById('lbClose');
+  function open(src,alt){ lbImg.src=src; lbImg.alt=alt||''; lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function close(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); lbImg.src=''; document.body.style.overflow=''; }
+  document.querySelectorAll('.plate__frame img').forEach(function(img){
+    img.addEventListener('click', function(){ open(img.currentSrc||img.src, img.alt); });
+  });
+  lb.addEventListener('click', function(e){ if(e.target!==lbImg) close(); });
+  lbClose.addEventListener('click', close);
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb.classList.contains('open')) close(); });
+})();
+</script>
 </body>
 </html>
