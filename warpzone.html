@@ -739,6 +739,35 @@ body.power-on .start-button {
   animation: bounce 0.6s ease-in-out infinite;
 }
 
+/* Hint bubble — shows what's behind the door, above the "Press SPACE" prompt */
+.door-hint {
+  position: absolute;
+  bottom: calc(100% + 34px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(13, 13, 13, 0.96);
+  color: #f0f0f0;
+  border: 1px solid rgba(244, 121, 33, 0.45);
+  padding: 6px 11px;
+  border-radius: 5px;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  line-height: 1.45;
+  text-align: center;
+  width: max-content;
+  max-width: 180px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  z-index: 61;
+}
+
+.door.can-enter .door-hint {
+  opacity: 1;
+}
+
 @keyframes bounce {
   0%, 100% { transform: translate(-50%, 0); }
   50% { transform: translate(-50%, -8px); }
@@ -1023,10 +1052,10 @@ if (isDesktop) {
   }
 
   const mainDoorData = [
-    { row: 12, col: 6, id: 'doorRepository', icon: 'fa-door-open', label: 'Repository', type: 'repository' },
-    { row: 8, col: 21, id: 'doorStudio', icon: 'fa-door-open', label: 'Studio', type: 'studio' },
-    { row: 4, col: 14, id: 'doorHome', icon: 'fa-door-closed', label: 'Home', type: 'home' },
-    { row: 12, col: 23, id: 'doorAbout', icon: 'fa-user-circle', label: 'About', type: 'about' }
+    { row: 12, col: 6, id: 'doorRepository', icon: 'fa-door-open', label: 'Repository', type: 'repository', hint: 'Software development' },
+    { row: 8, col: 21, id: 'doorStudio', icon: 'fa-door-open', label: 'Studio', type: 'studio', hint: 'Web & graphic design · art · illustration · film · branding' },
+    { row: 4, col: 14, id: 'doorHome', icon: 'fa-door-closed', label: 'Home', type: 'home', hint: 'Back to homepage' },
+    { row: 12, col: 23, id: 'doorAbout', icon: 'fa-user-circle', label: 'About', type: 'about', hint: 'My profile' }
   ];
 
   const studioMazeGrid = [];
@@ -1084,15 +1113,22 @@ if (isDesktop) {
           const prompt = document.createElement('div');
           prompt.className = 'entrance-prompt';
           prompt.textContent = 'Press SPACE';
-          
+
+          if (doorInfo.hint) {
+            const hint = document.createElement('div');
+            hint.className = 'door-hint';
+            hint.textContent = doorInfo.hint;
+            door.appendChild(hint);
+          }
+
           const icon = document.createElement('div');
           icon.className = 'door-icon';
           icon.innerHTML = `<i class="fa-solid ${doorInfo.icon}"></i>`;
-          
+
           const label = document.createElement('div');
           label.className = 'door-label';
           label.textContent = doorInfo.label;
-          
+
           door.appendChild(prompt);
           door.appendChild(icon);
           door.appendChild(label);
