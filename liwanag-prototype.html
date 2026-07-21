@@ -1635,9 +1635,13 @@
 @supports (padding: max(0px)) {
   nav { padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important; }
 }
+<style>
+/* Embed mode — slightly tighter header when opened inside the home-page modal (?embed=1) */
+body.embed-mode .prototype-header { padding-top: 18px; }
 </style>
 </head>
 <body>
+<script>if(new URLSearchParams(location.search).has('embed'))document.body.classList.add('embed-mode');</script>
 
   <div class="prototype-header">
     <h1 class="prototype-title">LIWANAG PROTOTYPE</h1>

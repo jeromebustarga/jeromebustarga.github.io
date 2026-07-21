@@ -960,9 +960,15 @@
 @supports (padding: max(0px)) {
   nav { padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important; }
 }
+/* Embed mode — chrome-free when opened inside the home-page modal (?embed=1) */
+body.embed-mode nav,
+body.embed-mode .mobile-nav,
+body.embed-mode .mobile-nav-overlay,
+body.embed-mode footer { display: none !important; }
 </style>
 </head>
 <body>
+<script>if(new URLSearchParams(location.search).has('embed'))document.body.classList.add('embed-mode');</script>
 
   <!-- Loading Overlay for Disconnected Mode -->
   <div class="loading-overlay" id="loadingOverlay">
@@ -983,7 +989,7 @@
 
   <!-- Navigation -->
   <nav>
-    <a href="#" class="logo">Konektado?</a>
+    <a href="home.html#work" class="logo">Konektado?</a>
     <ul class="nav-links">
       <li><a href="#reality">Reality</a></li>
       <li><a href="#stories">Stories</a></li>
