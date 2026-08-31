@@ -84,9 +84,11 @@ function setupEventListeners() {
     const explanationToggle = document.getElementById('explanation-toggle');
     explanationToggle.addEventListener('click', toggleExplanations);
     
-    // Algorithm explanation toggle
+    // Algorithm explanation toggle (element is injected later, if at all)
     const algorithmToggle = document.getElementById('algorithm-explanation-toggle');
-    algorithmToggle.addEventListener('click', toggleAlgorithmExplanation);
+    if (algorithmToggle) {
+        algorithmToggle.addEventListener('click', toggleAlgorithmExplanation);
+    }
 }
 
 // Setup drag and drop

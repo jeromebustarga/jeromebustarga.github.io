@@ -3,11 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="See how YouTube's recommendation algorithm shapes your viewing — upload your watch history to explore it as interactive data art. Private, client-side, no sign-in.">
+    <meta name="theme-color" content="#07070c">
     <title>The Algorithm Mirror - AI Literacy Through Personal Data</title>
-    
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
     <!-- External Libraries -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -19,6 +27,13 @@
             <p>Discover how YouTube's algorithm sees you through your watch history</p>
             
             <div class="upload-box" id="upload-box">
+                <div class="upload-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 16V4"></path>
+                        <path d="m6 10 6-6 6 6"></path>
+                        <path d="M4 20h16"></path>
+                    </svg>
+                </div>
                 <div class="upload-text">Upload Your YouTube History</div>
                 <div class="upload-subtext">
                     Drag & drop your watch-history.json or click to browse<br>
@@ -154,7 +169,7 @@
                     <div class="ai-insights-title">
                         <div class="ai-icon"></div>
                         AI Analysis
-                        <button id="ai-settings-btn" style="margin-left: auto; background: none; border: none; color: #667eea; cursor: pointer; font-size: 12px;">
+                        <button id="ai-settings-btn" aria-label="AI analysis settings" title="AI analysis settings" style="margin-left: auto; background: none; border: none; color: #667eea; cursor: pointer; font-size: 12px;">
                             ⚙
                         </button>
                     </div>
