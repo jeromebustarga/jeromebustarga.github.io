@@ -8,15 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
+            /* Brand (unchanged terminal identity) */
             --terminal-bg: #0a0a0a;
             --terminal-orange: #f47921;
             --terminal-amber: #ff9642;
@@ -26,10 +23,27 @@
             --border-hover: rgba(244, 121, 33, 0.4);
             --text-primary: #fafafa;
             --text-secondary: #a0a0a0;
-            --text-dim: #505050;
+            --text-dim: #6a6a6a;
             --success-color: #22c55e;
             --error-color: #ef4444;
             --warning-color: #eab308;
+
+            /* VS Code chrome surfaces */
+            --vs-titlebar: #0d0d10;
+            --vs-activity: #0b0b0e;
+            --vs-sidebar: #0e0e11;
+            --vs-editor: #0a0a0a;
+            --vs-panel: #0c0c0f;
+            --vs-tab-active: #0a0a0a;
+            --vs-tab-inactive: #131317;
+            --vs-line: rgba(255, 255, 255, 0.06);
+            --vs-line-strong: rgba(255, 255, 255, 0.1);
+
+            --title-h: 40px;
+            --activity-w: 52px;
+            --sidebar-w: 270px;
+            --status-h: 26px;
+            --panel-h: 240px;
         }
 
         html { scroll-behavior: smooth; }
@@ -41,971 +55,361 @@
             min-height: 100vh;
             overflow-x: hidden;
             opacity: 0;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.6s ease;
         }
-
         body.loaded { opacity: 1; }
+        a, button, .project-item { -webkit-tap-highlight-color: rgba(244, 121, 33, 0.1); }
 
-        a, button, .project-item { 
-            -webkit-tap-highlight-color: rgba(244, 121, 33, 0.1); 
-        }
+        ::selection { background: rgba(244, 121, 33, 0.3); color: #fff; }
 
         /* Background Effects */
-        .bg-effects {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
+        .bg-effects { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .bg-grid {
-            position: absolute;
-            inset: 0;
-            background-image: 
+            position: absolute; inset: 0;
+            background-image:
                 linear-gradient(rgba(244, 121, 33, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(244, 121, 33, 0.03) 1px, transparent 1px);
             background-size: 60px 60px;
             mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
         }
+        .orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.06; }
+        .orb1 { width: 600px; height: 600px; background: radial-gradient(circle, var(--terminal-orange), transparent 70%); top: -300px; left: -200px; animation: orbFloat 30s ease-in-out infinite; }
+        .orb2 { width: 500px; height: 500px; background: radial-gradient(circle, var(--terminal-amber), transparent 70%); bottom: -250px; right: -200px; animation: orbFloat 25s ease-in-out infinite reverse; }
+        @keyframes orbFloat { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(60px, -60px) scale(1.05); } 66% { transform: translate(-40px, 60px) scale(0.95); } }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(120px);
-            opacity: 0.06;
+        /* ==================== TITLE BAR ==================== */
+        .title-bar {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--title-h);
+            background: var(--vs-titlebar);
+            border-bottom: 1px solid var(--vs-line);
+            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+            padding: 0 12px; z-index: 1000;
+            font-size: 12px;
         }
+        .tb-left { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .tb-traffic { display: flex; gap: 8px; padding-left: 4px; }
+        .tb-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .tb-dot.r { background: #ff5f57; }
+        .tb-dot.y { background: #febc2e; }
+        .tb-dot.g { background: #28c840; }
+        .nav-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--text-primary); }
+        .nav-logo { width: 22px; height: 22px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+        .nav-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .nav-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--terminal-orange); }
+        .nav-title span { color: var(--text-dim); }
 
-        .orb1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--terminal-orange), transparent 70%);
-            top: -300px;
-            left: -200px;
-            animation: orbFloat 30s ease-in-out infinite;
+        .tb-center {
+            font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-dim);
+            white-space: nowrap; display: flex; align-items: center; gap: 8px;
         }
+        .tb-center i { color: var(--terminal-orange); font-size: 11px; }
 
-        .orb2 {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--terminal-amber), transparent 70%);
-            bottom: -250px;
-            right: -200px;
-            animation: orbFloat 25s ease-in-out infinite reverse;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(60px, -60px) scale(1.05); }
-            66% { transform: translate(-40px, 60px) scale(0.95); }
-        }
-
-        /* Navigation Bar */
-        .nav-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
-            background: rgba(10, 10, 10, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            z-index: 1000;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text-primary);
-        }
-
-        .nav-logo {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .nav-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .nav-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--terminal-orange);
-        }
-
-        .nav-title span {
-            color: var(--text-dim);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 8px;
-        }
-
+        .tb-right { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
         .nav-link {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 400;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 6px 12px; border-radius: 6px; color: var(--text-secondary);
+            text-decoration: none; font-size: 12.5px; transition: all 0.2s ease;
+            display: flex; align-items: center; gap: 7px;
         }
+        .nav-link:hover { background: rgba(244, 121, 33, 0.1); color: var(--terminal-orange); }
 
-        .nav-link:hover {
-            background: rgba(244, 121, 33, 0.1);
-            border-color: var(--border-hover);
-            color: var(--terminal-orange);
-        }
-
-        /* Mobile Hamburger */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 8px;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 22px;
-            height: 2px;
-            background: var(--text-primary);
-            transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
+        /* Hamburger (mobile) */
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1001; }
+        .hamburger span { width: 22px; height: 2px; background: var(--text-primary); transition: all 0.3s ease; border-radius: 2px; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         /* Mobile Menu */
-        .mobile-menu {
-            display: none;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            background: rgba(10, 10, 10, 0.98);
-            border-bottom: 1px solid var(--border-color);
-            padding: 16px;
-            z-index: 999;
-            flex-direction: column;
-            gap: 8px;
+        .mobile-menu { display: none; position: fixed; top: var(--title-h); left: 0; right: 0; background: rgba(13, 13, 16, 0.98); border-bottom: 1px solid var(--border-color); padding: 16px; z-index: 999; flex-direction: column; gap: 8px; }
+        .mobile-menu.active { display: flex; }
+        .mobile-menu-link { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-secondary); text-decoration: none; font-size: 14px; transition: all 0.2s ease; }
+        .mobile-menu-link:hover, .mobile-menu-link:active { background: rgba(244,121,33,0.1); border-color: var(--border-hover); color: var(--terminal-orange); }
+        .mobile-menu-link i { width: 20px; text-align: center; }
+
+        /* ==================== IDE SHELL ==================== */
+        .ide {
+            position: relative; z-index: 1;
+            margin-top: var(--title-h);
+            height: calc(100vh - var(--title-h));
+            display: flex; flex-direction: column;
+        }
+        .vs-main { flex: 1; display: flex; min-height: 0; }
+
+        /* Activity bar */
+        .activity-bar {
+            width: var(--activity-w); flex-shrink: 0;
+            background: var(--vs-activity);
+            border-right: 1px solid var(--vs-line);
+            display: flex; flex-direction: column; align-items: center;
+            padding: 10px 0;
+        }
+        .activity-top, .activity-bottom { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .activity-bottom { margin-top: auto; }
+        .activity-btn {
+            width: 40px; height: 40px; border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-dim); font-size: 18px; cursor: pointer;
+            background: none; border: none; text-decoration: none;
+            position: relative; transition: color 0.2s ease, background 0.2s ease;
+        }
+        .activity-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.04); }
+        .activity-btn.active { color: var(--terminal-orange); }
+        .activity-btn.active::before {
+            content: ''; position: absolute; left: -10px; top: 8px; bottom: 8px;
+            width: 2px; background: var(--terminal-orange); border-radius: 2px;
         }
 
-        .mobile-menu.active {
-            display: flex;
+        /* Sidebar / Explorer */
+        .sidebar {
+            width: var(--sidebar-w); flex-shrink: 0;
+            background: var(--vs-sidebar);
+            border-right: 1px solid var(--vs-line);
+            display: flex; flex-direction: column; min-height: 0;
         }
-
-        .mobile-menu-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.2s ease;
+        .sidebar-header {
+            padding: 12px 16px 8px; font-size: 11px; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--text-dim); font-weight: 600;
+            display: flex; align-items: center; justify-content: space-between;
         }
+        .sidebar-header .dots { display: flex; gap: 10px; color: var(--text-dim); font-size: 12px; }
+        .explorer { flex: 1; overflow-y: auto; padding: 4px 8px 16px; }
+        .explorer::-webkit-scrollbar, .editor-content::-webkit-scrollbar, .terminal-body::-webkit-scrollbar { width: 8px; height: 8px; }
+        .explorer::-webkit-scrollbar-thumb, .editor-content::-webkit-scrollbar-thumb, .terminal-body::-webkit-scrollbar-thumb { background: rgba(244,121,33,0.28); border-radius: 4px; }
+        .explorer::-webkit-scrollbar-track, .editor-content::-webkit-scrollbar-track, .terminal-body::-webkit-scrollbar-track { background: transparent; }
 
-        .mobile-menu-link:hover,
-        .mobile-menu-link:active {
-            background: rgba(244, 121, 33, 0.1);
-            border-color: var(--border-hover);
-            color: var(--terminal-orange);
+        .ws-root {
+            display: flex; align-items: center; gap: 6px; padding: 6px 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 600;
+            color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;
+            cursor: default;
         }
+        .ws-root .chev { font-size: 10px; color: var(--text-dim); }
 
-        .mobile-menu-link i {
-            width: 20px;
-            text-align: center;
+        .tree-folder { margin-left: 8px; }
+        .tree-folder-label {
+            display: flex; align-items: center; gap: 6px; padding: 5px 8px;
+            font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--terminal-amber);
+            cursor: pointer; border-radius: 6px; user-select: none;
         }
+        .tree-folder-label:hover { background: rgba(255,255,255,0.03); }
+        .tree-folder-label .chev { font-size: 10px; color: var(--text-dim); width: 10px; transition: transform 0.15s ease; }
+        .tree-folder.collapsed .chev { transform: rotate(-90deg); }
+        .tree-folder.collapsed .tree-children { display: none; }
+        .tree-folder-label .fa-folder, .tree-folder-label .fa-folder-open { color: var(--terminal-amber); font-size: 12px; }
+        .tree-children { margin-left: 6px; border-left: 1px solid var(--vs-line); padding-left: 6px; }
 
-        /* ==================== DESKTOP LAYOUT ==================== */
-        .desktop-layout {
-            position: relative;
-            z-index: 1;
-            display: grid;
-            grid-template-columns: 420px 1fr;
-            gap: 20px;
-            padding: 80px 20px 20px;
-            height: 100vh;
-            max-width: 1800px;
-            margin: 0 auto;
+        /* Project rows (files) — class kept for JS hooks */
+        .project-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 8px; margin: 1px 0; border-radius: 6px; cursor: pointer;
+            border: 1px solid transparent; transition: background 0.15s ease;
         }
+        .project-item:hover { background: rgba(255,255,255,0.04); }
+        .project-item.active { background: rgba(244,121,33,0.12); border-color: var(--border-color); }
+        .file-icon { width: 16px; text-align: center; color: var(--terminal-orange); font-size: 12px; flex-shrink: 0; }
+        .file-name { flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .file-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+        .file-dot.live { background: var(--success-color); box-shadow: 0 0 6px var(--success-color); }
+        .file-dot.dev { background: var(--warning-color); }
+        .file-dot.planned { background: var(--text-dim); }
 
-        .left-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            height: calc(100vh - 100px);
+        /* Right column: editor + panel */
+        .main-right { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+        .editor-area { flex: 1; display: flex; flex-direction: column; min-height: 0; background: var(--vs-editor); }
+
+        .tab-bar {
+            display: flex; align-items: stretch; background: var(--vs-tab-inactive);
+            border-bottom: 1px solid var(--vs-line); height: 40px; overflow-x: auto;
         }
-
-        /* Panel Styling */
-        .panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            position: relative;
-            backdrop-filter: blur(20px);
-            overflow: hidden;
+        .tab-bar::-webkit-scrollbar { height: 0; }
+        .tab {
+            display: flex; align-items: center; gap: 9px; padding: 0 14px;
+            font-size: 12.5px; color: var(--text-dim); cursor: pointer;
+            border-right: 1px solid var(--vs-line); white-space: nowrap;
+            background: var(--vs-tab-inactive); position: relative; max-width: 220px;
         }
+        .tab .fa-solid, .tab .fa-brands { font-size: 12px; color: var(--terminal-orange); }
+        .tab.active { background: var(--vs-tab-active); color: var(--text-primary); }
+        .tab.active::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--terminal-orange); }
+        .tab-name { overflow: hidden; text-overflow: ellipsis; font-family: 'JetBrains Mono', monospace; }
+        .tab-close { width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-dim); }
+        .tab-close:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
 
-        .panel-header {
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .breadcrumb {
+            display: flex; align-items: center; gap: 6px; padding: 7px 16px;
+            font-size: 11.5px; color: var(--text-dim); border-bottom: 1px solid var(--vs-line);
+            font-family: 'JetBrains Mono', monospace; min-height: 30px;
         }
+        .breadcrumb i { font-size: 8px; opacity: 0.6; }
+        .breadcrumb .crumb-active { color: var(--text-secondary); }
 
-        .panel-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--terminal-orange);
-            box-shadow: 0 0 10px var(--terminal-orange);
-            animation: pulse 2s ease-in-out infinite;
+        .editor-content { flex: 1; overflow-y: auto; position: relative; }
+
+        /* Welcome (editor default) */
+        .welcome { padding: 56px 48px; max-width: 820px; margin: 0 auto; }
+        .welcome-logo { width: 60px; height: 60px; border-radius: 16px; overflow: hidden; margin-bottom: 22px; border: 1px solid var(--border-color); }
+        .welcome-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .welcome-title { font-size: 34px; font-weight: 300; letter-spacing: -1px; color: var(--text-primary); margin-bottom: 6px; }
+        .welcome-title b { font-weight: 600; color: var(--terminal-orange); }
+        .welcome-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 40px; font-family: 'JetBrains Mono', monospace; }
+        .welcome-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+        .welcome-h { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); font-weight: 600; margin-bottom: 16px; }
+        .welcome-action { display: flex; align-items: center; gap: 12px; padding: 9px 4px; cursor: pointer; color: var(--terminal-orange); font-size: 14px; border-radius: 6px; }
+        .welcome-action:hover { color: var(--terminal-amber); }
+        .welcome-action i { width: 18px; text-align: center; font-size: 13px; }
+        .welcome-action span.desc { color: var(--text-dim); font-size: 12.5px; }
+        .welcome-recent { display: flex; align-items: center; gap: 10px; padding: 8px 4px; cursor: pointer; border-radius: 6px; color: var(--text-secondary); font-size: 13.5px; }
+        .welcome-recent:hover { color: var(--text-primary); }
+        .welcome-recent i { width: 16px; text-align: center; color: var(--terminal-orange); font-size: 12px; }
+        .welcome-recent .rc-code { font-family: 'JetBrains Mono', monospace; }
+        .welcome-recent .rc-meta { color: var(--text-dim); font-size: 12px; }
+        .welcome-tip { margin-top: 40px; padding: 16px 18px; background: rgba(244,121,33,0.05); border: 1px solid var(--border-color); border-radius: 10px; font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+        .welcome-tip code { font-family: 'JetBrains Mono', monospace; color: var(--terminal-orange); background: rgba(244,121,33,0.1); padding: 1px 6px; border-radius: 4px; }
+
+        /* ==================== BOTTOM PANEL (TERMINAL) ==================== */
+        .term-panel {
+            height: var(--panel-h); flex-shrink: 0;
+            background: var(--vs-panel); border-top: 1px solid var(--vs-line-strong);
+            display: flex; flex-direction: column; min-height: 0;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        .term-panel.collapsed { height: 36px; }
+        .term-panel.collapsed .terminal-body { display: none; }
+        .term-tabs {
+            display: flex; align-items: center; height: 36px; padding: 0 8px 0 16px;
+            border-bottom: 1px solid var(--vs-line); gap: 18px; flex-shrink: 0;
         }
-
-        .panel-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            text-transform: uppercase;
+        .term-tab {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+            color: var(--text-dim); cursor: pointer; padding: 10px 2px; position: relative; font-weight: 600;
         }
+        .term-tab.active { color: var(--text-primary); }
+        .term-tab.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--terminal-orange); }
+        .term-actions { margin-left: auto; display: flex; align-items: center; gap: 4px; }
+        .term-action { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--text-dim); cursor: pointer; background: none; border: none; font-size: 12px; }
+        .term-action:hover { background: rgba(255,255,255,0.06); color: var(--text-primary); }
 
-        /* Terminal */
-        .terminal-panel {
-            height: 380px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .terminal-body {
-            flex: 1;
-            padding: 16px 20px;
-            overflow-y: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            line-height: 1.7;
-        }
-
-        .terminal-body::-webkit-scrollbar { width: 6px; }
-        .terminal-body::-webkit-scrollbar-track { background: transparent; }
-        .terminal-body::-webkit-scrollbar-thumb { 
-            background: rgba(244, 121, 33, 0.3); 
-            border-radius: 3px; 
-        }
-
-        .ascii-art {
-            color: var(--terminal-dim);
-            font-size: 9px;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            white-space: pre;
-            opacity: 0.6;
-        }
-
-        .terminal-welcome {
-            color: var(--text-secondary);
-            margin-bottom: 4px;
-        }
-
-        .terminal-welcome.highlight {
-            color: var(--terminal-orange);
-        }
-
-        .terminal-history {
-            margin: 12px 0;
-        }
-
-        .terminal-line {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 4px;
-        }
-
-        .prompt {
-            color: var(--terminal-orange);
-            margin-right: 8px;
-            white-space: nowrap;
-            user-select: none;
-        }
-
+        .terminal-body { flex: 1; padding: 12px 18px; overflow-y: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; min-height: 0; }
+        .ascii-art { color: var(--terminal-dim); font-size: 9px; line-height: 1.2; margin-bottom: 14px; white-space: pre; opacity: 0.55; }
+        .terminal-welcome { color: var(--text-secondary); margin-bottom: 4px; }
+        .terminal-welcome.highlight { color: var(--terminal-orange); }
+        .terminal-history { margin: 10px 0; }
+        .terminal-line { display: flex; align-items: flex-start; margin-bottom: 4px; }
+        .prompt { color: var(--terminal-orange); margin-right: 8px; white-space: nowrap; user-select: none; }
         .prompt-user { color: var(--success-color); }
         .prompt-path { color: var(--terminal-amber); }
         .prompt-symbol { color: var(--text-secondary); }
-
-        .terminal-input-wrapper {
-            display: flex;
-            align-items: center;
-            flex: 1;
-        }
-
-        .terminal-input {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            outline: none;
-            flex: 1;
-            caret-color: var(--terminal-orange);
-            min-width: 0;
-        }
-
-        .cursor {
-            width: 8px;
-            height: 16px;
-            background: var(--terminal-orange);
-            animation: blink 1s step-end infinite;
-            flex-shrink: 0;
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
+        .terminal-input-wrapper { display: flex; align-items: center; flex: 1; }
+        .terminal-input { background: transparent; border: none; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-size: 13px; outline: none; flex: 1; caret-color: var(--terminal-orange); min-width: 0; }
+        .cursor { width: 8px; height: 16px; background: var(--terminal-orange); animation: blink 1s step-end infinite; flex-shrink: 0; }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
         .output { color: var(--text-secondary); padding-left: 16px; margin: 4px 0; }
         .output-success { color: var(--success-color); padding-left: 16px; margin: 4px 0; }
         .output-error { color: var(--error-color); padding-left: 16px; margin: 4px 0; }
         .output-warning { color: var(--warning-color); padding-left: 16px; margin: 4px 0; }
         .output-dir { color: var(--terminal-amber); padding-left: 16px; margin: 4px 0; }
 
-        /* Projects Panel */
-        .projects-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
+        /* ==================== STATUS BAR ==================== */
+        .status-bar {
+            height: var(--status-h); flex-shrink: 0;
+            background: var(--vs-titlebar); border-top: 1px solid var(--vs-line);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 4px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 11.5px;
         }
+        .sb-left, .sb-right { display: flex; align-items: center; height: 100%; }
+        .sb-item { display: flex; align-items: center; gap: 6px; padding: 0 10px; height: 100%; color: var(--text-secondary); }
+        .sb-item i { font-size: 11px; }
+        .sb-branch { background: var(--terminal-orange); color: #1a1000; font-weight: 600; }
+        .sb-branch i { color: #1a1000; }
+        .sb-item.ok { color: var(--success-color); }
 
-        .projects-body {
-            flex: 1;
-            padding: 16px 20px;
-            overflow-y: auto;
-        }
-
-        .projects-body::-webkit-scrollbar { width: 6px; }
-        .projects-body::-webkit-scrollbar-track { background: transparent; }
-        .projects-body::-webkit-scrollbar-thumb { 
-            background: rgba(244, 121, 33, 0.3); 
-            border-radius: 3px; 
-        }
-
-        .project-group {
-            margin-bottom: 24px;
-        }
-
-        .project-group:last-child { margin-bottom: 0; }
-
-        .project-group-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--terminal-amber);
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-color);
-            letter-spacing: 1px;
-        }
-
-        .project-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            margin-bottom: 4px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-
-        .project-item:hover {
-            background: rgba(244, 121, 33, 0.05);
-            border-color: var(--border-color);
-        }
-
-        .project-item.active {
-            background: rgba(244, 121, 33, 0.1);
-            border-color: var(--border-hover);
-        }
-
-        .project-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            background: rgba(244, 121, 33, 0.1);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--terminal-orange);
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .project-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .project-codename {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-
-        .project-codename::before {
-            content: '/';
-            color: var(--terminal-dim);
-            margin-right: 4px;
-        }
-
-        .project-meta {
-            font-size: 11px;
-            color: var(--text-dim);
-        }
-
-        .project-status {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .project-status.live { background: var(--success-color); box-shadow: 0 0 8px var(--success-color); }
-        .project-status.dev { background: var(--warning-color); }
-        .project-status.planned { background: var(--text-dim); }
-
-        /* Preview Panel */
-        .preview-panel {
-            height: calc(100vh - 100px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .preview-body {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        .preview-frame {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .preview-placeholder {
-            text-align: center;
-            padding: 40px;
-        }
-
-        .preview-placeholder-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 20px;
-            background: rgba(244, 121, 33, 0.1);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 24px;
-            color: var(--terminal-orange);
-            font-size: 32px;
-        }
-
-        .preview-placeholder-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .preview-placeholder-text {
-            font-size: 13px;
-            color: var(--text-dim);
-            line-height: 1.6;
-        }
-
-        /* Project Detail View */
-        .project-detail {
-            width: 100%;
-            height: 100%;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow-y: auto;
-        }
-
-        .project-detail-icon {
-            width: 100px;
-            height: 100px;
-            border-radius: 24px;
-            background: linear-gradient(135deg, rgba(244, 121, 33, 0.2), rgba(244, 121, 33, 0.05));
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 32px;
-            font-size: 40px;
-            color: var(--terminal-orange);
-        }
-
-        .project-detail-codename {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            color: var(--terminal-dim);
-            margin-bottom: 8px;
-        }
-
-        .project-detail-name {
-            font-family: 'Inter', sans-serif;
-            font-size: 28px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
-        }
-
-        .project-detail-desc {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 500px;
-            margin-bottom: 32px;
-        }
-
-        .project-detail-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 32px;
-        }
-
-        .tech-tag {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 100px;
-            font-size: 12px;
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-
-        .project-detail-links {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .project-link {
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 500;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .project-link-primary {
-            background: var(--terminal-orange);
-            color: var(--terminal-bg);
-            border: 1px solid var(--terminal-orange);
-        }
-
-        .project-link-primary:hover {
-            background: var(--terminal-amber);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(244, 121, 33, 0.3);
-        }
-
-        .project-link-secondary {
-            background: transparent;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .project-link-secondary:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .project-status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(244, 121, 33, 0.1);
-            border: 1px solid var(--border-color);
-            border-radius: 100px;
-            font-size: 12px;
-            color: var(--terminal-orange);
-            margin-top: 24px;
-        }
-
-        /* Loading State */
-        .loading-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--border-color);
-            border-top-color: var(--terminal-orange);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-
-        /* ==================== MOBILE LAYOUT ==================== */
-        .mobile-layout {
-            display: none;
-            position: relative;
-            z-index: 1;
-            padding: 80px 16px 40px;
-            min-height: 100vh;
-        }
-
-        .mobile-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .mobile-header-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 16px;
-            background: rgba(244, 121, 33, 0.1);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            color: var(--terminal-orange);
-            font-size: 24px;
-        }
-
-        .mobile-header-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 24px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 8px;
-        }
-
-        .mobile-header-subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .mobile-terminal-notice {
-            background: rgba(244, 121, 33, 0.05);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 16px 20px;
-            margin-bottom: 32px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .mobile-terminal-notice i {
-            color: var(--terminal-orange);
-            font-size: 18px;
-        }
-
-        .mobile-terminal-notice-text {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-        }
-
-        .mobile-projects-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .mobile-project-card {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .mobile-project-card:hover,
-        .mobile-project-card:active {
-            background: rgba(244, 121, 33, 0.05);
-            border-color: var(--border-hover);
-        }
-
-        .mobile-project-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 12px;
-        }
-
-        .mobile-project-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 12px;
-            background: rgba(244, 121, 33, 0.1);
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--terminal-orange);
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .mobile-project-title-wrap {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .mobile-project-name {
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-primary);
-            margin-bottom: 2px;
-        }
-
-        .mobile-project-codename {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--terminal-dim);
-        }
-
-        .mobile-project-status {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
+        /* ==================== MOBILE LAYOUT (kept) ==================== */
+        .mobile-layout { display: none; position: relative; z-index: 1; padding: 80px 16px 40px; min-height: 100vh; }
+        .mobile-header { text-align: center; margin-bottom: 32px; }
+        .mobile-header-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(244,121,33,0.1); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--terminal-orange); font-size: 24px; }
+        .mobile-header-title { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
+        .mobile-header-subtitle { font-size: 14px; color: var(--text-secondary); }
+        .mobile-terminal-notice { background: rgba(244,121,33,0.05); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px 20px; margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+        .mobile-terminal-notice i { color: var(--terminal-orange); font-size: 18px; }
+        .mobile-terminal-notice-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+        .mobile-projects-list { display: flex; flex-direction: column; gap: 12px; }
+        .mobile-project-card { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; text-decoration: none; transition: all 0.3s ease; }
+        .mobile-project-card:hover, .mobile-project-card:active { background: rgba(244,121,33,0.05); border-color: var(--border-hover); }
+        .mobile-project-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+        .mobile-project-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(244,121,33,0.1); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; color: var(--terminal-orange); font-size: 18px; flex-shrink: 0; }
+        .mobile-project-title-wrap { flex: 1; min-width: 0; }
+        .mobile-project-name { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+        .mobile-project-codename { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--terminal-dim); }
+        .mobile-project-status { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
         .mobile-project-status.live { background: var(--success-color); box-shadow: 0 0 8px var(--success-color); }
         .mobile-project-status.dev { background: var(--warning-color); }
         .mobile-project-status.planned { background: var(--text-dim); }
+        .mobile-project-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
+        .mobile-project-tech { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .mobile-tech-tag { padding: 5px 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 100px; font-size: 11px; color: var(--text-dim); }
+        .mobile-project-actions { display: flex; gap: 10px; }
+        .mobile-project-btn { flex: 1; padding: 12px 16px; border-radius: 8px; font-size: 12px; font-weight: 500; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s ease; }
+        .mobile-project-btn-primary { background: var(--terminal-orange); color: var(--terminal-bg); }
+        .mobile-project-btn-secondary { background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: var(--text-secondary); }
+        .mobile-section-title { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: var(--terminal-amber); letter-spacing: 1px; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); }
+        .mobile-section-title:first-of-type { margin-top: 0; }
 
-        .mobile-project-desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 14px;
-        }
+        /* Project detail (rendered by JS into #previewFrame) */
+        .project-detail { width: 100%; min-height: 100%; padding: 48px 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .project-detail-icon { width: 96px; height: 96px; border-radius: 24px; background: linear-gradient(135deg, rgba(244,121,33,0.2), rgba(244,121,33,0.05)); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; font-size: 38px; color: var(--terminal-orange); }
+        .project-detail-codename { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--terminal-dim); margin-bottom: 8px; }
+        .project-detail-name { font-family: 'Inter', sans-serif; font-size: 28px; font-weight: 500; color: var(--text-primary); margin-bottom: 16px; letter-spacing: -0.5px; }
+        .project-detail-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.7; max-width: 560px; margin-bottom: 28px; }
+        .project-detail-tech { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 28px; }
+        .tech-tag { padding: 8px 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); border-radius: 100px; font-size: 12px; color: var(--text-secondary); }
+        .project-detail-links { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+        .project-link { padding: 12px 24px; border-radius: 10px; font-size: 13px; font-weight: 500; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+        .project-link-primary { background: var(--terminal-orange); color: var(--terminal-bg); border: 1px solid var(--terminal-orange); }
+        .project-link-primary:hover { background: var(--terminal-amber); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(244,121,33,0.3); }
+        .project-link-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--border-color); }
+        .project-link-secondary:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.2); }
+        .project-status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(244,121,33,0.1); border: 1px solid var(--border-color); border-radius: 100px; font-size: 12px; color: var(--terminal-orange); margin-top: 24px; }
 
-        .mobile-project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 16px;
-        }
-
-        .mobile-tech-tag {
-            padding: 5px 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            border-radius: 100px;
-            font-size: 11px;
-            color: var(--text-dim);
-        }
-
-        .mobile-project-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .mobile-project-btn {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 500;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .mobile-project-btn-primary {
-            background: var(--terminal-orange);
-            color: var(--terminal-bg);
-        }
-
-        .mobile-project-btn-secondary {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-        }
-
-        .mobile-section-title {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--terminal-amber);
-            letter-spacing: 1px;
-            margin: 32px 0 16px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .mobile-section-title:first-of-type {
-            margin-top: 0;
-        }
+        /* Loading */
+        .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; min-height: 100%; padding: 60px; }
+        .loading-spinner { width: 40px; height: 40px; border: 2px solid var(--border-color); border-top-color: var(--terminal-orange); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--text-secondary); }
 
         /* ==================== RESPONSIVE ==================== */
-        @media (max-width: 1200px) {
-            .desktop-layout {
-                grid-template-columns: 380px 1fr;
-            }
-        }
-
-        @media (max-width: 1024px) {
-            .desktop-layout {
-                grid-template-columns: 340px 1fr;
-                gap: 16px;
-                padding: 76px 16px 16px;
-            }
-
-            .terminal-panel { height: 340px; }
-            .ascii-art { display: none; }
-        }
+        @media (max-width: 1100px) { :root { --sidebar-w: 230px; } }
+        @media (max-width: 900px) { .tb-center { display: none; } }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            .tb-right { display: none; }
+            .tb-traffic { display: none; }
             .hamburger { display: flex; }
-            
-            .desktop-layout {
-                display: none;
-            }
-
-            .mobile-layout {
-                display: block;
-            }
-
+            .title-bar { grid-template-columns: 1fr auto; }
+            .tb-center { display: none; }
+            .ide { display: none; }
+            .mobile-layout { display: block; }
             .orb { animation: none; opacity: 0.03; }
         }
 
         @media (max-width: 480px) {
-            .nav-bar {
-                padding: 0 16px;
-            }
-
-            .nav-title {
-                font-size: 12px;
-            }
-
-            .mobile-layout {
-                padding: 70px 12px 32px;
-            }
-
-            .mobile-header-title {
-                font-size: 20px;
-            }
-
-            .mobile-project-card {
-                padding: 16px;
-            }
+            .title-bar { padding: 0 10px; }
+            .nav-title { font-size: 12px; }
+            .mobile-layout { padding: 70px 12px 32px; }
+            .mobile-header-title { font-size: 20px; }
+            .mobile-project-card { padding: 16px; }
         }
 
-        @media (max-width: 360px) {
-            .nav-logo {
-                width: 28px;
-                height: 28px;
-            }
-
-            .nav-title {
-                font-size: 11px;
-            }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
         }
     </style>
-<style>/* safe-area-notch-fix */
-@supports (padding: max(0px)) {
-  nav { padding-top: calc(env(safe-area-inset-top, 0px) + 16px) !important; }
-}
-</style>
+    <style>/* safe-area-notch-fix */
+    @supports (padding: max(0px)) {
+      .title-bar { padding-top: env(safe-area-inset-top, 0px); height: calc(var(--title-h) + env(safe-area-inset-top, 0px)); }
+      .ide { margin-top: calc(var(--title-h) + env(safe-area-inset-top, 0px)); height: calc(100vh - var(--title-h) - env(safe-area-inset-top, 0px)); }
+      .mobile-menu { top: calc(var(--title-h) + env(safe-area-inset-top, 0px)); }
+    }
+    </style>
 </head>
 <body>
     <!-- Background Effects -->
@@ -1015,173 +419,171 @@
         <div class="orb orb2"></div>
     </div>
 
-    <!-- Navigation Bar -->
-    <nav class="nav-bar">
-        <a href="index.html" class="nav-brand">
-            <div class="nav-logo">
-                <img src="images/logo.png" alt="Logo">
-            </div>
-            <span class="nav-title">jerome<span>@</span>repository</span>
-        </a>
-        <div class="nav-links">
-            <a href="index.html" class="nav-link">
-                <i class="fa-solid fa-house"></i>
-                Home
-            </a>
-            <a href="warpzone.html" class="nav-link">
-                <i class="fa-solid fa-rocket"></i>
-                Warpzone
-            </a>
-            <a href="about.html" class="nav-link">
-                <i class="fa-solid fa-user"></i>
-                About
+    <!-- Title Bar -->
+    <header class="title-bar">
+        <div class="tb-left">
+            <div class="tb-traffic"><span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span></div>
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo"><img src="images/logo.png" alt="Logo"></div>
+                <span class="nav-title">jerome<span>@</span>repository</span>
             </a>
         </div>
-        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </nav>
+        <div class="tb-center"><i class="fa-solid fa-folder-open"></i> jerome-world — repository</div>
+        <div class="tb-right">
+            <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="warpzone.html" class="nav-link"><i class="fa-solid fa-rocket"></i> Warpzone</a>
+            <a href="about.html" class="nav-link"><i class="fa-solid fa-user"></i> About</a>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </header>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html" class="mobile-menu-link">
-            <i class="fa-solid fa-house"></i>
-            Home
-        </a>
-        <a href="warpzone.html" class="mobile-menu-link">
-            <i class="fa-solid fa-rocket"></i>
-            Warpzone
-        </a>
-        <a href="about.html" class="mobile-menu-link">
-            <i class="fa-solid fa-user"></i>
-            About
-        </a>
+        <a href="index.html" class="mobile-menu-link"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="warpzone.html" class="mobile-menu-link"><i class="fa-solid fa-rocket"></i> Warpzone</a>
+        <a href="about.html" class="mobile-menu-link"><i class="fa-solid fa-user"></i> About</a>
     </div>
 
-    <!-- ==================== DESKTOP LAYOUT ==================== -->
-    <div class="desktop-layout">
-        <!-- Left Panel -->
-        <div class="left-panel">
-            <!-- Terminal Panel -->
-            <div class="panel terminal-panel">
-                <div class="panel-header">
-                    <div class="panel-indicator"></div>
-                    <span class="panel-title">Terminal</span>
+    <!-- ==================== DESKTOP: VS CODE IDE ==================== -->
+    <div class="ide">
+        <div class="vs-main">
+            <!-- Activity Bar -->
+            <div class="activity-bar">
+                <div class="activity-top">
+                    <button class="activity-btn active" title="Explorer"><i class="fa-solid fa-files"></i><i class="fa-regular fa-copy" style="display:none"></i></button>
+                    <button class="activity-btn" title="Search" id="actSearch"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button class="activity-btn" title="Source Control"><i class="fa-solid fa-code-branch"></i></button>
+                    <button class="activity-btn" title="Run &amp; Debug"><i class="fa-solid fa-play"></i></button>
+                    <button class="activity-btn" title="Extensions"><i class="fa-solid fa-puzzle-piece"></i></button>
                 </div>
-                <div class="terminal-body" id="terminalBody">
-                    <div class="ascii-art">
+                <div class="activity-bottom">
+                    <a href="index.html" class="activity-btn nav-link" title="Home"><i class="fa-solid fa-house"></i></a>
+                    <a href="warpzone.html" class="activity-btn nav-link" title="Warpzone"><i class="fa-solid fa-rocket"></i></a>
+                    <a href="about.html" class="activity-btn nav-link" title="About"><i class="fa-solid fa-user"></i></a>
+                </div>
+            </div>
+
+            <!-- Sidebar / Explorer -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <span>Explorer</span>
+                    <span class="dots"><i class="fa-solid fa-ellipsis"></i></span>
+                </div>
+                <div class="explorer">
+                    <div class="ws-root"><i class="fa-solid fa-chevron-down chev"></i> JEROME-WORLD</div>
+
+                    <div class="tree-folder" data-folder="web-apps">
+                        <div class="tree-folder-label"><i class="fa-solid fa-chevron-down chev"></i><i class="fa-solid fa-folder"></i> web-apps</div>
+                        <div class="tree-children">
+                            <div class="project-item" data-project="uplift"><i class="file-icon fa-solid fa-hand-holding-heart"></i><span class="file-name">uplift</span><span class="file-dot live"></span></div>
+                            <div class="project-item" data-project="cubby"><i class="file-icon fa-solid fa-store"></i><span class="file-name">cubby</span><span class="file-dot live"></span></div>
+                            <div class="project-item" data-project="r2s"><i class="file-icon fa-solid fa-rocket"></i><span class="file-name">r2s</span><span class="file-dot live"></span></div>
+                        </div>
+                    </div>
+
+                    <div class="tree-folder" data-folder="experiments">
+                        <div class="tree-folder-label"><i class="fa-solid fa-chevron-down chev"></i><i class="fa-solid fa-folder"></i> experiments</div>
+                        <div class="tree-children">
+                            <div class="project-item" data-project="decay"><i class="file-icon fa-solid fa-biohazard"></i><span class="file-name">decay</span><span class="file-dot live"></span></div>
+                            <div class="project-item" data-project="mirror"><i class="file-icon fa-solid fa-chart-line"></i><span class="file-name">mirror</span><span class="file-dot live"></span></div>
+                        </div>
+                    </div>
+
+                    <div class="tree-folder" data-folder="advocacy">
+                        <div class="tree-folder-label"><i class="fa-solid fa-chevron-down chev"></i><i class="fa-solid fa-folder"></i> advocacy</div>
+                        <div class="tree-children">
+                            <div class="project-item" data-project="koneksyon"><i class="file-icon fa-solid fa-globe-asia"></i><span class="file-name">koneksyon</span><span class="file-dot live"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Editor + Panel -->
+            <div class="main-right">
+                <div class="editor-area">
+                    <div class="tab-bar" id="tabBar">
+                        <div class="tab active" id="welcomeTab"><i class="fa-solid fa-hand-sparkles"></i><span class="tab-name">Welcome</span></div>
+                    </div>
+                    <div class="breadcrumb" id="breadcrumb">
+                        <span>repository</span>
+                    </div>
+                    <div class="editor-content" id="previewFrame">
+                        <div class="welcome">
+                            <div class="welcome-logo"><img src="images/logo.png" alt="Logo"></div>
+                            <div class="welcome-title">Jerome's <b>Repository</b></div>
+                            <div class="welcome-sub">// software, experiments &amp; advocacy — browse the tree or use the terminal</div>
+                            <div class="welcome-cols">
+                                <div class="welcome-start">
+                                    <div class="welcome-h">Start</div>
+                                    <div class="welcome-action" onclick="document.getElementById('terminalInput').focus()"><i class="fa-solid fa-terminal"></i> Use the terminal <span class="desc">— type <code style="color:inherit">help</code></span></div>
+                                    <div class="welcome-action" onclick="loadProject('uplift')"><i class="fa-solid fa-folder-open"></i> Open a project <span class="desc">— pick from Explorer</span></div>
+                                    <a class="welcome-action" href="https://github.com/jhb09808" target="_blank" style="text-decoration:none"><i class="fa-brands fa-github"></i> Browse GitHub <span class="desc">— @jhb09808</span></a>
+                                </div>
+                                <div class="welcome-recents">
+                                    <div class="welcome-h">Recent</div>
+                                    <div class="welcome-recent" onclick="loadProject('uplift')"><i class="fa-solid fa-hand-holding-heart"></i><span class="rc-code">uplift</span> <span class="rc-meta">— Resource Platform</span></div>
+                                    <div class="welcome-recent" onclick="loadProject('mirror')"><i class="fa-solid fa-chart-line"></i><span class="rc-code">mirror</span> <span class="rc-meta">— Algorithm Research</span></div>
+                                    <div class="welcome-recent" onclick="loadProject('decay')"><i class="fa-solid fa-biohazard"></i><span class="rc-code">decay</span> <span class="rc-meta">— Image Corruption</span></div>
+                                    <div class="welcome-recent" onclick="loadProject('koneksyon')"><i class="fa-solid fa-globe-asia"></i><span class="rc-code">koneksyon</span> <span class="rc-meta">— Internet Map</span></div>
+                                </div>
+                            </div>
+                            <div class="welcome-tip">
+                                <i class="fa-solid fa-lightbulb" style="color:var(--terminal-orange)"></i>
+                                Tip: the integrated terminal below is real. Try <code>ls</code>, <code>cd mirror</code>, <code>info</code>, or <code>open</code>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Panel: Terminal -->
+                <div class="term-panel" id="termPanel">
+                    <div class="term-tabs">
+                        <span class="term-tab">Problems</span>
+                        <span class="term-tab">Output</span>
+                        <span class="term-tab active">Terminal</span>
+                        <div class="term-actions">
+                            <button class="term-action" id="termClear" title="Clear terminal"><i class="fa-solid fa-ban"></i></button>
+                            <button class="term-action" id="termToggle" title="Toggle panel"><i class="fa-solid fa-chevron-down"></i></button>
+                        </div>
+                    </div>
+                    <div class="terminal-body" id="terminalBody">
+                        <div class="ascii-art">
  ____  _____ ____   ___  ____ ___ _____ ___  ______   __
 |  _ \| ____|  _ \ / _ \/ ___|_ _|_   _/ _ \|  _ \ \ / /
-| |_) |  _| | |_) | | | \___ \| |  | || | | | |_) \ V / 
-|  _ <| |___|  __/| |_| |___) | |  | || |_| |  _ < | |  
+| |_) |  _| | |_) | | | \___ \| |  | || | | | |_) \ V /
+|  _ <| |___|  __/| |_| |___) | |  | || |_| |  _ < | |
 |_| \_\_____|_|    \___/|____/___| |_| \___/|_| \_\|_|</div>
-                    <div class="terminal-welcome highlight">Repository System v2.0</div>
-                    <div class="terminal-welcome">Type 'help' for commands</div>
-                    <div class="terminal-history" id="terminalHistory"></div>
-                    <div class="terminal-line">
-                        <span class="prompt">
-                            <span class="prompt-user">jerome</span><span class="prompt-symbol">@</span><span class="prompt-path">repo</span><span class="prompt-symbol">:~$</span>
-                        </span>
-                        <div class="terminal-input-wrapper">
-                            <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                            <span class="cursor"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Projects Panel -->
-            <div class="panel projects-panel">
-                <div class="panel-header">
-                    <div class="panel-indicator"></div>
-                    <span class="panel-title">Directory</span>
-                </div>
-                <div class="projects-body">
-                    <div class="project-group">
-                        <div class="project-group-title">/web-apps</div>
-                        <div class="project-item" data-project="uplift">
-                            <div class="project-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                            <div class="project-info">
-                                <div class="project-codename">uplift</div>
-                                <div class="project-meta">Resource Management Platform</div>
+                        <div class="terminal-welcome highlight">Repository System v2.0</div>
+                        <div class="terminal-welcome">Type 'help' for commands</div>
+                        <div class="terminal-history" id="terminalHistory"></div>
+                        <div class="terminal-line">
+                            <span class="prompt">
+                                <span class="prompt-user">jerome</span><span class="prompt-symbol">@</span><span class="prompt-path">repo</span><span class="prompt-symbol">:~$</span>
+                            </span>
+                            <div class="terminal-input-wrapper">
+                                <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                                <span class="cursor"></span>
                             </div>
-                            <div class="project-status live"></div>
-                        </div>
-                        <div class="project-item" data-project="cubby">
-                            <div class="project-icon"><i class="fa-solid fa-store"></i></div>
-                            <div class="project-info">
-                                <div class="project-codename">cubby</div>
-                                <div class="project-meta">Campus Marketplace</div>
-                            </div>
-                            <div class="project-status live"></div>
-                        </div>
-                        <div class="project-item" data-project="r2s">
-                            <div class="project-icon"><i class="fa-solid fa-rocket"></i></div>
-                            <div class="project-info">
-                                <div class="project-codename">r2s</div>
-                                <div class="project-meta">Space Exploration Platform</div>
-                            </div>
-                            <div class="project-status live"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="project-group">
-                        <div class="project-group-title">/experiments</div>
-                        <div class="project-item" data-project="decay">
-                            <div class="project-icon"><i class="fa-solid fa-biohazard"></i></div>
-                            <div class="project-info">
-                                <div class="project-codename">decay</div>
-                                <div class="project-meta">Image Corruption Simulator</div>
-                            </div>
-                            <div class="project-status live"></div>
-                        </div>
-                        <div class="project-item" data-project="mirror">
-                            <div class="project-icon"><i class="fa-solid fa-chart-line"></i></div>
-                            <div class="project-info">
-                                <div class="project-codename">mirror</div>
-                                <div class="project-meta">Algorithm Visualization Research</div>
-                            </div>
-                            <div class="project-status live"></div>
-                        </div>
-                    </div>
-
-                    <div class="project-group">
-                        <div class="project-group-title">/advocacy</div>
-                        <div class="project-item" data-project="koneksyon">
-                            <div class="project-icon"><i class="fa-solid fa-globe-asia"></i></div>
-                            <div class="project-info">
-                                <div class="project-codename">koneksyon</div>
-                                <div class="project-meta">Philippine Internet Map</div>
-                            </div>
-                            <div class="project-status live"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Preview Panel -->
-        <div class="panel preview-panel">
-            <div class="panel-header">
-                <div class="panel-indicator"></div>
-                <span class="panel-title">Preview</span>
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="sb-left">
+                <span class="sb-item sb-branch"><i class="fa-solid fa-code-branch"></i> main</span>
+                <span class="sb-item"><i class="fa-solid fa-arrows-rotate"></i> 0 ↓ 0 ↑</span>
+                <span class="sb-item ok"><i class="fa-solid fa-circle-check"></i> 0 <i class="fa-solid fa-triangle-exclamation" style="margin-left:8px"></i> 0</span>
             </div>
-            <div class="preview-body">
-                <div class="preview-frame" id="previewFrame">
-                    <div class="preview-placeholder">
-                        <div class="preview-placeholder-icon">
-                            <i class="fa-solid fa-folder-open"></i>
-                        </div>
-                        <div class="preview-placeholder-title">Select a Project</div>
-                        <div class="preview-placeholder-text">
-                            Click a project from the directory<br>or type <span style="color: var(--terminal-orange);">cd [codename]</span> in terminal
-                        </div>
-                    </div>
-                </div>
+            <div class="sb-right">
+                <span class="sb-item" id="sbLang"><i class="fa-solid fa-folder"></i> repository</span>
+                <span class="sb-item">UTF-8</span>
+                <span class="sb-item">Jerome's World</span>
+                <span class="sb-item"><i class="fa-solid fa-bell"></i></span>
             </div>
-        </div>
+        </footer>
     </div>
 
     <!-- ==================== MOBILE LAYOUT ==================== -->
@@ -1696,6 +1098,105 @@
 
         // Initial focus
         terminalInput.focus();
+    </script>
+    <script>
+        /* ===== VS Code chrome enhancements (additive; wraps existing behavior) ===== */
+        (function () {
+            const FOLDERS = { uplift: 'web-apps', cubby: 'web-apps', r2s: 'web-apps', decay: 'experiments', mirror: 'experiments', koneksyon: 'advocacy' };
+            const previewFrame = document.getElementById('previewFrame');
+            const tabBar = document.getElementById('tabBar');
+            const welcomeTab = document.getElementById('welcomeTab');
+            const breadcrumb = document.getElementById('breadcrumb');
+            const WELCOME_HTML = previewFrame ? previewFrame.innerHTML : '';
+
+            function fileMeta(key) {
+                const el = document.querySelector('.project-item[data-project="' + key + '"]');
+                const iconEl = el ? el.querySelector('.file-icon') : null;
+                const iconClass = iconEl ? iconEl.className.replace('file-icon', '').trim() : 'fa-solid fa-file';
+                const name = el ? el.querySelector('.file-name').textContent.trim() : key;
+                return { iconClass, name };
+            }
+
+            function showWelcome() {
+                if (previewFrame) previewFrame.innerHTML = WELCOME_HTML;
+                const ft = document.getElementById('fileTab');
+                if (ft) ft.remove();
+                if (welcomeTab) welcomeTab.classList.add('active');
+                document.querySelectorAll('.project-item').forEach(i => i.classList.remove('active'));
+                if (breadcrumb) breadcrumb.innerHTML = '<span>repository</span>';
+                rewire();
+            }
+
+            function openTab(key) {
+                const meta = fileMeta(key);
+                if (welcomeTab) welcomeTab.classList.remove('active');
+                let ft = document.getElementById('fileTab');
+                if (!ft) {
+                    ft = document.createElement('div');
+                    ft.className = 'tab';
+                    ft.id = 'fileTab';
+                    tabBar.appendChild(ft);
+                }
+                ft.classList.add('active');
+                ft.innerHTML = '<i class="' + meta.iconClass + '"></i><span class="tab-name">' + meta.name + '.md</span><span class="tab-close" id="fileTabClose"><i class="fa-solid fa-xmark"></i></span>';
+                ft.onclick = function (e) {
+                    if (e.target.closest('#fileTabClose')) { showWelcome(); return; }
+                    ft.classList.add('active');
+                    if (welcomeTab) welcomeTab.classList.remove('active');
+                };
+                const folder = FOLDERS[key] || 'repository';
+                if (breadcrumb) {
+                    breadcrumb.innerHTML = '<span>repository</span> <i class="fa-solid fa-chevron-right"></i> ' +
+                        '<span>' + folder + '</span> <i class="fa-solid fa-chevron-right"></i> ' +
+                        '<span class="crumb-active"><i class="' + meta.iconClass + '"></i> ' + meta.name + '.md</span>';
+                }
+            }
+
+            // Wrap the existing global loadProject so every open (click or `cd`) updates the tab
+            if (typeof window.loadProject === 'function') {
+                const orig = window.loadProject;
+                window.loadProject = function (key) {
+                    orig(key);
+                    if (key && FOLDERS.hasOwnProperty(key)) openTab(key);
+                };
+            }
+
+            function rewire() {
+                if (welcomeTab) {
+                    welcomeTab.onclick = function () {
+                        showWelcome();
+                    };
+                }
+            }
+            rewire();
+
+            // Folder collapse/expand
+            document.querySelectorAll('.tree-folder-label').forEach(label => {
+                label.addEventListener('click', function () {
+                    const folder = this.closest('.tree-folder');
+                    folder.classList.toggle('collapsed');
+                    const ic = this.querySelector('.fa-folder, .fa-folder-open');
+                    if (ic) {
+                        ic.classList.toggle('fa-folder');
+                        ic.classList.toggle('fa-folder-open');
+                    }
+                });
+            });
+
+            // Terminal panel toggle + clear
+            const termPanel = document.getElementById('termPanel');
+            const termToggle = document.getElementById('termToggle');
+            const termClear = document.getElementById('termClear');
+            if (termToggle) termToggle.addEventListener('click', function () {
+                termPanel.classList.toggle('collapsed');
+                const chev = this.querySelector('i');
+                if (chev) { chev.classList.toggle('fa-chevron-down'); chev.classList.toggle('fa-chevron-up'); }
+            });
+            if (termClear) termClear.addEventListener('click', function () {
+                const h = document.getElementById('terminalHistory');
+                if (h) h.innerHTML = '';
+            });
+        })();
     </script>
 </body>
 </html>
